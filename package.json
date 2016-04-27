@@ -1,11 +1,22 @@
 {
   "name": "relution-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/typescript/bin/tsc -p .",
+    "watch": "./node_modules/typescript/bin/tsc -p . -w",
+    "postinstall": "typings install"
   },
-  "author": "",
-  "license": "ISC"
+  "bin": {
+    "relution": "./lib/relution.js"
+  },
+  "author": "Pascal Brewing",
+  "license": "Apache License",
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "typescript": "^1.8.10",
+     "sinon": "^1.16.0"
+  }
 }
