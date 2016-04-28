@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npm run tslint",
-    "tslint": "./node_modules/tslint/bin/tslint src/**/*.ts",
-    "test": "./node_modules/mocha/bin/mocha src/**/*.spec.ts",
-    "build": "./node_modules/typescript/bin/tsc -p .",
-    "api": "./node_modules/typedoc/bin/typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.ts",
-    "watch": "./node_modules/typescript/bin/tsc -p . -w",
+    "tslint": "tslint src/**/*.ts",
+    "test": "npm run build && mocha lib/**/*.spec.js",
+    "build": "tsc -p .",
+    "api": "typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.js",
+    "watch": "tsc -p . -w",
     "postinstall": "typings install"
   },
   "bin": {

@@ -1,1 +1,1 @@
-{"version":3,"file":"Gii.spec.js","sourceRoot":"","sources":["../../src/gii/Gii.spec.ts"],"names":[],"mappings":"AAAA,QAAQ,CAAC,WAAW,EAAE;AAEtB,CAAC,CAAC,CAAC"}
+{"version":3,"file":"Gii.spec.js","sourceRoot":"","sources":["../../src/gii/Gii.spec.ts"],"names":[],"mappings":"AAAA,QAAQ,CAAC,WAAW,EAAE;IACpB,EAAE,CAAC,cAAc,EAAE,UAAC,IAAI;QACtB,IAAI,EAAE,CAAC;IACT,CAAC,CAAC,CAAA;AACJ,CAAC,CAAC,CAAC"}

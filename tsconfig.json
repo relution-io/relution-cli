@@ -13,6 +13,7 @@
         "typings/main.d.ts"
     ],
     "files": [
+        "typings/main.d.ts",
         "src/gii/Gii.spec.ts",
         "src/gii/Gii.ts"
     ]
