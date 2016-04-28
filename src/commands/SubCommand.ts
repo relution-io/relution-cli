@@ -4,26 +4,18 @@ interface SubCommandInterface {
 }
 
 export class SubCommand implements SubCommandInterface {
+
+  public name:string;
+  public vars:[string];
+
   constructor(name:string, vars?:[string]) {
+    if (!name || !name.length) {
+      throw new Error('Subcommand need a name');
+    }
     this.name = name;
+
     if (vars) {
       this.vars = vars;
     }
-  }
-  public set name(v: string) {
-    this.name = v;
-  };
-
-  public get name() : string {
-    return this.name;
-  };
-
-
-  public get vars() : [string] {
-    return this.vars;
-  }
-
-  public set vars(v : [string]) {
-    this.vars = v;
   }
 }

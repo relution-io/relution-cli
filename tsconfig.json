@@ -5,7 +5,14 @@
         "declaration": false,
         "sourceMap": true,
         "rootDir": "./src",
-        "outDir": "./lib"
+        "outDir": "./lib",
+        "pretty": true,
+        "stripInternal": true,
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true
     },
     "filesGlob": [
         "src/**/*.ts",
@@ -16,6 +23,7 @@
         "typings/main.d.ts",
         "src/commands/Command.spec.ts",
         "src/commands/Command.ts",
+        "src/commands/Commands.ts",
         "src/commands/home/Home.spec.ts",
         "src/commands/home/Home.ts",
         "src/commands/server/ServerHome.ts",
@@ -23,6 +31,7 @@
         "src/gii/Gii.spec.ts",
         "src/gii/Gii.ts",
         "src/Tower.spec.ts",
-        "src/Tower.ts"
+        "src/Tower.ts",
+        "src/utility/UserRc.ts"
     ]
 }

@@ -8,22 +8,25 @@
     "tslint": "tslint src/**/*.ts",
     "test": "jasmine-node --verbose --autotest --watch --color --test-dir lib",
     "build": "tsc -p .",
-    "api": "typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.ts",
+    "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
     "watch": "tsconfig && tsc -p . -w",
     "postinstall": "typings install"
   },
   "bin": {
-    "relution": "./lib/relution.js"
+    "relution-cli": "lib/Tower.js"
   },
   "author": "Pascal Brewing",
   "license": "Apache License",
   "devDependencies": {
     "jasmine-node": "^1.14.5",
     "tslint": "^3.8.1",
-    "typedoc": "^0.3.12",
+    "typedoc": "sierrasoftworks/typedoc#v1.8.10",
     "typescript": "^1.8.10"
   },
   "dependencies": {
-    "inquirer": "^1.0.2"
+    "@reactivex/rxjs": "^5.0.0-beta.7",
+    "inquirer": "^1.0.2",
+    "nopt": "^3.0.6",
+    "readline": "^1.3.0"
   }
 }

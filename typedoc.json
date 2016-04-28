@@ -1,5 +1,5 @@
 {
-  "mode": "modules",
+  "mode": "commonjs",
   "out": "public/doc",
   "exclude": "*.spec",
   "theme": "default",
@@ -7,7 +7,6 @@
   "experimentalDecorators": "true",
   "emitDecoratorMetadata": "true",
   "target": "ES5",
-  "moduleResolution": "node",
   "preserveConstEnums": "true",
   "stripInternal": "true",
   "suppressExcessPropertyErrors": "true",
