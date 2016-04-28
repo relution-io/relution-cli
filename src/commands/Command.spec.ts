@@ -1,6 +1,6 @@
 describe('Command', () => {
-  console.log('Hannes');
   it('should have a name', (done) => {
+    expect('name').toBe('name');
     done();
   });
 });

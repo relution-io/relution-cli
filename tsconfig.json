@@ -21,6 +21,8 @@
         "src/commands/server/ServerHome.ts",
         "src/commands/SubCommand.ts",
         "src/gii/Gii.spec.ts",
-        "src/gii/Gii.ts"
+        "src/gii/Gii.ts",
+        "src/Tower.spec.ts",
+        "src/Tower.ts"
     ]
 }

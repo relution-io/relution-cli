@@ -6,10 +6,10 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "mocha  $(find lib -name '.spec.js')",
+    "test": "jasmine-node --verbose --autotest --watch --color --test-dir lib",
     "build": "tsc -p .",
     "api": "typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.ts",
-    "watch": "tsc -p . -w",
+    "watch": "tsconfig && tsc -p . -w",
     "postinstall": "typings install"
   },
   "bin": {
@@ -18,10 +18,7 @@
   "author": "Pascal Brewing",
   "license": "Apache License",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "jasmine": "^2.4.1",
-    "mocha": "^2.4.5",
-    "sinon": "^1.16.0",
+    "jasmine-node": "^1.14.5",
     "tslint": "^3.8.1",
     "typedoc": "^0.3.12",
     "typescript": "^1.8.10"
