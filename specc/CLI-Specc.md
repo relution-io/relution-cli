@@ -424,6 +424,16 @@ and looks something like this
 ...
 ```
 
+To implement this the following REST interfaces of the Relution are relevant:
+- `GET /gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.connectorProvider` for list of connectorProvider labels and values
+- `GET /gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.protocol` for list of protocol labels and values
+- `GET /gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.protocol?query=Intranet+HTTP(S)`  for list of protocol labels and values supported by given connectorProvider (query is the value of the connectorProvider enumeration above)
+- `GET /gofer/meta-model/meta-type-adapter/rest/meta-type-adapters?pid=com.mwaysolutions.mcap.connector.http.SoapConnectionConfig` for model of properties supported by given protocol (pid is the value of the protocol enumeration above)
+
+These interfaces are issued by Gofer UI when editing a connection under Development/Connections. Please see also:
+- https://coredev.mwaysolutions.com/gofer/gui/swagger/index.html?baseUrl=%2Fgofer%2Fform%2Frest%2Fservice.json&apiKey=#!/enumerables/getPairs_get_1
+- https://coredev.mwaysolutions.com/gofer/gui/swagger/index.html?baseUrl=%2Fgofer%2Fmeta-model%2Fmeta-type-adapter%2Frest%2Fservice.json&apiKey=#!/meta-type-adapters/getMetaTypeInfoForPid_get_0
+
 | command | subcommand | vars |
 |--------|--------|--------|
 | connection    | api-list |--name=<$name> --server=<$server> --filter=<$Filter>|
@@ -479,6 +489,10 @@ module.exports.getTasks = function(input) {
   );
 }
 ```
+
+Implementation:
+- To implement this you'll have to firstly get the UUID of the connection. Do this by using https://coredev.mwaysolutions.com/gofer/gui/swagger/index.html?baseUrl=%2Fmcap%2Fconnector%2Frest%2Fservice.json&apiKey=#!/connectors/getConnections_get_0 with a filter on application = app-uuid as in relution.hjson and name = connection-name as in some-connection.hjson specifying field = uuid to limit data retrieval to only the uuid value: `GET /mcap/connector/rest/connectors/?filter=%7B%22type%22%3A%22logOp%22%2C+%22operation%22%3A%22AND%22%2C+%22filters%22%3A%5B%7B%22type%22%3A%22string%22%2C+%22fieldName%22%3A%22application%22%2C+%22value%22%3A%221bd93460-725e-11e5-a837-0800200c9a66%22%7D%2C%7B%22type%22%3A%22string%22%2C+%22fieldName%22%3A%22name%22%2C+%22value%22%3A%22ews%22%7D%5D%7D&field=uuid`.
+- Once you have the connection-uuid use ``GET /mcap/connector/rest/connectors/8F3466DB-9B29-4135-A463-C327981CB312` to load the calls available to the connection.
 
 ## Push:
 ---
