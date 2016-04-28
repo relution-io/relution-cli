@@ -8,7 +8,7 @@
     "tslint": "tslint src/**/*.ts",
     "test": "npm run build && mocha lib/**/*.spec.js",
     "build": "tsc -p .",
-    "api": "typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.js",
+    "api": "typedoc --out public/docs src --module commonjs --target ES5 --name Relution-Cli --exclude **/*.spec.ts",
     "watch": "tsc -p . -w",
     "postinstall": "typings install"
   },
