@@ -21,17 +21,18 @@
     ],
     "files": [
         "typings/main.d.ts",
-        "src/commands/Command.spec.ts",
-        "src/commands/Command.ts",
-        "src/commands/Commands.ts",
-        "src/commands/home/Home.spec.ts",
-        "src/commands/home/Home.ts",
-        "src/commands/server/ServerHome.ts",
-        "src/commands/SubCommand.ts",
+        "src/cli.ts",
+        "src/commands/Relution.ts",
+        "src/commands/Server.ts",
+        "src/commands/server/add.ts",
         "src/gii/Gii.spec.ts",
         "src/gii/Gii.ts",
-        "src/Tower.spec.ts",
         "src/Tower.ts",
-        "src/utility/UserRc.ts"
+        "src/utility/Command.ts",
+        "src/utility/InquirerHelper.ts",
+        "src/utility/ServerModelRc.ts",
+        "src/utility/Table.ts",
+        "src/utility/UserRc.ts",
+        "src/utility/Validator.ts"
     ]
 }

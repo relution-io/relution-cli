@@ -25,8 +25,13 @@
   },
   "dependencies": {
     "@reactivex/rxjs": "^5.0.0-beta.7",
+    "chalk": "^1.1.3",
+    "cli-table": "^0.3.1",
+    "cli-table2": "^0.2.0",
     "inquirer": "^1.0.2",
+    "install": "^0.6.1",
     "nopt": "^3.0.6",
+    "npm": "^3.8.8",
     "readline": "^1.3.0"
   }
 }
