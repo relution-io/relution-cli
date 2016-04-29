@@ -37,6 +37,7 @@ export class Table {
   sidebar(header:Array<string>, content:any) {
     let grid = new Clitable({
       head: header,
+      options:{hAlign:'center', vAlign: 'center'},
       chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
     });
     content.forEach((item:Object) => {

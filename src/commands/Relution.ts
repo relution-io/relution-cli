@@ -8,6 +8,14 @@ export class Relution extends Command {
   public args: Array<string> = [];
   public reserved: Array<string> = ['help', 'quit', 'relution'];
 
+  public commands: Object = {
+    help: {
+      description: 'list available Commands'
+    },
+    quit: {
+      description: 'Exit To Home'
+    }
+  };
   constructor(staticCommands:Object) {
     super('relution');
     this.rl = readline.createInterface(process.stdin, process.stdout);
@@ -33,7 +41,6 @@ export class Relution extends Command {
 
     let subargs = this._copy(args);
     subargs.splice(0, 1);
-
     if (subcommand) {
       return this.subCommand(subargs, subcommand).subscribe(
         (scenario:any) => {
@@ -46,6 +53,8 @@ export class Relution extends Command {
           console.log('subcommand done', subargs)
         }
       );
+    } else if ( args[1] === 'help') {
+      return this.help();
     }
   }
 
@@ -63,5 +72,31 @@ export class Relution extends Command {
         }
        );
     });
+  }
+
+  help () {
+    let header: any = ['Command', 'Subcommand', 'Param/s', 'Description'];
+    let comp:any = [];
+    let helpBatch: any = [super.help(true)];
+
+    Object.keys(this.staticCommands).forEach((command) => {
+      helpBatch.push(this.staticCommands[command].help(true));
+    });
+
+    return Observable.forkJoin(helpBatch).subscribe(
+      (comm:any) => {
+        comm.forEach((ob:any) => {
+          ob.forEach((o:any) => {
+            comp.push(o);
+          })
+        });
+      },
+      (e:Error) => {
+        console.error(e);
+      },
+      () => {
+        console.log(this.table.sidebar(header, comp));
+      }
+    );
   }
 }

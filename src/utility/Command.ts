@@ -78,10 +78,10 @@ export class Command implements CommandInterface {
      └─────────┴────────────┴─────────┴────────────────────────────────┘
    * ```
    */
-  help() {
+  help(asArray:boolean = false) {
     return Observable.create((observer: any) => {
-      let header: any = ['command', 'subcommand', 'params', 'description'];
-      let content: any = [];
+      let header: any = ['Command', 'Subcommand', 'Param/s', 'Description'];
+      let content: any = [['','', '', '']];
       //[this.name, '', '', '']
       if (this.commands) {
         let i = 0;
@@ -99,14 +99,19 @@ export class Command implements CommandInterface {
           content.push(command);
           i++;
         });
-        observer.next(this.table.sidebar(header, content));
+        content.push(['','', '', '']);
+        if (!asArray) {
+          observer.next(this.table.sidebar(header, content));
+        } else {
+          observer.next(content);
+        }
       }
       observer.complete();
     });
   }
 
   init(args: Array<string>) {
-    console.log(this.name, args);
+    console.log(`${this.name} init`, args);
   }
 
   _copy(org: any) {

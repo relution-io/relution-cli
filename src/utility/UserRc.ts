@@ -9,7 +9,6 @@ export class UserRc {
 
   constructor() {
     this._rcHome = `${this.getUserHome()}/.${this.appPrefix}rc`
-    this.debug(this);
   }
 
   public get rc(): string {
@@ -28,7 +27,6 @@ export class UserRc {
           observer.next(false);
 
         } else {
-          console.log(`${this._rcHome} available`)
           observer.next(true);
         }
         observer.complete();
