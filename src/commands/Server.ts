@@ -1,7 +1,6 @@
 import {Observable} from '@reactivex/rxjs';
 import {Command} from './../utility/Command';
 import {Validator} from './../utility/Validator';
-import * as chalk from 'chalk';
 
 export class Server extends Command {
 
