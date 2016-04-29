@@ -10,10 +10,10 @@ interface CommandInterface {
   commands?: Object;
 }
 /**
+ *
  * ```javascript
  * import {Command} from './../utility/Command';
  * export class Server extends Command {
- *
  *   constructor() {
  *    super('server');
  *    this.commandDispatcher.subscribe(this.init.bind(this));

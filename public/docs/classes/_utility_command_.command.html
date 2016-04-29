@@ -73,16 +73,15 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>```javascript
-							import {Command} from &#39;./../utility/Command&#39;;
-						export class Server extends Command {</p>
+						<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> {Command} <span class="hljs-keyword">from</span> <span class="hljs-string">'./../utility/Command'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Command</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+   <span class="hljs-keyword">super</span>(<span class="hljs-string">'server'</span>);
+   <span class="hljs-keyword">this</span>.commandDispatcher.subscribe(<span class="hljs-keyword">this</span>.init.bind(<span class="hljs-keyword">this</span>));
+  }
+}
+</code></pre>
 					</div>
-					<p>  constructor() {
-						super(&#39;server&#39;);
-						this.commandDispatcher.subscribe(this.init.bind(this));
-						}
-						}
-					```</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
