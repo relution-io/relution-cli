@@ -73,47 +73,16 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> {Command} <span class="hljs-keyword">from</span> <span class="hljs-string">'./../utility/Command'</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Command</span> </span>{
-public commands: <span class="hljs-built_in">Object</span> = {
-create: {
-description: <span class="hljs-string">'add a new BaaS Server'</span>,
-vars: {
-name: {
-pos: <span class="hljs-number">0</span>
-}
-}
-},
-list: {
-description: <span class="hljs-string">'list all available BaaS Server'</span>,
-vars: {
-name: {
-pos: <span class="hljs-number">0</span>
-}
-}
-},
-rm: {
-description: <span class="hljs-string">'remove a server form the list'</span>,
-vars: {
-name: {
-pos: <span class="hljs-number">0</span>
-}
-}
-},
-help: {
-description: <span class="hljs-string">'List the Server Command'</span>
-},
-quit: {
-description: <span class="hljs-string">'Exit To Home'</span>
-}
-};
-  <span class="hljs-keyword">constructor</span>() {
-   <span class="hljs-keyword">super</span>(<span class="hljs-string">'server'</span>);
-   <span class="hljs-keyword">this</span>.commandDispatcher.subscribe(<span class="hljs-keyword">this</span>.init.bind(<span class="hljs-keyword">this</span>));
-  }
-}
-</code></pre>
+						<p>```javascript
+							import {Command} from &#39;./../utility/Command&#39;;
+						export class Server extends Command {</p>
 					</div>
+					<p>  constructor() {
+						super(&#39;server&#39;);
+						this.commandDispatcher.subscribe(this.init.bind(this));
+						}
+						}
+					```</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -183,7 +152,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L63">utility/Command.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L32">utility/Command.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -206,7 +175,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commanddispatcher">commandDispatcher</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L58">utility/Command.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L27">utility/Command.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -217,7 +186,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L62">utility/Command.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L31">utility/Command.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +197,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L61">utility/Command.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L30">utility/Command.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -238,7 +207,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<div class="tsd-signature tsd-kind-icon">direct<wbr>Mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L59">utility/Command.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L28">utility/Command.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -249,7 +218,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L57">utility/Command.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L26">utility/Command.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -259,7 +228,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="_utility_table_.table.html" class="tsd-signature-type">Table</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L63">utility/Command.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L32">utility/Command.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -269,7 +238,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 					<div class="tsd-signature tsd-kind-icon">user<wbr>Rc<span class="tsd-signature-symbol">:</span> <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L60">utility/Command.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L29">utility/Command.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -286,7 +255,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L143">utility/Command.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L112">utility/Command.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -309,7 +278,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L112">utility/Command.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L81">utility/Command.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -342,7 +311,7 @@ description: <span class="hljs-string">'Exit To Home'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L139">utility/Command.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L108">utility/Command.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
