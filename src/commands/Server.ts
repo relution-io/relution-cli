@@ -86,17 +86,22 @@ export class Server extends Command {
   }
 
   init(args:Array<string>):any {
+
     super.init(args);
-    if (args.length ===  1) {
-      return this.help();
-    } else if (args.length > 1 && this.reserved.indexOf(args[1]) === -1) {
-      let vars = this._copy(args);
-      vars.splice(0, 1);
-      return this[args[1]](vars);
-    } else if (args.length > 1 && this.reserved.indexOf(args[1]) !== -1) {
-      //help() quit()
-      return this[args[1]]();
-    }
+    return Observable.create((observer:any) => {
+      if (args.length <=  1) {
+
+        console.log('yoo');
+        return this.showCommands(`Choose a ${this.name.toLocaleUpperCase()}`);
+      } else if (args.length > 1 && this.reserved.indexOf(args[1]) === -1) {
+        let vars = this._copy(args);
+        vars.splice(0, 1);
+        return this[args[1]](vars);
+      } else if (args.length > 1 && this.reserved.indexOf(args[1]) !== -1) {
+        //help() quit()
+        return this[args[1]]();
+      }
+    })
   }
 
   list(name?:string){

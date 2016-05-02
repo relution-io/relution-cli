@@ -13,7 +13,7 @@
     "postinstall": "typings install"
   },
   "bin": {
-    "relution-cli": "lib/Tower.js"
+    "relution-cli": "./lib/cli.js"
   },
   "author": "Pascal Brewing",
   "license": "Apache License",
@@ -28,7 +28,7 @@
     "chalk": "^1.1.3",
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
-    "inquirer": "^1.0.2",
+    "inquirer": "DrMabuse23/Inquirer.js#add78131e3461acbc861b4cdba8aff67a54ef4f4",
     "install": "^0.6.1",
     "nopt": "^3.0.6",
     "npm": "^3.8.8",

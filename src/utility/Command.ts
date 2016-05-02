@@ -2,6 +2,7 @@ import {Observable, Observer} from '@reactivex/rxjs';
 import {UserRc} from './UserRc';
 import {Table} from './Table';
 import * as chalk from 'chalk';
+let inquirer = require('inquirer');
 
 interface CommandInterface {
   name: string;
@@ -31,6 +32,7 @@ export class Command implements CommandInterface {
   public commands: Object;
   public table: Table;
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
+  // public inquirer: InquirerHelper = new InquirerHelper();
 
   constructor(name: string) {
     if (!name) {
@@ -85,7 +87,7 @@ export class Command implements CommandInterface {
       //[this.name, '', '', '']
       if (this.commands) {
         let i = 0;
-        Object.keys(this.commands).forEach((commandName: string) => {
+        this.flatCommands().forEach((commandName: string) => {
           let command: Array<string> = [chalk.green(this.name), chalk.cyan(commandName)];
           if (this.commands[commandName].vars) {
             let vars: Array<string> = Object.keys(this.commands[commandName].vars);
@@ -126,7 +128,25 @@ export class Command implements CommandInterface {
     process.exit();
   }
 
-  flatCommands(){
+  flatCommands(): Array<string> {
     return Object.keys(this.commands);
+  }
+
+  showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
+    let questions = [
+      {
+        name: this.name,
+        message: message,
+        type: type,
+        choices: this.flatCommands(),
+        filter: function (str: string) {
+          console.log(str);
+          return str.toLowerCase();
+        }
+      }
+    ];
+    return Observable.fromPromise(inquirer.prompt(questions, (answers: any) => {
+      return answers;
+    }));
   }
 }

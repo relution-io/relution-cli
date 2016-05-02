@@ -89,34 +89,58 @@ export class Relution extends Command {
     } else if (args[0] === this.name && args[1] === 'quit') {
       //relution quit
       return this.quit();
-    } else if (args[0] === this.name) {
+    } else if (args[0] === this.name && args.length === 1) {
       //only relution
       console.log('only prompt');
+      return this.showCommands().subscribe((answer:any) => {
+        console.log(JSON.stringify(answer, null, 2));
+        console.log(answer[this.name]);
+        let subcommand:string = this.isSubcommand([answer[this.name]]);
+        console.log( subcommand )
+        if (subcommand.length) {
+          return this.subCommand([], subcommand).subscribe((response:any) => {
+            console.log(response);
+            this.rl.prompt();
+          }, (e:any) => {
+            console.log(e);
+          }, () => {
+            console.log('done');
+          });
+        } else {
+          this[answer[this.name]]().subscribe(() => {
+            this.rl.prompt();
+          });
+        }
+      })
     } else {
       console.log('this command is not available');
-      return this.help();
+      return this.showCommands().subscribe(() => {
+        this.rl.prompt();
+      });
     }
   }
 
   /**
    * if is available in subcommands
    */
-  isSubcommand(args:Array<string>): Array<string> {
+  isSubcommand(args:Array<string>): string {
     let subcommand: any = null;
     if (args[0] !== this.name) {
       Object.keys(this.staticCommands).forEach((command) => {
         if (this.staticCommands[command].name === args[0]) {
           if (!this.staticCommands[command].init) {
-            throw new Error('a commmand need a init Method');
+            throw new Error(`a commmand need a init Method ${args[0]}`);
           }
           subcommand = command;
         }
       });
       return subcommand;
     }
-    return [];
+    return '';
   }
-
+  /**
+   * trigger a subcommand an return if is completed
+   */
   subCommand(args: Array<string>, command: string) {
     return Observable.create((observer: any) => {
       this.staticCommands[command].init(args).subscribe(
@@ -132,7 +156,9 @@ export class Relution extends Command {
       );
     });
   }
-
+  /**
+   * user help options
+   */
   help() {
     let comp: any = [];
     let helpBatch: any = [super.help(true)];
@@ -162,19 +188,10 @@ export class Relution extends Command {
   /**
    * flat the top commands
    */
-
   flatCommands(){
     let list:Array<string> = Object.keys(this.commands);
     let subList:Array<string> = Object.keys(this.staticCommands);
     let av:Array<string> = subList.concat(list);
     return av;
-  }
-
-  /**
-   *
-   */
-  flatCommandsToRadioList(){
-    let commands:Array<string> = this.flatCommands();
-
   }
 }
