@@ -45,6 +45,10 @@ export class Relution extends Command {
           case 'quit':
             this.quit();
             break;
+          case 'h':
+          case 'help':
+            this.help();
+            break;
           case '':
             this.rl.prompt();
             break;
@@ -52,7 +56,6 @@ export class Relution extends Command {
             this.init(line.trim().split(' '));
             break;
         }
-        this.rl.prompt();
       }
     )
   }
@@ -76,6 +79,7 @@ export class Relution extends Command {
         },
         () => {
           console.log('subcommand done', subargs)
+          this.rl.prompt();
         }
       );
 
@@ -150,6 +154,7 @@ export class Relution extends Command {
       },
       () => {
         console.log(this.table.sidebar(this.tableHeader, comp));
+        this.rl.prompt();
       }
     );
   }
