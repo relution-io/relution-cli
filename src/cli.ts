@@ -8,4 +8,3 @@ let staticCommands = {
 if (process.argv[2] === 'relution') {
   let relution = new Relution(staticCommands);
 }
-

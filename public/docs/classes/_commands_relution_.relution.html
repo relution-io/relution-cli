@@ -104,7 +104,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_relution_.relution.html#args" class="tsd-kind-icon">args</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#commanddispatcher" class="tsd-kind-icon">command<wbr>Dispatcher</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#commands" class="tsd-kind-icon">commands</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#config" class="tsd-kind-icon">config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#directmode" class="tsd-kind-icon">direct<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#name" class="tsd-kind-icon">name</a></li>
@@ -119,9 +118,15 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#_copy" class="tsd-kind-icon">_copy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_relution_.relution.html#help" class="tsd-kind-icon">help</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_commands_relution_.relution.html#help" class="tsd-kind-icon">help</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_commands_relution_.relution.html#init" class="tsd-kind-icon">init</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_relution_.relution.html#subcommand" class="tsd-kind-icon">sub<wbr>Command</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite"><a href="_commands_relution_.relution.html#commands" class="tsd-kind-icon">commands</a></li>
 							</ul>
 						</section>
 					</div>
@@ -140,7 +145,7 @@
 							<aside class="tsd-sources">
 								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L9">commands/Relution.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L18">commands/Relution.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,18 +180,6 @@
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commanddispatcher">commandDispatcher</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L27">utility/Command.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="commands" class="tsd-anchor"></a>
-					<h3>commands</h3>
-					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
-						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commands">commands</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L31">utility/Command.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -291,7 +284,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#_copy">_copy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L112">utility/Command.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L117">utility/Command.ts:117</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -304,37 +297,21 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="help" class="tsd-anchor"></a>
 					<h3>help</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Subscription</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#help">help</a></p>
+								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#help">help</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/Command.ts#L81">utility/Command.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L77">commands/Relution.ts:77</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>description</dt>
-									<dd><p>shows a list of Available commands form the Command like this</p>
-										<pre><code class="lang-bash">┌─────────┬────────────┬─────────┬────────────────────────────────┐
-│ <span class="hljs-built_in">command</span> │ subcommand │ params  │ description                    │
-│ server  │ create     │ &lt;<span class="hljs-variable">$name</span>&gt; │ add a new BaaS Server          │
-│ server  │ list       │ &lt;<span class="hljs-variable">$name</span>&gt; │ list all available BaaS Server │
-│ server  │ rm         │ &lt;<span class="hljs-variable">$name</span>&gt; │ remove a server form the list  │
-│ server  │ <span class="hljs-built_in">help</span>       │ --      │ List the Server Command        │
-│ server  │ quit       │ --      │ Exit To Home                   │
-└─────────┴────────────┴─────────┴────────────────────────────────┘
-</code></pre>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Subscription</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -349,7 +326,7 @@
 							<aside class="tsd-sources">
 								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L20">commands/Relution.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L28">commands/Relution.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -372,7 +349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L52">commands/Relution.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L61">commands/Relution.ts:61</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -387,6 +364,61 @@
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite">
+					<a name="commands" class="tsd-anchor"></a>
+					<h3>commands</h3>
+					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
+						<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commands">commands</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L11">commands/Relution.ts:11</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+						<a name="commands.help-1" class="tsd-anchor"></a>
+						<h3>help</h3>
+						<div class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L12">commands/Relution.ts:12</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.help-1.description" class="tsd-anchor"></a>
+							<h3>description</h3>
+							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L13">commands/Relution.ts:13</a></li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+						<a name="commands.quit" class="tsd-anchor"></a>
+						<h3>quit</h3>
+						<div class="tsd-signature tsd-kind-icon">quit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L15">commands/Relution.ts:15</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.quit.description-1" class="tsd-anchor"></a>
+							<h3>description</h3>
+							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/commands/Relution.ts#L16">commands/Relution.ts:16</a></li>
+								</ul>
+							</aside>
+						</section>
+					</section>
 				</section>
 			</section>
 		</div>
@@ -454,9 +486,6 @@
 								<a href="_commands_relution_.relution.html#commanddispatcher" class="tsd-kind-icon">command<wbr>Dispatcher</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_commands_relution_.relution.html#commands" class="tsd-kind-icon">commands</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_relution_.relution.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -483,7 +512,7 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_relution_.relution.html#_copy" class="tsd-kind-icon">_copy</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_commands_relution_.relution.html#help" class="tsd-kind-icon">help</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
@@ -491,6 +520,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_relution_.relution.html#subcommand" class="tsd-kind-icon">sub<wbr>Command</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_commands_relution_.relution.html#commands" class="tsd-kind-icon">commands</a>
 							</li>
 						</ul>
 					</li>

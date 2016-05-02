@@ -30,6 +30,7 @@ export class Command implements CommandInterface {
   public config: any;
   public commands: Object;
   public table: Table;
+  public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
 
   constructor(name: string) {
     if (!name) {
@@ -78,10 +79,9 @@ export class Command implements CommandInterface {
      └─────────┴────────────┴─────────┴────────────────────────────────┘
    * ```
    */
-  help(asArray:boolean = false) {
+  help(asArray: boolean = false) {
     return Observable.create((observer: any) => {
-      let header: any = ['Command', 'Subcommand', 'Param/s', 'Description'];
-      let content: any = [['','', '', '']];
+      let content: any = [['', '', '', '']];
       //[this.name, '', '', '']
       if (this.commands) {
         let i = 0;
@@ -99,9 +99,9 @@ export class Command implements CommandInterface {
           content.push(command);
           i++;
         });
-        content.push(['','', '', '']);
+        content.push(['', '', '', '']);
         if (!asArray) {
-          observer.next(this.table.sidebar(header, content));
+          observer.next(this.table.sidebar(this.tableHeader, content));
         } else {
           observer.next(content);
         }
@@ -116,5 +116,17 @@ export class Command implements CommandInterface {
 
   _copy(org: any) {
     return JSON.parse(JSON.stringify(org));
+  }
+
+  /**
+   * exit the app
+   */
+  quit() {
+    console.log('Have a Great Day!');
+    process.exit();
+  }
+
+  flatCommands(){
+    return Object.keys(this.commands);
   }
 }

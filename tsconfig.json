@@ -30,6 +30,7 @@
         "src/Tower.ts",
         "src/utility/Command.ts",
         "src/utility/InquirerHelper.ts",
+        "src/utility/ReadlineDispatcher.ts",
         "src/utility/ServerModelRc.ts",
         "src/utility/Table.ts",
         "src/utility/UserRc.ts",
