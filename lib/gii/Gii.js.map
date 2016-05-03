@@ -1,1 +1,1 @@
-{"version":3,"file":"Gii.js","sourceRoot":"","sources":["../../src/gii/Gii.ts"],"names":[],"mappings":";AAAA;;;GAGG;AACH;IACE;;OAEG;IACH,aAAY,OAAO;IAEnB,CAAC;IACH,UAAC;AAAD,CAAC,AAPD,IAOC;AAPY,WAAG,MAOf,CAAA"}
+{"version":3,"file":"Gii.js","sourceRoot":"","sources":["../../src/gii/Gii.ts"],"names":[],"mappings":";AAAA;;;GAGG;AACH;IACE;;OAEG;IACH,aAAa,OAAmB;QAAnB,uBAAmB,GAAnB,YAAmB;IAEhC,CAAC;IACH,UAAC;AAAD,CAAC,AAPD,IAOC;AAPY,WAAG,MAOf,CAAA"}

@@ -5,7 +5,14 @@
         "declaration": false,
         "sourceMap": true,
         "rootDir": "./src",
-        "outDir": "./lib"
+        "outDir": "./lib",
+        "pretty": true,
+        "stripInternal": true,
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true
     },
     "filesGlob": [
         "src/**/*.ts",
@@ -14,7 +21,21 @@
     ],
     "files": [
         "typings/main.d.ts",
+        "src/cli.ts",
+        "src/commands/Server.ts",
+        "src/commands/server/add.ts",
+        "src/commands/Tower.spec.ts",
+        "src/commands/Tower.ts",
         "src/gii/Gii.spec.ts",
-        "src/gii/Gii.ts"
+        "src/gii/Gii.ts",
+        "src/Tower.ts",
+        "src/utility/Command.spec.ts",
+        "src/utility/Command.ts",
+        "src/utility/InquirerHelper.ts",
+        "src/utility/ReadlineDispatcher.ts",
+        "src/utility/ServerModelRc.ts",
+        "src/utility/Table.ts",
+        "src/utility/UserRc.ts",
+        "src/utility/Validator.ts"
     ]
 }
