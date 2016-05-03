@@ -5,7 +5,7 @@ import {Validator} from './../utility/Validator';
 export class Server extends Command {
 
   public commands: Object = {
-    create: {
+    add: {
       description: 'add a new BaaS Server',
       vars: {
         name: {
@@ -84,39 +84,45 @@ export class Server extends Command {
     this.commandDispatcher.subscribe(this.init.bind(this));
   }
 
-  list(name?:string){
+  list(name?: string) {
     console.log(this.config);
   }
 
-  create (name?:string){
+  create(name?: string) {
     console.log('create');
   }
 
-  rm (name?:string) {
+  rm(name?: string) {
     console.log('rm');
   }
 
-  addServerPrompt(name:string) {
+  addServerPrompt(name: string) {
     if (name && name.length) {
       this.addConfig[0]['value'] = name.trim();
     }
-
-    return Observable.fromPromise(this.inquirer.prompt(this.addConfig, (answers:any) => {
-      return answers;
-    }));
+    return Observable.fromPromise(this.inquirer.prompt(this.addConfig));
   }
 
-  add(name:string){
-    return this.addServerPrompt(name).subscribe(
-      (answers:Object) => {
-        console.log('add answers', answers);
-        return answers;
-      },
-      (e) => {
-        return e;
-      }, () => {
-        console.log('completed');
-      }
-    );
+  add(name: string) {
+    console.log(__filename);
+    // .subscribe(
+    //   (answers: Object) => {
+    //     console.log('add answers', answers);
+    //     return answers;
+    //   },
+    //   (e: ErrorConstructor) => {
+    //     return e;
+    //   }, () => {
+    //     console.log('completed');
+    //   }
+    // );
+    this.addServerPrompt(name);
+    // .subscribe((a:any) => {
+    //   console.log(a);
+    // });
+
+    return Observable.create((observer:any) => {
+      observer.next(1000);
+    })
   }
 }

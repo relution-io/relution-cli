@@ -1,10 +1,7 @@
 import {Server} from './commands/Server';
-import {Relution} from './commands/Relution';
+import {Tower} from './commands/Tower';
 
 let staticCommands = {
   server: new Server()
 };
-
-if (process.argv[2] === 'relution') {
-  let relution = new Relution(staticCommands);
-}
+let relution = new Tower(staticCommands);

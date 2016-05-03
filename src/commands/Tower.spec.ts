@@ -1,11 +1,11 @@
-import {Relution} from './Relution';
+import {Tower} from './Tower';
 import {Observable, Subscriber} from '@reactivex/rxjs';
 
 describe('Commands Relution', () => {
-  let command: Relution;
+  let command: Tower;
 
   beforeEach(() => {
-    command = new Relution({});
+    command = new Tower({});
   });
 
   it('has name relution', done => {
@@ -14,7 +14,7 @@ describe('Commands Relution', () => {
   });
 
   it('help command on relution', done => {
-    let temp:any = command.init(['relution', 'help']);
+    let temp:any = command.init();
     expect(temp.isUnsubscribed).toBe(true);
     expect(temp.syncErrorValue).toBe(null);
     expect(temp.syncErrorThrown).toBe(false);

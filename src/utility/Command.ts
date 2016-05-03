@@ -52,6 +52,7 @@ export class Command implements CommandInterface {
       this.username = username;
     });
 
+
     this.userRc.rcFileExist().subscribe((exist: boolean) => {
       if (exist) {
         this.userRc.streamRc().subscribe((data: any) => {

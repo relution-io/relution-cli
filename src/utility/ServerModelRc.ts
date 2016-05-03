@@ -1,5 +1,13 @@
 import {Validator} from './Validator';
 
+interface ObjectCtor extends ObjectConstructor {
+    assign(target: any, ...sources: any[]): any;
+}
+declare var Object: ObjectCtor;
+export let assign = Object.assign ? Object.assign : function(target: any, ...sources: any[]): any {
+        return;
+};
+
 export class ServerModelRc {
 
   public name: string;
@@ -14,6 +22,12 @@ export class ServerModelRc {
     username: Validator.notEmptyValidate,
     password: Validator.notEmptyValidate,
   };
+
+  constructor(params?: Object) {
+    if (params){
+      Object.assign(params, this);
+    }
+  }
 
   validate(){
     this.errors = [];

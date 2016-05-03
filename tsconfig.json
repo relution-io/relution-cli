@@ -22,10 +22,10 @@
     "files": [
         "typings/main.d.ts",
         "src/cli.ts",
-        "src/commands/Relution.spec.ts",
-        "src/commands/Relution.ts",
         "src/commands/Server.ts",
         "src/commands/server/add.ts",
+        "src/commands/Tower.spec.ts",
+        "src/commands/Tower.ts",
         "src/gii/Gii.spec.ts",
         "src/gii/Gii.ts",
         "src/Tower.ts",
