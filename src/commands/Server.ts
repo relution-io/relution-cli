@@ -37,7 +37,7 @@ export class Server extends Command {
     }
   };
 
-  public config: Array<Object> = [
+  public addConfig: Array<Object> = [
     {
       type: 'input',
       name: 'name',
@@ -78,30 +78,10 @@ export class Server extends Command {
       validate: Validator.notEmptyValidate('Password')
     }
   ];
-  public reserved: Array<string> = ['help', 'quit'];
 
   constructor() {
     super('server');
     this.commandDispatcher.subscribe(this.init.bind(this));
-  }
-
-  init(args:Array<string>):any {
-
-    super.init(args);
-    return Observable.create((observer:any) => {
-      if (args.length <=  1) {
-
-        console.log('yoo');
-        return this.showCommands(`Choose a ${this.name.toLocaleUpperCase()}`);
-      } else if (args.length > 1 && this.reserved.indexOf(args[1]) === -1) {
-        let vars = this._copy(args);
-        vars.splice(0, 1);
-        return this[args[1]](vars);
-      } else if (args.length > 1 && this.reserved.indexOf(args[1]) !== -1) {
-        //help() quit()
-        return this[args[1]]();
-      }
-    })
   }
 
   list(name?:string){
@@ -114,5 +94,29 @@ export class Server extends Command {
 
   rm (name?:string) {
     console.log('rm');
+  }
+
+  addServerPrompt(name:string) {
+    if (name && name.length) {
+      this.addConfig[0]['value'] = name.trim();
+    }
+
+    return Observable.fromPromise(this.inquirer.prompt(this.addConfig, (answers:any) => {
+      return answers;
+    }));
+  }
+
+  add(name:string){
+    return this.addServerPrompt(name).subscribe(
+      (answers:Object) => {
+        console.log('add answers', answers);
+        return answers;
+      },
+      (e) => {
+        return e;
+      }, () => {
+        console.log('completed');
+      }
+    );
   }
 }

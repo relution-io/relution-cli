@@ -8,6 +8,9 @@ describe('Utility Command', () => {
     command.commands = {
       create: {
         description: 'test the commands'
+      },
+      help: {
+        description: 'whatver'
       }
     }
     return command;
@@ -19,15 +22,19 @@ describe('Utility Command', () => {
   });
 
   it('has commands', done => {
-    expect(command.flatCommands()).toEqual(['create']);
-    expect(command.help).not.toBeUndefined();
-    expect(command.quit).not.toBeUndefined();
+    expect(command.flatCommands()).toEqual(['create', 'help']);
     expect(command.showCommands).not.toBeUndefined();
     done();
   });
 
-  it('has command inquirer list', done => {
-    command.showCommands();
+  it('has a help method', done => {
+    expect(command.help).not.toBeUndefined();
+    done();
+  });
+
+  it('has a quit method', done => {
+    expect(command.quit).not.toBeUndefined();
     done();
   });
 });
+
