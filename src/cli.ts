@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {Server} from './commands/Server';
 import {Tower} from './commands/Tower';
 

@@ -13,7 +13,7 @@
     "postinstall": "typings install"
   },
   "bin": {
-    "relution-cli": "./lib/cli.js"
+    "relution": "lib/cli.js"
   },
   "author": "Pascal Brewing",
   "license": "Apache License",

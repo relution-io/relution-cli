@@ -28,7 +28,6 @@
         "src/commands/Tower.ts",
         "src/gii/Gii.spec.ts",
         "src/gii/Gii.ts",
-        "src/Tower.ts",
         "src/utility/Command.spec.ts",
         "src/utility/Command.ts",
         "src/utility/InquirerHelper.ts",

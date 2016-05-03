@@ -179,7 +179,7 @@ export class Command implements CommandInterface {
     this.flatCommands().forEach((command) => {
       temp.push({
         name: command,
-        value: [command]
+        value: [this.name, command]
       })
     })
     return temp;
@@ -192,14 +192,17 @@ export class Command implements CommandInterface {
         message: message,
         type: type,
         choices: this.setupCommandsForList(),
-        filter: function (str: string) {
-          console.log(str);
-          return str.toLowerCase();
+        filter: function (str: Array<string>) {
+          return str;
         }
       }
     ];
-    return Observable.fromPromise(inquirer.prompt(questions, (answers: any) => {
-      return answers;
-    }));
+
+    return Observable.create((observer: any) => {
+      inquirer.prompt(questions).then((answers: Array<string>) => {
+        observer.next(answers);
+        observer.complete();
+      });
+    });
   }
 }

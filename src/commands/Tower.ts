@@ -12,15 +12,14 @@ const username = require('username');
  * Command Tower all Commmands go inside here
  */
 export class Tower {
+
   public name: string = 'relution';
   public staticCommands: Object;
   public staticCommandRootKeys: Array<string>;
   public reserved: Array<string> = ['help', 'quit'];
-
   public table: Table;
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   public reset:Array<string> = [this.name];
-
   public commands: Object = {
     help: {
       description: 'list available Commands'
@@ -29,18 +28,22 @@ export class Tower {
       description: 'Exit To Home'
     }
   };
-
-  public args: Array<string> = [];
+  public args: Array<string> = ['relution'];
   private _emptyRow: Array<string> = ['', '', '', ''];
 
   constructor(staticCommands: Object) {
     this.table = new Table();
-
     this.staticCommands = staticCommands;
     this.staticCommandRootKeys = Object.keys(staticCommands);
-
     this.args = this._copy(process.argv);
-    this.args.splice(0, 2);
+
+    //if the bin is used there are n params so we add it again to args
+    if (this.args.length === 2) {
+      this.args = this.reset;
+    } else {
+      this.args.splice(0, 2);
+    }
+
     this.init();
   }
 
@@ -49,15 +52,11 @@ export class Tower {
    */
   init() {
     console.log('Relution', this.args);
-
-
     if (this.args[0] === this.name) {
-      console.log('this.args[0] === this.name', this.args[0] === this.name);
-
+      //console.log('this.args[0] === this.name', this.args[0] === this.name);
       //only relution
       if (this.args.length === 1) {
-        console.log('this.args.length === 1', this.args.length === 1);
-
+        // console.log('this.args.length === 1', this.args.length === 1);
         return this.showCommands().subscribe((answers: any) => {
           if (answers[this.name]) {
             this.args = answers[this.name];
@@ -71,14 +70,13 @@ export class Tower {
       if (this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]) {
         return this[this.args[1]]().subscribe(
           (log: any) => {
-
             console.log(log);
           },
           (e: ErrorConstructor) => {
             console.log(`Something get wrong to use ${this.args[1]}`, e)
           },
           () => {
-            this.args = ['relution'];
+            this.args = this._copy(this.reset);
             this.init();
           });
       }
@@ -134,11 +132,11 @@ export class Tower {
               commands.forEach((command: any) => {
                 content.push(command);
               });
-              console.log(commands);
+              //console.log(commands);
             }
           );
         } else if (this.reserved.indexOf(commandName) !== -1) {
-          content.unshift([chalk.green(this.name), chalk.cyan(commandName), '', this.commands[commandName].description]);
+          content.unshift([chalk.green(commandName), '', '', this.commands[commandName].description]);
         }
       });
       content.unshift(this._emptyRow);
@@ -208,7 +206,6 @@ export class Tower {
         type: type,
         choices: this.setupCommandsForList(),
         filter: function (str: Array<string>) {
-          console.log('str', str);
           return str;
         }
       }
