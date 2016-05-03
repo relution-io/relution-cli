@@ -35,6 +35,7 @@
         "src/utility/ServerModelRc.ts",
         "src/utility/Table.ts",
         "src/utility/UserRc.ts",
-        "src/utility/Validator.ts"
+        "src/utility/Validator.ts",
+        "src/utility/Welcome.ts"
     ]
 }

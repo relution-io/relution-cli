@@ -2,7 +2,7 @@ import {Observable, Observer} from '@reactivex/rxjs';
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Command} from './../utility/Command';
-
+import {Welcome} from './../utility/Welcome';
 import * as chalk from 'chalk';
 
 const inquirer = require('inquirer');
@@ -30,6 +30,7 @@ export class Tower {
   };
   public args: Array<string> = ['relution'];
   private _emptyRow: Array<string> = ['', '', '', ''];
+  public username: string;
 
   constructor(staticCommands: Object) {
     this.table = new Table();
@@ -43,15 +44,22 @@ export class Tower {
     } else {
       this.args.splice(0, 2);
     }
-
-    this.init();
+    username().then( (username:string) => {
+      this.username = username;
+      Welcome.greets(this.username);
+      this.init();
+    });
   }
 
+  home(){
+    this.args = this._copy(this.reset);
+    this.init();
+  }
   /**
    * check available options
    */
   init() {
-    console.log('Relution', this.args);
+    // console.log('Relution', this.args);
     if (this.args[0] === this.name) {
       //console.log('this.args[0] === this.name', this.args[0] === this.name);
       //only relution
@@ -93,12 +101,12 @@ export class Tower {
         //only ['server']
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
           console.log(`trigger static ${subArgs.toString()} showCommands`);
-          return this.staticCommands[subArgs[0]].init(subArgs);
+          return this.staticCommands[subArgs[0]].init(subArgs, this);
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
           params.splice(0, 2);
           if (params.length) {
-            return this.staticCommands[subArgs[0]].init(subArgs);
+            return this.staticCommands[subArgs[0]].init(subArgs, this);
           }
 
         } else {
@@ -185,7 +193,7 @@ export class Tower {
         value: [this.name, command]
       })
     })
-    console.log(temp);
+    // console.log(temp);
     return temp;
   }
   /**
@@ -217,5 +225,10 @@ export class Tower {
         observer.complete();
       });
     });
+  }
+
+  quit(){
+    Welcome.bye(this.username);
+    process.exit();
   }
 }

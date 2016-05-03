@@ -37,7 +37,7 @@ export class Command implements CommandInterface {
   public table: Table;
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   // public inquirer: InquirerHelper = new InquirerHelper();
-  public username: string;
+
 
   constructor(name: string) {
     if (!name) {
@@ -46,12 +46,6 @@ export class Command implements CommandInterface {
 
     this.table = new Table();
     this.userRc = new UserRc();
-    console.log(JSON.stringify(username, null, 2));
-
-    username().then( (username:string) => {
-      this.username = username;
-    });
-
 
     this.userRc.rcFileExist().subscribe((exist: boolean) => {
       if (exist) {
@@ -126,15 +120,15 @@ export class Command implements CommandInterface {
     });
   }
 
-  init(args: Array<string>) {
+  init(args: Array<string>, back:any) {
 
     console.log('Command.ts', args);
 
     //directly
     if (args[0] === this.name && args.length === 1) {
       return this.showCommands().subscribe((answers:Array<string>) => {
-        console.log('answers', answers);
-        return this.init(answers);
+        // console.log('answers', answers);
+        return this.init(answers[this.name], back);
       });
     }
 
@@ -152,6 +146,9 @@ export class Command implements CommandInterface {
         args.splice(0,2);
         return this[args[1]](args);
       }
+      if (args[1] === 'quit') {
+        return back.home();
+      }
       return this[args[1]]();
     }
     //not my command!
@@ -166,8 +163,15 @@ export class Command implements CommandInterface {
    * exit the app
    */
   quit() {
-    console.log(`Have a Great Day! ${this.username}`);
-    process.exit();
+    console.log('quit');
+    const readline = require('readline');
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+    rl.write('relution');
+    rl.prompt();
+    rl.close();
   }
 
   flatCommands(): Array<string> {
