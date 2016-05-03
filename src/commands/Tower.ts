@@ -9,7 +9,7 @@ const inquirer = require('inquirer');
 const username = require('username');
 
 /**
- * Command Tower all Commmands gooin inside here
+ * Command Tower all Commmands go inside here
  */
 export class Tower {
   public name: string = 'relution';
@@ -49,19 +49,21 @@ export class Tower {
    */
   init() {
     console.log('Relution', this.args);
-    //debugger;
-    // //only relution
+
+
     if (this.args[0] === this.name) {
       console.log('this.args[0] === this.name', this.args[0] === this.name);
+
+      //only relution
       if (this.args.length === 1) {
+        console.log('this.args.length === 1', this.args.length === 1);
+
         return this.showCommands().subscribe((answers: any) => {
-          console.log('wtf');
           if (answers[this.name]) {
             this.args = answers[this.name];
           } else {
             this.args = answers;
           }
-
           return this.init();
         });
       }
@@ -81,41 +83,30 @@ export class Tower {
           });
       }
 
-      // //if from subcommand a method ?
 
-      if (this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1) {
+      //if from subcommand a method ?
+      if (this.staticCommandRootKeys.indexOf(this.args[1]) !== -1) {
         //console.log('this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1', this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1);
         let subArgs = this._copy(this.args);
-        if (subArgs.length > 1) {
+        if (subArgs[0] === this.name) {
           subArgs.splice(0, 1);
         }
-        //console.log('static', subArgs);
 
         //only ['server']
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
-          console.log(`trigger static ${subArgs[1]} showCommands`);
-          return this.staticCommands[subArgs[0]].showCommands().subscribe((log: any) => {
-            console.log(log);
-          });
-        }
-
-        //['server', 'add']
-        //not for relution delegate to subcommand
-        if (this.staticCommands[subArgs[0]][subArgs[1]]) {
+          console.log(`trigger static ${subArgs.toString()} showCommands`);
+          return this.staticCommands[subArgs[0]].init(subArgs);
+        } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
           params.splice(0, 2);
-
           if (params.length) {
-            return this.staticCommands[subArgs[0]][subArgs[1]](params).subscribe((log: any) => {
-              console.log(log);
-            });
+            return this.staticCommands[subArgs[0]].init(subArgs);
           }
 
-          return this.staticCommands[subArgs[0]][subArgs[1]]().subscribe((log: any) => {
-            console.log('static');
-            console.log(log);
-          });
+        } else {
+          console.error(`${subArgs.toString()} command not found!`);
         }
+
       }
     }
   }

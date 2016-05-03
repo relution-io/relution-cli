@@ -127,14 +127,17 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>) {
+
     console.log('Command.ts', args);
 
     //directly
     if (args[0] === this.name && args.length === 1) {
       return this.showCommands().subscribe((answers:Array<string>) => {
+        console.log('answers', answers);
         return this.init(answers);
       });
     }
+
     if (this[args[0]]) {
       if (args.length > 1) {
         args.splice(0,1);
