@@ -31,10 +31,5 @@ describe('Utility Command', () => {
     expect(command.help).not.toBeUndefined();
     done();
   });
-
-  it('has a quit method', done => {
-    expect(command.quit).not.toBeUndefined();
-    done();
-  });
 });
 

@@ -24,6 +24,8 @@ interface CommandInterface {
  * }
  * ```
  */
+const QUIT: string = 'quit';
+
 export class Command implements CommandInterface {
 
   public name: string;
@@ -33,7 +35,7 @@ export class Command implements CommandInterface {
   public config: any;
   public commands: Object;
   public inquirer:any = inquirer;
-  public reserved: Array<string> = ['help', 'quit'];
+  public reserved: Array<string> = ['help', QUIT];
   public table: Table;
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   // public inquirer: InquirerHelper = new InquirerHelper();
@@ -87,6 +89,7 @@ export class Command implements CommandInterface {
    * ```
    */
   help(asArray: boolean = false) {
+    console.log('help', asArray);
     return Observable.create((observer: any) => {
       let content: any = [['', '', '', '']];
       //[this.name, '', '', '']
@@ -121,9 +124,7 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back:any) {
-
     console.log('Command.ts', args);
-
     //directly
     if (args[0] === this.name && args.length === 1) {
       return this.showCommands().subscribe((answers:Array<string>) => {
@@ -132,7 +133,15 @@ export class Command implements CommandInterface {
       });
     }
 
+    if (args.length >= 1 && args[0] === this.name && args[1] === QUIT) {
+      return back.home()
+    }
+
+    //we have this method maybe help we get ['server', 'help', 'param']
+    //build this.help('param');
+    // console.log('this[args[0]]', this[args[0]]);
     if (this[args[0]]) {
+      // console.log('args.length > 1', args.length > 1);
       if (args.length > 1) {
         args.splice(0,1);
         return this[args[0]](args);
@@ -140,38 +149,33 @@ export class Command implements CommandInterface {
       return this[args[0]]();
     }
 
+    // console.log('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     //server add
-    if (args[0] === this.name && this[args[1]]) {
+
+    if (args[0] === this.name && this[args[1]] ) {
+
       if (args.length > 2) {
+        console.log('args.length > 2', args.length > 2);
         args.splice(0,2);
         return this[args[1]](args);
       }
-      if (args[1] === 'quit') {
-        return back.home();
-      }
-      return this[args[1]]();
+      return this[args[1]]().subscribe(
+        (log:any) => {
+          console.log(log);
+        },
+        (e:any) => {
+          console.error(e);
+          process.exit();
+        },
+        () => {
+          this.init([this.name], back)
+        }
+      );
     }
-    //not my command!
-    return null;
   }
 
   _copy(org: any) {
     return JSON.parse(JSON.stringify(org));
-  }
-
-  /**
-   * exit the app
-   */
-  quit() {
-    console.log('quit');
-    const readline = require('readline');
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-    rl.write('relution');
-    rl.prompt();
-    rl.close();
   }
 
   flatCommands(): Array<string> {
