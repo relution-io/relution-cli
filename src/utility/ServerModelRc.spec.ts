@@ -3,7 +3,7 @@ import {ServerModelRc} from './ServerModelRc';
 describe('ServerModelRc', () => {
   let model:ServerModelRc;
   let temp =  {
-    "asDefault": false,
+    "default": false,
     "id": "beckmann new",
     "serverUrl": "http://10.21.4.60:8080",
     "userName": "ibxdev",

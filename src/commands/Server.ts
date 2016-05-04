@@ -1,10 +1,12 @@
 import {Observable} from '@reactivex/rxjs';
 import {Command} from './../utility/Command';
 import {Validator} from './../utility/Validator';
-import {ServerModelRc} from './../utility/ServerModelRc';
+import {ServerModelRc, ServerModel} from './../utility/ServerModelRc';
 
 export class Server extends Command {
+  public tableHeader: Array<string> = ['Name', 'Server url', 'Default', 'Username'];
   public debug:boolean = true;
+
   public commands: Object = {
     add: {
       description: 'add a new BaaS Server',
@@ -96,35 +98,49 @@ export class Server extends Command {
   }
 
   list(name?: string) {
-    console.log(this.config);
+    let empty:Array<string> = ['','','',''];
+    let content:Array<any> = [empty];
+    this.userRc.server.forEach((model:ServerModelRc) => {
+      content.push(model.toTableRow(), empty);
+    })
+    return Observable.create((observer:any) => {
+      observer.next(this.table.sidebar(this.tableHeader, content));
+      observer.complete();
+    });
   }
 
-  create(name?: string) {
-    console.log('create');
-  }
+  update(id:string) {
 
+  }
   rm(name?: string) {
     console.log('rm');
   }
 
+  setDefaults(defaults:ServerModel) {
+    this.addConfig.forEach((item:any) => {
+      item.default = () => {return defaults[item.name]};
+    })
+  }
   /**
    * the add scenario
    * @link https://github.com/SBoudrias/Inquirer.js/blob/master/examples/input.js
    */
-  addServerPrompt(name: string) {
-    console.log('addServerPrompt');
+  addServerPrompt(id: string) {
+    //console.log('addServerPrompt');
     //for testing
     if (this.debug) {
-      this.addConfig[1]['default'] = () => {return 'https://coredev.com:1234'};
-      this.addConfig[2]['default'] = () => {return 'pascal'};
-      this.addConfig[3]['default'] = () => {return 'blubber'};
+      this.setDefaults({
+        id: id,
+        serverUrl: 'https://coredev.com:1234',
+        userName: 'pascal',
+        password: 'foo',
+        default: false
+      });
     }
 
-    //set default name
-    if (name && name.length && name.match(Validator.stringNumberPattern)) {
-      this.addConfig[0]['default'] = () => {return name.trim()};
-    } else {
-      console.log('name is not correct');
+    //set default id
+    if (id && id.length && id.match(Validator.stringNumberPattern)) {
+      this.addConfig[0]['default'] = () => {return id.trim()};
     }
     return Observable.fromPromise(this.inquirer.prompt(this.addConfig));
   }
@@ -132,23 +148,17 @@ export class Server extends Command {
    * add method
    */
   add(params: Array<string>) {
-    console.log(params);
     let name:string = '';
     if (params && params.length) {
       name = params[0].trim();
     }
-    console.log('add', name);
-    this.addServerPrompt(name).subscribe((answers:Array<string>) => {
-        console.log(answers);
-        let model = new ServerModelRc(answers);
-        this.userRc.addServer(model).subscribe((isSaved:boolean) => {
-          console.log(isSaved);
-        });
-      });
-    // return Observable.create((observer:any) => {
-
-    // }).subscribe((answers:any) => {
-    //   console.log(answers);
-    // });
+    this.addServerPrompt(name).subscribe((answers:ServerModel) => {
+      let model = new ServerModelRc(answers);
+      this.userRc.addServer(model).subscribe(
+        (isSaved:boolean) => {},
+        (e:any) => console.error(`Something get wrong on add the server ${model.id}`),
+        () => this.init(['server'], this._parent)
+      );
+    });
   }
 }

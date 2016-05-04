@@ -1,10 +1,3 @@
-interface ObjectCtor extends ObjectConstructor {
-    assign(target: any, ...sources: any[]): any;
-}
-declare var Object: ObjectCtor;
-export let assign = Object.assign ? Object.assign : function(target: any, ...sources: any[]): any {
-        return;
-};
 import {Observable} from '@reactivex/rxjs';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -60,7 +53,7 @@ export class UserRc {
         });
       });
     }).map((config:any) => {
-      console.log('this.server', this.server);
+      // console.log('this.server', this.server);
       config.server.forEach((server: any, index:number) => {
         let model:ServerModelRc = new ServerModelRc(server);
         this.server.push(model);
@@ -77,6 +70,16 @@ export class UserRc {
     console.log(JSON.stringify(line, null, 2));
   }
 
+  public falseyDefaultServer(){
+    this.server = [];
+    this.config.server.forEach((server:any) => {
+      if (server.default) {
+        server.default = false;
+      }
+      this.server.push(new ServerModelRc(server));
+    });
+  }
+
   public isUnique(server:ServerModelRc) {
     let isUnique:boolean = true;
     this.config.server.forEach((cserver:any) => {
@@ -89,11 +92,14 @@ export class UserRc {
 
   public addServer(server:ServerModelRc):any{
     if (this.isUnique(server)) {
+      if (server.default) {
+        this.falseyDefaultServer();
+      }
       this.server.push(server);
       this.config.server.push(server.toJson());
       return this.updateRcFile();
     }
-    return Observable.throw('name already exist please use update');
+    throw new Error(`Server ${server.id} already exist please use update!`);
   }
 
   public updateRcFile() {

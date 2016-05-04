@@ -1,8 +1,9 @@
 import {Observable, Observer} from '@reactivex/rxjs';
+import * as chalk from 'chalk';
 import {UserRc} from './UserRc';
 import {Table} from './Table';
+import {Tower} from './../commands/Tower';
 import {ServerModelRc} from './ServerModelRc';
-import * as chalk from 'chalk';
 
 const inquirer = require('inquirer');
 const username =  require('username');
@@ -36,23 +37,19 @@ export class Command implements CommandInterface {
   public commandDispatcher: any;
 
   public directMode: boolean = false;
-  public userRc: UserRc;
+  public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
   public inquirer:any = inquirer;
   public reserved: Array<string> = ['help', QUIT];
-  public table: Table;
+  public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
-  // public inquirer: InquirerHelper = new InquirerHelper();
-
+  public _parent:Tower;
 
   constructor(name: string) {
     if (!name) {
       throw Error('Command need a name');
     }
-
-    this.table = new Table();
-    this.userRc = new UserRc();
 
     this.userRc.rcFileExist().subscribe((exist: boolean) => {
       if (exist) {
@@ -94,7 +91,7 @@ export class Command implements CommandInterface {
    * ```
    */
   help(asArray: boolean = false) {
-    console.log('help', asArray);
+    //console.log('help', asArray);
     return Observable.create((observer: any) => {
       let content: any = [['', '', '', '']];
       //[this.name, '', '', '']
@@ -128,18 +125,19 @@ export class Command implements CommandInterface {
     });
   }
 
-  init(args: Array<string>, back:any) {
+  init(args: Array<string>, back:Tower) {
     console.log('Command.ts', args);
+    this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
       return this.showCommands().subscribe((answers:Array<string>) => {
         // console.log('answers', answers);
-        return this.init(answers[this.name], back);
+        return this.init(answers[this.name], this._parent);
       });
     }
 
     if (args.length >= 1 && args[0] === this.name && args[1] === QUIT) {
-      return back.home()
+      return this._parent.home()
     }
 
     //we have this method maybe help we get ['server', 'help', 'param']
@@ -160,7 +158,7 @@ export class Command implements CommandInterface {
     if (args[0] === this.name && this[args[1]] ) {
 
       if (args.length > 2) {
-        console.log('args.length > 2', args.length > 2);
+        // console.log('args.length > 2', args.length > 2);
         let subArgs:Array<string> = this._copy(args);
         subArgs.splice(0,2);
         return this[args[1]](subArgs);
@@ -174,7 +172,7 @@ export class Command implements CommandInterface {
           process.exit();
         },
         () => {
-          this.init([this.name], back)
+          this.init([this.name], this._parent)
         }
       );
     }
