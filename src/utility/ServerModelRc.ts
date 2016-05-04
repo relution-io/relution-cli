@@ -1,4 +1,5 @@
 import {Validator} from './Validator';
+import {CertModelRc} from './CertModelRc';
 
 interface ObjectCtor extends ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
@@ -10,36 +11,62 @@ export let assign = Object.assign ? Object.assign : function(target: any, ...sou
 
 export class ServerModelRc {
 
-  public name: string;
-  public baseUrl: string;
-  public username: string;
-  public pasword: string;
-  public errors: Array<Object>;
+  private _id : string;
+  private _default : boolean;
+  private _serverUrl : string;
+  private _userName : string;
+  private _password : string;
+  private _clientcertificate : CertModelRc;
 
-  public rules:Object =  {
-    name: Validator.notEmptyValidate,
-    baseUrl: Validator.url,
-    username: Validator.notEmptyValidate,
-    password: Validator.notEmptyValidate,
-  };
-
-  constructor(params?: Object) {
-    if (params){
-      Object.assign(params, this);
+  constructor(params?:any) {
+    if (params) {
+      Object.assign(this, params);
+      console.log(this);
     }
+
+  }
+  public get id() : string {
+    return this._id;
   }
 
-  validate(){
-    this.errors = [];
-    Object.keys(this.rules).forEach((param) => {
-      if ( !this.rules[param](this[param]) ){
-        this.errors.push({name: param});
-      }
-    });
-    return this.errors.length > 0;
+  public set id(v : string) {
+    this._id = v;
   }
 
-  withName(name:string) {
-    return
+  public get serverUrl() : string {
+    return this._serverUrl;
+  }
+
+  public set serverUrl(v : string) {
+    this._serverUrl = v;
+  }
+
+  public get userName() : string {
+    return this._userName;
+  }
+  public set userName(v : string) {
+    this._userName = v;
+  }
+
+  public get password() : string {
+    return this._password;
+  }
+  public set password(v : string) {
+    this._password = v;
+  }
+
+  public get clientcertificate() : CertModelRc {
+    return this._clientcertificate;
+  }
+
+  public set clientcertificate(v : CertModelRc) {
+    this._clientcertificate = v;
+  }
+
+  public get default() : boolean {
+    return this._default;
+  }
+  public set default(v : boolean) {
+    this._default = v;
   }
 }

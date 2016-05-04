@@ -1,6 +1,7 @@
 import {Observable, Observer} from '@reactivex/rxjs';
 import {UserRc} from './UserRc';
 import {Table} from './Table';
+import {ServerModelRc} from './ServerModelRc';
 import * as chalk from 'chalk';
 
 const inquirer = require('inquirer');
@@ -27,9 +28,13 @@ interface CommandInterface {
 const QUIT: string = 'quit';
 
 export class Command implements CommandInterface {
-
+  /**
+   * Command name
+   */
   public name: string;
+
   public commandDispatcher: any;
+
   public directMode: boolean = false;
   public userRc: UserRc;
   public config: any;
@@ -156,8 +161,9 @@ export class Command implements CommandInterface {
 
       if (args.length > 2) {
         console.log('args.length > 2', args.length > 2);
-        args.splice(0,2);
-        return this[args[1]](args);
+        let subArgs:Array<string> = this._copy(args);
+        subArgs.splice(0,2);
+        return this[args[1]](subArgs);
       }
       return this[args[1]]().subscribe(
         (log:any) => {

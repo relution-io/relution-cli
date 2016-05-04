@@ -3,7 +3,7 @@ import {Command} from './../utility/Command';
 import {Validator} from './../utility/Validator';
 
 export class Server extends Command {
-
+  public debug:boolean = true;
   public commands: Object = {
     add: {
       description: 'add a new BaaS Server',
@@ -69,13 +69,17 @@ export class Server extends Command {
       type: 'input',
       name: 'username',
       message: 'Enter your username',
-      validate: Validator.notEmptyValidate('Username')
+      validate: (value:string) => {
+        return Validator.notEmptyValidate(value);
+      }
     },
     {
       type: 'password',
       name: 'password',
       message: 'Enter your Password',
-      validate: Validator.notEmptyValidate('Password')
+      validate: (value:string) => {
+        return Validator.notEmptyValidate(value);
+      }
     }
   ];
 
@@ -96,33 +100,35 @@ export class Server extends Command {
     console.log('rm');
   }
 
+  /**
+   * the add scenario
+   * @link https://github.com/SBoudrias/Inquirer.js/blob/master/examples/input.js
+   */
   addServerPrompt(name: string) {
-    if (name && name.length) {
-      this.addConfig[0]['value'] = name.trim();
+    //for testing
+    if (this.debug) {
+      this.addConfig[1]['default'] = () => {return 'https://coredev.com:1234'};
+      this.addConfig[2]['default'] = () => {return 'pascal'};
+      this.addConfig[3]['default'] = () => {return 'blubber'};
+    }
+
+    //set default name
+    if (name && name.length && name.match(Validator.stringNumberPattern)) {
+      this.addConfig[0]['default'] = () => {return name.trim()};
+    } else {
+      console.log('name is not correct');
     }
     return Observable.fromPromise(this.inquirer.prompt(this.addConfig));
   }
-
-  add(name: string) {
-    console.log(__filename);
-    // .subscribe(
-    //   (answers: Object) => {
-    //     console.log('add answers', answers);
-    //     return answers;
-    //   },
-    //   (e: ErrorConstructor) => {
-    //     return e;
-    //   }, () => {
-    //     console.log('completed');
-    //   }
-    // );
-    this.addServerPrompt(name);
-    // .subscribe((a:any) => {
-    //   console.log(a);
-    // });
-
+  /**
+   * add method
+   */
+  add(params: Array<string>) {
     return Observable.create((observer:any) => {
-      observer.next(1000);
-    })
+      this.addServerPrompt(params[0].trim()).subscribe((answers:Array<string>) => {
+        console.log(answers);
+        observer.next(answers);
+      });
+    }).subscribe();
   }
 }

@@ -12,14 +12,21 @@ const username = require('username');
  * Command Tower all Commmands go inside here
  */
 export class Tower {
-
+  //where is this command available
   public name: string = 'relution';
+  //all commands are available
   public staticCommands: Object;
+  //helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
+  //which one are reserved
   public reserved: Array<string> = ['help', 'quit'];
+  //create a Table in the Terminal
   public table: Table;
+  //standard Command Header
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
+  //Back to home on this command
   public reset:Array<string> = [this.name];
+  //Tower commands
   public commands: Object = {
     help: {
       description: 'list available Commands'
@@ -28,8 +35,11 @@ export class Tower {
       description: 'Exit To Home'
     }
   };
+  //process argV
   public args: Array<string> = ['relution'];
-  private _emptyRow: Array<string> = ['', '', '', ''];
+  //for the table a empty divider
+  private _rowDivider: Array<string> = ['', '', '', ''];
+  //to say hello
   public username: string;
 
   constructor(staticCommands: Object) {
@@ -44,13 +54,18 @@ export class Tower {
     } else {
       this.args.splice(0, 2);
     }
+
     username().then( (username:string) => {
       this.username = username;
-      Welcome.greets(this.username);
+      if (this.args.length === 1) {
+        Welcome.greets(this.username);
+      }
       this.init();
     });
   }
-
+  /**
+   * reset the Tower to get start
+   */
   home(){
     this.args = this._copy(this.reset);
     this.init();
@@ -97,22 +112,21 @@ export class Tower {
         if (subArgs[0] === this.name) {
           subArgs.splice(0, 1);
         }
-
         //only ['server']
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
           console.log(`trigger static ${subArgs.toString()} showCommands`);
           return this.staticCommands[subArgs[0]].init(subArgs, this);
+        //only ['server', 'add', 'name']
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
           params.splice(0, 2);
           if (params.length) {
-            return this.staticCommands[subArgs[0]].init(subArgs, this);
+            return this.staticCommands[subArgs[0]].init(params, this);
           }
 
         } else {
           console.error(`${subArgs.toString()} command not found!`);
         }
-
       }
     }
   }
@@ -131,8 +145,9 @@ export class Tower {
    * ```
    */
   help(asArray: boolean = false) {
-    return Observable.create((observer: any) => {
-      let content: any = [this._emptyRow];
+    return Observable.create((observer:any) => {
+      let content: any = [this._rowDivider];
+      //to say hello
       this.flatCommands().forEach((commandName: string) => {
         if (commandName !== this.name && this.reserved.indexOf(commandName) === -1) {
           this.staticCommands[commandName].help(true).subscribe(
@@ -146,8 +161,9 @@ export class Tower {
         } else if (this.reserved.indexOf(commandName) !== -1) {
           content.unshift([chalk.green(commandName), '', '', this.commands[commandName].description]);
         }
-      });
-      content.unshift(this._emptyRow);
+     });
+      content.unshift(this._rowDivider);
+      //to say hello
       if (!asArray) {
         observer.next(this.table.sidebar(this.tableHeader, content));
       } else {
@@ -166,7 +182,6 @@ export class Tower {
   flatCommands() {
     let list: Array<string> = Object.keys(this.commands);
     let av: Array<string> = this.staticCommandRootKeys.concat(list);
-
     //console.log('av', av)
     return av;
   }
