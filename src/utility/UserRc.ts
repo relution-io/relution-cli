@@ -14,8 +14,8 @@ import {ServerModelRc} from './ServerModelRc';
 export class UserRc {
   private _rcHome: string;
   public appPrefix: string = 'relution';
-  public server:Array<ServerModelRc>;
-  public config: Object;
+  public server:Array<Object> = [];
+  public config: any;
 
   constructor() {
     this._rcHome = `${this.getUserHome()}/.${this.appPrefix}rc`
@@ -30,7 +30,6 @@ export class UserRc {
   }
 
   public rcFileExist() {
-
     return Observable.create((observer: any) => {
       fs.exists(this._rcHome, (exists) => {
         if (!exists) {
@@ -55,17 +54,16 @@ export class UserRc {
           if (err) {
             observer.error(err);
           }
-
           this.config = JSON.parse(data);
           observer.next(this.config);
           observer.complete();
         });
       });
     }).map((config:any) => {
+      console.log('this.server', this.server);
       config.server.forEach((server: any, index:number) => {
         let model:ServerModelRc = new ServerModelRc(server);
-        config.server[index] = model;
-        console.log(config.server[index].id);
+        this.server.push(model);
       });
       return config;
     });
@@ -77,5 +75,35 @@ export class UserRc {
 
   public debug(line: any) {
     console.log(JSON.stringify(line, null, 2));
+  }
+
+  public isUnique(server:ServerModelRc) {
+    let isUnique:boolean = true;
+    this.config.server.forEach((cserver:any) => {
+      if (cserver.id === server.id) {
+        isUnique = false;
+      }
+    });
+    return isUnique;
+  }
+
+  public addServer(server:ServerModelRc):any{
+    if (this.isUnique(server)) {
+      this.server.push(server);
+      this.config.server.push(server.toJson());
+      return this.updateRcFile();
+    }
+    return Observable.throw('name already exist please use update');
+  }
+
+  public updateRcFile() {
+    return Observable.create((observer:any) => {
+      return fs.writeFile(this._rcHome, JSON.stringify(this.config, null, 2), (err) => {
+        if (err) observer.error(err);
+        console.log(`.${this.appPrefix}rc is written`);
+        observer.next(true);
+        observer.complete();
+      });
+    });
   }
 }

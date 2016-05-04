@@ -32,6 +32,7 @@
         "src/utility/Command.spec.ts",
         "src/utility/Command.ts",
         "src/utility/InquirerHelper.ts",
+        "src/utility/ServerModelRc.spec.ts",
         "src/utility/ServerModelRc.ts",
         "src/utility/Table.ts",
         "src/utility/UserRc.ts",

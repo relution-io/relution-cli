@@ -12,19 +12,30 @@ export let assign = Object.assign ? Object.assign : function(target: any, ...sou
 export class ServerModelRc {
 
   private _id : string;
-  private _default : boolean;
+  private _asDefault : boolean;
   private _serverUrl : string;
   private _userName : string;
   private _password : string;
   private _clientcertificate : CertModelRc;
 
+  private _attributes : Array<string>;
+
   constructor(params?:any) {
     if (params) {
       Object.assign(this, params);
-      console.log(this);
+      this.attributes = Object.keys(params);
+      console.log('params', this.attributes);
     }
-
   }
+
+  public get attributes() : Array<string> {
+    return this._attributes;
+  }
+
+  public set attributes(v : Array<string>) {
+    this._attributes = v;
+  }
+
   public get id() : string {
     return this._id;
   }
@@ -63,10 +74,21 @@ export class ServerModelRc {
     this._clientcertificate = v;
   }
 
-  public get default() : boolean {
-    return this._default;
+  public get asDefault() : boolean {
+    return this._asDefault;
   }
-  public set default(v : boolean) {
-    this._default = v;
+
+  public set asDefault(v : boolean) {
+    this._asDefault = v;
+  }
+
+  public toJson(){
+    let model:Object = {};
+    this.attributes.forEach((attr:string) => {
+      if (attr && this[attr] !== undefined) {
+        model[attr] = this[attr];
+      }
+    });
+    return model;
   }
 }

@@ -15,9 +15,6 @@ describe('Commands Relution', () => {
 
   it('help command on relution', done => {
     let temp:any = command.init();
-    expect(temp.isUnsubscribed).toBe(true);
-    expect(temp.syncErrorValue).toBe(null);
-    expect(temp.syncErrorThrown).toBe(false);
     done();
   });
 
