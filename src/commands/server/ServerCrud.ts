@@ -246,7 +246,10 @@ export class ServerCrud {
     })
   }
   /**
-   * add a server to the userrc file
+   * @name add
+   * @return Observable
+   * @params Array<string>
+   * @description add a server to the userrc file
    */
   add(params?: Array<string>):any {
     let name: string = '';
@@ -279,6 +282,7 @@ export class ServerCrud {
 
   /**
    * no server id is given we set the user server list to choose one
+   * @private
    */
   private _updateWithoutId(){
     return Observable.create((observer:any) => {
@@ -313,6 +317,9 @@ export class ServerCrud {
       }
     );
    * ```
+   * @name update
+   * @return Observable
+   * @params Array<string>
    */
   update(params?: Array<string>):any {
     if (!this.userRc && !this.userRc.config && !this.userRc.config.server){

@@ -4,9 +4,10 @@ import {UserRc} from './UserRc';
 import {Table} from './Table';
 import {Tower} from './../commands/Tower';
 import {ServerModelRc} from './ServerModelRc';
+import {Translation} from './../utility/Translation';
 
 const inquirer = require('inquirer');
-const username =  require('username');
+const username = require('username');
 
 interface CommandInterface {
   name: string;
@@ -26,7 +27,7 @@ interface CommandInterface {
  * }
  * ```
  */
-const QUIT: string = 'quit';
+
 
 export class Command implements CommandInterface {
   /**
@@ -40,11 +41,11 @@ export class Command implements CommandInterface {
   public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
-  public inquirer:any = inquirer;
-  public reserved: Array<string> = ['help', QUIT];
+  public inquirer: any = inquirer;
+  public reserved: Array<string> = ['help', Translation.QUIT];
   public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
-  public _parent:Tower;
+  public _parent: Tower;
 
   constructor(name: string) {
     if (!name) {
@@ -64,7 +65,7 @@ export class Command implements CommandInterface {
   /**
    * preload data
    */
-  preload(){
+  preload() {
     return this.userRc.rcFileExist().subscribe((exist: boolean) => {
       if (exist) {
         return this.userRc.streamRc().subscribe((data: any) => {
@@ -94,8 +95,8 @@ export class Command implements CommandInterface {
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
         let command: Array<string> = [chalk.green(this.name), chalk.cyan(commandName)];
-        if ( this.commands[commandName]) {
-          if (commandName !== 'relution' ) {
+        if (this.commands[commandName]) {
+          if (commandName !== 'relution') {
             // && this.reserved.indexOf(commandName) === -1
             if (this.commands[commandName].vars) {
               let vars: Array<string> = Object.keys(this.commands[commandName].vars);
@@ -121,19 +122,19 @@ export class Command implements CommandInterface {
     });
   }
 
-  init(args: Array<string>, back:Tower) {
+  init(args: Array<string>, back: Tower) {
     console.log('Command.ts', args);
     debugger;
     this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
-      return this.showCommands().subscribe((answers:Array<string>) => {
+      return this.showCommands().subscribe((answers: Array<string>) => {
         // console.log('answers', answers);
         return this.init(answers[this.name], this._parent);
       });
     }
 
-    if (args.length >= 1 && args[0] === this.name && args[1] === QUIT) {
+    if (args.length >= 1 && args[0] === this.name && args[1] === Translation.QUIT) {
       return this._parent.home()
     }
 
@@ -144,7 +145,7 @@ export class Command implements CommandInterface {
       // console.log('args.length > 1', args.length > 1);
       if (args.length > 1) {
         let params = this._copy(args);
-        params.splice(0,1);//remove 'update' or 'create'
+        params.splice(0, 1);//remove 'update' or 'create'
         return this[args[0]](params);
       }
       return this[args[0]]();
@@ -153,19 +154,19 @@ export class Command implements CommandInterface {
     // console.log('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     //server add
 
-    if (args[0] === this.name && this[args[1]] ) {
+    if (args[0] === this.name && this[args[1]]) {
 
       if (args.length > 2) {
         // console.log('args.length > 2', args.length > 2);
-        let subArgs:Array<string> = this._copy(args);
-        subArgs.splice(0,2);
+        let subArgs: Array<string> = this._copy(args);
+        subArgs.splice(0, 2);
         return this[args[1]](subArgs);
       }
       return this[args[1]]().subscribe(
-        (log:any) => {
+        (log: any) => {
           console.log(log);
         },
-        (e:any) => {
+        (e: any) => {
           console.error(e);
           process.exit();
         },
@@ -185,7 +186,7 @@ export class Command implements CommandInterface {
   }
 
   setupCommandsForList() {
-    let temp:Array<Object> = [];
+    let temp: Array<Object> = [];
     this.flatCommands().forEach((command) => {
       temp.push({
         name: command,
