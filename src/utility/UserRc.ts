@@ -1,7 +1,7 @@
 import {Observable} from '@reactivex/rxjs';
 import * as fs from 'fs';
 import * as path from 'path';
-
+import {findIndex} from 'lodash';
 import {ServerModelRc} from './ServerModelRc';
 
 export class UserRc {
@@ -21,21 +21,36 @@ export class UserRc {
   public set rc(v: string) {
     this.rc = v;
   }
-
+  /**
+   * check  if the relutionrc file exist
+   */
   public rcFileExist() {
     return Observable.create((observer: any) => {
       fs.exists(this._rcHome, (exists) => {
-        if (!exists) {
-          observer.next(false);
-
-        } else {
+        console.log('exists', exists);
+        if (exists) {
           observer.next(true);
+          observer.complete();
+        } else {
+          //create a empty rc file if no one exists
+          this.config = {server:[]};
+          this.updateRcFile().subscribe(
+            () => {
+              observer.next(true);
+            },(e:any) => {
+              observer.error(e);
+            }, () => {
+              observer.complete();
+            }
+          )
         }
-        observer.complete();
+
       });
     })
   }
-
+  /**
+   * read the relutionrc file
+   */
   streamRc() {
     let self = this;
     return Observable.create((observer: any) => {
@@ -53,53 +68,31 @@ export class UserRc {
         });
       });
     }).map((config:any) => {
-      // console.log('this.server', this.server);
-      config.server.forEach((server: any, index:number) => {
-        let model:ServerModelRc = new ServerModelRc(server);
-        this.server.push(model);
-      });
+      this.setServer();
       return config;
     });
   }
-
+  /**
+   * set a the server as model
+   */
+  public setServer() {
+    this.server = [];
+    this.config.server.forEach((server: any, index:number) => {
+      let model:ServerModelRc = new ServerModelRc(server);
+      this.server.push(model);
+    });
+  }
+  /**
+   * the home path form the reluitonrc file
+   */
   public getUserHome() {
     return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
   }
-
+  /**
+   * logger
+   */
   public debug(line: any) {
     console.log(JSON.stringify(line, null, 2));
-  }
-
-  public falseyDefaultServer(){
-    this.server = [];
-    this.config.server.forEach((server:any) => {
-      if (server.default) {
-        server.default = false;
-      }
-      this.server.push(new ServerModelRc(server));
-    });
-  }
-
-  public isUnique(server:ServerModelRc) {
-    let isUnique:boolean = true;
-    this.config.server.forEach((cserver:any) => {
-      if (cserver.id === server.id) {
-        isUnique = false;
-      }
-    });
-    return isUnique;
-  }
-
-  public addServer(server:ServerModelRc):any{
-    if (this.isUnique(server)) {
-      if (server.default) {
-        this.falseyDefaultServer();
-      }
-      this.server.push(server);
-      this.config.server.push(server.toJson());
-      return this.updateRcFile();
-    }
-    throw new Error(`Server ${server.id} already exist please use update!`);
   }
 
   public updateRcFile() {
@@ -108,7 +101,9 @@ export class UserRc {
         if (err) observer.error(err);
         console.log(`.${this.appPrefix}rc is written`);
         observer.next(true);
-        observer.complete();
+        this.streamRc().subscribe({
+          complete: observer.complete()
+        });
       });
     });
   }

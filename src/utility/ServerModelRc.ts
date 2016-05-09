@@ -1,6 +1,5 @@
 import {Validator} from './Validator';
 import {CertModelRc} from './CertModelRc';
-
 const chalk = require('chalk');
 const figures = require('figures');
 

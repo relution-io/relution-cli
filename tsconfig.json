@@ -23,7 +23,7 @@
         "typings/main.d.ts",
         "src/cli.ts",
         "src/commands/Server.ts",
-        "src/commands/server/add.ts",
+        "src/commands/server/ServerCrud.ts",
         "src/commands/Tower.spec.ts",
         "src/commands/Tower.ts",
         "src/gii/Gii.spec.ts",
@@ -35,6 +35,7 @@
         "src/utility/ServerModelRc.spec.ts",
         "src/utility/ServerModelRc.ts",
         "src/utility/Table.ts",
+        "src/utility/Translation.ts",
         "src/utility/UserRc.ts",
         "src/utility/Validator.ts",
         "src/utility/Welcome.ts"

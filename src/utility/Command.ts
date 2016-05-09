@@ -35,7 +35,7 @@ export class Command implements CommandInterface {
   public name: string;
 
   public commandDispatcher: any;
-
+  public takeMeOut:string = 'Take me out of here';
   public directMode: boolean = false;
   public userRc: UserRc = new UserRc();
   public config: any;
@@ -60,22 +60,18 @@ export class Command implements CommandInterface {
     });
 
     this.name = name;
-
-    this.commandDispatcher = Observable.create((observer: any) => {
-      if (process.argv.length <= 2) {
-        observer.complete();
+  }
+  /**
+   * preload data
+   */
+  preload(){
+    return this.userRc.rcFileExist().subscribe((exist: boolean) => {
+      if (exist) {
+        return this.userRc.streamRc().subscribe((data: any) => {
+          this.config = data;
+        });
       }
-      let args = this._copy(process.argv);
-      args.splice(0, 2);
-      observer.next(args);
-      observer.complete();
-    })
-      .catch((e: any) => {
-        throw new Error(e);
-      })
-      .filter((data: Array<string>) => {
-        return data[0] === this.name;
-      });
+    });
   }
   /**
    * @description shows a list of Available commands form the Command like this
@@ -127,6 +123,7 @@ export class Command implements CommandInterface {
 
   init(args: Array<string>, back:Tower) {
     console.log('Command.ts', args);
+    debugger;
     this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
@@ -146,8 +143,9 @@ export class Command implements CommandInterface {
     if (this[args[0]]) {
       // console.log('args.length > 1', args.length > 1);
       if (args.length > 1) {
-        args.splice(0,1);
-        return this[args[0]](args);
+        let params = this._copy(args);
+        params.splice(0,1);//remove 'update' or 'create'
+        return this[args[0]](params);
       }
       return this[args[0]]();
     }

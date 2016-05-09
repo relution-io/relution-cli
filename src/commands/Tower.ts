@@ -12,6 +12,7 @@ const username = require('username');
  * Command Tower all Commmands go inside here
  */
 export class Tower {
+  public userRc:UserRc = new UserRc();
   //where is this command available
   public name: string = 'relution';
   //all commands are available
@@ -35,6 +36,9 @@ export class Tower {
       description: 'Exit To Home'
     }
   };
+
+  public config:Array<Object>;
+
   //process argV
   public args: Array<string> = ['relution'];
   //for the table a empty divider
@@ -54,13 +58,26 @@ export class Tower {
     } else {
       this.args.splice(0, 2);
     }
+    this.userRc.rcFileExist().subscribe((exist: boolean) => {
+      if (exist) {
+        this.userRc.streamRc().subscribe((data: any) => {
+          this.config = data;
+        });
+      }
+    },
+    (e:any) => {
+      console.log(`no rc file `);
+    },
+     () => {
+      this.init();
+    });
 
     username().then( (username:string) => {
       this.username = username;
       if (this.args.length === 1) {
         Welcome.greets(this.username);
       }
-      this.init();
+
     });
   }
   /**
@@ -74,7 +91,8 @@ export class Tower {
    * check available options
    */
   init() {
-    // console.log('Relution', this.args);
+    // debugger;
+    console.log('Relution', this.args);
     if (this.args[0] === this.name) {
       //console.log('this.args[0] === this.name', this.args[0] === this.name);
       //only relution
@@ -119,7 +137,7 @@ export class Tower {
         //only ['server', 'add', 'name']
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
-          params.splice(0, 2);
+          params.splice(0, 1);
           if (params.length) {
             return this.staticCommands[subArgs[0]].init(params, this);
           }
