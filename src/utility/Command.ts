@@ -35,7 +35,7 @@ export class Command implements CommandInterface {
   public name: string;
 
   public commandDispatcher: any;
-  public takeMeOut:string = 'Take me out of here';
+
   public directMode: boolean = false;
   public userRc: UserRc = new UserRc();
   public config: any;

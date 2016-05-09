@@ -73,7 +73,8 @@ export class UserRc {
     });
   }
   /**
-   * set a the server as model
+   * set a collection the server models
+   *
    */
   public setServer() {
     this.server = [];
@@ -95,13 +96,21 @@ export class UserRc {
     console.log(JSON.stringify(line, null, 2));
   }
 
+  /**
+   * save the config into the rc file as json
+   * ```javascript
+   * updateRcFile().subscribe((written:boolean) => {console.log(written)});
+   * ```
+   */
   public updateRcFile() {
     return Observable.create((observer:any) => {
       return fs.writeFile(this._rcHome, JSON.stringify(this.config, null, 2), (err) => {
         if (err) observer.error(err);
         console.log(`.${this.appPrefix}rc is written`);
         observer.next(true);
+
         this.streamRc().subscribe({
+          sucess: this.setServer,
           complete: observer.complete()
         });
       });

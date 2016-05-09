@@ -1,8 +1,8 @@
-import {Observable} from '@reactivex/rxjs';
+import {Observable, Observer} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
 import {ServerModelRc, ServerModel} from './../../utility/ServerModelRc';
-import {findIndex} from 'lodash';
+import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
 /**
@@ -17,6 +17,7 @@ export class ServerCrud {
   constructor(userRc:UserRc) {
     this.userRc = userRc;
   }
+
   get addConfig(): Array<Object> {
     return [
       {
@@ -70,7 +71,9 @@ export class ServerCrud {
       }
     ];
   };
-
+  _copy(org: any) {
+    return JSON.parse(JSON.stringify(org));
+  }
   /**
    * toggle all server to default false
    */
@@ -148,9 +151,9 @@ export class ServerCrud {
     if (!id) {
       this.setDefaults({
         id: id,
-        serverUrl: 'https://coredev.com:1234',
-        userName: 'pascal',
-        password: 'foo',
+        serverUrl: '',
+        userName: '',
+        password: '',
         default: this.userRc.config.server.length ? false : true
       });
     }
@@ -161,7 +164,89 @@ export class ServerCrud {
     }
     return Observable.fromPromise(this.inquirer.prompt(this.addConfig));
   }
+  /**
+   * create a prompt like this
+   * ```json
+   * [ { type: 'list',
+    message: 'Select Server/s',
+    name: 'server',
+    choices:
+     [ 'cordev',
+       'cordev2',
+       'local dev',
+       'ibx',
+       't.beckmann',
+       'beckmann new',
+       'mdmdev2',
+       'Take me out of here' ],
+    validate: [Function] } ]
+   * ```
+   */
+  serverListPrompt(name: string = 'server', type: string = 'checkbox', message: string = 'Select Server/s') {
+    let choices = map(this.userRc.config.server, 'id');
+    choices.push(Translation.TAKE_ME_OUT);
+    return [
+      {
+        type: type,
+        message: message,
+        name: name,
+        choices: choices,
+        validate: (answer: Array<string>): any => {
+          if (answer.length < 1) {
+            return 'You must choose at least one server.';
+          }
+          return true;
+        }
+      }
+    ];
+  }
 
+  /**
+   * remove a server frm a list
+   */
+  deletePrompt() {
+    return Observable.fromPromise(this.inquirer.prompt(this.serverListPrompt()));
+  }
+  /**
+   * ```javascript
+   * const crud = new ServerCrud(myuserRc)
+   * crud.rm(id).subscribe(
+      () => {
+         console.log('on working porgress');
+      },
+      (e:any) => {
+        console.error(e);
+      },
+      () => {
+        console.log('complete');
+      }
+    );
+   * ```
+   */
+  rm(id?:string):any {
+    return Observable.create((observer:any) => {
+      this.deletePrompt().subscribe((answers: any) => {
+        let all: any = [];
+        if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1) {
+          if (answers.server.length > 1) {
+            console.log(`I see you choose servers and "Take me out of here" so you get out without remove`);
+          }
+          observer.complete();
+        }
+
+        answers.server.forEach((id: string) => {
+          all.push(this.removeServer(id));
+        });
+
+        Observable.forkJoin(all).subscribe({complete: () => {
+          observer.complete();
+        }});
+      });
+    })
+  }
+  /**
+   * add a server to the userrc file
+   */
   add(params?: Array<string>):any {
     let name: string = '';
     if (params && params.length) {
@@ -169,14 +254,93 @@ export class ServerCrud {
     }
     return Observable.create((observer:any) => {
       this.createNewServer(name).subscribe((answers: ServerModel) => {
-        console.log('answers', answers);
         this.addServer(new ServerModelRc(answers)).subscribe(
           () => {
-            console.log('done');
             observer.complete();
           }
         );
       });
     });
+  }
+
+  /**
+   * chose a server from the list
+   */
+  private _updateServerChooserPrompt(id?: string) {
+    let prompt: any = this.serverListPrompt('server', 'list', 'choose a Server');
+
+    if (id && id.length) {
+      prompt.default = () => { return id; }
+    }
+
+    return Observable.fromPromise(this.inquirer.prompt(prompt));
+  }
+
+  /**
+   * no server id is given we set the user server list to choose one
+   */
+  private _updateWithoutId(){
+    return Observable.create((observer:any) => {
+      this._updateServerChooserPrompt().subscribe(
+        (answers: any) => {observer.next(this._copy(answers.server));},
+        (e:any) => console.error(e),
+        () => observer.complete
+      );
+    });
+  }
+  /**
+   * inquirer a server with defaults
+   */
+  private _updateWithId(id:string):any {
+    let serverId = this._copy(id);
+    let serverIndex = findIndex(this.userRc.config.server, {id:serverId});
+    let prompt = this.setDefaults(this.userRc.config.server[serverIndex]);
+    return Observable.fromPromise(this.inquirer.prompt(prompt));
+  }
+  /**
+   * ```javascript
+   * const crudHelper = new ServerCrud(userRc);
+   * crudHelper.update(params).subscribe(
+      () => {
+
+      },
+      (e:any) => {
+        console.error(e);
+      },
+      () => {
+        console.log('server added');
+      }
+    );
+   * ```
+   */
+  update(params?: Array<string>):any {
+    if (!this.userRc && !this.userRc.config && !this.userRc.config.server){
+      return Observable.throw('no server are available');
+    }
+
+    if (!params || !params.length) {
+      return Observable.create((observer:any)=>{
+        this._updateWithoutId().subscribe((serverId: string) => {
+          if (serverId === Translation.TAKE_ME_OUT) {
+            observer.complete();
+          }
+          //maybe the user rename the server
+          let oldId = this._copy(serverId);
+          this._updateWithId(serverId).subscribe(
+            (answers:ServerModel) => {
+              let serverIndex = findIndex(this.userRc.config.server, {id: oldId});
+              this.userRc.config.server[serverIndex] = answers;
+              this.userRc.updateRcFile().subscribe(() => observer.complete);
+            },
+            (e:any) => console.error(e),
+            () => {
+              observer.complete();
+            }
+          );
+      })
+    });;
+    }
+    let serverId = params[0];
+    return Observable.from(this.updateWithId(serverId));
   }
 }
