@@ -16,6 +16,11 @@ export class Validator{
    */
   public static stringNumberPattern:RegExp = /^[a-zA-Z\s]|[0-9\s]+$/;
   /**
+   * allow a-Z for the given value
+   * @type {RegExp}
+   */
+  public static stringPattern:RegExp = /^[a-zA-Z\s]+$/;
+  /**
    * check if the string is not empty
    */
   public static notEmptyValidate(label:any):boolean {

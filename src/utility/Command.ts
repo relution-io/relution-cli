@@ -197,6 +197,7 @@ export class Command implements CommandInterface {
   }
 
   showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
+    console.log(new Date().getTime());
     let questions = [
       {
         name: this.name,
