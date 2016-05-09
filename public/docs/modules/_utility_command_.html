@@ -83,7 +83,60 @@
 								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported"><a href="../interfaces/_utility_command_.commandinterface.html" class="tsd-kind-icon">Command<wbr>Interface</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_utility_command_.html#quit" class="tsd-kind-icon">QUIT</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_utility_command_.html#inquirer" class="tsd-kind-icon">inquirer</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_utility_command_.html#username" class="tsd-kind-icon">username</a></li>
+							</ul>
+						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="quit" class="tsd-anchor"></a>
+					<h3>QUIT</h3>
+					<div class="tsd-signature tsd-kind-icon">QUIT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L29">utility/Command.ts:29</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> {Command} <span class="hljs-keyword">from</span> <span class="hljs-string">'./../utility/Command'</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Command</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+   <span class="hljs-keyword">super</span>(<span class="hljs-string">'server'</span>);
+   <span class="hljs-keyword">this</span>.commandDispatcher.subscribe(<span class="hljs-keyword">this</span>.init.bind(<span class="hljs-keyword">this</span>));
+  }
+}
+</code></pre>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="inquirer" class="tsd-anchor"></a>
+					<h3>inquirer</h3>
+					<div class="tsd-signature tsd-kind-icon">inquirer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L8">utility/Command.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="username" class="tsd-anchor"></a>
+					<h3>username</h3>
+					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L9">utility/Command.ts:9</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -94,19 +147,19 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_tower_.html">"<wbr>Tower"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="_cli_.html">"cli"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_commands_relution_.html">"commands/<wbr>Relution"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_commands_server_.html">"commands/<wbr>Server"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_commands_server_add_.html">"commands/server/add"</a>
+						<a href="_commands_tower_.html">"commands/<wbr>Tower"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_commands_tower_spec_.html">"commands/<wbr>Tower.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_commands_server_servercrud_.html">"commands/server/<wbr>Server<wbr>Crud"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_gii_gii_.html">"gii/<wbr>Gii"</a>
@@ -114,8 +167,14 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_gii_gii_spec_.html">"gii/<wbr>Gii.spec"</a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_utility_certmodelrc_.html">"utility/<wbr>Cert<wbr>Model<wbr>Rc"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_utility_command_.html">"utility/<wbr>Command"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_utility_command_spec_.html">"utility/<wbr>Command.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
@@ -124,13 +183,22 @@
 						<a href="_utility_servermodelrc_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="_utility_servermodelrc_spec_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="_utility_table_.html">"utility/<wbr>Table"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_utility_translation_.html">"utility/<wbr>Translation"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_utility_userrc_.html">"utility/<wbr>User<wbr>Rc"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_utility_validator_.html">"utility/<wbr>Validator"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_utility_welcome_.html">"utility/<wbr>Welcome"</a>
 					</li>
 				</ul>
 			</nav>
@@ -141,6 +209,15 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../interfaces/_utility_command_.commandinterface.html" class="tsd-kind-icon">Command<wbr>Interface</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_utility_command_.html#quit" class="tsd-kind-icon">QUIT</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_utility_command_.html#inquirer" class="tsd-kind-icon">inquirer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_utility_command_.html#username" class="tsd-kind-icon">username</a>
 					</li>
 				</ul>
 			</nav>

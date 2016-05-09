@@ -137,17 +137,18 @@ export class ServerCrud {
 
   setDefaults(defaults: ServerModel) {
     let myPrompt:any = this.addConfig;
-    myPrompt.forEach((item: any) => {
-      console.log(item, defaults);
-      item.default = () => { return defaults[item.name] };
-      item.message += Translation.PRESS_ENTER;
-    });
+
+    if (defaults) {
+      myPrompt.forEach((item: any) => {
+        item.default = () => { return defaults[item.name] };
+        item.message += Translation.PRESS_ENTER;
+      });
+    }
+
     return myPrompt;
   }
 
   createNewServer(id?: string){
-    //console.log('addServerPrompt');
-    //for testing
     if (!id) {
       this.setDefaults({
         id: id,
@@ -322,7 +323,7 @@ export class ServerCrud {
       return Observable.create((observer:any)=>{
         this._updateWithoutId().subscribe((serverId: string) => {
           if (serverId === Translation.TAKE_ME_OUT) {
-            observer.complete();
+            return observer.complete();
           }
           //maybe the user rename the server
           let oldId = this._copy(serverId);
@@ -341,6 +342,6 @@ export class ServerCrud {
     });;
     }
     let serverId = params[0];
-    return Observable.from(this.updateWithId(serverId));
+    return Observable.from(this._updateWithId(serverId));
   }
 }

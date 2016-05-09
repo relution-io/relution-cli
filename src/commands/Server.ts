@@ -75,59 +75,6 @@ export class Server extends Command {
     );
   }
 
-  get addConfig(): Array<Object> {
-    return [
-      {
-        type: 'input',
-        name: 'id',
-        message: 'Server Name',
-        validate: (value: string): any => {
-          var pass = value.match(Validator.stringNumberPattern);
-          if (pass) {
-            return true;
-          } else {
-            return 'Please enter a valid Server name';
-          }
-        }
-      },
-      {
-        type: 'input',
-        name: 'serverUrl',
-        message: 'Enter the server url (http://....)',
-        validate: (value: string): any => {
-          var pass = value.match(Validator.urlPattern);
-
-          if (pass) {
-            return true;
-          } else {
-            return 'Please enter a valid url';
-          }
-        }
-      },
-      {
-        type: 'input',
-        name: 'userName',
-        message: 'Enter your username',
-        validate: (value: string) => {
-          return Validator.notEmptyValidate(value);
-        }
-      },
-      {
-        type: 'password',
-        name: 'password',
-        message: 'Enter your Password',
-        validate: (value: string) => {
-          return Validator.notEmptyValidate(value);
-        }
-      },
-      {
-        type: 'confirm',
-        name: 'default',
-        default: false,
-        message: 'Set as Default Server ?'
-      }
-    ];
-  }
   /**
    * list available Server
    */
@@ -158,12 +105,8 @@ export class Server extends Command {
    */
   update(params?: Array<string>):any {
     this.crudHelper.update(params).subscribe(
-      () => {
-
-      },
-      (e:any) => {
-        console.error(e);
-      },
+      () => {},
+      (e:any) => console.error(e),
       () => {
         return this.init([this.name], this._parent);
       }
@@ -175,12 +118,8 @@ export class Server extends Command {
    */
   rm(id?:string):any {
     this.crudHelper.rm(id).subscribe(
-      () => {
-
-      },
-      (e:any) => {
-        console.error(e);
-      },
+      () => {},
+      (e:any) => console.error(e),
       () => {
         return this.init([this.name], this._parent);
       }

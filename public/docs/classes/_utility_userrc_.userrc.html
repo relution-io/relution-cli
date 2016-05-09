@@ -94,6 +94,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_utility_userrc_.userrc.html#_rchome" class="tsd-kind-icon">_rc<wbr>Home</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#appprefix" class="tsd-kind-icon">app<wbr>Prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#server" class="tsd-kind-icon">server</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -108,7 +109,9 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#debug" class="tsd-kind-icon">debug</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#getuserhome" class="tsd-kind-icon">get<wbr>User<wbr>Home</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#rcfileexist" class="tsd-kind-icon">rc<wbr>File<wbr>Exist</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#setserver" class="tsd-kind-icon">set<wbr>Server</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#streamrc" class="tsd-kind-icon">stream<wbr>Rc</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_userrc_.userrc.html#updatercfile" class="tsd-kind-icon">update<wbr>RcFile</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L8">utility/UserRc.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L11">utility/UserRc.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></h4>
@@ -142,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">_rc<wbr>Home<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L6">utility/UserRc.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L8">utility/UserRc.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,17 +155,27 @@
 					<div class="tsd-signature tsd-kind-icon">app<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L7">utility/UserRc.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L9">utility/UserRc.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="config" class="tsd-anchor"></a>
 					<h3>config</h3>
-					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L8">utility/UserRc.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L11">utility/UserRc.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="server" class="tsd-anchor"></a>
+					<h3>server</h3>
+					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L10">utility/UserRc.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -180,7 +193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L14">utility/UserRc.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L17">utility/UserRc.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -188,7 +201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L18">utility/UserRc.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L21">utility/UserRc.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -214,9 +227,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L61">utility/UserRc.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L95">utility/UserRc.ts:95</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>logger</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -237,9 +255,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L57">utility/UserRc.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L89">utility/UserRc.ts:89</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the home path form the reluitonrc file</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -254,10 +277,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L22">utility/UserRc.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L27">utility/UserRc.ts:27</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>check  if the relutionrc file exist</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setserver" class="tsd-anchor"></a>
+					<h3>set<wbr>Server</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Server<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L79">utility/UserRc.ts:79</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>set a collection the server models</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -271,9 +321,38 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/command-module/src/utility/UserRc.ts#L37">utility/UserRc.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L54">utility/UserRc.ts:54</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>read the relutionrc file</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatercfile" class="tsd-anchor"></a>
+					<h3>update<wbr>RcFile</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>RcFile<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/UserRc.ts#L105">utility/UserRc.ts:105</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>save the config into the rc file as json</p>
+									<pre><code class="lang-javascript">updateRcFile().subscribe((written:boolean) =&gt; {<span class="hljs-built_in">console</span>.log(written)});
+</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -287,19 +366,19 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_tower_.html">"<wbr>Tower"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_cli_.html">"cli"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_relution_.html">"commands/<wbr>Relution"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_commands_server_.html">"commands/<wbr>Server"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_server_add_.html">"commands/server/add"</a>
+						<a href="../modules/_commands_tower_.html">"commands/<wbr>Tower"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_commands_tower_spec_.html">"commands/<wbr>Tower.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_commands_server_servercrud_.html">"commands/server/<wbr>Server<wbr>Crud"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_gii_gii_.html">"gii/<wbr>Gii"</a>
@@ -308,7 +387,13 @@
 						<a href="../modules/_gii_gii_spec_.html">"gii/<wbr>Gii.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_certmodelrc_.html">"utility/<wbr>Cert<wbr>Model<wbr>Rc"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_command_.html">"utility/<wbr>Command"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_command_spec_.html">"utility/<wbr>Command.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
@@ -317,13 +402,22 @@
 						<a href="../modules/_utility_servermodelrc_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_servermodelrc_spec_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_table_.html">"utility/<wbr>Table"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_translation_.html">"utility/<wbr>Translation"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_utility_userrc_.html">"utility/<wbr>User<wbr>Rc"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_validator_.html">"utility/<wbr>Validator"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_welcome_.html">"utility/<wbr>Welcome"</a>
 					</li>
 				</ul>
 			</nav>
@@ -346,6 +440,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_utility_userrc_.userrc.html#config" class="tsd-kind-icon">config</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_utility_userrc_.userrc.html#server" class="tsd-kind-icon">server</a>
+							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="_utility_userrc_.userrc.html#rc" class="tsd-kind-icon">rc</a>
 							</li>
@@ -359,7 +456,13 @@
 								<a href="_utility_userrc_.userrc.html#rcfileexist" class="tsd-kind-icon">rc<wbr>File<wbr>Exist</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_utility_userrc_.userrc.html#setserver" class="tsd-kind-icon">set<wbr>Server</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_utility_userrc_.userrc.html#streamrc" class="tsd-kind-icon">stream<wbr>Rc</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_utility_userrc_.userrc.html#updatercfile" class="tsd-kind-icon">update<wbr>RcFile</a>
 							</li>
 						</ul>
 					</li>
