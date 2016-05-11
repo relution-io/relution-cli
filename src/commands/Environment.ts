@@ -49,10 +49,10 @@ export class Environment extends Command {
       observer.next(template);
       this.fsApi.writeHjson(template.render(name), name).subscribe(
         (pipe:any) => {
-
+          observer.next(pipe);
         },
         () => {},
-        () => observer.complete
+        () => {observer.complete()}
       );
     });
   }
@@ -88,12 +88,8 @@ export class Environment extends Command {
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
 
-  attribute(){
-
-  }
-
   /**
-   * add a new Environment
+   * add a new Environment allow attributes name as a string
    */
   add(name?: string) {
     if (!name || !name.length) {
@@ -101,19 +97,21 @@ export class Environment extends Command {
         this.enterName().subscribe(
           (answers: any) => {
             this.createEnvironment(answers.name).subscribe({
-              complete: () => observer.complete
+              complete: () => observer.complete()
             });
           },
           (e: any) => console.error(e),
-          () => observer.complete
+          () => {observer.complete();}
         );
       });
     }
 
     return Observable.create((observer:any) => {
-      this.createEnvironment(name[0]).subscribe({
-        complete: () => observer.complete
-      });
-    })
+      this.createEnvironment(name[0]).subscribe(
+        () => {observer.next()},
+        (e: any) => console.error(e),
+        () => {observer.complete();}
+      );
+    });
   }
 }
