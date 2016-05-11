@@ -27,7 +27,7 @@ export class UserRc {
   public rcFileExist() {
     return Observable.create((observer: any) => {
       fs.exists(this._rcHome, (exists) => {
-        console.log('exists', exists);
+        // console.log('exists', exists);
         if (exists) {
           observer.next(true);
           observer.complete();
@@ -44,9 +44,8 @@ export class UserRc {
             }
           )
         }
-
       });
-    })
+    });
   }
   /**
    * read the relutionrc file

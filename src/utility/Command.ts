@@ -65,12 +65,14 @@ export class Command implements CommandInterface {
    * preload data
    */
   preload() {
-    return this.userRc.rcFileExist().subscribe((exist: boolean) => {
-      if (exist) {
-        return this.userRc.streamRc().subscribe((data: any) => {
-          this.config = data;
-        });
-      }
+    return Observable.create((observer:any) => {
+      return this.userRc.rcFileExist().subscribe((exist: boolean) => {
+        if (exist) {
+          return this.userRc.streamRc().subscribe((data: any) => {
+            this.config = data;
+          });
+        }
+      });
     });
   }
   /**
@@ -123,7 +125,6 @@ export class Command implements CommandInterface {
 
   init(args: Array<string>, back: Tower) {
     console.log('Command.ts', args);
-    debugger;
     this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
@@ -166,8 +167,7 @@ export class Command implements CommandInterface {
           console.log(log);
         },
         (e: any) => {
-          console.error(e);
-          process.exit();
+          this.init([this.name], this._parent);
         },
         () => {
           this.init([this.name], this._parent)
