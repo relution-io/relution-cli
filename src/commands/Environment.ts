@@ -42,6 +42,21 @@ export class Environment extends Command {
   constructor() {
     super('env');
   }
+
+  createEnvironment(name:string) {
+    return Observable.create((observer:any) => {
+      let template = new EnvironmentTemplate();
+      observer.next(template);
+      this.fsApi.writeHjson(template.render(name), name).subscribe(
+        (pipe:any) => {
+
+        },
+        () => {},
+        () => observer.complete
+      );
+    });
+  }
+
   /**
    * add a name for a new environment
    */
@@ -73,25 +88,32 @@ export class Environment extends Command {
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
 
+  attribute(){
+
+  }
+
+  /**
+   * add a new Environment
+   */
   add(name?: string) {
     if (!name || !name.length) {
       return Observable.create((observer: any) => {
         this.enterName().subscribe(
           (answers: any) => {
-            let template = new EnvironmentTemplate();
-            observer.next(template);
-            this.fsApi.writeHjson(template.render(answers.name), answers.name).subscribe(
-              (pipe:any) => {},
-              () => {},
-              () => {
-                observer.complete();
-              }
-            );
+            this.createEnvironment(answers.name).subscribe({
+              complete: () => observer.complete
+            });
           },
           (e: any) => console.error(e),
           () => observer.complete
         );
       });
     }
+
+    return Observable.create((observer:any) => {
+      this.createEnvironment(name[0]).subscribe({
+        complete: () => observer.complete
+      });
+    })
   }
 }

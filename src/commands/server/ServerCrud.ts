@@ -1,7 +1,7 @@
 import {Observable, Observer} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
-import {ServerModelRc, ServerModel} from './../../utility/ServerModelRc';
+import {ServerModelRc, ServerModel} from './../../models/ServerModelRc';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';

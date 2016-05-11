@@ -2,7 +2,7 @@ import {Observable} from '@reactivex/rxjs';
 import * as fs from 'fs';
 import * as path from 'path';
 import {findIndex} from 'lodash';
-import {ServerModelRc} from './ServerModelRc';
+import {ServerModelRc} from './../models/ServerModelRc';
 
 export class UserRc {
   private _rcHome: string;

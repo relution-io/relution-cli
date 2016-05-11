@@ -3,7 +3,7 @@ import {Command} from './../utility/Command';
 import {Validator} from './../utility/Validator';
 import {ServerCrud} from './server/ServerCrud';
 
-import {ServerModelRc, ServerModel} from './../utility/ServerModelRc';
+import {ServerModelRc, ServerModel} from './../models/ServerModelRc';
 import {orderBy, partition, concat, map, findIndex} from 'lodash';
 
 const PRESS_ENTER = ' or press enter';

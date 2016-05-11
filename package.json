@@ -7,9 +7,10 @@
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
     "test": "jasmine-node --verbose --autotest --watch --color --test-dir lib",
+    "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
-    "watch": "tsconfig && tsc -p . -w",
+    "watch": "npm run clean && tsconfig && tsc -p . -w",
     "postinstall": "typings install"
   },
   "bin": {
@@ -18,6 +19,7 @@
   "author": "Pascal Brewing",
   "license": "Apache License",
   "devDependencies": {
+    "del-cli": "^0.2.0",
     "jasmine-node": "^1.14.5",
     "tslint": "^3.8.1",
     "typedoc": "sierrasoftworks/typedoc#v1.8.10",
@@ -29,6 +31,7 @@
     "cli-loader": "^1.1.1",
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
+    "del": "^2.2.0",
     "figures": "^1.5.0",
     "hjson": "^1.8.4",
     "inquirer": "DrMabuse23/Inquirer.js#add78131e3461acbc861b4cdba8aff67a54ef4f4",

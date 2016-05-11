@@ -3,7 +3,6 @@ import * as chalk from 'chalk';
 import {UserRc} from './UserRc';
 import {Table} from './Table';
 import {Tower} from './../commands/Tower';
-import {ServerModelRc} from './ServerModelRc';
 import {Translation} from './../utility/Translation';
 
 const inquirer = require('inquirer');
