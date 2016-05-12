@@ -114,7 +114,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#config" class="tsd-kind-icon">config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#directmode" class="tsd-kind-icon">direct<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_.environment.html#envcollection" class="tsd-kind-icon">env<wbr>Collection</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_.environment.html#envfiles" class="tsd-kind-icon">env<wbr>Files</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_.environment.html#fsapi" class="tsd-kind-icon">fs<wbr>Api</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_.environment.html#gii" class="tsd-kind-icon">gii</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#inquirer" class="tsd-kind-icon">inquirer</a></li>
@@ -136,11 +135,13 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#_copy" class="tsd-kind-icon">_copy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_environment_.environment.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_environment_.environment.html#attribute" class="tsd-kind-icon">attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_environment_.environment.html#createenvironment" class="tsd-kind-icon">create<wbr>Environment</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_environment_.environment.html#entername" class="tsd-kind-icon">enter<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#flatcommands" class="tsd-kind-icon">flat<wbr>Commands</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#help" class="tsd-kind-icon">help</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#init" class="tsd-kind-icon">init</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_environment_.environment.html#list" class="tsd-kind-icon">list</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_commands_environment_.environment.html#preload" class="tsd-kind-icon">preload</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#setupcommandsforlist" class="tsd-kind-icon">setup<wbr>Commands<wbr>For<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_environment_.environment.html#showcommands" class="tsd-kind-icon">show<wbr>Commands</a></li>
@@ -168,7 +169,7 @@
 							<aside class="tsd-sources">
 								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L58">commands/Environment.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L76">commands/Environment.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_commands_environment_.environment.html" class="tsd-signature-type">Environment</a></h4>
@@ -230,19 +231,14 @@
 					<div class="tsd-signature tsd-kind-icon">env<wbr>Collection<span class="tsd-signature-symbol">:</span> <a href="_collection_envcollection_.envcollection.html" class="tsd-signature-type">EnvCollection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L58">commands/Environment.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L76">commands/Environment.ts:76</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="envfiles" class="tsd-anchor"></a>
-					<h3>env<wbr>Files</h3>
-					<div class="tsd-signature tsd-kind-icon">env<wbr>Files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L57">commands/Environment.ts:57</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the collection of the available environments</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="fsapi" class="tsd-anchor"></a>
@@ -250,7 +246,7 @@
 					<div class="tsd-signature tsd-kind-icon">fs<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="_utility_fileapi_.fileapi.html" class="tsd-signature-type">FileApi</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L55">commands/Environment.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L68">commands/Environment.ts:68</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -265,9 +261,14 @@
 					<div class="tsd-signature tsd-kind-icon">gii<span class="tsd-signature-symbol">:</span> <a href="_gii_gii_.gii.html" class="tsd-signature-type">Gii</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L56">commands/Environment.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L72">commands/Environment.ts:72</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>code generator</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="inquirer" class="tsd-anchor"></a>
@@ -354,7 +355,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L93">commands/Environment.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L119">commands/Environment.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -363,6 +364,7 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Array</p>
 						</li>
 					</ul>
 				</section>
@@ -380,7 +382,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#_copy">_copy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L187">utility/Command.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L188">utility/Command.ts:188</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -403,7 +405,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L127">commands/Environment.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L179">commands/Environment.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -418,6 +420,30 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>Observable</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="attribute" class="tsd-anchor"></a>
+					<h3>attribute</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">attribute<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L153">commands/Environment.ts:153</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -431,7 +457,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L67">commands/Environment.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L87">commands/Environment.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -442,6 +468,9 @@
 									<dt>todo</dt>
 									<dd><p>add process.cwd as path</p>
 									</dd>
+									<dt>params</dt>
+									<dd><p>name create a &lt;$name&gt;.hjson in the project env folder</p>
+									</dd>
 								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -451,6 +480,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>Observable</p>
 						</li>
 					</ul>
 				</section>
@@ -464,10 +494,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L119">commands/Environment.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L148">commands/Environment.ts:148</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>create a prompt to enter a name</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable</p>
 						</li>
 					</ul>
 				</section>
@@ -482,7 +518,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#flatcommands">flatCommands</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L191">utility/Command.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L192">utility/Command.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -500,7 +536,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#help">help</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L91">utility/Command.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L92">utility/Command.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -540,7 +576,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L134">utility/Command.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L135">utility/Command.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -556,6 +592,29 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="list" class="tsd-anchor"></a>
+					<h3>list</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L160">commands/Environment.ts:160</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>shows all available environments</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>Observable</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="preload" class="tsd-anchor"></a>
 					<h3>preload</h3>
@@ -567,7 +626,7 @@
 							<aside class="tsd-sources">
 								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#preload">preload</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L83">commands/Environment.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L104">commands/Environment.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -576,6 +635,7 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>Observable</p>
 						</li>
 					</ul>
 				</section>
@@ -590,7 +650,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#setupcommandsforlist">setupCommandsForList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L195">utility/Command.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L196">utility/Command.ts:196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -608,7 +668,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#showcommands">showCommands</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L206">utility/Command.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L207">utility/Command.ts:207</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -635,7 +695,7 @@
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
 						<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commands">commands</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L22">commands/Environment.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L27">commands/Environment.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -649,7 +709,7 @@
 						<div class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L23">commands/Environment.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L28">commands/Environment.ts:28</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -658,7 +718,7 @@
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L24">commands/Environment.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L29">commands/Environment.ts:29</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -668,7 +728,7 @@
 							<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L25">commands/Environment.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L30">commands/Environment.ts:30</a></li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -677,7 +737,7 @@
 								<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L26">commands/Environment.ts:26</a></li>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L31">commands/Environment.ts:31</a></li>
 									</ul>
 								</aside>
 								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -686,7 +746,7 @@
 									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L27">commands/Environment.ts:27</a></li>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L32">commands/Environment.ts:32</a></li>
 										</ul>
 									</aside>
 								</section>
@@ -699,7 +759,7 @@
 						<div class="tsd-signature tsd-kind-icon">copy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L31">commands/Environment.ts:31</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L44">commands/Environment.ts:44</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -708,7 +768,7 @@
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L32">commands/Environment.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L45">commands/Environment.ts:45</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -718,7 +778,7 @@
 							<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L33">commands/Environment.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L46">commands/Environment.ts:46</a></li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -727,7 +787,7 @@
 								<div class="tsd-signature tsd-kind-icon">from<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L34">commands/Environment.ts:34</a></li>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L47">commands/Environment.ts:47</a></li>
 									</ul>
 								</aside>
 								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -736,7 +796,7 @@
 									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L35">commands/Environment.ts:35</a></li>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L48">commands/Environment.ts:48</a></li>
 										</ul>
 									</aside>
 								</section>
@@ -747,7 +807,7 @@
 								<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L37">commands/Environment.ts:37</a></li>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L50">commands/Environment.ts:50</a></li>
 									</ul>
 								</aside>
 								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -756,7 +816,7 @@
 									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L38">commands/Environment.ts:38</a></li>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L51">commands/Environment.ts:51</a></li>
 										</ul>
 									</aside>
 								</section>
@@ -769,7 +829,7 @@
 						<div class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L45">commands/Environment.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L58">commands/Environment.ts:58</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -778,27 +838,27 @@
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L46">commands/Environment.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L59">commands/Environment.ts:59</a></li>
 								</ul>
 							</aside>
 						</section>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
-						<a name="commands.list" class="tsd-anchor"></a>
+						<a name="commands.list-1" class="tsd-anchor"></a>
 						<h3>list</h3>
 						<div class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L42">commands/Environment.ts:42</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L55">commands/Environment.ts:55</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="commands.list.description-3" class="tsd-anchor"></a>
+							<a name="commands.list-1.description-3" class="tsd-anchor"></a>
 							<h3>description</h3>
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L43">commands/Environment.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L56">commands/Environment.ts:56</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -809,7 +869,7 @@
 						<div class="tsd-signature tsd-kind-icon">quit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L48">commands/Environment.ts:48</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L61">commands/Environment.ts:61</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -818,9 +878,59 @@
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L49">commands/Environment.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L62">commands/Environment.ts:62</a></li>
 								</ul>
 							</aside>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+						<a name="commands.update" class="tsd-anchor"></a>
+						<h3>update</h3>
+						<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L36">commands/Environment.ts:36</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.update.description-5" class="tsd-anchor"></a>
+							<h3>description</h3>
+							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L37">commands/Environment.ts:37</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+							<a name="commands.update.vars-2" class="tsd-anchor"></a>
+							<h3>vars</h3>
+							<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L38">commands/Environment.ts:38</a></li>
+								</ul>
+							</aside>
+							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+								<a name="commands.update.vars-2.name-3" class="tsd-anchor"></a>
+								<h3>name</h3>
+								<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L39">commands/Environment.ts:39</a></li>
+									</ul>
+								</aside>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="commands.update.vars-2.name-3.pos-3" class="tsd-anchor"></a>
+									<h3>pos</h3>
+									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Environment.ts#L40">commands/Environment.ts:40</a></li>
+										</ul>
+									</aside>
+								</section>
+							</section>
 						</section>
 					</section>
 				</section>
@@ -935,9 +1045,6 @@
 								<a href="_commands_environment_.environment.html#envcollection" class="tsd-kind-icon">env<wbr>Collection</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_commands_environment_.environment.html#envfiles" class="tsd-kind-icon">env<wbr>Files</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_commands_environment_.environment.html#fsapi" class="tsd-kind-icon">fs<wbr>Api</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -971,6 +1078,9 @@
 								<a href="_commands_environment_.environment.html#add" class="tsd-kind-icon">add</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_environment_.environment.html#attribute" class="tsd-kind-icon">attribute</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_environment_.environment.html#createenvironment" class="tsd-kind-icon">create<wbr>Environment</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -984,6 +1094,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_environment_.environment.html#init" class="tsd-kind-icon">init</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_environment_.environment.html#list" class="tsd-kind-icon">list</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_commands_environment_.environment.html#preload" class="tsd-kind-icon">preload</a>
