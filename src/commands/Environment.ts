@@ -2,6 +2,7 @@ import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../utility/Validator';
 import {Translation} from './../utility/Translation';
+import {EnvCollection} from './../collection/EnvCollection';
 import {FileApi} from './../utility/FileApi';
 import {Gii} from './../gii/Gii';
 /**
@@ -27,6 +28,17 @@ export class Environment extends Command {
         }
       }
     },
+    copy: {
+      description: 'copy a exist Environment',
+      vars: {
+        from: {
+          pos: 0
+        },
+        name:{
+          pos: 1
+        }
+      }
+    },
     help: {
       description: 'List the Server Command'
     },
@@ -40,12 +52,15 @@ export class Environment extends Command {
   public fsApi: FileApi = new FileApi();
   public gii:Gii = new Gii();
   public envFiles:Array<string> = [];
+  public envCollection:EnvCollection = new EnvCollection();
 
   constructor() {
     super('env');
-
   }
-
+  /**
+   * write the hjson to the dev folder
+   * @todo add process.cwd as path
+   */
   createEnvironment(name:string) {
     return Observable.create((observer:any) => {
       let template = this.gii.getTemplateByName(this.name);
@@ -58,6 +73,17 @@ export class Environment extends Command {
       );
     });
   }
+
+  /**
+   * overwrite Commnad preload and load environments before
+   */
+  preload () {
+    return this.envCollection.getEnvironments().subscribe({complete: ( ) => {
+      // console.log(this.collection.collection);
+      return super.preload();
+    }});
+  }
+
   /**
    * add a name for a new environment
    */
@@ -69,27 +95,23 @@ export class Environment extends Command {
         name: 'name',
         message: Translation.ENTER_SOMETHING.concat('Environment name'),
         validate: function(value: string) {
-          let done = this.async();
-          self.getEnvironments().subscribe((files:any) => {
-            if (files.indexOf(`${value}.hjson`) !== -1){
-              console.log(`Name ${value} already exist Please choose another one`);
+          let done:any =  this.async();
+          if (self.envCollection.isUnique(value)) {
+              console.log(`\n Name ${value} already exist please choose another one`);
               done(false);
-            }
-            let pass = value.match(Validator.stringPattern);
-            if (pass) {
-              done(null, true);
+          }
 
-            } else {
-              done(false);
-            }
-          });
+          let pass = value.match(Validator.stringPattern);
+          if (pass) {
+
+            done(null, true);
+          } else {
+            console.log(`\n Name ${value} has wrong character allowed only [a-z A-Z]`);
+            done(false);
+          }
         }
       }
     ];
-  }
-
-  getEnvironments() {
-    return this.fsApi.fileList(`${process.cwd()}/devtest`, '.hjson');
   }
 
   enterName() {

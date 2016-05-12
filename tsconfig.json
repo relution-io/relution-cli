@@ -22,6 +22,8 @@
     "files": [
         "typings/main.d.ts",
         "src/cli.ts",
+        "src/collection/EnvCollection.spec.ts",
+        "src/collection/EnvCollection.ts",
         "src/commands/Environment.ts",
         "src/commands/Server.ts",
         "src/commands/server/ServerCrud.ts",
@@ -31,6 +33,7 @@
         "src/gii/Gii.ts",
         "src/gii/templates/EnvironmentTemplate.ts",
         "src/models/CertModelRc.ts",
+        "src/models/EnvModel.ts",
         "src/models/ServerModelRc.spec.ts",
         "src/models/ServerModelRc.ts",
         "src/utility/Command.spec.ts",

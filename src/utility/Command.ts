@@ -101,9 +101,17 @@ export class Command implements CommandInterface {
             // && this.reserved.indexOf(commandName) === -1
             if (this.commands[commandName].vars) {
               let vars: Array<string> = Object.keys(this.commands[commandName].vars);
-              vars.forEach((param) => {
-                command.push(chalk.yellow(`<$${param}>`));
-              })
+              let params:string = '';
+              vars.forEach((param, index) => {
+                params += chalk.yellow(`<$${param}>`);
+                console.log(index, vars.length, index !== (vars.length -1));
+                if (index !== (vars.length -1) ){
+                  params += ' ';
+                }
+              });
+              if (params) {
+                command.push(params);
+              }
             } else {
               command.push('--');
             }
