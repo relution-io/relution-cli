@@ -37,8 +37,7 @@ export class EnvCollection {
     })
     Observable.forkJoin(all).subscribe((hjsons:any) => {
       hjsons.forEach((data:any) => {
-        let model = new EnvModel(data.data.name, data.path);
-        model.data = data.data;
+        let model = new EnvModel(data.data.name, data.path, data.data);
         this.collection.push(model);
       });
       observer.next(this.collection);

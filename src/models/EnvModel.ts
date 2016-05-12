@@ -7,19 +7,19 @@ export class EnvModel{
 
   private _name : string;
   private _path : string;
-  private _data : string;
+  private _data : any;
 
-  constructor(name: string, path:string){
+  constructor(name: string, path:string, data:any){
     this.name = name;
     this.path = path;
-
+    this.data = data;
   }
 
-  public get data() : string {
+  public get data() : any {
     return this._data;
   }
 
-  public set data(v : string) {
+  public set data(v : any) {
     this._data = v;
   }
 

@@ -92,7 +92,7 @@ export class Tower {
    */
   init() {
     // debugger;
-    console.log('Relution', this.args);
+    // console.log('Relution', this.args);
     // console.log('this.staticCommandRootKeys', this.staticCommandRootKeys);
     if (this.args[0] === this.name || this.staticCommandRootKeys.indexOf( this.args[0]) !== -1) {
       // console.log('this.args[0] === this.name', this.args[0] === this.name);
