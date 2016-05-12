@@ -53,7 +53,7 @@ export class AddAttribute {
     ];
   }
 
-  addPrompt() {
+  addAnotherPrompt() {
     let prompt: Array<any> = [
       {
         type: 'confirm',
@@ -74,6 +74,6 @@ export class AddAttribute {
    * Darfs ein bischen mehr sein ?
    */
   addAnother() {
-    return Observable.fromPromise(inquirer.prompt(this.addPrompt()));
+    return Observable.fromPromise(inquirer.prompt(this.addAnotherPrompt()));
   }
 }

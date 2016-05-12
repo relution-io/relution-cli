@@ -19,7 +19,7 @@ export class ChooseEnv{
   }
 
   /**
-   * @return Observable
+   * @return Array<any>
    */
   prompt():any {
     let orderedNames:any = map(orderBy(this.envCollection.collection,['name'], ['asc']), 'name');
@@ -53,11 +53,15 @@ export class ChooseEnv{
     ];
     return prompt;
   }
-
+  /**
+   * @return Observable
+   */
   choose(){
     return Observable.fromPromise(inquirer.prompt(this.prompt()));
   }
-
+  /**
+   * @return EnvCollection
+   */
   public get envCollection() : EnvCollection {
     return this._envCollection;
   }
