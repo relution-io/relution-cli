@@ -5,6 +5,7 @@ import {ServerModelRc, ServerModel} from './../../models/ServerModelRc';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
+import * as chalk from 'chalk';
 /**
  * add a Server to Config from the UserRc and store it
  */
@@ -25,7 +26,20 @@ export class ServerCrud {
         name: 'id',
         message: 'Server Name',
         validate: (value: string): any => {
-          var pass = value.match(Validator.stringNumberPattern);
+          let testNameModel:ServerModelRc = new ServerModelRc({
+            id: value,
+            default: false,
+            serverUrl: '',
+            userName: '',
+            password: ''
+          });
+
+          if (!this.isUnique(testNameModel)){
+            console.log(chalk.red(`\n Name ${value} already exist please choose another one`));
+            return false;
+          }
+
+          let pass = value.match(Validator.stringNumberPattern);
           if (pass) {
             return true;
           } else {
