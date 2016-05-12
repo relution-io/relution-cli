@@ -14,7 +14,7 @@
 ```bash
 $: git clone git@github.com:relution-io/relution-cli.git
 $: cd relution-cli
-$: npm install -g typings
+$: npm i -g tsconfig-cli typings
 $: npm i
 $: npm run watch
 ```
