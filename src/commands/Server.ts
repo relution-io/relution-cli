@@ -58,21 +58,12 @@ export class Server extends Command {
   }
 
   preload(){
-    return this.userRc.rcFileExist().subscribe(
-      (exist: boolean) => {
-        if (exist) {
-          return this.userRc.streamRc().subscribe((data: any) => {
-            this.config = data;
-          });
-        }
-      },
-      (e:any) => {
-        console.error(e);
-      },
-      () => {
+    return Observable.create((observer: any) => {
+      super.preload().subscribe({complete: () => {
         this.crudHelper = new ServerCrud(this.userRc);
-      }
-    );
+        observer.complete();
+      }})
+    });
   }
 
   /**

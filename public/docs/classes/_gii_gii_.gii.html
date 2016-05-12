@@ -70,16 +70,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<dl class="tsd-comment-tags">
-						<dt>class</dt>
-						<dd><p>Gii
-							the code generator</p>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -93,36 +83,66 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_gii_gii_.gii.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_gii_.gii.html#templates" class="tsd-kind-icon">templates</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_gii_.gii.html#templatesfolder" class="tsd-kind-icon">templates<wbr>Folder</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_gii_gii_.gii.html#gettemplatebyname" class="tsd-kind-icon">get<wbr>Template<wbr>ByName</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Gii<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_gii_gii_.gii.html" class="tsd-signature-type">Gii</a></li>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="templates" class="tsd-anchor"></a>
+					<h3>templates</h3>
+					<div class="tsd-signature tsd-kind-icon">templates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="_gii_gii_.templatemodel.html" class="tsd-signature-type">TemplateModel</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/Gii.ts#L39">gii/Gii.ts:39</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="templatesfolder" class="tsd-anchor"></a>
+					<h3>templates<wbr>Folder</h3>
+					<div class="tsd-signature tsd-kind-icon">templates<wbr>Folder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/Gii.ts#L37">gii/Gii.ts:37</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="gettemplatebyname" class="tsd-anchor"></a>
+					<h3>get<wbr>Template<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Template<wbr>ByName<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_gii_gii_.templatemodel.html" class="tsd-signature-type">TemplateModel</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/Gii.ts#L5">gii/Gii.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/Gii.ts#L43">gii/Gii.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_gii_gii_.gii.html" class="tsd-signature-type">Gii</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_gii_gii_.templatemodel.html" class="tsd-signature-type">TemplateModel</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -136,6 +156,15 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_cli_.html">"cli"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_collection_envcollection_.html">"collection/<wbr>Env<wbr>Collection"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_collection_envcollection_spec_.html">"collection/<wbr>Env<wbr>Collection.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_commands_environment_.html">"commands/<wbr>Environment"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_commands_server_.html">"commands/<wbr>Server"</a>
@@ -156,7 +185,19 @@
 						<a href="../modules/_gii_gii_spec_.html">"gii/<wbr>Gii.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_certmodelrc_.html">"utility/<wbr>Cert<wbr>Model<wbr>Rc"</a>
+						<a href="../modules/_gii_templates_environmenttemplate_.html">"gii/templates/<wbr>Environment<wbr>Template"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_certmodelrc_.html">"models/<wbr>Cert<wbr>Model<wbr>Rc"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_envmodel_.html">"models/<wbr>Env<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_servermodelrc_.html">"models/<wbr>Server<wbr>Model<wbr>Rc"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_servermodelrc_spec_.html">"models/<wbr>Server<wbr>Model<wbr>Rc.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_command_.html">"utility/<wbr>Command"</a>
@@ -165,13 +206,13 @@
 						<a href="../modules/_utility_command_spec_.html">"utility/<wbr>Command.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_fileapi_.html">"utility/<wbr>File<wbr>Api"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utility_fileapi_spec_.html">"utility/<wbr>File<wbr>Api.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_servermodelrc_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_servermodelrc_spec_.html">"utility/<wbr>Server<wbr>Model<wbr>Rc.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_table_.html">"utility/<wbr>Table"</a>
@@ -197,13 +238,22 @@
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_gii_gii_.gii.html" class="tsd-kind-icon">Gii</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_gii_gii_.gii.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_gii_.gii.html#templates" class="tsd-kind-icon">templates</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_gii_.gii.html#templatesfolder" class="tsd-kind-icon">templates<wbr>Folder</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_gii_gii_.gii.html#gettemplatebyname" class="tsd-kind-icon">get<wbr>Template<wbr>ByName</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_gii_gii_.templatemodel.html" class="tsd-kind-icon">Template<wbr>Model</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

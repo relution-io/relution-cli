@@ -66,10 +66,11 @@ export class Command implements CommandInterface {
    */
   preload() {
     return Observable.create((observer:any) => {
-      return this.userRc.rcFileExist().subscribe((exist: boolean) => {
+      this.userRc.rcFileExist().subscribe((exist: boolean) => {
         if (exist) {
-          return this.userRc.streamRc().subscribe((data: any) => {
+          this.userRc.streamRc().subscribe((data: any) => {
             this.config = data;
+            observer.complete();
           });
         }
       });
@@ -132,7 +133,7 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back: Tower) {
-    console.log('Command.ts', args);
+    console.log(`Command.ts ${this.name}`, args);
     this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
@@ -143,7 +144,7 @@ export class Command implements CommandInterface {
     }
 
     if (args.length >= 1 && args[0] === this.name && args[1] === Translation.QUIT) {
-      return this._parent.home()
+      return this._parent.home();
     }
 
     //we have this method maybe help we get ['server', 'help', 'param']

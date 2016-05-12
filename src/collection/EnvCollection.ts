@@ -28,7 +28,9 @@ export class EnvCollection {
   }
 
   public isUnique(name:string):EnvModel{
-    return find(this.collection, {name: name});
+    let test = find(this.collection, {name: name});
+    console.log('test', this.collection, test);
+    return test;
   }
 
   public getEnvironments() {

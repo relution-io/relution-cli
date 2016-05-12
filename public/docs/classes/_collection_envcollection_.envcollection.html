@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>InquirerHelper | Relution-CLI</title>
+	<title>EnvCollection | Relution-CLI</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,33 +57,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_utility_inquirerhelper_.html">&quot;utility/InquirerHelper&quot;</a>
+					<a href="../modules/_collection_envcollection_.html">&quot;collection/EnvCollection&quot;</a>
 				</li>
 				<li>
-					<a href="_utility_inquirerhelper_.inquirerhelper.html">InquirerHelper</a>
+					<a href="_collection_envcollection_.envcollection.html">EnvCollection</a>
 				</li>
 			</ul>
-			<h1>Class InquirerHelper</h1>
+			<h1>Class EnvCollection</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<dl class="tsd-comment-tags">
-						<dt>link</dt>
-						<dd><p><a href="https://www.npmjs.com/package/inquirer">https://www.npmjs.com/package/inquirer</a></p>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">InquirerHelper</span>
+						<span class="target">EnvCollection</span>
 					</li>
 				</ul>
 			</section>
@@ -92,49 +83,148 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#collection" class="tsd-kind-icon">collection</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#envfiles" class="tsd-kind-icon">env<wbr>Files</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#envfolder" class="tsd-kind-icon">env<wbr>Folder</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#fsapi" class="tsd-kind-icon">fs<wbr>Api</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_inquirerhelper_.inquirerhelper.html#list" class="tsd-kind-icon">list</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#flatenvarray" class="tsd-kind-icon">flat<wbr>Env<wbr>Array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#getenvironments" class="tsd-kind-icon">get<wbr>Environments</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#isunique" class="tsd-kind-icon">is<wbr>Unique</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#setcollection" class="tsd-kind-icon">set<wbr>Collection</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="collection" class="tsd-anchor"></a>
+					<h3>collection</h3>
+					<div class="tsd-signature tsd-kind-icon">collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_envmodel_.envmodel.html" class="tsd-signature-type">EnvModel</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L7">collection/EnvCollection.ts:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="envfiles" class="tsd-anchor"></a>
+					<h3>env<wbr>Files</h3>
+					<div class="tsd-signature tsd-kind-icon">env<wbr>Files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L8">collection/EnvCollection.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="envfolder" class="tsd-anchor"></a>
+					<h3>env<wbr>Folder</h3>
+					<div class="tsd-signature tsd-kind-icon">env<wbr>Folder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L9">collection/EnvCollection.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="fsapi" class="tsd-anchor"></a>
+					<h3>fs<wbr>Api</h3>
+					<div class="tsd-signature tsd-kind-icon">fs<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="_utility_fileapi_.fileapi.html" class="tsd-signature-type">FileApi</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L10">collection/EnvCollection.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="list" class="tsd-anchor"></a>
-					<h3>list</h3>
+					<a name="flatenvarray" class="tsd-anchor"></a>
+					<h3>flat<wbr>Env<wbr>Array</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, choices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span>, question<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">flat<wbr>Env<wbr>Array<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/InquirerHelper.ts#L11">utility/InquirerHelper.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L51">collection/EnvCollection.ts:51</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>link</dt>
-									<dd><p><a href="https://github.com/SBoudrias/Inquirer.js/blob/master/examples/list.js">https://github.com/SBoudrias/Inquirer.js/blob/master/examples/list.js</a></p>
-									</dd>
-								</dl>
-							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getenvironments" class="tsd-anchor"></a>
+					<h3>get<wbr>Environments</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Environments<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L34">collection/EnvCollection.ts:34</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isunique" class="tsd-anchor"></a>
+					<h3>is<wbr>Unique</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Unique<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_models_envmodel_.envmodel.html" class="tsd-signature-type">EnvModel</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L30">collection/EnvCollection.ts:30</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_models_envmodel_.envmodel.html" class="tsd-signature-type">EnvModel</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setcollection" class="tsd-anchor"></a>
+					<h3>set<wbr>Collection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Collection<span class="tsd-signature-symbol">(</span>observer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L12">collection/EnvCollection.ts:12</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
 								<li>
-									<h5>choices: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>question: <span class="tsd-signature-type">string</span></h5>
+									<h5>observer: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -149,7 +239,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_cli_.html">"cli"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_collection_envcollection_.html">"collection/<wbr>Env<wbr>Collection"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -203,7 +293,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_fileapi_spec_.html">"utility/<wbr>File<wbr>Api.spec"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -228,10 +318,31 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_utility_inquirerhelper_.inquirerhelper.html" class="tsd-kind-icon">Inquirer<wbr>Helper</a>
+						<a href="_collection_envcollection_.envcollection.html" class="tsd-kind-icon">Env<wbr>Collection</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#collection" class="tsd-kind-icon">collection</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#envfiles" class="tsd-kind-icon">env<wbr>Files</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#envfolder" class="tsd-kind-icon">env<wbr>Folder</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#fsapi" class="tsd-kind-icon">fs<wbr>Api</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_utility_inquirerhelper_.inquirerhelper.html#list" class="tsd-kind-icon">list</a>
+								<a href="_collection_envcollection_.envcollection.html#flatenvarray" class="tsd-kind-icon">flat<wbr>Env<wbr>Array</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#getenvironments" class="tsd-kind-icon">get<wbr>Environments</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#isunique" class="tsd-kind-icon">is<wbr>Unique</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#setcollection" class="tsd-kind-icon">set<wbr>Collection</a>
 							</li>
 						</ul>
 					</li>

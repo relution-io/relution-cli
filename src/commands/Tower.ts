@@ -93,8 +93,9 @@ export class Tower {
   init() {
     // debugger;
     console.log('Relution', this.args);
-    if (this.args[0] === this.name) {
-      //console.log('this.args[0] === this.name', this.args[0] === this.name);
+    // console.log('this.staticCommandRootKeys', this.staticCommandRootKeys);
+    if (this.args[0] === this.name || this.staticCommandRootKeys.indexOf( this.args[0]) !== -1) {
+      // console.log('this.args[0] === this.name', this.args[0] === this.name);
       //only relution
       if (this.args.length === 1) {
         // console.log('this.args.length === 1', this.args.length === 1);
@@ -107,7 +108,7 @@ export class Tower {
           return this.init();
         });
       }
-
+      // console.log('this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]', this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]);
       if (this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]) {
         return this[this.args[1]]().subscribe(
           (log: any) => {
@@ -121,18 +122,18 @@ export class Tower {
             this.init();
           });
       }
-
-
+      // console.log('hey iaam here');
       //if from subcommand a method ?
-      if (this.staticCommandRootKeys.indexOf(this.args[1]) !== -1) {
-        //console.log('this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1', this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1);
+      if (this.staticCommandRootKeys.indexOf(this.args[1]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[0]) !== -1) {
+        // console.log('this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1', this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1);
+
         let subArgs = this._copy(this.args);
         if (subArgs[0] === this.name) {
           subArgs.splice(0, 1);
         }
         //only ['server']
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
-          console.log(`trigger static ${subArgs.toString()} showCommands`);
+          // console.log(`trigger static ${subArgs.toString()} showCommands`);
           return this.staticCommands[subArgs[0]].init(subArgs, this);
         //only ['server', 'add', 'name']
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {

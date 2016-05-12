@@ -18,9 +18,9 @@ Object.keys(staticCommands).forEach((commandName:any) => {
 });
 
 //preload done
-Observable.forkJoin([all]).subscribe(
+Observable.forkJoin(all).subscribe(
   () => {
-    //console.log(`cli is preloaded`);
+
   },
   (e:any) => {
     console.error(e);
@@ -28,6 +28,7 @@ Observable.forkJoin([all]).subscribe(
     process.exit();
   },
   () => {
+    console.log(`cli is preloaded`);
     let relution = new Tower(staticCommands);
     // loader.stop();
   }
