@@ -1,6 +1,6 @@
 import {Command} from './../utility/Command';
 import * as chalk from 'chalk';
-import {isArray, isString} from 'lodash';
+import {isArray, isString, map} from 'lodash';
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../utility/Validator';
 import {Translation} from './../utility/Translation';
@@ -164,8 +164,8 @@ export class Environment extends Command {
     return Observable.create((observer: any) => {
       this.addAttribute.store().subscribe(
         (answers: any) => {
-          console.log('answers store', answers);
-          store.push(answers);
+          // console.log('answers store', answers);
+          store.push({key: answers.key.trim(), value: answers.value.trim()});
         },
         (e: any) => console.error(e),
         () => {
@@ -189,7 +189,9 @@ export class Environment extends Command {
       );
     });
   }
-
+  /**
+   *
+   */
   update(name?: string) {
     let attributes: Array<any> = [];
     let names: Array<string> = [];
@@ -203,9 +205,10 @@ export class Environment extends Command {
         this.getAttributes([]).subscribe(
           (attrs: any) => {
             attributes = attrs;
-            console.log('result', attributes);
+            // console.log('result', attributes);
             this.envCollection.bulkUpdate(names, attributes).subscribe(
               (res: any) => {
+                // console.log('complete????');
                 super.home();
               }
             );

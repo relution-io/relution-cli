@@ -103,7 +103,9 @@ export class EnvCollection {
             console.log(chalk.green(`File Environment ${model.name} are written`));
           }
           observer.next(answer);
-        }
+        },
+        (e:any) => observer.error(e),
+        () => observer.complete()
       );
     });
   }

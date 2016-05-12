@@ -28,7 +28,7 @@ describe('Command Environment ChooseEnv', () => {
   it('chooseEnv has a prompt', (done) => {
     let prompt = chooseEnv.prompt()[0];
     expect(prompt.choices.length).toBe(mock.length + 1);
-    expect(prompt.choices[0]).toBe('atstart');
+    expect(prompt.choices[0].name).toBe('atstart');
     done();
   });
 
@@ -37,5 +37,6 @@ describe('Command Environment ChooseEnv', () => {
     //   expect(answers[chooseEnv.promptName]).toBeDefined();
     //   done();
     // });
+    done();
   });
 })

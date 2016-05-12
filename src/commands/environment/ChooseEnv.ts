@@ -22,8 +22,20 @@ export class ChooseEnv{
    * @return Observable
    */
   prompt():any {
-    let choices:any = map(orderBy(this.envCollection.collection,['name'], ['asc']), 'name');
-    choices.push(Translation.TAKE_ME_OUT);
+    let orderedNames:any = map(orderBy(this.envCollection.collection,['name'], ['asc']), 'name');
+    let choices:Array<{name:string, checked:boolean}> = [];
+
+    orderedNames.forEach((env:string) => {
+      choices.push({
+        name: env,
+        checked: true
+      });
+    });
+
+    choices.push({
+      name: Translation.TAKE_ME_OUT,
+      checked: false
+    });
 
     let prompt:Array<any>  = [
       {
