@@ -6,11 +6,15 @@ import * as inquirer from 'inquirer';
 import * as chalk from 'chalk';
 
 export class AddAttribute {
-  private _store:Array<any> = [];
+  private _store: Array<any> = [];
   /**
    * @param promptName return the key from the prompt
    */
   public promptName: string = 'envattribute';
+  /**
+     * @param promptName return the key from the prompt
+     */
+  public addPromptName: string = 'another';
 
   prompt(): any {
     return [
@@ -49,7 +53,27 @@ export class AddAttribute {
     ];
   }
 
-  store(){
-    return Observable.fromPromise(inquirer.prompt(prompt));
+  addPrompt() {
+    let prompt: Array<any> = [
+      {
+        type: 'confirm',
+        name: this.addPromptName,
+        default: false,
+        message: 'Add one more ?'
+      }
+    ];
+    return prompt;
+  }
+  /**
+   * create a key value question prompt
+   */
+  store() {
+    return Observable.fromPromise(inquirer.prompt(this.prompt()));
+  }
+  /**
+   * Darfs ein bischen mehr sein ?
+   */
+  addAnother() {
+    return Observable.fromPromise(inquirer.prompt(this.addPrompt()));
   }
 }

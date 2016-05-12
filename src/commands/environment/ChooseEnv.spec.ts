@@ -16,12 +16,11 @@ describe('Command Environment ChooseEnv', () => {
     });
     envCollection.collection = collection;
     chooseEnv = new ChooseEnv(envCollection);
-    chooseEnv.promptName = 'testenv';
   });
 
   it('chooseEnv has a collection', (done) => {
     expect(chooseEnv.envCollection.collection.length).toBe(mock.length);
-    expect(chooseEnv.promptName).toBe('testenv');
+    expect(chooseEnv.promptName).toBe('env');
     expect(chooseEnv.envCollection.collection[0].name).toBe('zend');
     done();
   });

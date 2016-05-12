@@ -1,7 +1,8 @@
 import {EnvModel} from './../models/EnvModel';
 import {FileApi} from './../utility/FileApi';
 import {Observable} from '@reactivex/rxjs';
-import {find} from 'lodash';
+import {find, findIndex} from 'lodash';
+import * as chalk from 'chalk';
 /**
  * @class EnvCollection the collection Helper Class for the environments
  */
@@ -86,5 +87,48 @@ export class EnvCollection {
       flat.push(model.name);
     });
     return flat;
+  }
+
+  public updateModelByName(name:string, attributes:Array<{key:string, value:any}>) {
+    return Observable.create((observer:any) => {
+      let modelIndex:number = findIndex(this.collection, {name: name});
+      let model:EnvModel = this.collection[modelIndex];
+      attributes.forEach((attr:any) => {
+        model.data[attr.key] = attr.value;
+      });
+      // console.log(model);
+      this.fsApi.writeHjson(model.data, model.name).subscribe(
+        (answer:any) => {
+          if (answer) {
+            console.log(chalk.green(`File Environment ${model.name} are written`));
+          }
+          observer.next(answer);
+        }
+      );
+    });
+  }
+
+  public bulkUpdate(env:Array<string>, store:Array<{key:string, value:any}>):Observable<any>{
+    return Observable.create((observer:any) => {
+      if (!store.length){
+        observer.error('Store can not be empty');
+        return observer.complete()
+      }
+
+      let all:Array<any> = [];
+      env.forEach((envName:string) => {
+        all.push(this.updateModelByName(envName, store));
+      });
+
+      if (all.length) {
+        Observable.forkJoin(all).subscribe(
+          (answers:any) => {
+            observer.next(answers);
+          },
+          (e:any) => observer.error(),
+          () => observer.complete()
+        )
+      }
+    });
   }
 }

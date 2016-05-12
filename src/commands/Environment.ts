@@ -111,12 +111,12 @@ export class Environment extends Command {
    * @returns Observable
    */
   preload() {
-    return Observable.create((observer:any) => {
+    return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
         complete: () => {
           // console.log(this.envCollection.collection);
           this.chooseEnv = new ChooseEnv(this.envCollection);
-          super.preload().subscribe({complete: () => observer.complete() });
+          super.preload().subscribe({ complete: () => observer.complete() });
         }
       });
     });
@@ -160,15 +160,59 @@ export class Environment extends Command {
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
 
+  getAttributes(store: Array<{ key: string, value: any }>) {
+    return Observable.create((observer: any) => {
+      this.addAttribute.store().subscribe(
+        (answers: any) => {
+          console.log('answers store', answers);
+          store.push(answers);
+        },
+        (e: any) => console.error(e),
+        () => {
+          this.addAttribute.addAnother().subscribe(
+            (answers: any) => {
+              // console.log('answers another', answers );
+              if (answers[this.addAttribute.addPromptName] === false) {
+                observer.next(store);
+                return observer.complete();
+              }
+              // console.log('store', store);
+              this.getAttributes(store).subscribe({
+                complete: () => {
+                  observer.next(store);
+                  observer.complete();
+                }
+              });
+            }
+          );
+        }
+      );
+    });
+  }
+
   update(name?: string) {
-    let all:Array<any> = [];
-    if (!name || name.length) {
-      this.chooseEnv.prompt().subcribe(
-        (answers:Array<string>) => {
-          let names = answers[this.chooseEnv.promptName];
-          console.log(names);
-      })
-    }
+    let attributes: Array<any> = [];
+    let names: Array<string> = [];
+    this.chooseEnv.choose().subscribe(
+      (answers: any) => {
+        names = answers[this.chooseEnv.promptName];
+        // console.log(names);
+        if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
+          return super.home();
+        }
+        this.getAttributes([]).subscribe(
+          (attrs: any) => {
+            attributes = attrs;
+            console.log('result', attributes);
+            this.envCollection.bulkUpdate(names, attributes).subscribe(
+              (res: any) => {
+                super.home();
+              }
+            );
+          }
+        );
+      }
+    );
   }
   /**
    * shows all available environments
