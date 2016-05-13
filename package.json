@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "jasmine-node --verbose --autotest --watch --color --test-dir lib",
+    "test": "istanbul cover lib/**/*.js && jasmine-node --verbose --autotest --watch --color --test-dir lib",
     "testfile": "jasmine-node --verbose --autotest --watch --color --test-dir lib/utility",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
@@ -21,6 +21,7 @@
   "license": "Apache License",
   "devDependencies": {
     "del-cli": "^0.2.0",
+    "istanbul": "^0.4.3",
     "jasmine-node": "^1.14.5",
     "tslint": "^3.8.1",
     "typedoc": "sierrasoftworks/typedoc#v1.8.10",
