@@ -1,7 +1,7 @@
 import {Tower} from './Tower';
 import {Observable, Subscriber} from '@reactivex/rxjs';
 
-describe('Commands Relution', () => {
+describe('Commands Tower Relution', () => {
   let command: Tower;
 
   beforeEach(() => {

@@ -7,7 +7,7 @@ export class FileApi {
   public encode: string = 'utf8';
   public hjsonSuffix: string = 'hjson';
   public path: string = `${__dirname}/../../devtest/`;
-  private _hjsonOptions: any = { keepWsc: true };
+  public hjsonOptions: any = { keepWsc: true };
 
   /**
    * read a hjson file by path
@@ -19,7 +19,7 @@ export class FileApi {
     return Observable.create((observer: any) => {
       result.subscribe(
         (file: any) => {
-          observer.next({ path: path, data: Hjson.parse(file, this._hjsonOptions) });
+          observer.next({ path: path, data: Hjson.parse(file, this.hjsonOptions) });
         },
         (e: any) => console.error(e),
         () => observer.complete()
@@ -28,26 +28,25 @@ export class FileApi {
   }
 
   copyHjson(org:any){
-    let c:any = Hjson.stringify(org, this._hjsonOptions);
-    return Hjson.parse(c, this._hjsonOptions);
+    let c:any = Hjson.stringify(org, this.hjsonOptions);
+    return Hjson.parse(c, this.hjsonOptions);
   }
+
   /**
    * Hjson.stringify(value, options)
    */
   writeHjson(content: string, fileName: string) {
     let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
-    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, Hjson.stringify(content, this._hjsonOptions), this.encode);
+    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content), this.encode);
 
     return Observable.create((observer: any) => {
       result.subscribe(
         () => {
           observer.next(true);
         },
-        (err: Error) => {
-          if (err) {
-            observer.error(err);
-            observer.complete();
-          }
+        (err: any) => {
+          observer.error(err);
+          observer.complete();
         },
         () => observer.complete()
       );

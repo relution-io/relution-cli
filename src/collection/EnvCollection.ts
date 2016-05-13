@@ -3,7 +3,7 @@ import {FileApi} from './../utility/FileApi';
 import {Observable} from '@reactivex/rxjs';
 import {find, findIndex} from 'lodash';
 import * as chalk from 'chalk';
-import * as Hjson from 'hjson';
+
 /**
  * @class EnvCollection the collection Helper Class for the environments
  */
@@ -54,7 +54,7 @@ export class EnvCollection {
    */
   public isUnique(name:string):EnvModel{
     let test = find(this.collection, {name: name});
-    console.log('test', this.collection, test);
+    //console.log('test', this.collection, test);
     return test;
   }
   /**

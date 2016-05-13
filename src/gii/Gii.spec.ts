@@ -1,5 +1,3 @@
-describe('Testwurst', () => {
-  it('test is here', (done) =>{
-    done();
-  })
+describe('Gii Code Generator', () => {
+
 });

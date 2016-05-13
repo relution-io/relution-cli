@@ -15,11 +15,11 @@ export class EnvironmentTemplate {
   get template():string {
     //i know the tabs incorrect but its better for templating
     // try it before you change that
-    return Hjson.parse(`
+    return(`
 {
   //all vars are usable in your hjson files
   name: ${this.name}
-}`,{keepWsc: true});
+}`);
   }
 
   public render(name:string){

@@ -80,6 +80,10 @@ export class Command implements CommandInterface {
   home(){
     return this.init([this.name], this._parent);
   }
+
+  quit(){
+    return this.init([this.name], this._parent);
+  }
   /**
    * @description shows a list of Available commands form the Command like this
    * ```bash
