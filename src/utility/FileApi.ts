@@ -37,7 +37,7 @@ export class FileApi {
    */
   writeHjson(content: string, fileName: string) {
     let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
-    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content), this.encode);
+    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content), this.hjsonOptions);
 
     return Observable.create((observer: any) => {
       result.subscribe(

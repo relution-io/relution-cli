@@ -3,6 +3,7 @@ import {FileApi} from './../utility/FileApi';
 import {Observable} from '@reactivex/rxjs';
 import {find, findIndex} from 'lodash';
 import * as chalk from 'chalk';
+const Hjson = require('hjson');
 
 /**
  * @class EnvCollection the collection Helper Class for the environments
@@ -19,7 +20,7 @@ export class EnvCollection {
   /**
    * @param envFolder root folder from the env/<name>.hjson
    */
-  public envFolder: string = `${process.cwd()}/devtest`;
+  public envFolder: string = `${process.cwd()}/env/`;
   /**
    * @param fsApi file helper
    */
@@ -34,9 +35,12 @@ export class EnvCollection {
     let datas:Array<any> = [];
     let all:Array<any> = [];
     this.collection = [];
-    this.envFiles.forEach((file) => {
-      all.push(this.fsApi.readHjson(`${this.envFolder}/${file}`));
-    })
+    this.fsApi.path = this.envFolder;
+    this.envFiles.forEach((file:string) => {
+      if (file) {
+        all.push(this.fsApi.readHjson(`${this.envFolder}/${file}`));
+      }
+    });
     Observable.forkJoin(all).subscribe((hjsons:any) => {
       hjsons.forEach((data:any) => {
         let model = new EnvModel(data.data.name, data.path, data.data);
@@ -70,9 +74,17 @@ export class EnvCollection {
       this.fsApi.fileList(this.envFolder, '.hjson')
       .subscribe({
         next: (filePath: string) => {
-          this.envFiles.push(filePath);
+          if (filePath) {
+            // console.log('filePath', filePath);
+            this.envFiles.push(filePath);
+          }
+
         },
         complete: () => {
+          if (!this.envFiles.length) {
+            observer.next([])
+            return observer.complete();
+          }
           return this.setCollection(observer);
         }
       });
@@ -111,7 +123,7 @@ export class EnvCollection {
       let newData:any = this.fsApi.copyHjson(model.data);
       newData.name = to;
 
-      this.fsApi.writeHjson(newData, to).subscribe({
+      this.fsApi.writeHjson(Hjson.stringify(newData, this.fsApi.hjsonOptions), to).subscribe({
         complete: () => {
           this.getEnvironments().subscribe({
             complete: () => {
@@ -131,7 +143,7 @@ export class EnvCollection {
         model.data[attr.key] = attr.value;
       });
       // console.log(model);
-      this.fsApi.writeHjson(model.data, model.name).subscribe(
+      this.fsApi.writeHjson(Hjson.stringify(model.data, this.fsApi.hjsonOptions), model.name).subscribe(
         (answer:any) => {
           if (answer) {
             console.log(chalk.magenta(`File Environment ${model.name} are written`));

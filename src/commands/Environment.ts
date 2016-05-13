@@ -84,8 +84,10 @@ export class Environment extends Command {
    * prompt for add key value pair
    */
   public addAttribute: AddAttribute = new AddAttribute();
+
   constructor() {
     super('env');
+    this.fsApi.path = `${process.cwd()}/env/`;
   }
   /**
    * write the hjson to the dev folder
@@ -100,7 +102,7 @@ export class Environment extends Command {
         (pipe: any) => {
           observer.next(pipe);
         },
-        (e: any) => { observer.error(e) },
+        (e: any) => { console.error(e);observer.error(e); },
         () => {
           this.envCollection.getEnvironments().subscribe({
             complete: () => observer.complete()
@@ -196,30 +198,34 @@ export class Environment extends Command {
   /**
    *
    */
-  update(name?: string) {
+  update(name?: string):Observable<any> {
     let attributes: Array<any> = [];
     let names: Array<string> = [];
-    this.chooseEnv.choose().subscribe(
-      (answers: any) => {
-        names = answers[this.chooseEnv.promptName];
-        // console.log(names);
-        if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
-          return super.home();
-        }
-        this.getAttributes([]).subscribe(
-          (attrs: any) => {
-            attributes = attrs;
-            // console.log('result', attributes);
-            this.envCollection.bulkUpdate(names, attributes).subscribe(
-              (res: any) => {
-                // console.log('complete????');
-                super.home();
-              }
-            );
+    return Observable.create((observer:any) => {
+      this.chooseEnv.choose().subscribe(
+        (answers: any) => {
+          names = answers[this.chooseEnv.promptName];
+          console.log('names', names);
+          if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
+            return observer.complete();
           }
-        );
-      }
-    );
+
+          this.getAttributes([]).subscribe(
+            (attrs: any) => {
+              attributes = attrs;
+              // console.log('result', attributes);
+              this.envCollection.bulkUpdate(names, attributes).subscribe(
+                (res: any) => {
+                  // console.log('complete????');
+                  observer.complete();
+                }
+              );
+            }
+          );
+        }
+      );
+    });
+
   }
   /**
    * shows all available environments

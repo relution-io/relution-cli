@@ -4,6 +4,9 @@
  */
 import {findIndex} from 'lodash';
 import {EnvironmentTemplate} from './templates/EnvironmentTemplate';
+import {App as AppTemplate} from './templates/new/App';
+import {PackageJson as PackageJsonTemplate} from './templates/new/PackageJson';
+
 class TemplateModel {
   private _path: string;
   private _name: string;
@@ -37,7 +40,9 @@ export class Gii {
   public templatesFolder: string = `./templates/`;
 
   public templates: Array<TemplateModel> = [
-    new TemplateModel('env', new EnvironmentTemplate())
+    new TemplateModel('env', new EnvironmentTemplate()),
+    new TemplateModel('app', new AppTemplate()),
+    new TemplateModel('package', new PackageJsonTemplate())
   ];
 
   public getTemplateByName(name:string) : TemplateModel {

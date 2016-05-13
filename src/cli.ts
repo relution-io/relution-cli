@@ -31,7 +31,7 @@ Observable.forkJoin(all).subscribe(
     process.exit();
   },
   () => {
-    console.log(`cli is preloaded`);
+    // console.log(`cli is preloaded`);
     let relution = new Tower(staticCommands);
     // loader.stop();
   }
