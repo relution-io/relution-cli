@@ -3,6 +3,7 @@ import {FileApi} from './../utility/FileApi';
 import {Observable} from '@reactivex/rxjs';
 import {find, findIndex} from 'lodash';
 import * as chalk from 'chalk';
+import * as Hjson from 'hjson';
 /**
  * @class EnvCollection the collection Helper Class for the environments
  */
@@ -77,6 +78,8 @@ export class EnvCollection {
       });
     });
   }
+
+
   /**
    * return available names from the hjson files
    * @returns Array
@@ -87,6 +90,37 @@ export class EnvCollection {
       flat.push(model.name);
     });
     return flat;
+  }
+  /**
+   * copy a envModel and create the Hjson file in the envFolder
+   */
+  public copyByName(name:string, to:string):Observable<any>{
+    return Observable.create((observer:any) => {
+      let model:EnvModel = this.isUnique(name);
+
+      if (this.isUnique(to)){
+        observer.error(chalk.red(`${to} already exist please remove it before`));
+        return observer.complete();
+      }
+
+      if (!model) {
+        observer.error(chalk.red(`${name} not exist please add it before`));
+        return observer.complete();
+      }
+
+      let newData:any = this.fsApi.copyHjson(model.data);
+      newData.name = to;
+
+      this.fsApi.writeHjson(newData, to).subscribe({
+        complete: () => {
+          this.getEnvironments().subscribe({
+            complete: () => {
+              observer.complete();
+            }
+          });
+        }
+      });
+    });
   }
 
   public updateModelByName(name:string, attributes:Array<{key:string, value:any}>) {
@@ -100,7 +134,7 @@ export class EnvCollection {
       this.fsApi.writeHjson(model.data, model.name).subscribe(
         (answer:any) => {
           if (answer) {
-            console.log(chalk.green(`File Environment ${model.name} are written`));
+            console.log(chalk.magenta(`File Environment ${model.name} are written`));
           }
           observer.next(answer);
         },

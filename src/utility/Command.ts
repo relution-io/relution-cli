@@ -109,7 +109,7 @@ export class Command implements CommandInterface {
               let params:string = '';
               vars.forEach((param, index) => {
                 params += chalk.yellow(`<$${param}>`);
-                console.log(index, vars.length, index !== (vars.length -1));
+                // console.log(index, vars.length, index !== (vars.length -1));
                 if (index !== (vars.length -1) ){
                   params += ' ';
                 }
@@ -137,7 +137,7 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back: Tower) {
-    console.log(`Command.ts ${this.name}`, args);
+    // console.log(`Command.ts ${this.name}`, args);
     this._parent = back;
     //directly
     if (args[0] === this.name && args.length === 1) {
@@ -209,7 +209,7 @@ export class Command implements CommandInterface {
   }
 
   showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
-    console.log(new Date().getTime());
+    // console.log(new Date().getTime());
     let questions = [
       {
         name: this.name,

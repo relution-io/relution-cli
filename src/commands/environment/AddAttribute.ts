@@ -22,12 +22,12 @@ export class AddAttribute {
         type: 'input',
         name: 'key',
         message: Translation.ENTER_SOMETHING.concat('key'),
-        validate: function (value: string) {
+        validate: (value: string):boolean =>  {
           if (value === 'name') {
             console.log(chalk.red(`\n Key ${value} is a reserved key attribute and cant be overwritten.`));
             return false;
           }
-          let pass: any = value.match(Validator.stringPattern);
+          let pass: RegExpMatchArray = value.match(Validator.stringPattern);
           if (pass) {
             return true;
           } else {
@@ -40,8 +40,8 @@ export class AddAttribute {
         type: 'input',
         name: 'value',
         message: Translation.ENTER_SOMETHING.concat('value'),
-        validate: function (value: string) {
-          let pass: any = value.match(Validator.stringNumberPattern);
+        validate: (value: string):boolean => {
+          let pass: RegExpMatchArray = value.match(Validator.stringNumberPattern);
           if (pass) {
             return true;
           } else {

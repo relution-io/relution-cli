@@ -99,7 +99,7 @@ export class Server extends Command {
       () => {},
       (e:any) => console.error(e),
       () => {
-        return this.init([this.name], this._parent);
+        return super.home();
       }
     );
   }
@@ -112,7 +112,7 @@ export class Server extends Command {
       () => {},
       (e:any) => console.error(e),
       () => {
-        return this.init([this.name], this._parent);
+        return super.home();
       }
     );
   }
@@ -124,7 +124,7 @@ export class Server extends Command {
       () => {},
       (e:any) => console.error(e),
       () => {
-        return this.init([this.name], this._parent);
+        return super.home();
       }
     );
   }

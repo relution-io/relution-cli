@@ -4,15 +4,15 @@ import {Translation} from './../../utility/Translation';
 import {orderBy, map} from 'lodash';
 import * as inquirer from 'inquirer';
 
-export class ChooseEnv{
+export class ChooseEnv {
   /**
    * @param _collection the Environment Collection
    */
-  private _envCollection : EnvCollection;
+  private _envCollection: EnvCollection;
   /**
    * @param promptName return the key from the prompt
    */
-  public promptName:string = 'env';
+  public promptName: string = 'env';
 
   constructor(envCollection: EnvCollection) {
     this.envCollection = envCollection;
@@ -21,14 +21,14 @@ export class ChooseEnv{
   /**
    * @return Array<any>
    */
-  prompt():any {
-    let orderedNames:any = map(orderBy(this.envCollection.collection,['name'], ['asc']), 'name');
-    let choices:Array<{name:string, checked:boolean}> = [];
+  prompt(type: string = 'checkbox', message: string = Translation.SELECT('Environment/s')): any {
+    let orderedNames: any = map(orderBy(this.envCollection.collection, ['name'], ['asc']), 'name');
+    let choices: Array<{ name: string, checked: boolean }> = [];
 
-    orderedNames.forEach((env:string) => {
+    orderedNames.forEach((env: string) => {
       choices.push({
         name: env,
-        checked: true
+        checked: type === 'checkbox' ? true : false
       });
     });
 
@@ -37,15 +37,15 @@ export class ChooseEnv{
       checked: false
     });
 
-    let prompt:Array<any>  = [
+    let prompt: Array<any> = [
       {
-        type: 'checkbox',
-        message: 'Select Environment/s',
+        type: type,
+        message: message,
         name: this.promptName,
         choices: choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
-            return 'You must choose at least one environment.';
+            return Translation.YOU_MOUST_CHOOSE('environment');
           }
           return true;
         }
@@ -56,17 +56,17 @@ export class ChooseEnv{
   /**
    * @return Observable
    */
-  choose(){
-    return Observable.fromPromise(inquirer.prompt(this.prompt()));
+  choose(type: string = 'checkbox', message: string = Translation.SELECT('Environment/s')) {
+    return Observable.fromPromise(inquirer.prompt(this.prompt(type, message)));
   }
   /**
    * @return EnvCollection
    */
-  public get envCollection() : EnvCollection {
+  public get envCollection(): EnvCollection {
     return this._envCollection;
   }
 
-  public set envCollection(v : EnvCollection) {
+  public set envCollection(v: EnvCollection) {
     this._envCollection = v;
   }
 }

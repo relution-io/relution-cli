@@ -101,7 +101,11 @@ export class Environment extends Command {
           observer.next(pipe);
         },
         (e: any) => { observer.error(e) },
-        () => { observer.complete() }
+        () => {
+          this.envCollection.getEnvironments().subscribe({
+            complete: () => observer.complete()
+          });
+        }
       );
     });
   }
@@ -236,6 +240,33 @@ export class Environment extends Command {
       observer.complete();
     })
   }
+
+  copy(name?:string, to?:string):Observable<any>{
+    let tobeCopied:string;
+    let toBeGenerate:string;
+
+    return Observable.create((observer:any) => {
+
+      this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
+        (answers:any) => {
+          tobeCopied = answers[this.chooseEnv.promptName];
+          console.log(tobeCopied);
+          this.enterName().subscribe((answers:any) => {
+              toBeGenerate = answers.name;
+              console.log(toBeGenerate);
+              this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
+                complete: () => {
+                  console.log('copied');
+                  observer.complete();
+                }
+              })
+          });
+
+        }
+      )
+
+    });
+  }
   /**
    * add a new Environment allow attributes name as a string
    * @returns Observable
@@ -247,7 +278,9 @@ export class Environment extends Command {
         this.enterName().subscribe(
           (answers: any) => {
             this.createEnvironment(answers.name).subscribe({
-              complete: () => observer.complete()
+              complete: () => {
+                observer.complete()
+              }
             });
           },
           (e: any) => console.error(e),

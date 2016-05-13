@@ -10,7 +10,7 @@ describe('Utility Command', () => {
         description: 'test the commands'
       },
       help: {
-        description: 'whatver'
+        description: 'whatever'
       }
     }
     return command;
@@ -29,6 +29,11 @@ describe('Utility Command', () => {
 
   it('has a help method', done => {
     expect(command.help).not.toBeUndefined();
+    done();
+  });
+
+  it('has a home method', done => {
+    expect(command.home).not.toBeUndefined();
     done();
   });
 });
