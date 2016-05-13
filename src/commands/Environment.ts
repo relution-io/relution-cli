@@ -58,7 +58,7 @@ export class Environment extends Command {
       description: 'List all environments by name'
     },
     help: {
-      description: 'List the Environment Command'
+      description: Translation.LIST_COMMAND('Environment')
     },
     quit: {
       description: 'Exit To Home'

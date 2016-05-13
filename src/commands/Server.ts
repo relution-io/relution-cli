@@ -5,6 +5,7 @@ import {ServerCrud} from './server/ServerCrud';
 
 import {ServerModelRc, ServerModel} from './../models/ServerModelRc';
 import {orderBy, partition, concat, map, findIndex} from 'lodash';
+import {Translation} from './../utility/Translation';
 
 const PRESS_ENTER = ' or press enter';
 export class Server extends Command {
@@ -46,7 +47,7 @@ export class Server extends Command {
       }
     },
     help: {
-      description: 'List the Server Command'
+      description: Translation.LIST_COMMAND('Server')
     },
     quit: {
       description: 'Exit To Home'

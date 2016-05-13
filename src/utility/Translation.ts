@@ -10,7 +10,12 @@ export class Translation{
   static SELECT(name:string):string{
     return `Select ${name}`;
   }
+
   static YOU_MOUST_CHOOSE(name:string):string {
     return `You must choose at least one ${name}.`;
+  }
+
+  static LIST_COMMAND(name:string):string{
+    return `List the ${name} Command`;
   }
 }

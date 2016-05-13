@@ -29,6 +29,8 @@
         "src/commands/environment/AddAttribute.ts",
         "src/commands/environment/ChooseEnv.spec.ts",
         "src/commands/environment/ChooseEnv.ts",
+        "src/commands/New.spec.ts",
+        "src/commands/New.ts",
         "src/commands/Server.spec.ts",
         "src/commands/Server.ts",
         "src/commands/server/ServerCrud.ts",

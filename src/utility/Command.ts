@@ -41,6 +41,7 @@ export class Command implements CommandInterface {
   public config: any;
   public commands: Object;
   public inquirer: any = inquirer;
+  public i18n: Translation = Translation;
   public reserved: Array<string> = ['help', Translation.QUIT];
   public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
@@ -141,14 +142,14 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back: Tower) {
-    // console.log(`Command.ts ${this.name}`, args);
+    console.log(`Command.ts ${this.name}`, args);
     this._parent = back;
+
     //directly
     if (args[0] === this.name && args.length === 1) {
       return this.showCommands().subscribe((answers: Array<string>) => {
-        // console.log('answers', answers);
         return this.init(answers[this.name], this._parent);
-      });
+      }, (e:any) => console.error(e));
     }
 
     if (args.length >= 1 && args[0] === this.name && args[1] === Translation.QUIT) {
@@ -213,7 +214,10 @@ export class Command implements CommandInterface {
   }
 
   showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
-    // console.log(new Date().getTime());
+    //console.log(new Date().getTime());
+    if (!this.commands) {
+      return Observable.throw(new Error(`Command ${this.name} has no commands!`));
+    }
     let questions = [
       {
         name: this.name,
@@ -225,12 +229,11 @@ export class Command implements CommandInterface {
         }
       }
     ];
-
     return Observable.create((observer: any) => {
       inquirer.prompt(questions).then((answers: Array<string>) => {
         observer.next(answers);
         observer.complete();
-      });
+      }).catch((e:any) => {console.error(e)});
     });
   }
 }
