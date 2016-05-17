@@ -7,7 +7,7 @@
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
     "test": "istanbul cover lib/**/*.js && jasmine-node --verbose --autotest --watch --color --test-dir lib",
-    "testfile": "jasmine-node --verbose --autotest --watch --color --test-dir lib/utility",
+    "testfile": "jasmine-node --verbose --autotest --watch --color --test-dir lib/gii/templates/new",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",

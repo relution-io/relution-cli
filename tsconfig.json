@@ -44,6 +44,7 @@
         "src/gii/templates/EnvironmentTemplate.ts",
         "src/gii/templates/new/App.ts",
         "src/gii/templates/new/PackageJson.ts",
+        "src/gii/templates/new/RelutionHjson.spec.ts",
         "src/gii/templates/new/RelutionHjson.ts",
         "src/models/CertModelRc.ts",
         "src/models/EnvModel.ts",

@@ -15,25 +15,27 @@ export class RelutionHjson implements TemplateInterface {
   private _fileApi: FileApi = new FileApi();
   private _uuid: string;
   private _directoryIndex: boolean = false;
-  private _server: string = './app.js';
+  private _server: string = 'app.js';
   private _private: boolean = false;
+  private _baseAlias : string;
+
 
   get template() {
     return this._fileApi.copyHjson(
       `
 {
   //app name
-  name: ${this.name},
+  name: ${this.name}
   //description for the project
-  description: ${this.description},
+  description: ${this.description}
   //on which baseAlias the app is available
-  baseAlias: /${this.name},
+  baseAlias: ${this.baseAlias}
   //uuid identifier
-  uuid: ${this.uuid},
+  uuid: ${this.uuid}
   //node start script
-  server: ${this.server},
+  server: ${this.server}
   //shows directoryIndex on the Server good for debugging
-  directoryIndex: ${this.directoryIndex},
+  directoryIndex: ${this.directoryIndex}
   //@todo have to be defined
   private: ${this.private}
 }
@@ -45,8 +47,8 @@ export class RelutionHjson implements TemplateInterface {
    * The Description for the Project
    */
   public get description() : string {
-    if (!this._description ||this._description.length) {
-      this.description = Translation.RH_DESCRIPTION(this.name);
+    if (!this._description || !this._description.length) {
+      this._description = Translation.RH_DESCRIPTION(this.name);
     }
     return this._description;
   }
@@ -80,7 +82,7 @@ export class RelutionHjson implements TemplateInterface {
    * which file would be start from Node
    */
   public get server(): string {
-    return this._server;
+    return `./${this._server}`;
   }
 
   public set server(v: string) {
@@ -99,6 +101,20 @@ export class RelutionHjson implements TemplateInterface {
 
   public set uuid(v: string) {
     this._uuid = v;
+  }
+
+  /**
+   * set the baseALias to the app
+   */
+  public get baseAlias() : string {
+    if (!this._baseAlias || !this._baseAlias.length) {
+      this.baseAlias = this.name;
+    }
+    return `/${this._baseAlias}`;
+  }
+
+  public set baseAlias(v : string) {
+    this._baseAlias = v;
   }
 
 }

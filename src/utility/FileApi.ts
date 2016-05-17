@@ -21,7 +21,7 @@ export class FileApi {
         (file: any) => {
           observer.next({ path: path, data: Hjson.parse(file, this.hjsonOptions) });
         },
-        (e: any) => console.error(e),
+        (e: any) => observer.error(e),
         () => observer.complete()
       );
     });
@@ -46,7 +46,7 @@ export class FileApi {
    */
   writeHjson(content: string, fileName: string) {
     let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
-    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content), this.hjsonOptions);
+    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
 
     return Observable.create((observer: any) => {
       result.subscribe(
@@ -57,7 +57,7 @@ export class FileApi {
           observer.error(err);
           observer.complete();
         },
-        () => observer.complete()
+        () => {observer.complete();}
       );
     });
   }
