@@ -21,7 +21,7 @@ describe('Utility RxFs', () => {
 
   it('create a file', (done) => {
     let testPath: string = `${path.join(__dirname, '..', '..', 'spec', 'gentest', 'app')}/.gitkeep`;
-    RxFs.writeFile(testPath, 'nur mit ?').subscribe(
+    RxFs.writeFile(testPath, '').subscribe(
       (log:any) => {
         expect(RxFs.exist(testPath)).toBe(true);
       },

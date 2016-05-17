@@ -10,7 +10,9 @@ export class FileApi {
   public hjsonSuffix: string = 'hjson';
   public path: string = `${__dirname}/../../devtest/`;
   public hjsonOptions: any = { keepWsc: true };
-
+  /**
+   * create a Folder with a .gitkeep file
+   */
   mkdirStructureFolder(path:string):Observable<any> {
     let exist: any = RxFs.exist(path);
 
