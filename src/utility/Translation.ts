@@ -18,4 +18,8 @@ export class Translation{
   static LIST_COMMAND(name:string):string{
     return `List the ${name} Command`;
   }
+
+  static RH_DESCRIPTION(name:string):string {
+    return `Auto Generated Description for ${name}.`;
+  }
 }

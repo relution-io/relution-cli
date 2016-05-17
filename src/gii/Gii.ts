@@ -5,35 +5,9 @@
 import {findIndex} from 'lodash';
 import {EnvironmentTemplate} from './templates/EnvironmentTemplate';
 import {App as AppTemplate} from './templates/new/App';
+import {RelutionHjson as RelutionHjsonTemplate} from './templates/new/RelutionHjson';
 import {PackageJson as PackageJsonTemplate} from './templates/new/PackageJson';
-
-class TemplateModel {
-  private _path: string;
-  private _name: string;
-  public templatesFolder: string;
-  private _instance : any;
-
-  constructor(name: string, instance:any) {
-    this.name = name;
-    this.instance = instance;
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public set name(v: string) {
-    this._name = v;
-  }
-
-  public get instance() : any {
-    return this._instance;
-  }
-
-  public set instance(v : any) {
-    this._instance = v;
-  }
-}
+import {TemplateModel} from './TemplateModel';
 
 export class Gii {
 
@@ -42,11 +16,15 @@ export class Gii {
   public templates: Array<TemplateModel> = [
     new TemplateModel('env', new EnvironmentTemplate()),
     new TemplateModel('app', new AppTemplate()),
+    new TemplateModel('relutionhjson', new RelutionHjsonTemplate()),
     new TemplateModel('package', new PackageJsonTemplate())
   ];
 
   public getTemplateByName(name:string) : TemplateModel {
     let templateIndex:number = findIndex(this.templates, {name: name});
+    if (templateIndex < 0) {
+      return undefined;
+    }
     return this.templates[templateIndex];
   }
 }

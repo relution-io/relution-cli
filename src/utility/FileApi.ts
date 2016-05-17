@@ -27,13 +27,22 @@ export class FileApi {
     });
   }
 
-  copyHjson(org:any){
-    let c:any = Hjson.stringify(org, this.hjsonOptions);
+  copyHjson(org: any) {
+    let c: any = Hjson.stringify(org, this.hjsonOptions);
     return Hjson.parse(c, this.hjsonOptions);
   }
 
   /**
    * Hjson.stringify(value, options)
+   *   Hjson.parse(text, options)
+      options {
+        keepWsc     boolean, keep white space and comments. This is useful
+                    if you want to edit an hjson file and save it while
+                    preserving comments (default false)
+      }
+      This method parses Hjson text to produce an object or array.
+      It can throw a SyntaxError exception.
+      Hjson.stringify(value, options)
    */
   writeHjson(content: string, fileName: string) {
     let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
@@ -45,6 +54,29 @@ export class FileApi {
           observer.next(true);
         },
         (err: any) => {
+          observer.error(err);
+          observer.complete();
+        },
+        () => observer.complete()
+      );
+    });
+  }
+
+  /**
+   * Hjson.stringify(value, options)
+   */
+  writeFile(content: string, fileName: string, path: string = process.cwd()) {
+    let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
+    let result = writeFileAsObservable(`${path}/${fileName}`, content);
+    console.log(content, fileName, path);
+
+    return Observable.create((observer: any) => {
+      result.subscribe(
+        () => {
+          observer.next(true);
+        },
+        (err: any) => {
+          console.log(err);
           observer.error(err);
           observer.complete();
         },

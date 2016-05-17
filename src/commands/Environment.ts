@@ -89,6 +89,13 @@ export class Environment extends Command {
     super('env');
     this.fsApi.path = `${process.cwd()}/env/`;
   }
+
+  init(args:Array<string>, back:any){
+    if (!this.envCollection.collection.length) {
+      return back.home();
+    }
+    return super.init(args, back);
+  }
   /**
    * write the hjson to the dev folder
    * @todo add process.cwd as path
@@ -119,6 +126,10 @@ export class Environment extends Command {
   preload() {
     return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
+        error: (e:any) => {
+          console.log('no environments available');
+          super.preload().subscribe({ complete: () => observer.complete() });
+        },
         complete: () => {
           // console.log(this.envCollection.collection);
           this.chooseEnv = new ChooseEnv(this.envCollection);

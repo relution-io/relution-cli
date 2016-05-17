@@ -5,7 +5,7 @@ import {Translation} from './../utility/Translation';
 import {isArray, isString, map} from 'lodash';
 import {FileApi} from './../utility/FileApi';
 import {Gii} from './../gii/Gii';
-
+import {Create} from './new/Create';
 /**
  * create a new Baas for the Developer
  */
@@ -28,6 +28,8 @@ export class New extends Command {
     }
   };
 
+  private _create:Create = new Create();
+
   constructor(){
     super('new');
   }
@@ -37,9 +39,16 @@ export class New extends Command {
    * @return Observable
    */
   create(name?:string): Observable<any>{
-    return Observable.create((observer:any) => {
 
-    })
+    return Observable.create((observer:any) => {
+      this._create.publish().subscribe(
+        (name:string) => {
+          console.log('status:', name);
+        },
+        (e:any) => console.error(e),
+        () => {observer.complete()}
+      );
+    });
   }
 
 }

@@ -25,7 +25,6 @@ export class EnvCollection {
    * @param fsApi file helper
    */
   public fsApi: FileApi = new FileApi();
-
   /**
    * load all hjson file with content and add it to the collection
    * @param observer to will be completed
@@ -73,6 +72,9 @@ export class EnvCollection {
     return Observable.create((observer: any) => {
       this.fsApi.fileList(this.envFolder, '.hjson')
       .subscribe({
+        error: (e:any) => {
+          return observer.complete();
+        },
         next: (filePath: string) => {
           if (filePath) {
             // console.log('filePath', filePath);

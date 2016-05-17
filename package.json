@@ -38,6 +38,7 @@
     "inquirer": "DrMabuse23/Inquirer.js#add78131e3461acbc861b4cdba8aff67a54ef4f4",
     "install": "^0.6.1",
     "lodash": "^4.11.2",
+    "node-uuid": "^1.4.7",
     "nopt": "^3.0.6",
     "username": "^2.1.0"
   }

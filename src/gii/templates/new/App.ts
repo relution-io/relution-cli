@@ -1,11 +1,12 @@
-
-export class App {
+import {TemplateInterface} from './../../TemplateInterface';
+export class App implements TemplateInterface {
+  public publishName:string = 'app.js'
   public name:string = 'app';
 
-  get template(){
+  get template(): string{
     return (`
 /**
- * ${name}
+ * ${this.name}
  */
 var express = require('express');
 var app = express();
@@ -14,7 +15,7 @@ app.use(express.bodyParser());
 // global variables
 global.app = app;
 // starts express webserver
-app.listen();
-    `);
+app.listen();\n
+    `).trim();
   }
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "chalk": "registry:npm/chalk#1.0.0+20160211003958",
     "inquirer": "registry:npm/inquirer#1.0.0+20160427045422",
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519",
+    "node-uuid": "registry:npm/node-uuid#1.4.7+20160503013124"
   }
 }
