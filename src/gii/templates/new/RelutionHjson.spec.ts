@@ -58,7 +58,7 @@ describe('create RelutionHjson Template', () => {
   });
 });
 
-describe('read RelutionHjson File', () => {
+describe('read RelutionHjson Template', () => {
   let rHjson: RelutionHjsonTemplate = new RelutionHjsonTemplate();
   let fsApi: FileApi = new FileApi();
   let devtestPath: string = path.join(__dirname, '..', '..', '..', '..', 'spec', 'gentest', 'new');
