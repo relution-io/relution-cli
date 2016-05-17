@@ -163,21 +163,11 @@ export class ServerCrud {
   }
 
   createNewServer(id?: string){
-    if (!id) {
-      this.setDefaults({
-        id: id,
-        serverUrl: '',
-        userName: '',
-        password: '',
-        default: this.userRc.config.server.length ? false : true
-      });
+    let prompt = this.addConfig;
+    if (id) {
+      prompt[0]['default']  = id;
     }
-
-    //set default id
-    if (id && id.length && id.match(Validator.stringNumberPattern)) {
-      this.addConfig[0]['default'] = () => { return id.trim() };
-    }
-    return Observable.fromPromise(this.inquirer.prompt(this.addConfig));
+    return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
   /**
    * create a prompt like this
@@ -266,15 +256,19 @@ export class ServerCrud {
    * @description add a server to the userrc file
    */
   add(params?: Array<string>):any {
+    // the name is here
+    // console.log(params[0]);
     let name: string = '';
-    if (params && params.length) {
+    if (params && params[0] && params[0].length) {
       name = params[0].trim();
     }
     return Observable.create((observer:any) => {
       this.createNewServer(name).subscribe((answers: ServerModel) => {
         this.addServer(new ServerModelRc(answers)).subscribe(
-          () => {
-            observer.complete();
+          {
+            complete: () => {
+              observer.complete();
+            }
           }
         );
       });

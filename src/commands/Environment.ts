@@ -90,12 +90,6 @@ export class Environment extends Command {
     this.fsApi.path = `${process.cwd()}/env/`;
   }
 
-  init(args:Array<string>, back:any){
-    if (!this.envCollection.collection.length) {
-      return back.home();
-    }
-    return super.init(args, back);
-  }
   /**
    * write the hjson to the dev folder
    * @todo add process.cwd as path
@@ -216,7 +210,7 @@ export class Environment extends Command {
       this.chooseEnv.choose().subscribe(
         (answers: any) => {
           names = answers[this.chooseEnv.promptName];
-          console.log('names', names);
+          // console.log('names', names);
           if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
             return observer.complete();
           }
@@ -236,7 +230,6 @@ export class Environment extends Command {
         }
       );
     });
-
   }
   /**
    * shows all available environments
@@ -258,31 +251,54 @@ export class Environment extends Command {
     })
   }
 
-  copy(name?:string, to?:string):Observable<any>{
+  copy(args?:Array<string>):Observable<any>{
     let tobeCopied:string;
     let toBeGenerate:string;
 
-    return Observable.create((observer:any) => {
+    if (!args || args && !args[0].length) {
+      return Observable.create((observer:any) => {
+        this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
+          (answers:any) => {
+            tobeCopied = answers[this.chooseEnv.promptName];
+            // console.log(tobeCopied);
+            this.enterName().subscribe((answers:any) => {
+                toBeGenerate = answers.name;
+                // console.log(toBeGenerate);
+                this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
+                  next: (log:any) => {
+                    observer.next(log);
+                  },
+                  error: (e:any) => {
+                    observer.error(e);
+                  },
+                  complete: () => {
+                    // console.log('copied');
+                    observer.complete();
+                  }
+                })
+            });
+          }
+        );
+      });
+    }
 
-      this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
-        (answers:any) => {
-          tobeCopied = answers[this.chooseEnv.promptName];
-          console.log(tobeCopied);
-          this.enterName().subscribe((answers:any) => {
-              toBeGenerate = answers.name;
-              console.log(toBeGenerate);
-              this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
-                complete: () => {
-                  console.log('copied');
-                  observer.complete();
-                }
-              })
-          });
-
-        }
-      )
-
-    });
+    if(args && args[0].length && args[1].length) {
+      tobeCopied = args[0];
+      toBeGenerate = args[1];
+      return Observable.create((observer:any) => {
+        this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
+          next: (data:any) => {
+            observer.next(observer.next(chalk.green(`${toBeGenerate}.hjson are written`)));
+          },
+          error: (e:any) => {
+            observer.error(e);
+          },
+          complete: () => {
+            observer.complete();
+          }
+        });
+      })
+    }
   }
   /**
    * add a new Environment allow attributes name as a string
@@ -304,6 +320,7 @@ export class Environment extends Command {
           () => { observer.complete(); }
         );
       });
+
     }
     //>relution env add bubble
     // console.log('name', name);
@@ -317,20 +334,27 @@ export class Environment extends Command {
       // console.log('unique', unique);
 
       if (unique) {
-        console.log(chalk.red(`\n Name ${envName} already exist please choose another one`));
-        return this.init([this.name], this._parent);
+
+        return Observable.create((observer:any) => {
+          observer.next(chalk.red(`\n Name ${envName} already exist please choose another one`));
+          observer.complete();
+        });
       }
 
       if (pass) {
-        return this.createEnvironment(envName).subscribe(
-          () => { },
-          (e: any) => { console.error(e) },
-          () => { process.exit() }
-        );
+        return Observable.create((observer: any) => {
+          this.createEnvironment(envName).subscribe(
+            () => { observer.next(chalk.green(`${envName}.hjson are written`))},
+            (e: any) => { observer.error(e); },
+            () => {  observer.complete(); }
+          );
+        });
       }
 
-      console.log(chalk.red(`\n Name ${envName} has wrong character allowed only [a-z A-Z]`));
-      return this.init([this.name], this._parent);
+      return Observable.create((observer:any) => {
+        observer.next(chalk.red(`\n Name ${envName} has wrong character allowed only [a-z A-Z]`));
+        observer.complete();
+      });
     }
   }
 }

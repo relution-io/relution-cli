@@ -12,8 +12,18 @@ export class Create{
   private _gii:Gii = new Gii();
   private _fsApi:FileApi  = new FileApi();
 
-  public toGenTemplatesName:Array<string> = ['app', 'package', 'relutionhjson'];
+  public emptyFolders:Array<string> = ['env', 'routes', 'models', 'connections', 'providers'];
+  public toGenTemplatesName:Array<string> = ['app', 'package', 'relutionhjson', 'relutionignore'];
 
+  addStructure(){
+    let all:Array<any> = [];
+
+    this.emptyFolders.forEach((folderName:string) => {
+
+    });
+
+    return Observable.forkJoin(all);
+  }
   /**
    * add a name for a new environment
    * @returns Array
@@ -89,6 +99,7 @@ export class Create{
   public get name() : string {
     return this._name;
   }
+
   public set name(v : string) {
     this._name = v;
   }

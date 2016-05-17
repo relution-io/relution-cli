@@ -73,9 +73,12 @@ export class Server extends Command {
   list(name?: string) {
     let empty: Array<string> = ['', '', '', ''];
     let content: Array<any> = [empty];
-    let _parts = partition(this.userRc.server, (server: ServerModelRc) => {
-      return server.default
-    });
+    let _parts = partition(
+      this.userRc.server,
+      (server: ServerModelRc) => {
+        return server.default
+      }
+    );
 
     if (_parts[1]) {
       _parts[1] = orderBy(_parts[1], ['id'], ['asc']);
@@ -95,38 +98,20 @@ export class Server extends Command {
   /**
    * update existing Server
    */
-  update(params?: Array<string>):any {
-    this.crudHelper.update(params).subscribe(
-      () => {},
-      (e:any) => console.error(e),
-      () => {
-        return super.home();
-      }
-    );
+  update(params?: Array<string>):Observable<any> {
+    return this.crudHelper.update(params);
   }
 
   /**
    * Delete a Server from the RC file Object
    */
-  rm(id?:string):any {
-    this.crudHelper.rm(id).subscribe(
-      () => {},
-      (e:any) => console.error(e),
-      () => {
-        return super.home();
-      }
-    );
+  rm(id?:string):Observable<any> {
+    return this.crudHelper.rm(id);
   }
   /**
    * add method
    */
-  add(params: Array<string>):any {
-    return this.crudHelper.add(params).subscribe(
-      () => {},
-      (e:any) => console.error(e),
-      () => {
-        return super.home();
-      }
-    );
+  add(params: Array<string>):Observable<any> {
+    return this.crudHelper.add(params);
   }
 }

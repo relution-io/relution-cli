@@ -1,5 +1,6 @@
 import {EnvModel} from './../models/EnvModel';
 import {FileApi} from './../utility/FileApi';
+import {Validator} from './../utility/Validator';
 import {Observable} from '@reactivex/rxjs';
 import {find, findIndex} from 'lodash';
 import * as chalk from 'chalk';
@@ -49,6 +50,11 @@ export class EnvCollection {
     },
     () => {},
     () => {observer.complete()});
+  }
+
+  public validate(name:string){
+    let namePass:RegExpMatchArray = name.match(Validator.stringPattern);
+    return namePass;
   }
   /**
    * if match the name in the collection
@@ -109,16 +115,21 @@ export class EnvCollection {
    * copy a envModel and create the Hjson file in the envFolder
    */
   public copyByName(name:string, to:string):Observable<any>{
+    if (!this.validate(name) || !this.validate(to)) {
+    return Observable.create((observer:any) => {
+      observer.error(chalk.red(`${name} or ${to} are not valid. only Allowed ${Validator.stringPattern}`));
+      return observer.complete();
+    });
+    }
     return Observable.create((observer:any) => {
       let model:EnvModel = this.isUnique(name);
-
-      if (this.isUnique(to)){
-        observer.error(chalk.red(`${to} already exist please remove it before`));
+      if (!model) {
+        observer.error(chalk.red(`environment with name "${chalk.magenta(name)}" not exist, please add it before.`));
         return observer.complete();
       }
 
-      if (!model) {
-        observer.error(chalk.red(`${name} not exist please add it before`));
+      if (this.isUnique(to)){
+        observer.error(chalk.red(`${to} already exist please remove it before.`));
         return observer.complete();
       }
 
@@ -128,6 +139,9 @@ export class EnvCollection {
       this.fsApi.writeHjson(Hjson.stringify(newData, this.fsApi.hjsonOptions), to).subscribe({
         complete: () => {
           this.getEnvironments().subscribe({
+            next: () => {
+              observer.next(`${to} are created.`);
+            },
             complete: () => {
               observer.complete();
             }

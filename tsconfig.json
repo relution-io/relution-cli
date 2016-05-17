@@ -46,6 +46,7 @@
         "src/gii/templates/new/PackageJson.ts",
         "src/gii/templates/new/RelutionHjson.spec.ts",
         "src/gii/templates/new/RelutionHjson.ts",
+        "src/gii/templates/new/RelutionIgnore.ts",
         "src/models/CertModelRc.ts",
         "src/models/EnvModel.ts",
         "src/models/ServerModelRc.spec.ts",

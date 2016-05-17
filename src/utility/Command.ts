@@ -142,17 +142,23 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back: Tower) {
-    console.log(`Command.ts ${this.name}`, args);
+    // console.log(`Command.ts ${this.name}`, args);
     this._parent = back;
+    let myObservable:Observable<any>;
 
     //directly
     if (args[0] === this.name && args.length === 1) {
-      return this.showCommands().subscribe((answers: Array<string>) => {
-        return this.init(answers[this.name], this._parent);
-      }, (e:any) => console.error(e));
+      //is the help or command without any params
+      return this.showCommands().subscribe(
+        (answers: Array<string>) => {
+          return this.init(answers[this.name], this._parent);
+        },
+        (e:any) => console.error(e)
+      );
     }
 
     if (args.length >= 1 && args[0] === this.name && args[1] === Translation.QUIT) {
+      // back to Tower
       return this._parent.home();
     }
 
@@ -164,9 +170,10 @@ export class Command implements CommandInterface {
       if (args.length > 1) {
         let params = this._copy(args);
         params.splice(0, 1);//remove 'update' or 'create'
-        return this[args[0]](params);
+        myObservable = this[args[0]](params);
+      } else {
+        myObservable =  this[args[0]]();
       }
-      return this[args[0]]();
     }
 
     // console.log('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
@@ -175,23 +182,24 @@ export class Command implements CommandInterface {
     if (args[0] === this.name && this[args[1]]) {
 
       if (args.length > 2) {
-        // console.log('args.length > 2', args.length > 2);
+        console.log('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);
-        subArgs.splice(0, 2);
-        return this[args[1]](subArgs);
+          subArgs.splice(0, 2);
+          myObservable = this[args[1]](subArgs);
+      } else {
+        myObservable =  this[args[1]]();
       }
-      return this[args[1]]().subscribe(
-        (log: any) => {
-          console.log(log);
-        },
-        (e: any) => {
-          this.init([this.name], this._parent);
-        },
-        () => {
-          this.init([this.name], this._parent)
-        }
-      );
     }
+
+    return myObservable.subscribe(
+      (log: any) => {
+        console.log(log);
+      },
+      (e:any) => console.error(e),
+      () => {
+        this.home();
+      }
+    );
   }
 
   _copy(org: any) {

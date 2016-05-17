@@ -6,6 +6,7 @@ import {findIndex} from 'lodash';
 import {EnvironmentTemplate} from './templates/EnvironmentTemplate';
 import {App as AppTemplate} from './templates/new/App';
 import {RelutionHjson as RelutionHjsonTemplate} from './templates/new/RelutionHjson';
+import {RelutionIgnore as RelutionIgnoreTemplate} from './templates/new/RelutionIgnore';
 import {PackageJson as PackageJsonTemplate} from './templates/new/PackageJson';
 import {TemplateModel} from './TemplateModel';
 
@@ -17,6 +18,7 @@ export class Gii {
     new TemplateModel('env', new EnvironmentTemplate()),
     new TemplateModel('app', new AppTemplate()),
     new TemplateModel('relutionhjson', new RelutionHjsonTemplate()),
+    new TemplateModel('relutionignore', new RelutionIgnoreTemplate()),
     new TemplateModel('package', new PackageJsonTemplate())
   ];
 
