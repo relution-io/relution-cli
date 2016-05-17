@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {Observable, Observer} from '@reactivex/rxjs';
+import {Observable} from '@reactivex/rxjs';
+import {RxFs} from './RxFs';
+
 const Hjson = require('hjson');
 
 export class FileApi {
@@ -8,6 +10,15 @@ export class FileApi {
   public hjsonSuffix: string = 'hjson';
   public path: string = `${__dirname}/../../devtest/`;
   public hjsonOptions: any = { keepWsc: true };
+
+  mkdirStructureFolder(path:string):Observable<any> {
+    let exist: any = RxFs.exist(path);
+
+    if (exist) {
+      return Observable.throw(new Error(`${path} already exist`));
+    }
+    return Observable.zip(RxFs.mkdir(path), RxFs.writeFile(`${path}/.gitkeep`, ''));
+  }
 
   /**
    * read a hjson file by path

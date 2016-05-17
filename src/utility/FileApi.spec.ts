@@ -1,5 +1,9 @@
 import {FileApi} from './FileApi';
+import {RxFs} from './RxFs';
+
 import * as fs from 'fs';
+import * as path from 'path';
+
 const Hjson = require('hjson');
 
 describe('File api', () => {
@@ -74,5 +78,26 @@ describe('File api', () => {
         done();
       }
     });
+  });
+
+  it('create a structure folder', (done) => {
+    //wtf
+    let goalPath: string = path.join(`${__dirname}/../../spec/gentest/structureFolderTest`);
+
+    api.mkdirStructureFolder(goalPath).subscribe(
+      (log: any) => {
+        //console.log('mylog', JSON.stringify(log, null, 2));
+        expect(RxFs.exist(goalPath)).toBe(true);
+        expect(RxFs.exist(`${goalPath}/.gitkeep`)).toBe(true);
+      },
+      (e: Error) => {
+        console.error(e.message, e.name);
+        done();
+      },
+      () => {
+        //console.log('completed');
+        done();
+      }
+    )
   });
 });
