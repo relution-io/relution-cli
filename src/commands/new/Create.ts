@@ -52,10 +52,10 @@ export class Create{
       let templates: Array<any> = [];
       let writingFiles:Array<any> = [];
       this.toGenTemplatesName.forEach((name:string) => {
-        console.log(attr[0].name);
+        //console.log(attr[0].name);
         let templateGii:TemplateModel = this._gii.getTemplateByName(name);
         templateGii.instance.name = attr[0].name.name;
-        console.log(templateGii.instance.template);
+        //console.log(templateGii.instance.template);
         writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName));
       });
       Observable.forkJoin(writingFiles).subscribe({complete: () => {
@@ -70,12 +70,16 @@ export class Create{
       return Observable.create((observer:any) => {
         this.enterName().subscribe(
           (answers:any) => {
-            console.log(answers);
+            // console.log(answers);
             this.name = answers;
             observer.next(this.name);
-            this.writeTemplates({name: this.name}).subscribe((status:any) => {
-              console.log(status);
-            });
+            this.writeTemplates({name: this.name}).subscribe(
+              (status:any) => {
+                console.log(status);
+              },
+              () => {},
+              () => observer.complete()
+            );
           }
         )
       })

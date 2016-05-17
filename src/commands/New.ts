@@ -6,6 +6,8 @@ import {isArray, isString, map} from 'lodash';
 import {FileApi} from './../utility/FileApi';
 import {Gii} from './../gii/Gii';
 import {Create} from './new/Create';
+const figures = require('figures');
+
 /**
  * create a new Baas for the Developer
  */
@@ -42,11 +44,13 @@ export class New extends Command {
 
     return Observable.create((observer:any) => {
       this._create.publish().subscribe(
-        (name:string) => {
-          console.log('status:', name);
+        (status:any) => {
+          console.log(chalk.green(`${status.name} is still generated ${chalk.green(figures.tick) }`));
         },
         (e:any) => console.error(e),
-        () => {observer.complete()}
+        () => {
+          observer.complete()
+        }
       );
     });
   }

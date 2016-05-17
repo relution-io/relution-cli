@@ -68,17 +68,15 @@ export class FileApi {
   writeFile(content: string, fileName: string, path: string = process.cwd()) {
     let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
     let result = writeFileAsObservable(`${path}/${fileName}`, content);
-    console.log(content, fileName, path);
-
+    // console.log(content, fileName, path);
     return Observable.create((observer: any) => {
       result.subscribe(
         () => {
           observer.next(true);
         },
         (err: any) => {
-          console.log(err);
+          console.error(err);
           observer.error(err);
-          observer.complete();
         },
         () => observer.complete()
       );
