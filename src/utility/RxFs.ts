@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import {Observable} from '@reactivex/rxjs';
+const rimraf = require('rimraf');
 
 export class RxFs {
 
@@ -24,6 +25,26 @@ export class RxFs {
     return write(path, mode);
   }
 
+  /**
+   * @link [rimraf](https://github.com/isaacs/rimraf)
+   * @params dir the dir path which one has to be deleted
+   */
+  static rmDir(dir: string): Observable<any>{
+    if (!RxFs.exist(dir)) {
+      return Observable.throw(new Error(`${dir} not exists.`));
+    }
+    return Observable.create((observer: any) => {
+      rimraf(dir, (e: Error, data: any) => {
+        console.log(e, data);
+        if (e) {
+          observer.error(new Error(e.message));
+          observer.complete();
+        }
+        observer.next(data);
+        observer.complete();
+      });
+    });
+  }
   /**
    * create a Folder
    * @link [fs.writeFile](https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options)

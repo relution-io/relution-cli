@@ -22,7 +22,10 @@ describe('File api', () => {
           expect(file.indexOf('.hjson')).toBeGreaterThan(-1);
         }
       },
-      () => {},
+      (e: Error) => {
+        //console.error(e.message, e.stack);
+        done();
+      },
       () => {done();}
     );
   });
@@ -49,8 +52,9 @@ describe('File api', () => {
       next: (written:boolean) => {
         expect(written).toBe(true);
       },
-      error: (e:any) => {
-        console.error(e);
+      error: (e:Error) => {
+        //console.error(e.message, e.stack);
+        done();
       },
       complete: () => {
         let exist:boolean = fs.existsSync(`${api.path}/test.hjson`);
@@ -61,7 +65,6 @@ describe('File api', () => {
   });
 
   it('read a hjson file to spec test folder', (done) => {
-    //wtf
     api.path = `${__dirname}/../../spec/gentest/`;
     let filePath:string = `${api.path}/test.${api.hjsonSuffix}`;
     api.readHjson(filePath).subscribe({
@@ -71,8 +74,9 @@ describe('File api', () => {
         expect(file.data).toBeDefined();
         expect(file.data.name).toBe('test');
       },
-      error: (e:any) => {
-        console.error(e);
+      error: (e:Error) => {
+        //console.error(e.message, e.stack);
+        done();
       },
       complete: () => {
         done();
@@ -90,14 +94,17 @@ describe('File api', () => {
         expect(RxFs.exist(goalPath)).toBe(true);
         expect(RxFs.exist(`${goalPath}/.gitkeep`)).toBe(true);
       },
-      (e: Error) => {
-        console.error(e.message, e.name);
+      (e:Error) => {
+        //console.error(e.message, e.stack);
         done();
       },
       () => {
         //console.log('completed');
+        RxFs.rmDir(goalPath).subscribe();
         done();
       }
     )
   });
+
+
 });
