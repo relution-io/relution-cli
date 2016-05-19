@@ -14,7 +14,6 @@ export class FileApi {
   public path: string = `${__dirname}/../../devtest/`;
   //options abouthjson
   public hjsonOptions: any = { keepWsc: true };
-
   /**
    * create a Folder with a .gitkeep file
    */
@@ -30,13 +29,12 @@ export class FileApi {
         },
         complete: () => {
           RxFs.writeFile(`${path}/.gitkeep`, '').subscribe({
-            complete: observer.complete()
-          })
+            complete: () => observer.complete()
+          });
         }
       });
     });
   }
-
   /**
    * read a hjson file by path
    * on next you will get following:
@@ -64,7 +62,9 @@ export class FileApi {
       );
     });
   }
-
+  /**
+   * copy a exist hjson Object
+   */
   copyHjson(org: any) {
     let c: any = Hjson.stringify(org, this.hjsonOptions);
     return Hjson.parse(c, this.hjsonOptions);

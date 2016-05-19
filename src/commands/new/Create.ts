@@ -48,14 +48,13 @@ export class Create {
           if (pass) {
             return true;
           } else {
-            console.log(chalk.red(`\n Name ${value} has wrong character allowed only [a-z A-Z]`));
+            console.log(chalk.red( Translation.NOT_ALLOWED(value, Validator.stringPattern)));
             return false;
           }
         }
       }
     ];
   }
-
   /**
    * create a prompt to enter a name
    * @returns Observable
@@ -64,7 +63,9 @@ export class Create {
     let prompt = this._addName;
     return Observable.fromPromise(inquirer.prompt(prompt));
   }
-
+  /**
+   * create the "toGenTemplatesName" as file
+   */
   writeTemplates(name: string): Observable<any> {
     return Observable.create((observer: any) => {
       let templates: Array<any> = [];
@@ -106,13 +107,13 @@ export class Create {
           () => {
             this.addStructure().subscribe({
               complete: () => {
-                observer.next(chalk.magenta(`${this.emptyFolders.toString()} folders are written`));
+                observer.next(chalk.magenta(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString())));
                 this.writeTemplates(this.name).subscribe({
                   complete: () => {
-                    observer.next(chalk.magenta(`${this.toGenTemplatesName.toString()} files are written`));
+                    observer.next(chalk.magenta(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString())));
                     this.npmInstall().subscribe({
                       complete: () => {
-                        observer.next(chalk.magenta(`Project ${this.name} are generated!\n`));
+                        observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
                         observer.complete();
                       }
                     });

@@ -5,9 +5,10 @@ import {ServerCrud} from './server/ServerCrud';
 
 import {ServerModelRc, ServerModel} from './../models/ServerModelRc';
 import {orderBy, partition, concat, map, findIndex} from 'lodash';
-import {Translation} from './../utility/Translation';
+
 
 const PRESS_ENTER = ' or press enter';
+
 export class Server extends Command {
   public tableHeader: Array<string> = ['Name', 'Server url', 'Default', 'Username'];
   public debug: boolean = true;
@@ -15,7 +16,7 @@ export class Server extends Command {
 
   public commands: Object = {
     add: {
-      description: 'add a new BaaS Server',
+      description: this.i18n.SERVER_ADD,
       vars: {
         name: {
           pos: 0
@@ -23,7 +24,7 @@ export class Server extends Command {
       }
     },
     list: {
-      description: 'list all available BaaS Server',
+      description: this.i18n.SERVER_LIST,
       vars: {
         name: {
           pos: 0
@@ -31,7 +32,7 @@ export class Server extends Command {
       }
     },
     update: {
-      description: 'update a exist server from the Server list',
+      description: this.i18n.SERVER_UPDATE,
       vars: {
         name: {
           pos: 0
@@ -39,7 +40,7 @@ export class Server extends Command {
       }
     },
     rm: {
-      description: 'remove a server form the list',
+      description: this.i18n.SERVER_RM,
       vars: {
         name: {
           pos: 0
@@ -47,10 +48,10 @@ export class Server extends Command {
       }
     },
     help: {
-      description: Translation.LIST_COMMAND('Server')
+      description: this.i18n.LIST_COMMAND('Server')
     },
     quit: {
-      description: 'Exit To Home'
+      description: this.i18n.EXIT_TO_HOME
     }
   };
 
@@ -58,7 +59,7 @@ export class Server extends Command {
     super('server');
   }
 
-  preload(){
+  preload():Observable<any> {
     return Observable.create((observer: any) => {
       super.preload().subscribe({complete: () => {
         this.crudHelper = new ServerCrud(this.userRc);

@@ -15,7 +15,7 @@ export class New extends Command {
 
   public commands: any = {
     create: {
-      description: 'create a new Baas Backend',
+      description: this.i18n.NEW_CREATE,
       vars: {
         name: {
           pos: 0
@@ -23,10 +23,10 @@ export class New extends Command {
       }
     },
     help: {
-      description: Translation.LIST_COMMAND('New')
+      description: this.i18n.LIST_COMMAND('New')
     },
     quit: {
-      description: 'Exit To Home'
+      description: this.i18n.EXIT_TO_HOME
     }
   };
   private _fsApi: FileApi = new FileApi();
@@ -57,7 +57,7 @@ export class New extends Command {
               () => { observer.complete(); }
             );
           } else {
-            observer.next(chalk.red(`${process.cwd()} is not empty please clean it before!`));
+            observer.next(chalk.red(this.i18n.FOLDER_NOT_EMPTY(process.cwd())));
             observer.complete();
           }
         }

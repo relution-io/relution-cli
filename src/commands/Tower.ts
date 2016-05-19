@@ -4,7 +4,7 @@ import {Table} from './../utility/Table';
 import {Command} from './../utility/Command';
 import {Welcome} from './../utility/Welcome';
 import * as chalk from 'chalk';
-
+import {Translation} from './../utility/Translation';
 const inquirer = require('inquirer');
 const username = require('username');
 
@@ -30,10 +30,10 @@ export class Tower {
   //Tower commands
   public commands: Object = {
     help: {
-      description: 'list available Commands'
+      description: Translation.LIST_COMMAND(this.name)
     },
     quit: {
-      description: 'Exit To Home'
+      description: 'Exit Relution CLI'
     }
   };
 

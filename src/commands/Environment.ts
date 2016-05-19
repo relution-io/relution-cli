@@ -123,12 +123,16 @@ export class Environment extends Command {
       this.envCollection.getEnvironments().subscribe({
         error: (e:any) => {
           console.log('no environments available');
-          super.preload().subscribe({ complete: () => observer.complete() });
+          super.preload().subscribe({
+            complete: () => observer.complete()
+          });
         },
         complete: () => {
           // console.log(this.envCollection.collection);
           this.chooseEnv = new ChooseEnv(this.envCollection);
-          super.preload().subscribe({ complete: () => observer.complete() });
+          super.preload().subscribe({
+            complete: () => observer.complete()
+          });
         }
       });
     });
@@ -202,7 +206,7 @@ export class Environment extends Command {
     });
   }
   /**
-   *
+   * add a new key valu pair or many
    */
   update(name?: string):Observable<any> {
     let attributes: Array<any> = [];
@@ -251,7 +255,9 @@ export class Environment extends Command {
       observer.complete();
     })
   }
-
+  /**
+   * copy a exits environment and set the name
+   */
   copy(args?:Array<string>):Observable<any>{
     let tobeCopied:string;
     let toBeGenerate:string;
@@ -289,7 +295,7 @@ export class Environment extends Command {
       return Observable.create((observer:any) => {
         this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
           next: (data:any) => {
-            observer.next(observer.next(chalk.green(`${toBeGenerate}.hjson are written`)));
+            observer.next(chalk.green(this.i18n.HJSON_WRITTEN(toBeGenerate)));
           },
           error: (e:any) => {
             observer.error(e);
@@ -340,7 +346,7 @@ export class Environment extends Command {
       if (unique) {
 
         return Observable.create((observer:any) => {
-          observer.next(chalk.red(`\n Name ${envName} already exist please choose another one`));
+          observer.next(chalk.red(this.i18n.ALREADY_EXIST(envName)));
           observer.complete();
         });
       }
@@ -348,7 +354,7 @@ export class Environment extends Command {
       if (pass) {
         return Observable.create((observer: any) => {
           this.createEnvironment(envName).subscribe(
-            () => { observer.next(chalk.green(`${envName}.hjson are written`))},
+            () => { observer.next(chalk.green(this.i18n.HJSON_WRITTEN(envName)))},
             (e: any) => { observer.error(e); },
             () => {  observer.complete(); }
           );
@@ -356,7 +362,7 @@ export class Environment extends Command {
       }
 
       return Observable.create((observer:any) => {
-        observer.next(chalk.red(`\n Name ${envName} has wrong character allowed only [a-z A-Z]`));
+        observer.next(chalk.red(this.i18n.NOT_ALLOWED(envName, Validator.stringPattern)));
         observer.complete();
       });
     }
