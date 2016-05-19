@@ -40,9 +40,11 @@ export class Command implements CommandInterface {
   public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
-  public inquirer: any = inquirer;
-  public i18n: Translation = Translation;
-  public reserved: Array<string> = ['help', Translation.QUIT];
+  public inquirer = inquirer;
+
+  public i18n = Translation;
+
+  public reserved: Array<string> = ['help', this.i18n.QUIT];
   public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   public _parent: Tower;
@@ -65,8 +67,8 @@ export class Command implements CommandInterface {
   /**
    * preload data
    */
-  preload() {
-    return Observable.create((observer:any) => {
+  preload():Observable<any> {
+    return Observable.create((observer:Observer<any>) => {
       this.userRc.rcFileExist().subscribe((exist: boolean) => {
         if (exist) {
           this.userRc.streamRc().subscribe((data: any) => {

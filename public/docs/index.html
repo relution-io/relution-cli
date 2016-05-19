@@ -76,7 +76,7 @@
 				<h5 id="installation">Installation</h5>
 				<pre><code class="lang-bash">$: git <span class="hljs-built_in">clone</span> git@github.com:relution-io/relution-cli.git
 $: <span class="hljs-built_in">cd</span> relution-cli
-$: npm i -g tsconfig-cli typings
+$: npm i -g tsconfig-cli typings istanbul
 $: npm i
 $: npm run watch
 </code></pre>
@@ -94,6 +94,9 @@ $: npm run watch
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_cli_.html">"cli"</a>
 					</li>
@@ -107,13 +110,37 @@ $: npm run watch
 						<a href="modules/_commands_environment_.html">"commands/<wbr>Environment"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_environment_spec_.html">"commands/<wbr>Environment.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_new_.html">"commands/<wbr>New"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_new_spec_.html">"commands/<wbr>New.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_commands_server_.html">"commands/<wbr>Server"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_server_spec_.html">"commands/<wbr>Server.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_commands_tower_.html">"commands/<wbr>Tower"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_commands_tower_spec_.html">"commands/<wbr>Tower.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_environment_addattribute_.html">"commands/environment/<wbr>Add<wbr>Attribute"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_environment_chooseenv_.html">"commands/environment/<wbr>Choose<wbr>Env"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_environment_chooseenv_spec_.html">"commands/environment/<wbr>Choose<wbr>Env.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_new_create_.html">"commands/new/<wbr>Create"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_commands_server_servercrud_.html">"commands/server/<wbr>Server<wbr>Crud"</a>
@@ -125,7 +152,31 @@ $: npm run watch
 						<a href="modules/_gii_gii_spec_.html">"gii/<wbr>Gii.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templateinterface_.html">"gii/<wbr>Template<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templatemodel_.html">"gii/<wbr>Template<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_gii_templates_environmenttemplate_.html">"gii/templates/<wbr>Environment<wbr>Template"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_app_.html">"gii/templates/new/<wbr>App"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_packagejson_.html">"gii/templates/new/<wbr>Package<wbr>Json"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_relutionhjson_.html">"gii/templates/new/<wbr>Relution<wbr>Hjson"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_relutionhjson_spec_.html">"gii/templates/new/<wbr>Relution<wbr>Hjson.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_relutionignore_.html">"gii/templates/new/<wbr>Relution<wbr>Ignore"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gii_templates_new_routes_.html">"gii/templates/new/<wbr>Routes"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_models_certmodelrc_.html">"models/<wbr>Cert<wbr>Model<wbr>Rc"</a>
@@ -155,6 +206,12 @@ $: npm run watch
 						<a href="modules/_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_utility_rxfs_.html">"utility/<wbr>RxFs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utility_rxfs_spec_.html">"utility/<wbr>RxFs.spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_utility_table_.html">"utility/<wbr>Table"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -168,6 +225,15 @@ $: npm run watch
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_utility_welcome_.html">"utility/<wbr>Welcome"</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_gii_templates_new_editorconfig_.html">"gii/templates/new/<wbr>Editor<wbr>Config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_gii_templates_new_readme_.html">"gii/templates/new/<wbr>Readme"</a>
 					</li>
 				</ul>
 			</nav>

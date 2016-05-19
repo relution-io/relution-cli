@@ -128,7 +128,7 @@ export class ServerCrud {
    */
   addServer(server:ServerModelRc, update:boolean = false):any{
     if (!this.isUnique(server) && !update) {
-      throw new Error(`Server ${server.id} already exist please use update!`);
+      throw new Error(Translation.ALREADY_EXIST(server.id, 'Server'));
     }
 
     if (server.default) {
@@ -331,7 +331,7 @@ export class ServerCrud {
    */
   update(params?: Array<string>):any {
     if (!this.userRc && !this.userRc.config && !this.userRc.config.server){
-      return Observable.throw('no server are available');
+      return Observable.throw(new Error('no server are available'));
     }
 
     if (!params || !params.length) {
