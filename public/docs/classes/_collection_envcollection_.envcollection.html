@@ -103,10 +103,14 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#bulkupdate" class="tsd-kind-icon">bulk<wbr>Update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#copybyname" class="tsd-kind-icon">copy<wbr>ByName</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#flatenvarray" class="tsd-kind-icon">flat<wbr>Env<wbr>Array</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#getenvironments" class="tsd-kind-icon">get<wbr>Environments</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#isunique" class="tsd-kind-icon">is<wbr>Unique</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#setcollection" class="tsd-kind-icon">set<wbr>Collection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#updatemodelbyname" class="tsd-kind-icon">update<wbr>Model<wbr>ByName</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_collection_envcollection_.envcollection.html#validate" class="tsd-kind-icon">validate</a></li>
 							</ul>
 						</section>
 					</div>
@@ -120,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_envmodel_.envmodel.html" class="tsd-signature-type">EnvModel</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L12">collection/EnvCollection.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L16">collection/EnvCollection.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,7 +141,7 @@
 					<div class="tsd-signature tsd-kind-icon">env<wbr>Files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L16">collection/EnvCollection.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L20">collection/EnvCollection.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">env<wbr>Folder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L20">collection/EnvCollection.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L24">collection/EnvCollection.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">fs<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="_utility_fileapi_.fileapi.html" class="tsd-signature-type">FileApi</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L24">collection/EnvCollection.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L28">collection/EnvCollection.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -186,6 +190,63 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="bulkupdate" class="tsd-anchor"></a>
+					<h3>bulk<wbr>Update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">bulk<wbr>Update<span class="tsd-signature-symbol">(</span>env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, store<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L175">collection/EnvCollection.ts:175</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>env: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>store: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copybyname" class="tsd-anchor"></a>
+					<h3>copy<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>ByName<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L117">collection/EnvCollection.ts:117</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>copy a envModel and create the Hjson file in the envFolder</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>to: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="flatenvarray" class="tsd-anchor"></a>
 					<h3>flat<wbr>Env<wbr>Array</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -195,7 +256,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L84">collection/EnvCollection.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L107">collection/EnvCollection.ts:107</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -218,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L64">collection/EnvCollection.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L74">collection/EnvCollection.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -241,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L54">collection/EnvCollection.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L64">collection/EnvCollection.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,7 +334,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/collection/EnvCollection.ts#L31">collection/EnvCollection.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L34">collection/EnvCollection.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -295,6 +356,55 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatemodelbyname" class="tsd-anchor"></a>
+					<h3>update<wbr>Model<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Model<wbr>ByName<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L154">collection/EnvCollection.ts:154</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>attributes: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="validate" class="tsd-anchor"></a>
+					<h3>validate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">validate<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExpMatchArray</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/file-rx/src/collection/EnvCollection.ts#L55">collection/EnvCollection.ts:55</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RegExpMatchArray</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -303,80 +413,8 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_cli_.html">"cli"</a>
-					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_collection_envcollection_.html">"collection/<wbr>Env<wbr>Collection"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_collection_envcollection_spec_.html">"collection/<wbr>Env<wbr>Collection.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_environment_.html">"commands/<wbr>Environment"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_server_.html">"commands/<wbr>Server"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_tower_.html">"commands/<wbr>Tower"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_tower_spec_.html">"commands/<wbr>Tower.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_commands_server_servercrud_.html">"commands/server/<wbr>Server<wbr>Crud"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_gii_gii_.html">"gii/<wbr>Gii"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_gii_gii_spec_.html">"gii/<wbr>Gii.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_gii_templates_environmenttemplate_.html">"gii/templates/<wbr>Environment<wbr>Template"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_models_certmodelrc_.html">"models/<wbr>Cert<wbr>Model<wbr>Rc"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_models_envmodel_.html">"models/<wbr>Env<wbr>Model"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_models_servermodelrc_.html">"models/<wbr>Server<wbr>Model<wbr>Rc"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_models_servermodelrc_spec_.html">"models/<wbr>Server<wbr>Model<wbr>Rc.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_command_.html">"utility/<wbr>Command"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_command_spec_.html">"utility/<wbr>Command.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_fileapi_.html">"utility/<wbr>File<wbr>Api"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_fileapi_spec_.html">"utility/<wbr>File<wbr>Api.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_inquirerhelper_.html">"utility/<wbr>Inquirer<wbr>Helper"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_table_.html">"utility/<wbr>Table"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_translation_.html">"utility/<wbr>Translation"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_userrc_.html">"utility/<wbr>User<wbr>Rc"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_validator_.html">"utility/<wbr>Validator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utility_welcome_.html">"utility/<wbr>Welcome"</a>
 					</li>
 				</ul>
 			</nav>
@@ -400,6 +438,12 @@
 								<a href="_collection_envcollection_.envcollection.html#fsapi" class="tsd-kind-icon">fs<wbr>Api</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#bulkupdate" class="tsd-kind-icon">bulk<wbr>Update</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#copybyname" class="tsd-kind-icon">copy<wbr>ByName</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_collection_envcollection_.envcollection.html#flatenvarray" class="tsd-kind-icon">flat<wbr>Env<wbr>Array</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -411,10 +455,19 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_collection_envcollection_.envcollection.html#setcollection" class="tsd-kind-icon">set<wbr>Collection</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#updatemodelbyname" class="tsd-kind-icon">update<wbr>Model<wbr>ByName</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_collection_envcollection_.envcollection.html#validate" class="tsd-kind-icon">validate</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_collection_envcollection_.html#hjson" class="tsd-kind-icon">Hjson</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

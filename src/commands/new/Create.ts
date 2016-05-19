@@ -96,7 +96,6 @@ export class Create {
   publish(name?: string): Observable<any> {
 
     if (!name || !name.length) {
-
       return Observable.create((observer: any) => {
         this.enterName().subscribe(
           (answers: any) => {

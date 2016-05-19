@@ -13,10 +13,10 @@ const figures = require('figures');
  */
 export class New extends Command {
 
-  public commands:any = {
+  public commands: any = {
     create: {
       description: 'create a new Baas Backend',
-      vars:{
+      vars: {
         name: {
           pos: 0
         }
@@ -29,12 +29,10 @@ export class New extends Command {
       description: 'Exit To Home'
     }
   };
+  private _fsApi: FileApi = new FileApi();
+  private _create: Create = new Create();
 
-
-
-  private _create:Create = new Create();
-
-  constructor(){
+  constructor() {
     super('new');
   }
 
@@ -42,14 +40,28 @@ export class New extends Command {
    * @params name a string to create the project
    * @return Observable
    */
-  create(name?:string): Observable<any>{
-    let status:any = {name: name};
-    return Observable.create((observer:any) => {
-      this._create.publish().subscribe(
-        (resp:any) => {observer.next(resp);},
-        (e:any) => console.error(e),
-        () => {observer.complete();}
-      );
+  create(name?: string): Observable<any> {
+    let status: any = { name: name };
+    let files: Array<any> = [];
+
+    return Observable.create((observer: any) => {
+      this._fsApi.fileList(process.cwd()).subscribe({
+        next: (file: any) => {
+          files.push(file);
+        },
+        complete: () => {
+          if (!files.length) {
+            this._create.publish().subscribe(
+              (resp: any) => { observer.next(resp); },
+              (e: any) => console.error(e),
+              () => { observer.complete(); }
+            );
+          } else {
+            observer.next(chalk.red(`${process.cwd()} is not empty please clean it before!`));
+            observer.complete();
+          }
+        }
+      });
     });
   }
 

@@ -97,13 +97,14 @@ export class Environment extends Command {
    * @returns Observable
    */
   createEnvironment(name: string) {
+
     return Observable.create((observer: any) => {
       let template = this.gii.getTemplateByName(this.name);
-      this.fsApi.writeHjson(template.instance.render(name), name).subscribe(
+      this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase()).subscribe(
         (pipe: any) => {
-          observer.next(pipe);
+          observer.next(chalk.magenta(`${name} is generated`));
         },
-        (e: any) => { console.error(e);observer.error(e); },
+        (e: any) => { observer.error(e); },
         () => {
           this.envCollection.getEnvironments().subscribe({
             complete: () => observer.complete()
@@ -266,7 +267,7 @@ export class Environment extends Command {
                 // console.log(toBeGenerate);
                 this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
                   next: (log:any) => {
-                    observer.next(log);
+                    observer.next(chalk.magenta(`${log} \n`));
                   },
                   error: (e:any) => {
                     observer.error(e);
@@ -311,16 +312,19 @@ export class Environment extends Command {
         this.enterName().subscribe(
           (answers: any) => {
             this.createEnvironment(answers.name).subscribe({
-              complete: () => {
-                observer.complete()
+              next: (log: string) => {
+                console.log(`${log} \n`);
+                this.list().subscribe({
+                  complete: () => {
+                    observer.complete();
+                  }
+                })
               }
             });
           },
-          (e: any) => console.error(e),
-          () => { observer.complete(); }
+          (e: any) => console.error(e)
         );
       });
-
     }
     //>relution env add bubble
     // console.log('name', name);

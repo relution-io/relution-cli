@@ -93,16 +93,21 @@ export class FileApi {
   }
 
   // String -> [String]
-  fileList(dir: string, ext: string): any {
+  fileList(dir: string, ext?: string): any {
     let files: Array<string> = [];
     if (!fs.existsSync(dir)) {
       return Observable.throw(`${dir} not exist or maybe not readable`);
     }
     let loadingFiles: Array<string> = fs.readdirSync(dir);
-    return Observable.from(loadingFiles).filter(
-      (file: any): any => {
-        return path.extname(file) === ext;
-      }
-    );
+    //files by extension
+    if (ext && ext.length) {
+      return Observable.from(loadingFiles).filter(
+        (file: any): any => {
+          return path.extname(file) === ext;
+        }
+      );
+    }
+    //all
+    return Observable.from(loadingFiles);
   }
 }
