@@ -34,3 +34,4 @@ node_modules
 typings
 devtest
 /spec/gentest/**/*.*
+.DS_Store
