@@ -1,4 +1,4 @@
-  import * as fs from 'fs';
+import * as fs from 'fs';
 import {Observable} from '@reactivex/rxjs';
 const rimraf = require('rimraf');
 /**
