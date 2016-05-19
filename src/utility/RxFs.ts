@@ -37,7 +37,7 @@ export class RxFs {
       rimraf(dir, (e: Error, data: any) => {
         console.log(e, data);
         if (e) {
-          observer.error(new Error(e.message));
+          observer.error(e);
           observer.complete();
         }
         observer.next(data);

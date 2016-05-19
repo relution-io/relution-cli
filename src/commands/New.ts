@@ -43,17 +43,12 @@ export class New extends Command {
    * @return Observable
    */
   create(name?:string): Observable<any>{
-
+    let status:any = {name: name};
     return Observable.create((observer:any) => {
       this._create.publish().subscribe(
-        (status:any) => {
-          console.log(chalk.green(`${status.name} is still generated ${chalk.green(figures.tick) }`));
-        },
+        (resp:any) => {observer.next(resp);},
         (e:any) => console.error(e),
-        () => {
-
-          observer.complete()
-        }
+        () => {observer.complete();}
       );
     });
   }

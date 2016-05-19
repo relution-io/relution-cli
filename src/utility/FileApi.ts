@@ -6,25 +6,47 @@ import {RxFs} from './RxFs';
 const Hjson = require('hjson');
 
 export class FileApi {
+  //standard file encoding
   public encode: string = 'utf8';
+  //hjson extension name
   public hjsonSuffix: string = 'hjson';
+  //test
   public path: string = `${__dirname}/../../devtest/`;
+  //options abouthjson
   public hjsonOptions: any = { keepWsc: true };
+
   /**
    * create a Folder with a .gitkeep file
    */
   mkdirStructureFolder(path:string):Observable<any> {
     let exist: any = RxFs.exist(path);
-
     if (exist) {
       return Observable.throw(new Error(`${path} already exist`));
     }
-    return Observable.zip(RxFs.mkdir(path), RxFs.writeFile(`${path}/.gitkeep`, ''));
+    return Observable.create((observer:any) => {
+      RxFs.mkdir(path).subscribe({
+        next: (folder:any) => {
+          observer.next(folder);
+        },
+        complete: () => {
+          RxFs.writeFile(`${path}/.gitkeep`, '').subscribe({
+            complete: observer.complete()
+          })
+        }
+      });
+    });
   }
 
   /**
    * read a hjson file by path
-   *
+   * on next you will get following:
+   * ```json
+   * {
+   *  path: path,
+   *  data: Hjson.parse(file, this.hjsonOptions)
+   * }
+   * ```
+   * @returns Observable
    */
   readHjson(path: string): any {
     let readFileAsObservable: any = Observable.bindNodeCallback(fs.readFile);
@@ -32,7 +54,10 @@ export class FileApi {
     return Observable.create((observer: any) => {
       result.subscribe(
         (file: any) => {
-          observer.next({ path: path, data: Hjson.parse(file, this.hjsonOptions) });
+          observer.next({
+            path: path,
+            data: Hjson.parse(file, this.hjsonOptions)
+          });
         },
         (e: any) => observer.error(e),
         () => observer.complete()
@@ -58,42 +83,13 @@ export class FileApi {
       Hjson.stringify(value, options)
    */
   writeHjson(content: string, fileName: string) {
-    let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
-    let result = writeFileAsObservable(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
-
-    return Observable.create((observer: any) => {
-      result.subscribe(
-        () => {
-          observer.next(true);
-        },
-        (err: any) => {
-          observer.error(err);
-          observer.complete();
-        },
-        () => {observer.complete();}
-      );
-    });
+    return RxFs.writeFile(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
   }
-
   /**
-   * Hjson.stringify(value, options)
+   * write a file
    */
   writeFile(content: string, fileName: string, path: string = process.cwd()) {
-    let writeFileAsObservable: any = Observable.bindNodeCallback(fs.writeFile);
-    let result = writeFileAsObservable(`${path}/${fileName}`, content);
-    // console.log(content, fileName, path);
-    return Observable.create((observer: any) => {
-      result.subscribe(
-        () => {
-          observer.next(true);
-        },
-        (err: any) => {
-          console.error(err);
-          observer.error(err);
-        },
-        () => observer.complete()
-      );
-    });
+    return RxFs.writeFile(`${path}/${fileName}`, content);
   }
 
   // String -> [String]
