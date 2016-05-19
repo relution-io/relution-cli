@@ -1,7 +1,9 @@
-import * as fs from 'fs';
+  import * as fs from 'fs';
 import {Observable} from '@reactivex/rxjs';
 const rimraf = require('rimraf');
-
+/**
+ * File Helper for the cli
+ */
 export class RxFs {
 
   /**
@@ -35,18 +37,20 @@ export class RxFs {
     }
     return Observable.create((observer: any) => {
       rimraf(dir, (e: Error, data: any) => {
-        console.log(e, data);
+        // console.log(e, data);
         if (e) {
           observer.error(e);
           observer.complete();
+        } else {
+          observer.next(data);
+          observer.complete();
         }
-        observer.next(data);
-        observer.complete();
       });
     });
   }
+
   /**
-   * create a Folder
+   * create a File to filename
    * @link [fs.writeFile](https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options)
    * @params filename, data, options
    */

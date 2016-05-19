@@ -100,11 +100,19 @@ describe('File api', () => {
       },
       () => {
         //console.log('completed');
-        RxFs.rmDir(goalPath).subscribe();
         done();
       }
     )
   });
 
+  it('delete the structure Folder', (done) => {
+    let goalPath: string = path.join(`${__dirname}/../../spec/gentest/structureFolderTest`);
+    RxFs.rmDir(goalPath).debounceTime(1000).subscribe({
+      complete: () => {
+        expect(RxFs.exist(goalPath)).toBe(false);
+        done()
+      }
+    });
+  });
 
 });

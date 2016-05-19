@@ -40,11 +40,11 @@ describe('Utility RxFs', () => {
 
     RxFs.rmDir(testPath).subscribe(
       (log: any) => {
-        console.log('log', log);
+        // console.log('log', log);
         expect(RxFs.exist(testPath)).toBe(false);
       },
       (e: Error) => {
-        console.error(e.message, e);
+        console.error(e.message, e.stack);
         done();
       },
       () => {
