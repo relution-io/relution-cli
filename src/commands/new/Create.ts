@@ -13,6 +13,8 @@ export class Create {
   private _name: string;
   private _gii: Gii = new Gii();
   private _fsApi: FileApi = new FileApi();
+
+  public rootProjectFolder:string = this.rootProjectFolder;
   //create in the project folder a folder with a gitkeep file
   public emptyFolders: Array<string> = [
     'env',
@@ -48,7 +50,7 @@ export class Create {
   addStructure() {
     let all: Array<any> = [];
     this.emptyFolders.forEach((folderName: string) => {
-      all.push(this._fsApi.mkdirStructureFolder(`${process.cwd()}/${folderName}`));
+      all.push(this._fsApi.mkdirStructureFolder(`${this.rootProjectFolder}/${folderName}`));
     });
     return Observable.forkJoin(all);
   }
@@ -96,7 +98,7 @@ export class Create {
         let templateGii: TemplateModel = this._gii.getTemplateByName(templateName);
         templateGii.instance.name = name;
         //root or in a subfolder
-        let toGenPath: string = templateGii.instance.parentFolder ? `${process.cwd()}/${templateGii.instance.parentFolder}/` : process.cwd();
+        let toGenPath: string = templateGii.instance.parentFolder ? `${this.rootProjectFolder}/${templateGii.instance.parentFolder}/` : this.rootProjectFolder;
         // console.log(toGenPath);
         writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName, toGenPath));
       });
@@ -147,6 +149,26 @@ export class Create {
             });
           }
         )
+      });
+    } else if(name && name.length) {
+      this.name = name;
+      return Observable.create((observer: any) => {
+        this.addStructure().subscribe({
+          complete: () => {
+            observer.next(chalk.magenta(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString())));
+            this.writeTemplates(this.name).subscribe({
+              complete: () => {
+                observer.next(chalk.magenta(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString())));
+                this.npmInstall().subscribe({
+                  complete: () => {
+                    observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                    observer.complete();
+                  }
+                });
+              }
+            });
+          }
+        });
       });
     }
   }

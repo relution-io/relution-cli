@@ -311,7 +311,7 @@ export class Environment extends Command {
    * add a new Environment allow attributes name as a string
    * @returns Observable
    */
-  add(name?: string) {
+  add(name?: string|Array<string>) {
     //['relution', 'env', 'add']
     if (!name || !name.length) {
       return Observable.create((observer: any) => {

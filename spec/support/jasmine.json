@@ -7,5 +7,6 @@
     "helpers/**/*.js"
   ],
   "stopSpecOnExpectationFailure": false,
+  "showColors": true,
   "random": false
 }
