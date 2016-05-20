@@ -8,14 +8,11 @@ describe('New Create', () => {
   beforeAll(() => {
     RxFs.mkdir(commandRoot).subscribe({
       complete: () => {
-        console.log(`${commandRoot} is cretaed`);
+        expect(RxFs.exist(commandRoot)).toBe(true);
       }
     });
-  });
-  beforeEach(() => {
     commandCreate = new Create();
     commandCreate.rootProjectFolder = commandRoot;
-
   });
 
   it('have templates', (done) => {
@@ -31,7 +28,7 @@ describe('New Create', () => {
   });
 
   it('create templates', (done) => {
-    commandCreate.publish('test').subscribe({
+    commandCreate.publish('test', true).subscribe({
       complete: () => {
         commandCreate.emptyFolders.forEach((dir) => {
           expect(RxFs.exist(path.join(commandRoot, dir))).toBe(true);
@@ -42,12 +39,10 @@ describe('New Create', () => {
   });
 
   afterAll(() => {
-    setTimeout(() => {
-      RxFs.rmDir(commandRoot).subscribe({
-        complete: () => {
-          console.log(`${commandRoot} is removed`);
-        }
-      });
-    }, 5000);
+    RxFs.rmDir(commandRoot).subscribe({
+      complete: () => {
+        expect(RxFs.exist(commandRoot)).toBe(false);
+      }
+    });
   });
 })

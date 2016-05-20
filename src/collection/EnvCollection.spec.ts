@@ -46,12 +46,10 @@ describe('EnVCollection a subset of environments', () => {
   });
 
   afterAll(() => {
-    setTimeout(() => {
-      RxFs.rmDir(command.fsApi.path).subscribe({
-        complete: () => {
-          console.log(`${command.fsApi.path} is removed.`);
-        }
-      });
-    }, 3000);
+    RxFs.rmDir(command.fsApi.path).subscribe({
+      complete: () => {
+        console.log(`${command.fsApi.path} is removed.`);
+      }
+    });
   });
 });

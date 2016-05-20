@@ -121,7 +121,7 @@ export class Create {
   /**
    * create a new project
    */
-  publish(name?: string): Observable<any> {
+  publish(name?: string, test:boolean = false): Observable<any> {
 
     if (!name || !name.length) {
       return Observable.create((observer: any) => {
@@ -159,12 +159,19 @@ export class Create {
             this.writeTemplates(this.name).subscribe({
               complete: () => {
                 observer.next(chalk.magenta(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString())));
-                this.npmInstall().subscribe({
-                  complete: () => {
-                    observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
-                    observer.complete();
-                  }
-                });
+                if(!test) {
+                  npm.load(() => {
+                    this.npmInstall().subscribe({
+                      complete: () => {
+                        observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                        observer.complete();
+                      }
+                    });
+                  });
+                } else {
+                  observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                  observer.complete();
+                }
               }
             });
           }

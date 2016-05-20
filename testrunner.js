@@ -1,6 +1,8 @@
 var Jasmine = require('jasmine');
 var jasmine = new Jasmine();
 var util = require('util');
+require('events').EventEmitter.prototype._maxListeners = 0;
+
 jasmine.loadConfigFile('spec/support/jasmine.json');
 
 jasmine.configureDefaultReporter({
