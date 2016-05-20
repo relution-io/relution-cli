@@ -18,14 +18,6 @@ describe('New Create', () => {
 
   });
 
-  afterAll(() => {
-    RxFs.rmDir(commandRoot).subscribe({
-      complete: () => {
-        console.log(`${commandRoot} is removed`);
-      }
-    });
-  });
-
   it('have templates', (done) => {
     expect(commandCreate.toGenTemplatesName).toBeDefined();
     expect(commandCreate.toGenTemplatesName.length).toBeGreaterThan(0);
@@ -38,14 +30,24 @@ describe('New Create', () => {
     done();
   });
 
-  // it('create templates', (done) => {
-  //   commandCreate.publish('test').subscribe({
-  //     complete: () => {
-  //       commandCreate.emptyFolders.forEach((dir) => {
-  //         expect(RxFs.exist(path.join(commandRoot, dir))).toBe(true);
-  //       })
-  //       done();
-  //     }
-  //   })
-  // });
+  it('create templates', (done) => {
+    commandCreate.publish('test').subscribe({
+      complete: () => {
+        commandCreate.emptyFolders.forEach((dir) => {
+          expect(RxFs.exist(path.join(commandRoot, dir))).toBe(true);
+        });
+        done();
+      }
+    })
+  });
+
+  afterAll(() => {
+    setTimeout(() => {
+      RxFs.rmDir(commandRoot).subscribe({
+        complete: () => {
+          console.log(`${commandRoot} is removed`);
+        }
+      });
+    }, 5000);
+  });
 })
