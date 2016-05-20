@@ -16,11 +16,14 @@ jasmine.configureDefaultReporter({
     process.stdout.write(util.format.apply(this, arguments));
   }
 });
+
 jasmine.execute();
+
 jasmine.onComplete(function (passed) {
   if (passed) {
     console.log('All specs have passed');
   } else {
     console.log('At least one/some spec has failed');
   }
+  process.exit();
 });
