@@ -2,6 +2,7 @@ import * as uuid from 'node-uuid';
 import {FileApi} from './../../../utility/FileApi';
 import {Translation} from './../../../utility/Translation';
 import {TemplateInterface} from './../../TemplateInterface';
+const html = require('common-tags').html;
 /**
  * create the RelutionHjson file for the Project
  */
@@ -18,29 +19,28 @@ export class RelutionHjson implements TemplateInterface {
   private _server: string = 'app.js';
   private _private: boolean = false;
   private _baseAlias : string;
-
+  private _client : string = './www';
 
   get template() {
-    return this._fileApi.copyHjson(
-      `
-{
-  //app name
-  name: ${this.name}
-  //description for the project
-  description: ${this.description}
-  //on which baseAlias the app is available
-  baseAlias: ${this.baseAlias}
-  //uuid identifier
-  uuid: ${this.uuid}
-  //node start script
-  server: ${this.server}
-  //shows directoryIndex on the Server good for debugging
-  directoryIndex: ${this.directoryIndex}
-  //@todo have to be defined
-  private: ${this.private}
-}
-`
-    ).trim();
+    return this._fileApi.copyHjson(html`
+      {
+        //app name
+        name: ${this.name}
+        //description for the project
+        description: ${this.description}
+        //on which baseAlias the app is available
+        baseAlias: ${this.baseAlias}
+        //uuid identifier
+        uuid: ${this.uuid}
+        //client: ${this.client} //uncommented by default
+        //node start script
+        server: ${this.server}
+        //shows directoryIndex on the Server good for debugging
+        directoryIndex: ${this.directoryIndex}
+        //@todo have to be defined
+        private: ${this.private}
+      }
+    `);
   }
 
   /**
@@ -115,6 +115,14 @@ export class RelutionHjson implements TemplateInterface {
 
   public set baseAlias(v : string) {
     this._baseAlias = v;
+  }
+
+  public get client() : string {
+    return this._client;
+  }
+
+  public set client(v : string) {
+    this._client = v;
   }
 
 }

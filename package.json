@@ -33,6 +33,7 @@
     "cli-loader": "^1.1.1",
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
+    "common-tags": "^0.1.1",
     "figures": "^1.5.0",
     "hjson": "^1.8.4",
     "inquirer": "DrMabuse23/Inquirer.js#add78131e3461acbc861b4cdba8aff67a54ef4f4",

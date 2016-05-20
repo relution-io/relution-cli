@@ -1,5 +1,6 @@
 import {TemplateInterface} from './../../TemplateInterface';
 import {PackageJson} from './PackageJson';
+const html = require('common-tags').html;
 
 export class Readme implements TemplateInterface{
   public name:string = 'readme';
@@ -10,12 +11,10 @@ export class Readme implements TemplateInterface{
 
   }
   get template(){
-    return (
-      `
-#${this.name} ${this.package.version}
+    return (html`
+      #${this.name} ${this.package.version}
 
-${this.package.description}
-      `
-    );
+      ${this.package.description}
+    `);
   }
 }

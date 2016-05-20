@@ -1,4 +1,5 @@
 import {TemplateInterface} from './../../TemplateInterface';
+const html = require('common-tags').html;
 
 export class PackageJson implements TemplateInterface {
   public publishName: string = 'package.json';
@@ -27,24 +28,24 @@ export class PackageJson implements TemplateInterface {
    * ```
    */
   get template() {
-    return (`
-{
-  "name": "${this.name}",
-  "version": "${this.version}",
-  "main": "${this.main}",
-  "description": "${this.description}",
-  "dependencies": {
-    "lodash": "~4.5.1",
-    "q": "~1.4.1"
-  },
-  "devDependencies": {
-    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git"
-  },
-  "scripts": {
-    "jsdoc": "jsdoc ./ -r -c ./conf.json -d ./../jsdocs",
-    "startDoc": "http-server ./../jsdoc -p 6868"
-  }
-}\n
-`).trim();
+    return (html`
+      {
+        "name": "${this.name}",
+        "version": "${this.version}",
+        "main": "${this.main}",
+        "description": "${this.description}",
+        "dependencies": {
+          "lodash": "~4.5.1",
+          "q": "~1.4.1"
+        },
+        "devDependencies": {
+          "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git"
+        },
+        "scripts": {
+          "jsdoc": "jsdoc ./ -r -c ./conf.json -d ./../jsdocs",
+          "startDoc": "http-server ./../jsdoc -p 6868"
+        }
+      }\n
+    `);
   }
 }

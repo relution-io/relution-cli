@@ -4,15 +4,15 @@ const html = require('common-tags').html;
  * create the RelutionHjson file for the Project
  */
 
-export class RelutionIgnore implements TemplateInterface {
+export class GitIgnore implements TemplateInterface {
 
-  public publishName: string = '.relutionignore'
-  public name: string = 'relutionignore';
+  public publishName: string = '.gitignore'
+  public name: string = 'gitignore';
 
   get template() {
     return (html`
-      client/**/*.*
-      /node_modules
+      node_modules
+      npm-debug.log
     `);
   }
 }

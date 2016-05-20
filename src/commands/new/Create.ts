@@ -14,9 +14,30 @@ export class Create {
   private _gii: Gii = new Gii();
   private _fsApi: FileApi = new FileApi();
   //create in the project folder a folder with a gitkeep file
-  public emptyFolders: Array<string> = ['env', 'routes', 'models', 'connections', 'providers', 'editorconfig'];
+  public emptyFolders: Array<string> = [
+    'env',
+    'routes',
+    'models',
+    'connections',
+    'push'
+  ];
+
   //files to be generated
-  public toGenTemplatesName: Array<string> = ['app', 'package', 'relutionhjson', 'relutionignore', 'routes', 'readme'];
+  public toGenTemplatesName: Array<string> = [
+    'app',
+    'editorconfig',
+    'package',
+    'relutionhjson',
+    'relutionignore',
+    'gitignore',
+    'routes',
+    'readme',
+    'connectors',
+    'modelreadme',
+    'connectionsreadme',
+    'envreadme',
+    'pushreadme'
+  ];
 
   constructor() {
     npm.load();
@@ -87,20 +108,23 @@ export class Create {
       });
     });
   }
-
+  /**
+   * npm install
+   */
   npmInstall(): Observable<any> {
     npm.commands.install();
     let installer: any = Observable.bindNodeCallback(npm.commands.install);
     return installer();
   }
-
+  /**
+   * create a new project
+   */
   publish(name?: string): Observable<any> {
 
     if (!name || !name.length) {
       return Observable.create((observer: any) => {
         this.enterName().subscribe(
           (answers: any) => {
-
             this.name = answers.name;
           },
           (e) => { console.error(e) },
