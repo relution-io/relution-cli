@@ -5,7 +5,7 @@ import {Observable} from '@reactivex/rxjs';
 import {find, findIndex} from 'lodash';
 import * as chalk from 'chalk';
 const Hjson = require('hjson');
-
+import {EventEmitter} from 'events';
 /**
  * @class EnvCollection the collection Helper Class for the environments
  */
@@ -26,6 +26,21 @@ export class EnvCollection {
    * @param fsApi file helper
    */
   public fsApi: FileApi = new FileApi();
+  /**
+   * after change it wil be dispatched
+   */
+  public changeDispatcher: EventEmitter;
+
+  constructor(){
+    this.changeDispatcher = new EventEmitter();
+
+    this.changeDispatcher.on('changed', (self:any) => {
+      if (self !== this) {
+        console.log('fetch new');
+        this.getEnvironments().subcribe();
+      }
+    })
+  }
   /**
    * load all hjson file with content and add it to the collection
    * @param observer to will be completed
@@ -141,9 +156,11 @@ export class EnvCollection {
           this.getEnvironments().subscribe({
             next: () => {
               observer.next(`${to} are created.`);
+
             },
             complete: () => {
               observer.complete();
+              this.changeDispatcher.emit('changed', this);
             }
           });
         }
@@ -167,7 +184,10 @@ export class EnvCollection {
           observer.next(answer);
         },
         (e:any) => observer.error(e),
-        () => observer.complete()
+        () => {
+          this.changeDispatcher.emit('changed', this);
+          observer.complete()
+        }
       );
     });
   }
@@ -190,7 +210,10 @@ export class EnvCollection {
             observer.next(answers);
           },
           (e:any) => observer.error(),
-          () => observer.complete()
+          () => {
+            observer.complete()
+            this.changeDispatcher.emit('changed', this);
+          }
         )
       }
     });

@@ -42,6 +42,7 @@
     "node-uuid": "^1.4.7",
     "nopt": "^3.0.6",
     "npm": "^3.9.0",
+    "relution-sdk": "git+ssh://git@github.com/relution-io/relution-sdk.git",
     "rimraf": "^2.5.2",
     "username": "^2.1.0"
   }

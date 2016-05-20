@@ -10,6 +10,9 @@ import * as chalk from 'chalk';
  * add a Server to Config from the UserRc and store it
  */
 
+const ADD = 'add';
+const UPDATE = 'update';
+
 export class ServerCrud {
 
   public userRc:UserRc;
@@ -18,6 +21,7 @@ export class ServerCrud {
   constructor(userRc:UserRc) {
     this.userRc = userRc;
   }
+  private _scenario:string = ADD;
 
   get addConfig(): Array<Object> {
     return [
@@ -34,7 +38,7 @@ export class ServerCrud {
             password: ''
           });
 
-          if (!this.isUnique(testNameModel)){
+          if (!this.isUnique(testNameModel) && this._scenario === ADD){
             console.log(chalk.red(`\n Name ${value} already exist please choose another one`));
             return false;
           }
@@ -333,7 +337,7 @@ export class ServerCrud {
     if (!this.userRc && !this.userRc.config && !this.userRc.config.server){
       return Observable.throw(new Error('no server are available'));
     }
-
+    this._scenario = UPDATE;
     if (!params || !params.length) {
       return Observable.create((observer:any)=>{
         this._updateWithoutId().subscribe((serverId: string) => {

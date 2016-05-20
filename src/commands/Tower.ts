@@ -16,7 +16,7 @@ export class Tower {
   //where is this command available
   public name: string = 'relution';
   //all commands are available
-  public staticCommands: Object;
+  public staticCommands: any;
   //helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
   //which one are reserved

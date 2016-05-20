@@ -14,7 +14,7 @@ export class Translation {
   static SERVER_UPDATE: string = 'Update a exist server from the Server list';
 
   static NEW_CREATE = `create a new Project in Folder`;
-
+  static DEPLOY = `deploy your Baas to the server`;
   static SELECT(name: string): string {
     return `Select ${name}`;
   }

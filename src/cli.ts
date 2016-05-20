@@ -3,6 +3,7 @@ import {Server} from './commands/Server';
 import {Environment} from './commands/Environment';
 import {Tower} from './commands/Tower';
 import {New} from './commands/New';
+import {Deploy} from './commands/Deploy';
 
 import {Observable} from '@reactivex/rxjs';
 // const loader = require('cli-loader')();
@@ -11,7 +12,8 @@ import {Observable} from '@reactivex/rxjs';
 let staticCommands = {
   server: new Server(),
   env: new Environment(),
-  new: new New()
+  new: new New(),
+  deploy: new Deploy()
 };
 
 //observable to wait for before loading the tower some commands need a some data befor it can be initialised
