@@ -71,6 +71,7 @@ export class EnvCollection {
     let namePass:RegExpMatchArray = name.match(Validator.stringPattern);
     return namePass;
   }
+
   /**
    * if match the name in the collection
    * @param name the name: "" from your hjson file

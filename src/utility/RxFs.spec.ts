@@ -7,7 +7,7 @@ describe('Utility RxFs', () => {
     let testPath: string = `${path.join(__dirname, '..', '..', 'spec', 'gentest', 'app')}`;
     RxFs.mkdir(testPath).subscribe(
       (log:any) => {
-        expect(RxFs.exist(testPath)).toBe(true);
+        expect(RxFs.exist(testPath)).to.be(true);
       },
       (e: Error) => {
         //console.error(e.message, e);
@@ -23,7 +23,7 @@ describe('Utility RxFs', () => {
     let testPath: string = `${path.join(__dirname, '..', '..', 'spec', 'gentest', 'app')}/.gitkeep`;
     RxFs.writeFile(testPath, '').subscribe(
       (log:any) => {
-        expect(RxFs.exist(testPath)).toBe(true);
+        expect(RxFs.exist(testPath)).to.be(true);
       },
       (e: Error) => {
         console.error(e.message, e);
@@ -41,7 +41,7 @@ describe('Utility RxFs', () => {
     RxFs.rmDir(testPath).subscribe(
       (log: any) => {
         // console.log('log', log);
-        expect(RxFs.exist(testPath)).toBe(false);
+        expect(RxFs.exist(testPath)).to.be(false);
       },
       (e: Error) => {
         console.error(e.message, e.stack);

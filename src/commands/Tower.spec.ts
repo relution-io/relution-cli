@@ -10,7 +10,7 @@ describe('Commands Tower Relution', () => {
   });
 
   it('has name relution', done => {
-    expect(command.name).toEqual('relution');
+    expect(command.name).to.equal('relution');
     done();
   });
 
@@ -21,9 +21,9 @@ describe('Commands Tower Relution', () => {
 
   it('quit command on relution', done => {
     // let temp:any = command.init(['relution', 'quit']);
-    // expect(temp.isUnsubscribed).toBe(true);
-    // expect(temp.syncErrorValue).toBe(null);
-    // expect(temp.syncErrorThrown).toBe(false);
+    // expect(temp.isUnsubscribed).to.be(true);
+    // expect(temp.syncErrorValue).to.be(null);
+    // expect(temp.syncErrorThrown).to.be(false);
     done();
   });
 });

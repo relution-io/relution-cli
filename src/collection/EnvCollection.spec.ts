@@ -24,8 +24,8 @@ describe('EnVCollection a subset of environments', () => {
       next: (log:any) => {
         console.log(log);
       },
-      complete:() => {
-        expect(RxFs.exist(path.join(command.fsApi.path, 'dev.hjson'))).toBe(true);
+      complete: () => {
+        expect(RxFs.exist(path.join(command.fsApi.path, 'dev.hjson'))).to.be(true);
         console.log('envCollection.collection', command.envCollection.collection);
         done();
       }
@@ -34,14 +34,14 @@ describe('EnVCollection a subset of environments', () => {
 
   it ('has collection with entry dev', (done) => {
     console.log(command.envCollection.flatEnvArray());
-    expect(command.envCollection.collection.length).toBeGreaterThan(0);
-    expect(command.envCollection.flatEnvArray().indexOf('dev')).toBeGreaterThan(-1);
+    expect(command.envCollection.collection.length).to.be.greaterThan(0);
+    expect(command.envCollection.flatEnvArray().indexOf('dev')).to.be.greaterThan(-1);
     done();
   });
 
   it('read a environment "dev"', (done) => {
     let env:EnvModel = command.envCollection.isUnique('dev');
-    expect(env.name).toBe('dev');
+    expect(env.name).to.be('dev');
     done();
   });
 

@@ -34,12 +34,13 @@ describe('create RelutionHjson Template', () => {
 
   dummyKeys.forEach((key: any) => {
     it(`has a public ${key}`, (done) => {
+
       if (key === 'baseAlias') {
-        expect(rHjson[key]).toBe(`/${dummy[key]}`);
+        expect(rHjson[key]).to.be(`/${dummy[key]}`);
       } else if (key === 'server') {
-        expect(rHjson[key]).toBe(`./${dummy[key]}`);
+        expect(rHjson[key]).to.be(`./${dummy[key]}`);
       } else {
-        expect(rHjson[key]).toBe(dummy[key]);
+        expect(rHjson[key]).to.be(dummy[key]);
       }
       done();
     });
@@ -52,7 +53,7 @@ describe('create RelutionHjson Template', () => {
       },
       complete: () => {
         let stats: any = fs.statSync(`${fsApi.path}${rHjson.publishName}`);
-        expect(stats.blocks).toBe(8);
+        expect(stats.blocks).to.be(8);
         done();
       }
     });
@@ -74,11 +75,11 @@ describe('read RelutionHjson Template', () => {
         next: (result: any) => {
           data = fsApi.copyHjson(result.data);
           if (key === 'baseAlias') {
-            expect(data[key]).toBe(`/${dummy[key]}`);
+            expect(data[key]).to.be(`/${dummy[key]}`);
           } else if (key === 'server') {
-            expect(data[key]).toBe(`./${dummy[key]}`);
+            expect(data[key]).to.be(`./${dummy[key]}`);
           } else {
-            expect(data[key]).toBe(dummy[key]);
+            expect(data[key]).to.be(dummy[key]);
           }
           done();
         },

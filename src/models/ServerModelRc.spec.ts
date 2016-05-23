@@ -16,14 +16,14 @@ describe('ServerModelRc', () => {
   });
 
   it('has attributes', (done) => {
-    expect(model.attributes).toBeDefined();
-    expect(model.attributes).toEqual(Object.keys(temp));
+    expect(model.attributes).not.to.be(undefined);
+    expect(model.attributes.toString()).to.be.equal(Object.keys(temp).toString());
     done();
   });
 
   it('convert into a json object', (done) => {
-    expect(model.toJson).toBeDefined();
-    expect(Object.keys(model.toJson())).toEqual(Object.keys(temp));
+    expect(model.toJson).not.to.be(undefined);
+    expect(Object.keys(model.toJson()).toString()).to.be.equal(Object.keys(temp).toString());
     done();
   });
 });

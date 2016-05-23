@@ -19,8 +19,8 @@ describe('File api', () => {
     api.fileList(api.path, '.hjson').subscribe(
       (file:any) => {
         if (file) {
-          expect(typeof file).toEqual('string');
-          expect(file.indexOf('.hjson')).toBeGreaterThan(-1);
+          expect(typeof file).to.be.equal('string');
+          expect(file.indexOf('.hjson')).to.be.greaterThen(-1);
         }
       },
       (e: Error) => {
@@ -35,8 +35,8 @@ describe('File api', () => {
     let a:any = {name: 'a'};
     let b:any = api.copyHjson(a);
     b.name = 'b';
-    expect(a.name).toBe('a');
-    expect(b.name).toBe('b');
+    expect(a.name).to.be('a');
+    expect(b.name).to.be('b');
     done();
   });
 
@@ -50,8 +50,9 @@ describe('File api', () => {
     }`;
 
     api.writeHjson(neenv, 'test').subscribe({
-      next: (written:boolean) => {
-        expect(written).toBe(true);
+      next: (written: boolean) => {
+        console.log(written);
+        expect(RxFs.exist(path.join(api.path, 'test.hjson'))).to.be(true);
       },
       error: (e:Error) => {
         //console.error(e.message, e.stack);
@@ -59,7 +60,7 @@ describe('File api', () => {
       },
       complete: () => {
         let exist:boolean = fs.existsSync(`${api.path}/test.hjson`);
-        expect(exist).toBe(true);
+        expect(exist).to.be(true);
         done();
       }
     });
@@ -70,10 +71,10 @@ describe('File api', () => {
     let filePath:string = `${api.path}/test.${api.hjsonSuffix}`;
     api.readHjson(filePath).subscribe({
       next: (file:any) => {
-        expect(file.path).toBeDefined();
-        expect(file.path).toBe(filePath);
-        expect(file.data).toBeDefined();
-        expect(file.data.name).toBe('test');
+        expect(file.path).not.to.be(undefined);
+        expect(file.path).to.be(filePath);
+        expect(file.data).not.to.be(undefined);
+        expect(file.data.name).to.be('test');
       },
       error: (e:Error) => {
         //console.error(e.message, e.stack);
@@ -92,8 +93,7 @@ describe('File api', () => {
     api.mkdirStructureFolder(goalPath).subscribe(
       (log: any) => {
         //console.log('mylog', JSON.stringify(log, null, 2));
-        expect(RxFs.exist(goalPath)).toBe(true);
-        expect(RxFs.exist(`${goalPath}/.gitkeep`)).toBe(true);
+
       },
       (e:Error) => {
         //console.error(e.message, e.stack);
@@ -101,6 +101,8 @@ describe('File api', () => {
       },
       () => {
         //console.log('completed');
+        expect(RxFs.exist(goalPath)).to.be(true);
+        expect(RxFs.exist(`${goalPath}/.gitkeep`)).to.be(true);
         done();
       }
     )
@@ -110,7 +112,7 @@ describe('File api', () => {
     let goalPath: string = path.join(`${__dirname}/../../spec/gentest/structureFolderTest`);
     RxFs.rmDir(goalPath).debounceTime(1000).subscribe({
       complete: () => {
-        expect(RxFs.exist(goalPath)).toBe(false);
+        expect(RxFs.exist(goalPath)).to.be(false);
         done()
       }
     });

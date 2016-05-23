@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "npm run build && mocha lib/utility/Archiver.spec.js -w -d -c",
+    "test": "npm run build && node testrunner.js",
     "testfile": "jasmine --verbose --autotest --watch --color --test-dir lib/gii/templates/new",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
@@ -21,6 +21,7 @@
   "license": "Apache License",
   "devDependencies": {
     "chai": "^3.5.0",
+    "chokidar": "^1.5.1",
     "del-cli": "^0.2.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.3",
@@ -39,6 +40,7 @@
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
     "common-tags": "^0.1.1",
+    "directory-tree": "^1.0.0",
     "figures": "^1.5.0",
     "fstream-ignore": "^1.0.5",
     "hjson": "^1.8.4",

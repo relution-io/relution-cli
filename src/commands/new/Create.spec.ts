@@ -17,14 +17,14 @@ describe('New Create', () => {
   });
 
   it('have templates', (done) => {
-    expect(commandCreate.toGenTemplatesName).to.be.defined()();
-    expect(commandCreate.toGenTemplatesName.length).toBeGreaterThan(0);
+    expect(commandCreate.toGenTemplatesName).not.to.be(undefined);
+    expect(commandCreate.toGenTemplatesName.length).to.be.greaterThan(0);
     done();
   });
 
   it('have folders to generate', (done) => {
-    expect(commandCreate.emptyFolders).toBeDefined();
-    expect(commandCreate.emptyFolders.length).toBeGreaterThan(0);
+    expect(commandCreate.emptyFolders).not.to.be(undefined);
+    expect(commandCreate.emptyFolders.length).to.be.greaterThan(0);
     done();
   });
 
@@ -32,7 +32,7 @@ describe('New Create', () => {
     commandCreate.publish('test', true).subscribe({
       complete: () => {
         commandCreate.emptyFolders.forEach((dir) => {
-          expect(RxFs.exist(path.join(commandRoot, dir))).toBe(true);
+          expect(RxFs.exist(path.join(commandRoot, dir))).to.be(true);
         });
         done();
       }
@@ -42,7 +42,7 @@ describe('New Create', () => {
   after(() => {
     RxFs.rmDir(commandRoot).subscribe({
       complete: () => {
-        expect(RxFs.exist(commandRoot)).toBe(false);
+        expect(RxFs.exist(commandRoot)).to.be(false);
       }
     });
   });

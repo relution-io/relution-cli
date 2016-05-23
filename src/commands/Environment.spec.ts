@@ -10,13 +10,13 @@ describe('Command Environment', () => {
   let commands:Array<string> = env.flatCommands();
   commands.forEach((method:string) => {
     it(`has ${method} as method`, (done) => {
-      expect(env[method]).toBeDefined();
+      expect(env[method]).not.to.be(undefined);
       done();
     });
   });
 
   it('has env as name', (done) => {
-    expect(env.name).toBe('env');
+    expect(env.name).to.be('env');
     done();
   });
 })

@@ -18,23 +18,23 @@ describe('Utility Command', () => {
   });
 
   it('has a name', done => {
-    expect(command.name).toEqual('test');
+    expect(command.name).to.equal('test');
     done();
   });
 
   it('has commands', done => {
-    expect(command.flatCommands()).toEqual(['create', 'help']);
-    expect(command.showCommands).not.toBeUndefined();
+    expect(command.flatCommands().toString()).to.equal(['create', 'help'].toString());
+    expect(command.showCommands).not.to.be(undefined);
     done();
   });
 
   it('has a help method', done => {
-    expect(command.help).not.toBeUndefined();
+    expect(command.help).not.to.be(undefined);
     done();
   });
 
   it('has a home method', done => {
-    expect(command.home).not.toBeUndefined();
+    expect(command.home).not.to.be(undefined);
     done();
   });
 });
