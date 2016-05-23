@@ -1,4 +1,5 @@
 import {Environment} from './Environment';
+const expect = require('expect.js');
 
 describe('Command Environment', () => {
   let env:Environment = new Environment();

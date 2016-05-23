@@ -1,4 +1,5 @@
 import {ServerModelRc} from './ServerModelRc';
+const expect = require('expect.js');
 
 describe('ServerModelRc', () => {
   let model:ServerModelRc;

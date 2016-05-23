@@ -1,6 +1,6 @@
 import {RxFs} from './RxFs';
 import * as path from 'path';
-
+const expect = require('expect.js');
 describe('Utility RxFs', () => {
 
   it('create a folder', (done) => {

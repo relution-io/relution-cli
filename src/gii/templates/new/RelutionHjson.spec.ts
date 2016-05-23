@@ -2,6 +2,7 @@ import {RelutionHjson as RelutionHjsonTemplate} from './RelutionHjson';
 import {FileApi} from './../../../utility/FileApi';
 import * as fs from 'fs';
 import * as path from 'path';
+const expect = require('expect.js');
 
 let dummy: any = {
   name: 'testfoobar',

@@ -1,11 +1,12 @@
 import {Create} from './Create';
 import * as path from 'path';
 import {RxFs} from './../../utility/RxFs';
+const expect = require('expect.js');
 
 describe('New Create', () => {
   let commandCreate:Create;
   let commandRoot:string = path.join(process.cwd(), 'spec', 'gentest', 'create');
-  beforeAll(() => {
+  before(() => {
     RxFs.mkdir(commandRoot).subscribe({
       complete: () => {
         expect(RxFs.exist(commandRoot)).toBe(true);
@@ -38,7 +39,7 @@ describe('New Create', () => {
     })
   });
 
-  afterAll(() => {
+  after(() => {
     RxFs.rmDir(commandRoot).subscribe({
       complete: () => {
         expect(RxFs.exist(commandRoot)).toBe(false);

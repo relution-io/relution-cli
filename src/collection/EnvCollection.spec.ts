@@ -1,13 +1,13 @@
 import {EnvModel} from './../models/EnvModel';
 import {Environment} from './../commands/Environment';
 import {RxFs} from './../utility/RxFs';
-
+const expect = require('expect.js');
 import * as path from 'path';
 
 describe('EnVCollection a subset of environments', () => {
   let command:Environment;
 
-  beforeAll(() => {
+  before(() => {
     command = new Environment();
     command.fsApi.path = path.join(process.cwd(), 'spec', 'gentest', 'env') + '/';
     command.envCollection.envFolder = command.fsApi.path;
@@ -45,7 +45,7 @@ describe('EnVCollection a subset of environments', () => {
     done();
   });
 
-  afterAll(() => {
+  after(() => {
     RxFs.rmDir(command.fsApi.path).subscribe({
       complete: () => {
         console.log(`${command.fsApi.path} is removed.`);

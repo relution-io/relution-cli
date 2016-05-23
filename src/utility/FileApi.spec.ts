@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const Hjson = require('hjson');
+const expect = require('expect.js');
 
 describe('File api', () => {
   let api:FileApi;

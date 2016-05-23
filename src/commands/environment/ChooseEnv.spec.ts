@@ -1,6 +1,7 @@
 import {ChooseEnv} from './ChooseEnv';
 import {EnvModel} from './../../models/EnvModel';
 import {EnvCollection} from './../../collection/EnvCollection';
+const expect = require('expect.js');
 
 describe('Command Environment ChooseEnv', () => {
   let chooseEnv:ChooseEnv;

@@ -1,4 +1,5 @@
 import {Command} from './Command';
+const expect = require('expect.js');
 
 describe('Utility Command', () => {
   let command:Command;
