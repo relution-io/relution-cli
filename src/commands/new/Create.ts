@@ -90,25 +90,19 @@ export class Create {
    * create the "toGenTemplatesName" as file
    */
   writeTemplates(name: string): Observable<any> {
-    return Observable.create((observer: any) => {
-      let templates: Array<any> = [];
-      let writingFiles: Array<any> = [];
+    let templates: Array<any> = [];
+    let writingFiles: Array<any> = [];
 
-      this.toGenTemplatesName.forEach((templateName: string) => {
-        let templateGii: TemplateModel = this._gii.getTemplateByName(templateName);
-        templateGii.instance.name = name;
-        //root or in a subfolder
-        let toGenPath: string = templateGii.instance.parentFolder ? `${this.rootProjectFolder}/${templateGii.instance.parentFolder}/` : this.rootProjectFolder;
-        // console.log(toGenPath);
-        writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName, toGenPath));
-      });
-
-      Observable.forkJoin(writingFiles).subscribe({
-        complete: () => {
-          observer.complete();
-        }
-      });
+    this.toGenTemplatesName.forEach((templateName: string) => {
+      let templateGii: TemplateModel = this._gii.getTemplateByName(templateName);
+      templateGii.instance.name = name;
+      //root or in a subfolder
+      let toGenPath: string = templateGii.instance.parentFolder ? `${this.rootProjectFolder}/${templateGii.instance.parentFolder}/` : this.rootProjectFolder;
+      // console.log(toGenPath);
+      writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName, toGenPath));
     });
+
+    return Observable.forkJoin(writingFiles);
   }
   /**
    * npm install

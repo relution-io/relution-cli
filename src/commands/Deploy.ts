@@ -17,7 +17,7 @@ export class Deploy extends Command {
   private _defaultServer:string = 'default';
 
   public commands: any = {
-    publish: {
+    deploy: {
       description: this.i18n.DEPLOY,
       vars: {
         name: {
@@ -70,7 +70,7 @@ export class Deploy extends Command {
   /**
    * deploy the baas to the server
    */
-  public publish():Observable<any>{
+  public deploy():Observable<any>{
     return Observable.create(
       (observer:any) => {
         this.getServerPrompt().subscribe(

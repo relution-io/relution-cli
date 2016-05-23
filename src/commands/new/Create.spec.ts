@@ -9,7 +9,7 @@ describe('New Create', () => {
   before(() => {
     RxFs.mkdir(commandRoot).subscribe({
       complete: () => {
-        expect(RxFs.exist(commandRoot)).toBe(true);
+        expect(RxFs.exist(commandRoot)).to.be(true);
       }
     });
     commandCreate = new Create();
@@ -17,7 +17,7 @@ describe('New Create', () => {
   });
 
   it('have templates', (done) => {
-    expect(commandCreate.toGenTemplatesName).toBeDefined();
+    expect(commandCreate.toGenTemplatesName).to.be.defined()();
     expect(commandCreate.toGenTemplatesName.length).toBeGreaterThan(0);
     done();
   });

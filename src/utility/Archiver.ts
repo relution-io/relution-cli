@@ -1,7 +1,7 @@
 const fIgnore = require('fstream-ignore');
 import {Observable} from '@reactivex/rxjs';
 const archive = require('archiver');
-const progressBar = require('progress');
+// const loader = require('cli-loader')();
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -21,14 +21,10 @@ export /**
   }
 
   projectFiles(): Observable<any> {
-
     let count: number = 0;
     this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');
     let output = fs.createWriteStream(this.zipFilePath);
     let archiver = archive('zip');
-    let loader = new progressBar('archive project: :bar :percent :eta', {
-      total: 100
-    })
 
     //console.log(this.zipFilePath);
     return Observable.create((observer: any) => {
@@ -54,10 +50,12 @@ export /**
 
       output.on('finish', () => {
         observer.next({zip: this.zipFilePath, message: `Zip created at ${this.zipFilePath}`});
+        //loader.stop();
         observer.complete();
       })
       .on('error', (e:Error) => {
         observer.error(e);
+        // loader.stop();
       })
       archiver.pipe(output);
     });
