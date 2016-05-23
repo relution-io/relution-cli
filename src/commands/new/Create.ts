@@ -14,7 +14,7 @@ export class Create {
   private _gii: Gii = new Gii();
   private _fsApi: FileApi = new FileApi();
 
-  public rootProjectFolder:string = this.rootProjectFolder;
+  public rootProjectFolder:string = process.cwd();
   //create in the project folder a folder with a gitkeep file
   public emptyFolders: Array<string> = [
     'env',
@@ -128,6 +128,7 @@ export class Create {
         this.enterName().subscribe(
           (answers: any) => {
             this.name = answers.name;
+            console.log(answers.name);
           },
           (e) => { console.error(e) },
           () => {

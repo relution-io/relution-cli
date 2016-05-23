@@ -1,4 +1,5 @@
 import {Server} from './Server';
+const expect = require('expect.js');
 
 describe('Command Server', () => {
   let server:Server = new Server();

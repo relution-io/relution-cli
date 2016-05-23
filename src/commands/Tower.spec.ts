@@ -1,5 +1,6 @@
 import {Tower} from './Tower';
 import {Observable, Subscriber} from '@reactivex/rxjs';
+const expect = require('expect.js');
 
 describe('Commands Tower Relution', () => {
   let command: Tower;

@@ -37,11 +37,20 @@ export class Deploy extends Command {
       Relution.init({
         serverUrl: choosedServer.serverUrl
       });
-      console.log(JSON.stringify(Relution, null, 2))
-  // let credentials: Relution.LoginObject = {
-  //    userName: 'myusername',
-  //    password: 'mypassword'
-  // };
+
+    console.log('Relution', JSON.stringify(Relution.security, null, 2))
+    let credentials = {
+      userName: choosedServer.userName,
+      password: choosedServer.password
+    };
+
+    Relution.web.login(credentials).then(
+      (resp) => {
+        console.log('resp', resp);
+      }
+    ).catch((e:Error) => {
+      console.error(e.message, e.stack);
+    })
   }
 
   getServerPrompt():Observable<any> {

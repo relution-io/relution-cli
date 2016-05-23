@@ -62,6 +62,8 @@
         "src/models/EnvModel.ts",
         "src/models/ServerModelRc.spec.ts",
         "src/models/ServerModelRc.ts",
+        "src/utility/Archiver.spec.ts",
+        "src/utility/Archiver.ts",
         "src/utility/Command.spec.ts",
         "src/utility/Command.ts",
         "src/utility/FileApi.spec.ts",

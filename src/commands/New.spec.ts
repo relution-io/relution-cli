@@ -1,4 +1,5 @@
 import {New} from './New';
+const expect = require('expect.js');
 
 describe('Command New', () => {
   let project:New = new New();
