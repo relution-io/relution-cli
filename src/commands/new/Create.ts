@@ -1,5 +1,4 @@
 import {Observable} from '@reactivex/rxjs';
-import * as chalk from 'chalk';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
 import {Gii} from './../../gii/Gii';
@@ -8,6 +7,7 @@ import {FileApi} from './../../utility/FileApi'
 import * as inquirer from 'inquirer';
 const npm = require('npm');
 const figures = require('figures');
+import {DebugLog} from './../../utility/DebugLog';
 
 export class Create {
   private _name: string;
@@ -71,7 +71,7 @@ export class Create {
           if (pass) {
             return true;
           } else {
-            console.log(chalk.red( Translation.NOT_ALLOWED(value, Validator.stringPattern)));
+            DebugLog.error(new Error(Translation.NOT_ALLOWED(value, Validator.stringPattern)));
             return false;
           }
         }
@@ -98,7 +98,7 @@ export class Create {
       templateGii.instance.name = name;
       //root or in a subfolder
       let toGenPath: string = templateGii.instance.parentFolder ? `${this.rootProjectFolder}/${templateGii.instance.parentFolder}/` : this.rootProjectFolder;
-      // console.log(toGenPath);
+      // DebugLog.debug(toGenPath);
       writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName, toGenPath));
     });
 
@@ -122,19 +122,20 @@ export class Create {
         this.enterName().subscribe(
           (answers: any) => {
             this.name = answers.name;
-            console.log(answers.name);
+            DebugLog.debug(answers.name);
           },
           (e) => { console.error(e) },
           () => {
             this.addStructure().subscribe({
               complete: () => {
-                observer.next(chalk.magenta(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString())));
+                observer.next(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
                 this.writeTemplates(this.name).subscribe({
                   complete: () => {
-                    observer.next(chalk.magenta(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString())));
+                    observer.next(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
+
                     this.npmInstall().subscribe({
                       complete: () => {
-                        observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                        observer.next(Translation.WRITTEN(this.name, 'Project'));
                         observer.complete();
                       }
                     });
@@ -150,21 +151,21 @@ export class Create {
       return Observable.create((observer: any) => {
         this.addStructure().subscribe({
           complete: () => {
-            observer.next(chalk.magenta(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString())));
+            observer.next(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
             this.writeTemplates(this.name).subscribe({
               complete: () => {
-                observer.next(chalk.magenta(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString())));
+                observer.next(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
                 if(!test) {
                   npm.load(() => {
                     this.npmInstall().subscribe({
                       complete: () => {
-                        observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                        observer.next(Translation.WRITTEN(this.name, 'Project'));
                         observer.complete();
                       }
                     });
                   });
                 } else {
-                  observer.next(chalk.magenta(Translation.WRITTEN(this.name, 'Project')));
+                  observer.next(Translation.WRITTEN(this.name, 'Project'));
                   observer.complete();
                 }
               }

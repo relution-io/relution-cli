@@ -122,13 +122,13 @@ export class Environment extends Command {
     return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
         error: (e:any) => {
-          console.log('no environments available');
+          this.log.warn('no environments available');
           super.preload().subscribe({
             complete: () => observer.complete()
           });
         },
         complete: () => {
-          // console.log(this.envCollection.collection);
+          // this.log.debug(this.envCollection.collection);
           this.chooseEnv = new ChooseEnv(this.envCollection);
           super.preload().subscribe({
             complete: () => observer.complete()
@@ -152,7 +152,7 @@ export class Environment extends Command {
         validate: function (value: string) {
           let done: any = this.async();
           if (self.envCollection.isUnique(value)) {
-            console.log(chalk.red(`\n Name ${value} already exist please choose another one`));
+            this.log.error(new Error(this.i18n.ALREADY_EXIST(value)));
             done(false);
           }
 
@@ -160,7 +160,7 @@ export class Environment extends Command {
           if (pass) {
             done(null, true);
           } else {
-            console.log(chalk.red(`\n Name ${value} has wrong character allowed only [a-z A-Z]`));
+            this.log.error(new Error(Translation.NOT_ALLOWED(value, Validator.stringPattern)));
             done(false);
           }
         }
@@ -180,19 +180,19 @@ export class Environment extends Command {
     return Observable.create((observer: any) => {
       this.addAttribute.store().subscribe(
         (answers: any) => {
-          // console.log('answers store', answers);
+          // this.log.debug('answers store', answers);
           store.push({key: answers.key.trim(), value: answers.value.trim()});
         },
         (e: any) => console.error(e),
         () => {
           this.addAttribute.addAnother().subscribe(
             (answers: any) => {
-              // console.log('answers another', answers );
+              // this.log.debug('answers another', answers );
               if (answers[this.addAttribute.addPromptName] === false) {
                 observer.next(store);
                 return observer.complete();
               }
-              // console.log('store', store);
+              // this.log.debug('store', store);
               this.getAttributes(store).subscribe({
                 complete: () => {
                   observer.next(store);
@@ -215,7 +215,7 @@ export class Environment extends Command {
       this.chooseEnv.choose().subscribe(
         (answers: any) => {
           names = answers[this.chooseEnv.promptName];
-          // console.log('names', names);
+          // this.log.debug('names', names);
           if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
             return observer.complete();
           }
@@ -223,10 +223,10 @@ export class Environment extends Command {
           this.getAttributes([]).subscribe(
             (attrs: any) => {
               attributes = attrs;
-              // console.log('result', attributes);
+              // this.log.debug('result', attributes);
               this.envCollection.bulkUpdate(names, attributes).subscribe(
                 (res: any) => {
-                  // console.log('complete????');
+                  // this.log.debug('complete????');
                   observer.complete();
                 }
               );
@@ -267,10 +267,10 @@ export class Environment extends Command {
         this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
           (answers:any) => {
             tobeCopied = answers[this.chooseEnv.promptName];
-            // console.log(tobeCopied);
+            // this.log.debug(tobeCopied);
             this.enterName().subscribe((answers:any) => {
                 toBeGenerate = answers.name;
-                // console.log(toBeGenerate);
+                // this.log.debug(toBeGenerate);
                 this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
                   next: (log:any) => {
                     observer.next(chalk.magenta(`${log} \n`));
@@ -279,7 +279,7 @@ export class Environment extends Command {
                     observer.error(e);
                   },
                   complete: () => {
-                    // console.log('copied');
+                    // this.log.debug('copied');
                     observer.complete();
                   }
                 })
@@ -319,7 +319,7 @@ export class Environment extends Command {
           (answers: any) => {
             this.createEnvironment(answers.name).subscribe({
               next: (log: string) => {
-                console.log(`${log} \n`);
+                this.log.info(`${log} \n`);
                 this.list().subscribe({
                   complete: () => {
                     observer.complete();
@@ -333,15 +333,15 @@ export class Environment extends Command {
       });
     }
     //>relution env add bubble
-    // console.log('name', name);
+    // this.log.debug('name', name);
     if (isArray(name)) {
-      // console.log('isArray(name)', isArray(name));
+      // this.log.debug('isArray(name)', isArray(name));
       let envName: string = name[0];
-      // console.log('envName', envName);
+      // this.log.debug('envName', envName);
       let pass: any = envName.match(Validator.stringPattern);
-      // console.log('pass', pass);
+      // this.log.debug('pass', pass);
       let unique: EnvModel = this.envCollection.isUnique(envName);
-      // console.log('unique', unique);
+      // this.log.debug('unique', unique);
 
       if (unique) {
 

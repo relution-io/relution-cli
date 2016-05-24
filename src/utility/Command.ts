@@ -3,7 +3,8 @@ import * as chalk from 'chalk';
 import {UserRc} from './UserRc';
 import {Table} from './Table';
 import {Tower} from './../commands/Tower';
-import {Translation} from './../utility/Translation';
+import {Translation} from './Translation';
+import {DebugLog} from './DebugLog';
 
 const inquirer = require('inquirer');
 const username = require('username');
@@ -43,7 +44,7 @@ export class Command implements CommandInterface {
   public inquirer = inquirer;
 
   public i18n = Translation;
-
+  public log = DebugLog;
   public reserved: Array<string> = ['help', this.i18n.QUIT];
   public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
@@ -101,7 +102,7 @@ export class Command implements CommandInterface {
    * ```
    */
   help(asArray: boolean = false) {
-    //console.log('help', asArray);
+    //this.log.info('help', asArray);
     return Observable.create((observer: any) => {
       let content: any = [['', '', '', '']];
       //[this.name, '', '', '']
@@ -116,7 +117,7 @@ export class Command implements CommandInterface {
               let params:string = '';
               vars.forEach((param, index) => {
                 params += chalk.yellow(`<$${param}>`);
-                // console.log(index, vars.length, index !== (vars.length -1));
+                // this.log.info(index, vars.length, index !== (vars.length -1));
                 if (index !== (vars.length -1) ){
                   params += ' ';
                 }
@@ -144,7 +145,7 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>, back: Tower) {
-    // console.log(`Command.ts ${this.name}`, args);
+    // this.log.info(`Command.ts ${this.name}`, args);
     this._parent = back;
     let myObservable:Observable<any>;
 
@@ -155,7 +156,7 @@ export class Command implements CommandInterface {
         (answers: Array<string>) => {
           return this.init(answers[this.name], this._parent);
         },
-        (e:any) => console.error(e)
+        (e:any) => this.log.error(e)
       );
     }
 
@@ -166,9 +167,9 @@ export class Command implements CommandInterface {
 
     //we have this method maybe help we get ['server', 'help', 'param']
     //build this.help('param');
-    // console.log('this[args[0]]', this[args[0]]);
+    // this.log.info('this[args[0]]', this[args[0]]);
     if (this[args[0]]) {
-      // console.log('args.length > 1', args.length > 1);
+      // this.log.info('args.length > 1', args.length > 1);
       if (args.length > 1) {
         let params = this._copy(args);
         params.splice(0, 1);//remove 'update' or 'create'
@@ -178,13 +179,13 @@ export class Command implements CommandInterface {
       }
     }
 
-    // console.log('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
+    // this.log.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     //server add
 
     if (args[0] === this.name && this[args[1]]) {
 
       if (args.length > 2) {
-        console.log('args.length > 2', args.length > 2);
+        this.log.info('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);
           subArgs.splice(0, 2);
           myObservable = this[args[1]](subArgs);
@@ -195,9 +196,9 @@ export class Command implements CommandInterface {
 
     return myObservable.subscribe(
       (log: any) => {
-        console.log(log);
+        this.log.info(log);
       },
-      (e:any) => console.error(e),
+      (e:any) => this.log.error(e),
       () => {
         this.home();
       }
@@ -224,7 +225,7 @@ export class Command implements CommandInterface {
   }
 
   showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
-    //console.log(new Date().getTime());
+    //this.log.info(new Date().getTime());
     if (!this.commands) {
       return Observable.throw(new Error(`Command ${this.name} has no commands!`));
     }
@@ -243,7 +244,7 @@ export class Command implements CommandInterface {
       inquirer.prompt(questions).then((answers: Array<string>) => {
         observer.next(answers);
         observer.complete();
-      }).catch((e:any) => {console.error(e)});
+      }).catch((e:any) => {this.log.error(e)});
     });
   }
 }

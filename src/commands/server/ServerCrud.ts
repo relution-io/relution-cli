@@ -5,7 +5,7 @@ import {ServerModelRc, ServerModel} from './../../models/ServerModelRc';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
-import * as chalk from 'chalk';
+import {DebugLog} from './../../utility/DebugLog';
 /**
  * add a Server to Config from the UserRc and store it
  */
@@ -39,7 +39,7 @@ export class ServerCrud {
           });
 
           if (!this.isUnique(testNameModel) && this._scenario === ADD){
-            console.log(chalk.red(`\n Name ${value} already exist please choose another one`));
+            DebugLog.error(new Error(Translation.ALREADY_EXIST(value)));
             return false;
           }
 
@@ -202,7 +202,7 @@ export class ServerCrud {
         choices: choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
-            return 'You must choose at least one server.';
+            return Translation.YOU_MOUST_CHOOSE('Server');
           }
           return true;
         }
@@ -238,7 +238,7 @@ export class ServerCrud {
         let all: any = [];
         if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1) {
           if (answers.server.length > 1) {
-            console.log(`I see you choose servers and "Take me out of here" so you get out without remove`);
+            DebugLog.warn(`I see you choose servers and "Take me out of here" so you get out without remove`);
           }
           observer.complete();
         }

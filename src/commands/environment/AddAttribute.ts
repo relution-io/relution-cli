@@ -2,6 +2,7 @@ import {Observable} from '@reactivex/rxjs';
 import {orderBy, map} from 'lodash';
 import {Translation} from './../../utility/Translation';
 import {Validator} from './../../utility/Validator';
+import {DebugLog} from './../../utility/DebugLog';
 import * as inquirer from 'inquirer';
 import * as chalk from 'chalk';
 
@@ -24,14 +25,14 @@ export class AddAttribute {
         message: Translation.ENTER_SOMETHING.concat('key'),
         validate: (value: string):boolean =>  {
           if (value === 'name') {
-            console.log(chalk.red(`\n Key ${value} is a reserved key attribute and cant be overwritten.`));
+            DebugLog.error(new Error(`\n Key ${value} is a reserved key attribute and cant be overwritten.`));
             return false;
           }
           let pass: RegExpMatchArray = value.match(Validator.stringPattern);
           if (pass) {
             return true;
           } else {
-            console.log(chalk.red(`\n Name ${value} has wrong character allowed only [a-z A-Z]`));
+            DebugLog.error(new Error(Translation.NOT_ALLOWED(value, Validator.stringPattern)));
             return false;
           }
         }
@@ -45,7 +46,7 @@ export class AddAttribute {
           if (pass) {
             return true;
           } else {
-            console.log(chalk.red(`\n Name ${value} has wrong character allowed only [a-z A-Z 0-9]`));
+            DebugLog.error(new Error(Translation.NOT_ALLOWED(value, Validator.stringNumberPattern)));
             return false;
           }
         }

@@ -10,6 +10,7 @@ import {Archiver} from './../utility/Archiver';
 const figures = require('figures');
 import * as path from 'path';
 
+const loader = require('cli-loader')();
 const STUDIO: string = 'studio';
 /**
  * create a new Baas for the Developer
@@ -61,14 +62,14 @@ export class Deploy extends Command {
 
     let currentUser = Relution.security.getCurrentUser();
     if (currentUser) {
-      console.log('Relution.security.getCurrentUser()', currentUser);
+      this.log.info('Relution.security.getCurrentUser()', currentUser);
       return Observable.create((observer:any) => {
         observer.next({user: currentUser});
         observer.complete();
       })
     }
 
-    //console.log('Relution', JSON.stringify(Relution.security, null, 2))
+    //this.log.info('Relution', JSON.stringify(Relution.security, null, 2))
     let credentials = {
       userName: choosedServer.userName,
       password: choosedServer.password
@@ -176,7 +177,7 @@ export class Deploy extends Command {
                 /**
                  * Take me out of here
                  */
-                console.log('choosedServer === this.i18n.TAKE_ME_OUT', choosedServer === this.i18n.TAKE_ME_OUT);
+                //this.log.info('choosedServer === this.i18n.TAKE_ME_OUT', choosedServer === this.i18n.TAKE_ME_OUT);
               },
               () => {},
               () => {
@@ -189,7 +190,7 @@ export class Deploy extends Command {
                  * get default server
                  */
                 if (choosedServer === this._defaultServer) {
-                  //console.log(this.userRc.config.server);
+                  //this.log.info(this.userRc.config.server);
                   choosedServer = find(this.userRc.config.server, { default: true });
                 }
 
@@ -199,11 +200,6 @@ export class Deploy extends Command {
                 this.login(choosedServer).subscribe(
                   (answer: any) => {
                     resp = answer;
-                    //user is wrong
-                    if (!this.checkOrga(resp)) {
-                      console.error(chalk.red(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
-                      return observer.complete();
-                    }
                   },
                   (e: Error) => {
                     console.error(e.message, e);
@@ -211,14 +207,18 @@ export class Deploy extends Command {
                     return observer.complete();
                   },
                   () => {
-                    console.log(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
+                    //user is wrong
+                    if (!this.checkOrga(resp)) {
+                      console.error(chalk.red(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
+                      return observer.complete();
+                    }
+                    this.log.info(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
                     /**
                      * get environment
                      */
                     this._parent.staticCommands.env.chooseEnv.choose('list').subscribe(
                       (answers: any) => {
                         envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
-
                       },
                       (e: Error) => {
                         observer.error(e);
@@ -231,7 +231,7 @@ export class Deploy extends Command {
                         this._archiver.createBundle().subscribe(
                           (log: any) => {
                             if (log.file || log.directory) {
-                              console.log(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
+                              this.log.info(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
                             } else if (log.zip) {
                               /**
                                * {
@@ -240,21 +240,23 @@ export class Deploy extends Command {
                                *  readStream: stream
                                * }
                                */
-                              console.log(chalk.green(log.message) + ' ' + figures.tick);
+                              this.log.info(chalk.green(log.message) + ' ' + figures.tick);
+                              loader.start();
                               this.upload(log, envName).subscribe(
                                 (resp: XMLHttpRequest) => {
+                                  loader.stop();
                                   observer.next(resp);
                                 },
                                 (e: XMLHttpRequest) => {
                                   observer.error(e);
                                 },
                                 () => {
-                                  console.log('Deployment close');
+                                  this.log.info('Deployment close');
                                   observer.complete();
                                 }
                               );
                             } else if (log.processed) {
-                              console.log(chalk.green(log.processed) + ' ' + figures.tick);
+                              this.log.info(chalk.green(log.processed) + ' ' + figures.tick);
                             }
                           }
                         );

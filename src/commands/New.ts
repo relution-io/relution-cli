@@ -53,11 +53,11 @@ export class New extends Command {
           if (!files.length) {
             this._create.publish().subscribe(
               (resp: any) => { observer.next(resp); },
-              (e: any) => console.error(e),
+              (e: Error) => observer.error(e),
               () => { observer.complete(); }
             );
           } else {
-            observer.next(chalk.red(this.i18n.FOLDER_NOT_EMPTY(process.cwd())));
+            observer.error(new Error(this.i18n.FOLDER_NOT_EMPTY(process.cwd())));
             observer.complete();
           }
         }
