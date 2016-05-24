@@ -3,7 +3,7 @@ import {RxFs} from './RxFs';
 import * as path from 'path';
 import * as assert from 'assert';
 import * as chalk from 'chalk';
-const figures =  require('figures');
+const figures = require('figures');
 
 import {Create} from './../commands/new/Create';
 const expect = require('expect.js');
@@ -11,7 +11,7 @@ const expect = require('expect.js');
 describe('Utility Archiver', () => {
   let commandCreate: Create;
   let commandRoot: string = path.join(process.cwd(), 'spec', 'gentest', 'archiver');
-  let archiver:Archiver = new Archiver(commandRoot);
+  let archiver: Archiver = new Archiver(commandRoot);
 
   before(() => {
     commandCreate = new Create();
@@ -23,16 +23,16 @@ describe('Utility Archiver', () => {
   });
 
   it('read files from without ignore', (done) => {
-    archiver.projectFiles().subscribe(
-      (log:any) => {
+    archiver.createBundle().subscribe(
+      (log: any) => {
         if (log.file || log.directory) {
           console.log(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
         } else if (log.zip) {
-          console.log(chalk.green(log.message) +' ' + figures.tick);
+          console.log(chalk.green(log.message) + ' ' + figures.tick);
           expect(RxFs.exist(log.zip)).to.be(true);
           done();
         } else if (log.processed) {
-          console.log(chalk.green(log.processed) +' ' + figures.tick);
+          console.log(chalk.green(log.processed) + ' ' + figures.tick);
         }
       }
     );

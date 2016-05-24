@@ -1,7 +1,6 @@
 const fIgnore = require('fstream-ignore');
 import {Observable} from '@reactivex/rxjs';
 const archive = require('archiver');
-// const loader = require('cli-loader')();
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -19,8 +18,11 @@ export /**
   constructor(path: string = process.cwd()) {
     this.path = path;
   }
-
-  projectFiles(): Observable<any> {
+  /**
+   * zip all files which not in .relutionignore and next the zip path
+   * @return Observable
+   */
+  createBundle(): Observable<any> {
     let count: number = 0;
     this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');
     let output = fs.createWriteStream(this.zipFilePath);
@@ -49,18 +51,24 @@ export /**
         });
 
       output.on('finish', () => {
-        observer.next({zip: this.zipFilePath, message: `Zip created at ${this.zipFilePath}`});
-        //loader.stop();
-        observer.complete();
+        Observable.fromEvent(fs.createReadStream(this.zipFilePath), 'data')
+        .subscribe((stream:any) => {
+          observer.next({
+            zip: this.zipFilePath,
+            message: `Zip created at ${this.zipFilePath}`,
+            readStream:  stream
+          });
+          observer.complete();
+        });
       })
       .on('error', (e:Error) => {
         observer.error(e);
-        // loader.stop();
-      })
+      });
+
       archiver.pipe(output);
     });
   }
-
+ls -localStorage
   public get path(): string {
     return this._path;
   }
