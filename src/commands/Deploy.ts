@@ -11,7 +11,6 @@ const figures = require('figures');
 import * as path from 'path';
 
 const loader = require('cli-loader')();
-const STUDIO: string = 'studio';
 /**
  * create a new Baas for the Developer
  */
@@ -53,7 +52,7 @@ export class Deploy extends Command {
   login(choosedServer: ServerModelRc) {
      Relution.init({
       serverUrl: choosedServer.serverUrl,
-      application: STUDIO
+      application: 'studio'
     });
     let currentUser = Relution.security.getCurrentUser();
     if (currentUser) {
