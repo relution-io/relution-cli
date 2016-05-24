@@ -26,10 +26,10 @@
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.3",
     "jasmine": "^2.2.1",
-    "mocha": "^2.5.0",
+    "mocha": "^2.5.1",
     "sinon": "^1.17.4",
     "tslint": "^3.8.1",
-    "typedoc": "sierrasoftworks/typedoc#v1.8.10",
+    "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
     "typescript": "^1.8.10"
   },
   "dependencies": {

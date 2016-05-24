@@ -1,13 +1,16 @@
 import {Command} from './../utility/Command';
 import * as chalk from 'chalk';
 import {find, findIndex, sortBy} from 'lodash';
-import {Observable} from '@reactivex/rxjs';
+import {Observable, Observer} from '@reactivex/rxjs';
 import {ServerModelRc, ServerModel} from './../models/ServerModelRc';
 import * as Relution from 'relution-sdk';
+import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {Archiver} from './../utility/Archiver';
 const figures = require('figures');
+import * as path from 'path';
 
-const STUDIO:string = 'studio';
+const STUDIO: string = 'studio';
 /**
  * create a new Baas for the Developer
  */
@@ -19,6 +22,9 @@ export class Deploy extends Command {
   private _promptkey: string = 'deployserver';
   private _defaultServer: string = 'default';
   private _archiver: Archiver = new Archiver();
+  private _relutionHjson: any;
+  private _projectDir: string;
+  private _fileApi: FileApi = new FileApi();
 
   public commands: any = {
     deploy: {
@@ -36,12 +42,31 @@ export class Deploy extends Command {
       description: this.i18n.EXIT_TO_HOME
     }
   };
+  readRelutionHjson(){
 
-  loginRelution(choosedServer: ServerModelRc) {
+  }
+  /**
+   * login on Relution
+   * @link [relution-sdk](https://github.com/relution-io/relution-sdk)
+   */
+  login(choosedServer: ServerModelRc) {
+     Relution.init({
+      serverUrl: choosedServer.serverUrl,
+      application: STUDIO
+    });
     Relution.init({
       serverUrl: choosedServer.serverUrl,
       application: STUDIO
     });
+
+    let currentUser = Relution.security.getCurrentUser();
+    if (currentUser) {
+      console.log('Relution.security.getCurrentUser()', currentUser);
+      return Observable.create((observer:any) => {
+        observer.next({user: currentUser});
+        observer.complete();
+      })
+    }
 
     //console.log('Relution', JSON.stringify(Relution.security, null, 2))
     let credentials = {
@@ -70,112 +95,197 @@ export class Deploy extends Command {
    * doesn't work as expected.
    */
   checkOrga(resp: any) {
-    return resp.organization.defaultRoles.length > 0;
+    let orga: any = Relution.security.getCurrentOrganization('defaultRoles');
+    return orga && orga.defaultRoles.length > 0;
+  }
+  /**
+   * upload the generated zip to the server
+   */
+  upload(archiveresp: any, env: string): Observable<any> {
+    let formData = {
+      // Pass a simple key-value pair
+      env: env,
+      name: this._relutionHjson.name,
+      uuid: this._relutionHjson.uuid,
+      // Pass optional meta-data with an 'options' object with style: {value: DATA, options: OPTIONS}
+      // Use case: for some types of streams, you'll need to provide "file"-related information manually.
+      // See the `form-data` README for more information about options: https://github.com/form-data/form-data
+      custom_file: {
+        value: archiveresp.readStream,
+        options: {
+          filename: path.basename(archiveresp.zip),
+          contentType: 'application/zip'
+        }
+      }
+    };
+    return Observable.fromPromise(
+      Relution.web.ajax({
+        url: 'upload',
+        headers: {
+          "Accept": "text/plain"
+        },
+        method: 'POST',
+        formData: formData,
+        responseCallback: (resp:Q.Promise<any>) => {
+          return resp.then(
+            (r:any) => {
+              r.pipe(process.stdout, { 'end': false });
+              return r;
+          });
+        }
+      })
+    );
   }
 
-  upload():Observable<any>{
 
-    return Observable.create((observer:any) => {
-      observer.complete();
-      //Relution.
-    });
-
-  }
   /**
    * deploy the baas to the server
    */
   public deploy(): Observable<any> {
+
+
+    this._fileApi.path = this.projectDir;
     //loginresponse
     let resp: any = null;
     //choosed environment
     let envName: string = '';
     //choosed Server
-    let choosedServer:any;
+    let choosedServer: any;
 
     return Observable.create(
       (observer: any) => {
-        /**
-         * please choose a server
-         */
-        this.getServerPrompt().subscribe(
-          (answers: any) => {
-            choosedServer = answers[this._promptkey];
-            /**
-             * Take me out of here
-             */
-            if (choosedServer === this.i18n.TAKE_ME_OUT) {
-              return observer.complete();
-            }
-            /**
-             * get default server
-             */
-            if (choosedServer === this._defaultServer) {
-              console.log(this.userRc.config.server);
-              choosedServer = find(this.userRc.config.server, { default: true });
-            }
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || !RxFs.exist(path.join(process.cwd(), '.relutionignore'))) {
+          observer.error(`${process.cwd()} i not a valid Relution Project`);
+          return observer.complete();
+        }
+        this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson')).subscribe(
+          (relutionHjson: any) => {
+            this.relutionHjson = relutionHjson.data;
+          },
+          (e: Error) => {
+            observer.error(e);
+            return observer.complete();
+          },
+          () => {
+          /**
+           * please choose a server
+           */
+            this.getServerPrompt().subscribe(
+              (answers: any) => {
+                choosedServer = answers[this._promptkey];
+                /**
+                 * Take me out of here
+                 */
+                console.log('choosedServer === this.i18n.TAKE_ME_OUT', choosedServer === this.i18n.TAKE_ME_OUT);
+              },
+              () => {},
+              () => {
+                if (choosedServer === this.i18n.TAKE_ME_OUT) {
 
-            /**
-             * login on server
-             */
-            this.loginRelution(choosedServer).subscribe(
-              (answer: any) => {
-                resp = answer;
-                //user is wrong
-                if (!this.checkOrga(resp)) {
-                  console.error(chalk.red(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
+                  observer.complete()
                   return observer.complete();
                 }
-
+                /**
+                 * get default server
+                 */
+                if (choosedServer === this._defaultServer) {
+                  //console.log(this.userRc.config.server);
+                  choosedServer = find(this.userRc.config.server, { default: true });
+                }
 
                 /**
-                 * get environment
+                 * login on server
                  */
-                this._parent.staticCommands.env.chooseEnv.choose('list').subscribe(
-                  (answers: any) => {
-                    envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
-                    if (envName === this.i18n.TAKE_ME_OUT) {
+                this.login(choosedServer).subscribe(
+                  (answer: any) => {
+                    resp = answer;
+                    //user is wrong
+                    if (!this.checkOrga(resp)) {
+                      console.error(chalk.red(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
                       return observer.complete();
                     }
                   },
                   (e: Error) => {
-
+                    console.error(e.message, e);
+                    observer.error(e);
+                    return observer.complete();
                   },
                   () => {
-                    //create a zip and get stream
-                    this._archiver.createBundle().subscribe(
-                      (log: any) => {
-                        if (log.file || log.directory) {
-                          console.log(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
-                        } else if (log.zip) {
-                          /**
-                           * {
-                           *  zip: path:string,
-                           *  message: string,
-                           *  readStream: stream
-                           * }
-                           */
-                          console.log(chalk.green(log.message) + ' ' + figures.tick);
-                          //console.log(log.readStream);
-                        } else if (log.processed) {
-                          console.log(chalk.green(log.processed) + ' ' + figures.tick);
+                    console.log(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
+                    /**
+                     * get environment
+                     */
+                    this._parent.staticCommands.env.chooseEnv.choose('list').subscribe(
+                      (answers: any) => {
+                        envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
+
+                      },
+                      (e: Error) => {
+                        observer.error(e);
+                      },
+                      () => {
+                        if (envName === this.i18n.TAKE_ME_OUT) {
+                          return observer.complete();
                         }
+                        //create a zip and get stream
+                        this._archiver.createBundle().subscribe(
+                          (log: any) => {
+                            if (log.file || log.directory) {
+                              console.log(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
+                            } else if (log.zip) {
+                              /**
+                               * {
+                               *  zip: path:string,
+                               *  message: string,
+                               *  readStream: stream
+                               * }
+                               */
+                              console.log(chalk.green(log.message) + ' ' + figures.tick);
+                              this.upload(log, envName).subscribe(
+                                (resp: XMLHttpRequest) => {
+                                  observer.next(resp);
+                                },
+                                (e: XMLHttpRequest) => {
+                                  observer.error(e);
+                                },
+                                () => {
+                                  console.log('Deployment close');
+                                  observer.complete();
+                                }
+                              );
+                            } else if (log.processed) {
+                              console.log(chalk.green(log.processed) + ' ' + figures.tick);
+                            }
+                          }
+                        );
                       }
                     );
                   }
                 );
-                console.log(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`);
-              },
-              (e: Error) => {
-                console.error(e.message, e.stack);
-                observer.error(e);
-              },
-              () => {
-                console.log('done');
               }
-            );
+            )
           }
         )
       }
     );
+  }
+
+  public get projectDir(): string {
+    if (!this._projectDir) {
+      this._projectDir = process.cwd();
+    }
+    return this._projectDir;
+  }
+
+  public set projectDir(v: string) {
+    this._projectDir = v;
+  }
+
+  public get relutionHjson(): any {
+    return this._relutionHjson;
+  }
+
+  public set relutionHjson(v: any) {
+    this._relutionHjson = v;
   }
 }

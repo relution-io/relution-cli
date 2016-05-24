@@ -13,7 +13,7 @@ export /**
   private _relIgnore: string = '.relutionignore';
 
   private _files: Array<any> = [];
-  public zipFilePath:string = '';
+  public zipFilePath: string = '';
 
   constructor(path: string = process.cwd()) {
     this.path = path;
@@ -22,46 +22,60 @@ export /**
    * zip all files which not in .relutionignore and next the zip path
    * @return Observable
    */
-  createBundle(): Observable<any> {
+  createBundle(zipPath?:string): Observable<any> {
     let count: number = 0;
-    this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');
+    if (!zipPath) {
+      this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');
+    } else {
+      this.zipFilePath = zipPath;
+    }
+
     let output = fs.createWriteStream(this.zipFilePath);
+    /**
+     * @link [archiver](https://github.com/archiverjs/node-archiver)
+     */
     let archiver = archive('zip');
 
     //console.log(this.zipFilePath);
     return Observable.create((observer: any) => {
-      fIgnore({
+      /**
+       * @link [fstream-ignore](https://github.com/npm/fstream-ignore)
+       */
+      let zipFiles = fIgnore({
         path: this.path,
         ignoreFiles: [this._relIgnore]
-      })
-        .on('child', (c: any) => {
-          var name = c.path.substr(c.root.path.length + 1);
-          if (c.type === 'File') {
-            ++count;
-            archiver.append(c, { name: name });
-            observer.next({ file: name })
-          } else if (c.type === 'Directory') {
-            archiver.append(null, { name: name + '/' });
-            observer.next({ directory: name });
-          }
-        })
-        .on('end', () => {
-          archiver.finalize();
-          observer.next({processed: `Processed ${count} files`});
-        });
+      });
+
+      zipFiles.on('child', (c: any) => {
+        var name = c.path.substr(c.root.path.length + 1);
+        if (c.type === 'File') {
+          ++count;
+          archiver.append(c, { name: name });
+          observer.next({ file: name })
+        } else if (c.type === 'Directory') {
+          archiver.append(null, { name: name + '/' });
+          observer.next({ directory: name });
+        }
+      });
+
+      zipFiles.on('end', () => {
+        archiver.finalize();
+        observer.next({ processed: `Processed ${count} files` });
+      });
 
       output.on('finish', () => {
-        Observable.fromEvent(fs.createReadStream(this.zipFilePath), 'data')
-        .subscribe((stream:any) => {
+        /**
+         * readstream for the formdata
+         */
           observer.next({
             zip: this.zipFilePath,
             message: `Zip created at ${this.zipFilePath}`,
-            readStream:  stream
+            readStream: fs.createReadStream(this.zipFilePath)
           });
           observer.complete();
-        });
-      })
-      .on('error', (e:Error) => {
+      });
+
+      output.on('error', (e: Error) => {
         observer.error(e);
       });
 
