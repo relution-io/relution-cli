@@ -7,7 +7,10 @@ export
  */
 
   class DebugLog {
-
+  static withStack:boolean = false;
+  static badge(label:string, color:string = 'green'): string{
+    return chalk.bgBlack(chalk[color](` ${label} : `));
+  }
   static log(color: string, message: string, submessage?: any): void {
     if (submessage) {
       console.log(chalk[color](message, submessage));
@@ -16,18 +19,18 @@ export
   }
 
   static error(e: Error): void {
-    return DebugLog.log('red', `ERROR ${chalk.green(e.message)}`, e.stack ? e.stack : '');
+    return DebugLog.log('red', `${DebugLog.badge('ERROR', 'red')} ${chalk.green(e.message)}`, e.stack && DebugLog.withStack ? e.stack : '');
   }
 
   static info(message:string, submessage?:any) {
-    return DebugLog.log('cyan', message, submessage);
+    return DebugLog.log('cyan', `${DebugLog.badge('INFO', 'cyan')} ${message}`, submessage);
   }
 
   static warn(message:string, submessage?:any) {
-    return DebugLog.log('yellow', `WARNING ${chalk.green(message)}`, submessage);
+    return DebugLog.log('yellow', `${DebugLog.badge('WARNING', 'yellow')} ${chalk.green(message)}`, submessage);
   }
 
   static debug(message:string, submessage?:any) {
-    return DebugLog.log('magenta', `DEBUG ${chalk.green(message)}`, submessage);
+    return DebugLog.log('magenta', `${DebugLog.badge('DEBUG', 'magenta')} ${chalk.green(message)}`, submessage);
   }
 }

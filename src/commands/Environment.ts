@@ -102,7 +102,7 @@ export class Environment extends Command {
       let template = this.gii.getTemplateByName(this.name);
       this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase()).subscribe(
         (pipe: any) => {
-          observer.next(chalk.magenta(`${name} is generated`));
+          observer.next(`Environment ${name} is generated`);
         },
         (e: any) => { observer.error(e); },
         () => {
@@ -122,7 +122,7 @@ export class Environment extends Command {
     return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
         error: (e:any) => {
-          this.log.warn('no environments available');
+          observer.error('no environments available');
           super.preload().subscribe({
             complete: () => observer.complete()
           });
@@ -152,7 +152,7 @@ export class Environment extends Command {
         validate: function (value: string) {
           let done: any = this.async();
           if (self.envCollection.isUnique(value)) {
-            this.log.error(new Error(this.i18n.ALREADY_EXIST(value)));
+            self.log.error(new Error(self.i18n.ALREADY_EXIST(value)));
             done(false);
           }
 
@@ -160,7 +160,7 @@ export class Environment extends Command {
           if (pass) {
             done(null, true);
           } else {
-            this.log.error(new Error(Translation.NOT_ALLOWED(value, Validator.stringPattern)));
+            self.log.error(new Error(self.i18n.NOT_ALLOWED(value, Validator.stringPattern)));
             done(false);
           }
         }
@@ -224,10 +224,9 @@ export class Environment extends Command {
             (attrs: any) => {
               attributes = attrs;
               // this.log.debug('result', attributes);
-              this.envCollection.bulkUpdate(names, attributes).subscribe(
-                (res: any) => {
-                  // this.log.debug('complete????');
-                  observer.complete();
+              this.envCollection.bulkUpdate(names, attributes).subscribe({complete: () => {
+                    observer.complete();
+                  }
                 }
               );
             }
@@ -267,13 +266,13 @@ export class Environment extends Command {
         this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
           (answers:any) => {
             tobeCopied = answers[this.chooseEnv.promptName];
-            // this.log.debug(tobeCopied);
+            //this.log.debug(tobeCopied);
             this.enterName().subscribe((answers:any) => {
                 toBeGenerate = answers.name;
                 // this.log.debug(toBeGenerate);
                 this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
                   next: (log:any) => {
-                    observer.next(chalk.magenta(`${log} \n`));
+                    observer.next(log);
                   },
                   error: (e:any) => {
                     observer.error(e);
@@ -295,7 +294,7 @@ export class Environment extends Command {
       return Observable.create((observer:any) => {
         this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
           next: (data:any) => {
-            observer.next(chalk.green(this.i18n.HJSON_WRITTEN(toBeGenerate)));
+            observer.next(this.i18n.HJSON_WRITTEN(toBeGenerate));
           },
           error: (e:any) => {
             observer.error(e);
@@ -346,7 +345,7 @@ export class Environment extends Command {
       if (unique) {
 
         return Observable.create((observer:any) => {
-          observer.next(chalk.red(this.i18n.ALREADY_EXIST(envName)));
+          observer.error(this.i18n.ALREADY_EXIST(envName));
           observer.complete();
         });
       }
@@ -354,7 +353,7 @@ export class Environment extends Command {
       if (pass) {
         return Observable.create((observer: any) => {
           this.createEnvironment(envName).subscribe(
-            () => { observer.next(chalk.green(this.i18n.HJSON_WRITTEN(envName)))},
+            () => { observer.next(this.i18n.HJSON_WRITTEN(envName))},
             (e: any) => { observer.error(e); },
             () => {  observer.complete(); }
           );
@@ -362,7 +361,7 @@ export class Environment extends Command {
       }
 
       return Observable.create((observer:any) => {
-        observer.next(chalk.red(this.i18n.NOT_ALLOWED(envName, Validator.stringPattern)));
+        observer.next(this.i18n.NOT_ALLOWED(envName, Validator.stringPattern));
         observer.complete();
       });
     }
