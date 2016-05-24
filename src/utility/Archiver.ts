@@ -68,7 +68,7 @@ export /**
       archiver.pipe(output);
     });
   }
-ls -localStorage
+
   public get path(): string {
     return this._path;
   }
