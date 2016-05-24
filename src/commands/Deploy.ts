@@ -42,9 +42,7 @@ export class Deploy extends Command {
       description: this.i18n.EXIT_TO_HOME
     }
   };
-  readRelutionHjson(){
 
-  }
   /**
    * login on Relution
    * @link [relution-sdk](https://github.com/relution-io/relution-sdk)
@@ -56,7 +54,7 @@ export class Deploy extends Command {
     });
     let currentUser = Relution.security.getCurrentUser();
     if (currentUser) {
-      this.log.info('Relution.security.getCurrentUser()', currentUser);
+      //this.log.info('Relution.security.getCurrentUser()', currentUser);
       return Observable.create((observer:any) => {
         observer.next({user: currentUser});
         observer.complete();
@@ -75,7 +73,8 @@ export class Deploy extends Command {
    * choose first on which Server the App has to be deployed
    */
   getServerPrompt(): Observable<any> {
-    let prompt = this._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server');
+    this._defaultServer = 'default';
+    let prompt = this._copy(this._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
     let indexDefault: number = findIndex(this.userRc.config.server, { default: true });
     if (indexDefault > -1) {
       this._defaultServer += ` ${prompt[0].choices[indexDefault]}`
@@ -241,7 +240,7 @@ export class Deploy extends Command {
                                   loader.stop();
                                   observer.next(resp);
                                 },
-                                (e: XMLHttpRequest) => {
+                                (e: Error) => {
                                   observer.error(e);
                                 },
                                 () => {
@@ -251,6 +250,8 @@ export class Deploy extends Command {
                               );
                             } else if (log.processed) {
                               this.log.info(chalk.green(log.processed) + ' ' + figures.tick);
+                            } else {
+                              observer.next(log);
                             }
                           }
                         );
