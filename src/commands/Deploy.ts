@@ -55,11 +55,6 @@ export class Deploy extends Command {
       serverUrl: choosedServer.serverUrl,
       application: STUDIO
     });
-    Relution.init({
-      serverUrl: choosedServer.serverUrl,
-      application: STUDIO
-    });
-
     let currentUser = Relution.security.getCurrentUser();
     if (currentUser) {
       this.log.info('Relution.security.getCurrentUser()', currentUser);
