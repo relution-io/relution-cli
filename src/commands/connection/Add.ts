@@ -1,5 +1,8 @@
 import {Connection} from './../Connection';
 import {Observable} from '@reactivex/rxjs';
+import {find} from 'lodash';
+import {ServerModelRc} from './../../models/ServerModelRc';
+import * as Relution from 'relution-sdk';
 
 export class AddConnection {
 
@@ -23,21 +26,34 @@ export class AddConnection {
   }
 
   add() {
-    return Observable.create((observer: any) => {
-      this._getServer().subscribe({
-        next: (server: any) => {
-          this.connection.log.debug(server[this._promptkey]);
-          this.connection.log.debug(JSON.stringify(this.connection._parent.staticCommands.server, null, 2));
-          this._server = this.connection._parent.staticCommands.env.envCollection.isUnique(server[this._promptkey]);
+    let choosedServer:ServerModelRc;
 
-        },
-        complete: () => {
-          console.log(JSON.stringify(this._server, null, 2));
-          observer.complete();
-        }
-      }
-      );
-    });
+    return this._getServer()
+    .map((server:{connectserver:string}) => {
+      choosedServer = find(this.connection.userRc.server, { id: server.connectserver });
+      console.log(server);
+      return this.connection.relutionSDK.login(choosedServer);
+    })
+    .exhaust()
+    .map( (resp:{user: Relution.security.User}) => {
+      console.log(resp.user);
+    })
+
+    // return Observable.create((observer: any) => {
+    //   .subscribe({
+    //     next: (server: any) => {
+    //       this.connection.log.debug(server[this._promptkey]);
+    //       this.connection.log.debug(JSON.stringify(this.connection._parent.staticCommands.server, null, 2));
+    //       this._server = this.connection._parent.staticCommands.env.envCollection.isUnique(server[this._promptkey]);
+
+    //     },
+    //     complete: () => {
+    //       console.log(JSON.stringify(this._server, null, 2));
+    //       observer.complete();
+    //     }
+    //   }
+    //   );
+    // });
   }
 
   public get connection(): Connection {

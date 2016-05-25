@@ -2,7 +2,7 @@ import {Command} from './../utility/Command';
 import * as chalk from 'chalk';
 import {find, findIndex, sortBy} from 'lodash';
 import {Observable, Observer} from '@reactivex/rxjs';
-import {ServerModelRc, ServerModel} from './../models/ServerModelRc';
+import {ServerModelRc, ServerModelInterface} from './../models/ServerModelRc';
 import * as Relution from 'relution-sdk';
 import {FileApi} from './../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
@@ -18,7 +18,7 @@ export class Deploy extends Command {
   constructor() {
     super('deploy');
   }
-  private _deployServer: ServerModel;
+  private _deployServer: ServerModelInterface;
   private _promptkey: string = 'deployserver';
   private _defaultServer: string = 'default';
   private _archiver: Archiver = new Archiver();
@@ -43,32 +43,6 @@ export class Deploy extends Command {
     }
   };
 
-  /**
-   * login on Relution
-   * @link [relution-sdk](https://github.com/relution-io/relution-sdk)
-   */
-  login(serverModel: ServerModelRc):Observable<any> {
-     Relution.init({
-      serverUrl: serverModel.serverUrl,
-      application: 'studio'
-    });
-    let currentUser = Relution.security.getCurrentUser();
-    if (currentUser) {
-      //this.log.info('Relution.security.getCurrentUser()', currentUser);
-      return Observable.create((observer:any) => {
-        observer.next({user: currentUser});
-        observer.complete();
-      })
-    }
-
-    //this.log.info('Relution', JSON.stringify(Relution.security, null, 2))
-    let credentials = {
-      userName: serverModel.userName,
-      password: serverModel.password
-    };
-
-    return Observable.fromPromise(Relution.web.login(credentials));
-  }
   /**
    * choose first on which Server the App has to be deployed
    */
@@ -177,7 +151,7 @@ export class Deploy extends Command {
         } else {
           choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
-        return this.login(choosedServer);
+        return this.relutionSDK.login(choosedServer);
       })
       .exhaust()
       /**

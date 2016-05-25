@@ -5,7 +5,7 @@ import {Table} from './Table';
 import {Tower} from './../commands/Tower';
 import {Translation} from './Translation';
 import {DebugLog} from './DebugLog';
-
+import {RelutionSdk} from './RelutionSDK';
 const inquirer = require('inquirer');
 const username = require('username');
 
@@ -49,7 +49,7 @@ export class Command implements CommandInterface {
   public table: Table = new Table();
   public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   public _parent: Tower;
-
+  public relutionSDK = new RelutionSdk();
   constructor(name: string) {
     if (!name) {
       throw Error('Command need a name');

@@ -72,6 +72,7 @@
         "src/utility/FileApi.spec.ts",
         "src/utility/FileApi.ts",
         "src/utility/InquirerHelper.ts",
+        "src/utility/RelutionSDK.ts",
         "src/utility/RxFs.spec.ts",
         "src/utility/RxFs.ts",
         "src/utility/Table.ts",

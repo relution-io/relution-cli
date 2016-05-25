@@ -3,7 +3,7 @@ import {CertModelRc} from './CertModelRc';
 const chalk = require('chalk');
 const figures = require('figures');
 
-export interface ServerModel {
+export interface ServerModelInterface {
   id: string;
   default: boolean;
   serverUrl: string;
@@ -12,7 +12,7 @@ export interface ServerModel {
   clientcertificate?: CertModelRc;
 }
 
-export class ServerModelRc implements ServerModel{
+export class ServerModelRc implements ServerModelInterface{
 
   private _id: string;
   private _default: boolean;
@@ -23,7 +23,7 @@ export class ServerModelRc implements ServerModel{
 
   private _attributes: Array<string>;
 
-  constructor(params?: ServerModel) {
+  constructor(params?: ServerModelInterface) {
     if (params) {
       (<any>Object).assign(this, params);
       this.attributes = Object.keys(params);
@@ -95,8 +95,8 @@ export class ServerModelRc implements ServerModel{
     ];
   }
 
-  public toJson() {
-    let model: Object = {};
+  public toJson():ServerModelInterface {
+    let model: ServerModelInterface;
     this.attributes.forEach((attr: string) => {
       if (attr && this[attr] !== undefined) {
         model[attr] = this[attr];

@@ -7,7 +7,7 @@ import {ServerModelRc} from './../models/ServerModelRc';
 export class UserRc {
   private _rcHome: string;
   public appPrefix: string = 'relution';
-  public server:Array<Object> = [];
+  public server:Array<ServerModelRc> = [];
   public config: any;
 
   constructor() {

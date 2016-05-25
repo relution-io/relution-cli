@@ -1,7 +1,7 @@
 import {Observable, Observer} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
-import {ServerModelRc, ServerModel} from './../../models/ServerModelRc';
+import {ServerModelRc, ServerModelInterface} from './../../models/ServerModelRc';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
@@ -143,17 +143,18 @@ export class ServerCrud {
       let pos:number = findIndex(this.userRc.config.server, server.id);
       if (pos) {
         this.userRc.config.server[pos] = server.toJson();
-        this.userRc.server[pos] = server.toJson();
+        this.userRc.server[pos] = server;
+
       }
     } else {
       this.userRc.server.push(server);
-      this.userRc.config.server.push(server.toJson());
+      this.userRc.config.server.push(server);
     }
     return this.userRc.updateRcFile();
   }
 
 
-  setDefaults(defaults: ServerModel) {
+  setDefaults(defaults: ServerModelInterface) {
     let myPrompt:any = this.addConfig;
 
     if (defaults) {
@@ -267,7 +268,7 @@ export class ServerCrud {
       name = params[0].trim();
     }
     return Observable.create((observer:any) => {
-      this.createNewServer(name).subscribe((answers: ServerModel) => {
+      this.createNewServer(name).subscribe((answers: ServerModelInterface) => {
         this.addServer(new ServerModelRc(answers)).subscribe(
           {
             complete: () => {
@@ -347,7 +348,7 @@ export class ServerCrud {
           //maybe the user rename the server
           let oldId = this._copy(serverId);
           this._updateWithId(serverId).subscribe(
-            (answers:ServerModel) => {
+            (answers:ServerModelInterface) => {
               let serverIndex = findIndex(this.userRc.config.server, {id: oldId});
               this.userRc.config.server[serverIndex] = answers;
               this.userRc.updateRcFile().subscribe(() => observer.complete);
