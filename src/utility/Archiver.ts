@@ -22,7 +22,7 @@ export /**
    * zip all files which not in .relutionignore and next the zip path
    * @return Observable
    */
-  createBundle(zipPath?:string): Observable<any> {
+  createBundle(zipPath?:string) :Observable<{file:string}|{directory:string}|{zip:string, readStream:any, message:string}> {
     let count: number = 0;
     if (!zipPath) {
       this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');

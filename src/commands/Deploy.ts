@@ -48,6 +48,7 @@ export class Deploy extends Command {
    * @link [relution-sdk](https://github.com/relution-io/relution-sdk)
    */
   login(choosedServer: ServerModelRc) {
+    console.log('choosedServer',choosedServer);
      Relution.init({
       serverUrl: choosedServer.serverUrl,
       application: 'studio'
@@ -96,6 +97,7 @@ export class Deploy extends Command {
    * upload the generated zip to the server
    */
   upload(archiveresp: any, env: string): Observable<any> {
+    loader.start();
     let formData = {
       // Pass a simple key-value pair
       env: env,
@@ -123,6 +125,7 @@ export class Deploy extends Command {
         responseCallback: (resp:Q.Promise<any>) => {
           return resp.then(
             (r:any) => {
+              console.log('test');
               r.pipe(process.stdout, { 'end': false });
               return r;
           });
@@ -136,8 +139,6 @@ export class Deploy extends Command {
    * deploy the baas to the server
    */
   public deploy(): Observable<any> {
-
-
     this._fileApi.path = this.projectDir;
     //loginresponse
     let resp: any = null;
@@ -146,125 +147,89 @@ export class Deploy extends Command {
     //choosed Server
     let choosedServer: any;
 
-    return Observable.create(
-      (observer: any) => {
-        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || !RxFs.exist(path.join(process.cwd(), '.relutionignore'))) {
-          observer.error(`${process.cwd()} i not a valid Relution Project`);
-          return observer.complete();
+    if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || !RxFs.exist(path.join(process.cwd(), '.relutionignore'))) {
+      return Observable.throw(new Error(`${process.cwd()} is not a valid Relution Project`));
+    }
+    return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'))
+      /**
+       * get a server from inquirer
+       */
+      .map((relutionHjson:{data:any, path:string}) => {
+        this._relutionHjson = relutionHjson.data;
+        return this.getServerPrompt()
+      })
+      .exhaust()
+      .filter((server: {deployserver: string}) => {
+        return server.deployserver !== this.i18n.TAKE_ME_OUT;
+      })
+      /**
+       * logged in on server
+       */
+      .map((server: {deployserver: string}) => {
+        let choosedServer:any = null;
+        if (server.deployserver.toString().trim() === this._defaultServer.toString().trim()) {
+          choosedServer = find(this.userRc.config.server, { default: true });
+        } else {
+          choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
-        this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson')).subscribe(
-          (relutionHjson: any) => {
-            this.relutionHjson = relutionHjson.data;
-          },
-          (e: Error) => {
-            observer.error(e);
-            return observer.complete();
-          },
-          () => {
-          /**
-           * please choose a server
-           */
-            this.getServerPrompt().subscribe(
-              (answers: any) => {
-                choosedServer = answers[this._promptkey];
-                /**
-                 * Take me out of here
-                 */
-                //this.log.info('choosedServer === this.i18n.TAKE_ME_OUT', choosedServer === this.i18n.TAKE_ME_OUT);
-              },
-              () => {},
-              () => {
-                if (choosedServer === this.i18n.TAKE_ME_OUT) {
-
-                  observer.complete()
-                  return observer.complete();
-                }
-                /**
-                 * get default server
-                 */
-                if (choosedServer === this._defaultServer) {
-                  //this.log.info(this.userRc.config.server);
-                  choosedServer = find(this.userRc.config.server, { default: true });
-                }
-
-                /**
-                 * login on server
-                 */
-                this.login(choosedServer).subscribe(
-                  (answer: any) => {
-                    resp = answer;
-                  },
-                  (e: Error) => {
-                    console.error(e.message, e);
-                    observer.error(e);
-                    return observer.complete();
-                  },
-                  () => {
-                    //user is wrong
-                    if (!this.checkOrga(resp)) {
-                      console.error(chalk.red(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
-                      return observer.complete();
-                    }
-                    this.log.info(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
-                    /**
-                     * get environment
-                     */
-                    this._parent.staticCommands.env.chooseEnv.choose('list').subscribe(
-                      (answers: any) => {
-                        envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
-                      },
-                      (e: Error) => {
-                        observer.error(e);
-                      },
-                      () => {
-                        if (envName === this.i18n.TAKE_ME_OUT) {
-                          return observer.complete();
-                        }
-                        //create a zip and get stream
-                        this._archiver.createBundle().subscribe(
-                          (log: any) => {
-                            if (log.file || log.directory) {
-                              this.log.info(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
-                            } else if (log.zip) {
-                              /**
-                               * {
-                               *  zip: path:string,
-                               *  message: string,
-                               *  readStream: stream
-                               * }
-                               */
-                              this.log.info(chalk.green(log.message) + ' ' + figures.tick);
-                              loader.start();
-                              this.upload(log, envName).subscribe(
-                                (resp: XMLHttpRequest) => {
-                                  loader.stop();
-                                  observer.next(resp);
-                                },
-                                (e: Error) => {
-                                  observer.error(e);
-                                },
-                                () => {
-                                  this.log.info('Deployment close');
-                                  observer.complete();
-                                }
-                              );
-                            } else if (log.processed) {
-                              this.log.info(chalk.green(log.processed) + ' ' + figures.tick);
-                            } else {
-                              observer.next(log);
-                            }
-                          }
-                        );
-                      }
-                    );
-                  }
-                );
-              }
-            )
+        return this.login(choosedServer);
+      })
+      .exhaust()
+      /**
+       * choose environment
+       */
+      .map((resp:any) => {
+        if (!this.checkOrga(resp)) {
+          return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
+        }
+        this.log.info(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
+        resp = resp;
+        return this._parent.staticCommands.env.chooseEnv.choose('list');
+      })
+      .exhaust()
+      .filter((answers:{env:string}) => {
+        return answers.env !== this.i18n.TAKE_ME_OUT;
+      })
+      /**
+       * create the zip File
+       */
+      .map((answers:{env:string}) => {
+        envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
+        return this._archiver.createBundle()
+      })
+      /**
+       * loop into logs don when zip is coming upload start
+       */
+      .exhaustMap((log:Observable<{file:string}|{directory:string}|{zip:string, readStream:any, message:string}>) => {
+        return log.map((log:any) => {
+          if (log.file || log.directory) {
+            this.log.info(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
+          } else if (log.processed) {
+            this.log.info(chalk.green(log.processed) + ' ' + figures.tick);
           }
-        )
-      }
-    );
+          return log;
+        })
+        .filter( (log: {file:string}|{directory:string}|{zip:string, readStream:any, message:string}) => {
+          return log['zip'];
+        })
+        /**
+         * upload zip to server
+         */
+        .map((log: {zip:string, readStream:any, message:string}) => {
+          this.log.info(chalk.green(log.message) + ' ' + figures.tick);
+          return this.upload(log, envName);
+        });
+      })
+      .exhaust()
+      /**
+       * complete upload
+       */
+      .map((wtf:any) => {
+        console.log(wtf);
+
+        loader.stop();
+        return `Deployment done!`;
+      });
   }
 
   public get projectDir(): string {

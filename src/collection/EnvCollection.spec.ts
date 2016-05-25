@@ -45,6 +45,9 @@ describe('EnVCollection a subset of environments', () => {
     done();
   });
 
+  it('has a collection of envfiles', (done) => {
+
+  })
   after(() => {
     RxFs.rmDir(command.fsApi.path).subscribe({
       complete: () => {

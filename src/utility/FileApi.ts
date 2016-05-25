@@ -46,7 +46,10 @@ export class FileApi {
    * ```
    * @returns Observable
    */
-  readHjson(path: string): any {
+  readHjson(path: string): Observable<{
+    data: any,
+    path: string
+  }> {
     let readFileAsObservable: any = Observable.bindNodeCallback(fs.readFile);
     let result = readFileAsObservable(path, 'utf8');
     return Observable.create((observer: any) => {
@@ -93,7 +96,7 @@ export class FileApi {
   }
 
   // String -> [String]
-  fileList(dir: string, ext?: string): any {
+  fileList(dir: string, ext?: string): Observable<string> {
     let files: Array<string> = [];
     if (!fs.existsSync(dir)) {
       return Observable.throw(`${dir} not exist or maybe not readable`);
