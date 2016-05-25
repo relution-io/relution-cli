@@ -32,6 +32,9 @@
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
     "typescript": "^1.8.10"
   },
+  "engines": {
+    "node": ">=4.4.0"
+  },
   "dependencies": {
     "@reactivex/rxjs": "^5.0.0-beta.7",
     "archiver": "^1.0.0",

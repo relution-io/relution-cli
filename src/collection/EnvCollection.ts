@@ -37,7 +37,7 @@ export class EnvCollection {
     this.changeDispatcher.on('changed', (self:any) => {
       if (self !== this) {
         console.log('fetch new');
-        this.getEnvironments().subcribe();
+        this.getEnvironments().subscribe();
       }
     })
   }
@@ -46,25 +46,20 @@ export class EnvCollection {
    * @param observer to will be completed
    * @returns Observable
    */
-  public setCollection(observer:any) {
-    let datas:Array<any> = [];
-    let all:Array<any> = [];
+  public loadCollection(envFiles:Observable<string>) {
     this.collection = [];
-    this.fsApi.path = this.envFolder;
-    this.envFiles.forEach((file:string) => {
-      if (file) {
-        all.push(this.fsApi.readHjson(`${this.envFolder}/${file}`));
-      }
-    });
-    Observable.forkJoin(all).subscribe((hjsons:any) => {
-      hjsons.forEach((data:any) => {
-        let model = new EnvModel(data.data.name, data.path, data.data);
-        this.collection.push(model);
-      });
-      observer.next(this.collection);
-    },
-    () => {},
-    () => {observer.complete()});
+    return envFiles.map((envFile) => {
+      return this.fsApi.readHjson(`${this.envFolder}/${envFile}`);
+    })
+    .concatAll()
+    .map(
+      (model:{data:any, path:string}) => {
+      return new EnvModel(model.data.name, model.path, model.data);
+    })
+    .reduce((collection:[EnvModel], model:EnvModel) => {
+      collection.push(model);
+      return collection;
+    }, this.collection);
   }
 
   public validate(name:string){
@@ -87,34 +82,18 @@ export class EnvCollection {
    * @param name the name: "" from your hjson file
    * @returns Observable
    */
-  public getEnvironments() {
+  public getEnvironments(): Observable<any>{
     this.envFiles = [];
-    this.collection = [];
-
-    return Observable.create((observer: any) => {
-      this.fsApi.fileList(this.envFolder, '.hjson')
-      .subscribe({
-        error: (e:any) => {
-          return observer.complete();
-        },
-        next: (filePath: string) => {
-          if (filePath) {
-            // console.log('filePath', filePath);
-            this.envFiles.push(filePath);
-          }
-
-        },
-        complete: () => {
-          if (!this.envFiles.length) {
-            observer.next([])
-            return observer.complete();
-          }
-          return this.setCollection(observer);
+    this.fsApi.path = this.envFolder;
+    return this.loadCollection(
+      this.fsApi.fileList(this.envFolder, '.hjson').do(
+        (filePath: string) => {
+          console.log('filePath', filePath);
+          this.envFiles.push(filePath);
         }
-      });
-    });
+      )
+    );
   }
-
 
   /**
    * return available names from the hjson files
@@ -161,6 +140,7 @@ export class EnvCollection {
             },
             complete: () => {
               observer.complete();
+              //@todo we dont need it
               this.changeDispatcher.emit('changed', this);
             }
           });

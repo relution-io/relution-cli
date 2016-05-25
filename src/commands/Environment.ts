@@ -121,8 +121,9 @@ export class Environment extends Command {
   preload() {
     return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
-        error: (e:any) => {
-          observer.error('no environments available');
+        error: (e:Error) => {
+          console.log(e);
+          //observer.error('no environments available');
           super.preload().subscribe({
             complete: () => observer.complete()
           });
