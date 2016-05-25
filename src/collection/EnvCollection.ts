@@ -88,7 +88,6 @@ export class EnvCollection {
     return this.loadCollection(
       this.fsApi.fileList(this.envFolder, '.hjson').do(
         (filePath: string) => {
-          console.log('filePath', filePath);
           this.envFiles.push(filePath);
         }
       )
