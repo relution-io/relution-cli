@@ -196,7 +196,7 @@ export class Command implements CommandInterface {
 
     return myObservable.subscribe(
       (log: any) => {
-        this.log.info(log);
+        this.log.log('cyan', log);
       },
       (e:any) => this.log.error(e),
       () => {

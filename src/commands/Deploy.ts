@@ -47,10 +47,9 @@ export class Deploy extends Command {
    * login on Relution
    * @link [relution-sdk](https://github.com/relution-io/relution-sdk)
    */
-  login(choosedServer: ServerModelRc) {
-    console.log('choosedServer',choosedServer);
+  login(serverModel: ServerModelRc):Observable<any> {
      Relution.init({
-      serverUrl: choosedServer.serverUrl,
+      serverUrl: serverModel.serverUrl,
       application: 'studio'
     });
     let currentUser = Relution.security.getCurrentUser();
@@ -64,8 +63,8 @@ export class Deploy extends Command {
 
     //this.log.info('Relution', JSON.stringify(Relution.security, null, 2))
     let credentials = {
-      userName: choosedServer.userName,
-      password: choosedServer.password
+      userName: serverModel.userName,
+      password: serverModel.password
     };
 
     return Observable.fromPromise(Relution.web.login(credentials));
@@ -125,7 +124,6 @@ export class Deploy extends Command {
         responseCallback: (resp:Q.Promise<any>) => {
           return resp.then(
             (r:any) => {
-              console.log('test');
               r.pipe(process.stdout, { 'end': false });
               return r;
           });
@@ -141,7 +139,7 @@ export class Deploy extends Command {
   public deploy(): Observable<any> {
     this._fileApi.path = this.projectDir;
     //loginresponse
-    let resp: any = null;
+    let userResp: Relution.security.User;
     //choosed environment
     let envName: string = '';
     //choosed Server
@@ -150,7 +148,15 @@ export class Deploy extends Command {
     if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || !RxFs.exist(path.join(process.cwd(), '.relutionignore'))) {
       return Observable.throw(new Error(`${process.cwd()} is not a valid Relution Project`));
     }
-    return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'))
+    //load the environments before
+    return this._parent.staticCommands.env.envCollection.getEnvironments()
+      /**
+       * load the relution.hjson
+       */
+      .map(() => {
+        return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'))
+      })
+      .exhaust()
       /**
        * get a server from inquirer
        */
@@ -166,7 +172,6 @@ export class Deploy extends Command {
        * logged in on server
        */
       .map((server: {deployserver: string}) => {
-        let choosedServer:any = null;
         if (server.deployserver.toString().trim() === this._defaultServer.toString().trim()) {
           choosedServer = find(this.userRc.config.server, { default: true });
         } else {
@@ -179,11 +184,11 @@ export class Deploy extends Command {
        * choose environment
        */
       .map((resp:any) => {
-        if (!this.checkOrga(resp)) {
+        userResp = resp.user;
+        if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
         }
-        this.log.info(chalk.green(`logged in as ${resp.user.givenName ? resp.user.givenName + ' ' + resp.user.surname : resp.user.name}`));
-        resp = resp;
+        this.log.info(chalk.green(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`));
         return this._parent.staticCommands.env.chooseEnv.choose('list');
       })
       .exhaust()
@@ -224,11 +229,9 @@ export class Deploy extends Command {
       /**
        * complete upload
        */
-      .map((wtf:any) => {
-        console.log(wtf);
-
+      .map((resp:any) => {
         loader.stop();
-        return `Deployment done!`;
+        return resp;
       });
   }
 
