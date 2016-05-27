@@ -127,25 +127,24 @@ export class Deploy extends Command {
       /**
        * load the relution.hjson
        */
-      .map(() => {
+      .exhaustMap(() => {
         return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'))
       })
-      .exhaust()
+
       /**
        * get a server from inquirer
        */
-      .map((relutionHjson:{data:any, path:string}) => {
+      .exhaustMap((relutionHjson:{data:any, path:string}) => {
         this._relutionHjson = relutionHjson.data;
         return this.getServerPrompt()
-      })
-      .exhaust()
-      .filter((server: {deployserver: string}) => {
-        return server.deployserver !== this.i18n.TAKE_ME_OUT;
+        .filter((server: {deployserver: string}) => {
+          return server.deployserver !== this.i18n.TAKE_ME_OUT;
+        })
       })
       /**
        * logged in on server
        */
-      .map((server: {deployserver: string}) => {
+      .exhaustMap((server: {deployserver: string}) => {
         if (server.deployserver.toString().trim() === this._defaultServer.toString().trim()) {
           choosedServer = find(this.userRc.config.server, { default: true });
         } else {
@@ -153,28 +152,26 @@ export class Deploy extends Command {
         }
         return this.relutionSDK.login(choosedServer);
       })
-      .exhaust()
       /**
        * choose environment
        */
-      .map((resp:any) => {
+      .exhaustMap((resp:any) => {
         userResp = resp.user;
         if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
         }
         this.log.info(chalk.green(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`));
-        return this._parent.staticCommands.env.chooseEnv.choose('list');
-      })
-      .exhaust()
-      .filter((answers:{env:string}) => {
-        return answers.env !== this.i18n.TAKE_ME_OUT;
-      })
-      /**
-       * create the zip File
-       */
-      .map((answers:{env:string}) => {
-        envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
-        return this._archiver.createBundle()
+        return this._parent.staticCommands.env.chooseEnv.choose('list')
+          .filter((answers:{env:string}) => {
+            return answers.env !== this.i18n.TAKE_ME_OUT;
+          })
+          /**
+           * create the zip File
+           */
+          .map((answers:{env:string}) => {
+            envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
+            return this._archiver.createBundle()
+          });
       })
       /**
        * loop into logs don when zip is coming upload start
@@ -194,12 +191,12 @@ export class Deploy extends Command {
         /**
          * upload zip to server
          */
-        .map((log: {zip:string, readStream:any, message:string}) => {
-          this.log.info(chalk.green(log.message) + ' ' + figures.tick);
-          return this.upload(log, envName);
-        });
+
       })
-      .exhaust()
+      .exhaustMap((log: {zip:string, readStream:any, message:string}) => {
+        this.log.info(chalk.green(log.message) + ' ' + figures.tick);
+        return this.upload(log, envName);
+      })
       /**
        * complete upload
        */
