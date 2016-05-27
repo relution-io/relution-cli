@@ -154,7 +154,7 @@ export class AddConnection {
     let connectionModel = new ConnectionModel();
 
     if (!this.connection.userRc.server.length) {
-      return Observable.throw(new Error('Please a first a Server'));
+      return Observable.throw(new Error('Please add first a Server!'));
     }
     /**
      * set a new connection name
@@ -163,81 +163,78 @@ export class AddConnection {
     /**
      * add connection description
      */
-    .map((answers: {connectionname:string}) => {
+    .exhaustMap((answers: {connectionname:string}) => {
       connectionModel.name = answers.connectionname;
       return this._addConnectionDescription();
     })
-    .exhaust()
     /**
      * add server
      */
-    .map((answers: {connectiondescription:string}) => {
+    .exhaustMap((answers: {connectiondescription:string}) => {
       connectionModel.description = answers.connectiondescription;
-      return this.getServerPrompt();
+      return this.getServerPrompt()
+        .filter((server: {connectserver: string}) => {
+        return server.connectserver !== this.connection.i18n.TAKE_ME_OUT;
+      });
     })
-    .exhaust()
-    .filter((server: {connectserver: string}) => {
-      return server.connectserver !== this.connection.i18n.TAKE_ME_OUT;
-    })
+
     /**
      * login on relution
      */
-    .map((server:{connectserver:string}) => {
+    .exhaustMap((server:{connectserver:string}) => {
       if (server.connectserver.toString().trim() === this._defaultServer.toString().trim()) {
         choosedServer = find(this.connection.userRc.config.server, { default: true });
       } else {
         choosedServer = find(this.connection.userRc.config.server, { id: server.connectserver });
       }
-      return this.connection.relutionSDK.login(choosedServer);
+      return this.connection.relutionSDK.login(choosedServer)
+      .filter((resp:{user: Relution.security.User}) => {
+        return resp.user ? true : false;
+      });
     })
-    .exhaust()
-    .filter((resp:{user: Relution.security.User}) => {
-      return resp.user ? true : false;
-    })
+
     /**
      * get the connectionProvider
      */
-    .map( (resp:{user: Relution.security.User}) => {
-      return this._getConnectorProvider();
-    })
-    .exhaust()
-    .filter((resp:Array<{value:string, label:string}>) => {
-      return resp.length > 0;
+    .exhaustMap( (resp:{user: Relution.security.User}) => {
+      return this._getConnectorProvider()
+      .filter((resp:Array<{value:string, label:string}>) => {
+        return resp.length > 0;
+      });
     })
     /**
      * choose the connection Provider
      */
-    .map((resp:Array<{value:string, label:string}>) => {
+    .exhaustMap((resp:Array<{value:string, label:string}>) => {
       return this._chooseConnectorProvider(resp);
     })
-    .exhaust()
     /**
      * get protocols by Provider from Server
      */
-    .map((answers: {connectionprovider: string}) => {
+    .exhaustMap((answers: {connectionprovider: string}) => {
       connectionModel.connectorProvider = answers.connectionprovider;
-      return this._getProtocols(answers.connectionprovider);
+      return this._getProtocols(answers.connectionprovider)
+      .filter((resp:Array<{value:string, label:string}>) => {
+        return resp.length > 0;
+      });
     })
-    .exhaust()
-    .filter((resp:Array<{value:string, label:string}>) => {
-      return resp.length > 0;
-    })
-    .map((protocols:any) => {
+    /**
+     * choose the protocol
+     */
+    .exhaustMap((protocols:any) => {
       protocols = protocols;
-      return this._chooseProtocol(protocols);
-    })
-    .exhaust()
-    .filter((answers: {protocol:string}) => {
-      return answers.protocol !== this.connection.i18n.TAKE_ME_OUT;
+      return this._chooseProtocol(protocols)
+        .filter((answers: {protocol:string}) => {
+        return answers.protocol !== this.connection.i18n.TAKE_ME_OUT;
+      });
     })
     /**
      * write file to the connections folder
      */
-    .map((answers: {protocol:string}) => {
+    .exhaustMap((answers: {protocol:string}) => {
       connectionModel.type = answers.protocol;
       return this.connection.fileApi.writeHjson(connectionModel.toJson(), connectionModel.name, `${process.cwd()}/connections`);
     })
-    .exhaust()
     .map((file: any) => {
       console.log('file', file);
     });
