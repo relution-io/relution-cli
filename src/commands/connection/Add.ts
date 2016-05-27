@@ -233,10 +233,10 @@ export class AddConnection {
      */
     .exhaustMap((answers: {protocol:string}) => {
       connectionModel.type = answers.protocol;
-      return this.connection.fileApi.writeHjson(connectionModel.toJson(), connectionModel.name, `${process.cwd()}/connections`);
+      return this.connection.fileApi.writeHjson(connectionModel.toJson(), connectionModel.name, this._rootFolder);
     })
-    .map((file: any) => {
-      console.log('file', file);
+    .do((file: any) => {
+      return this.connection.log.info(`Connection ${connectionModel.name} created add ${this._rootFolder}.`)
     });
   }
 
