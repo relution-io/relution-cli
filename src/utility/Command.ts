@@ -223,7 +223,7 @@ export class Command implements CommandInterface {
     return temp;
   }
 
-  showCommands(message: string = "Please Choose Your Command: ", type: string = 'list'): any {
+  showCommands(message: string = `Please Choose Your ${this.name} Command: `, type: string = 'list'): any {
     //this.log.info(new Date().getTime());
     if (!this.commands) {
       return Observable.throw(new Error(`Command ${this.name} has no commands!`));

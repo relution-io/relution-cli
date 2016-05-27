@@ -85,8 +85,8 @@ export class FileApi {
       It can throw a SyntaxError exception.
       Hjson.stringify(value, options)
    */
-  writeHjson(content: string, fileName: string) {
-    return RxFs.writeFile(`${this.path}${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
+  writeHjson(content: any, fileName: string, path:string = this.path) {
+    return RxFs.writeFile(`${path}/${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
   }
   /**
    * write a file

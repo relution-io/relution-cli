@@ -1,9 +1,17 @@
 import {Connection} from './../Connection';
 import {Observable} from '@reactivex/rxjs';
-import {find, findIndex} from 'lodash';
-import {ServerModelRc} from './../../models/ServerModelRc';
+import {find, findIndex, orderBy} from 'lodash';
+import {ServerModelInterface} from './../../models/ServerModelRc';
 import * as Relution from 'relution-sdk';
+import {ConnectionInterface, ConnectionModel} from './../../models/ConnectionModel';
 
+/**
+ * this class add a new Connection
+ * 1. get name
+ * 2. get description
+ * 3. get Connector Provider
+ * 4. get Protocols to connector provider
+ */
 export class AddConnection {
 
   private _connection: Connection;
@@ -12,15 +20,119 @@ export class AddConnection {
   private _protocolsUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.protocol';
   private _providerUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.connectorProvider';
   private _defaultServer: string;
-
+  private _rootFolder:string  = `${process.cwd()}/connections/`;
   constructor(command: Connection) {
     this.connection = command;
   }
 
-  private _getName() {
-
+  public _addConnectionNamePath():Observable<any>{
+    return Observable.fromPromise(
+      this.connection.inquirer.prompt({
+        type: 'input',
+        name: 'connectionname',
+        message: `Please enter name or an sep path('ews/ews-exchange')`
+      })
+    );
   }
 
+  public _addConnectionDescription():Observable<any>{
+    return Observable.fromPromise(
+      this.connection.inquirer.prompt({
+        type: 'input',
+        name: 'connectiondescription',
+        message: `Please enter a description:`
+      })
+    );
+  }
+  /**
+   * @return XMLHttpRequest
+   */
+  private _getProtocols(query: string): Observable<any> {
+    return Observable.fromPromise(
+      Relution.web.ajax(
+      {
+        method: 'GET',
+        url: `${this._protocolsUrl}?query=${encodeURIComponent(query)}`
+      })
+    );
+  }
+
+  /**
+   * return a prompt with protocols as value
+   */
+  private _chooseConnectorProvider(providers: Array<{value: string, label: string}>): Observable<any>{
+    let choices: Array<{
+      name: string,
+      value: string,
+      default: boolean
+    }> = [];
+
+    providers.forEach((protocol:{value:string, label:string}) => {
+      choices.push({
+        name: protocol.label,
+        value: protocol.value,
+        default: false
+      });
+    });
+
+    choices = orderBy(choices, ['name'], ['asc']);
+    choices.push({
+      name: this.connection.i18n.TAKE_ME_OUT,
+      value: this.connection.i18n.TAKE_ME_OUT,
+      default: false
+    });
+
+    let prompt = [{
+      type: 'list',
+      name: 'connectionprovider',
+      message: 'Please choose a Connector: ',
+      choices: choices
+    }];
+    return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
+  }
+  /**
+   * return a prompt with protocols as value
+   */
+  private _chooseProtocol(protocols: Array<{value: string, label: string}>): Observable<any>{
+    let choices: Array<{
+      name: string,
+      value: string,
+      default: boolean
+    }> = [];
+
+    protocols.forEach((protocol:{value:string, label:string}) => {
+      choices.push({
+        name: protocol.label,
+        value: protocol.value,
+        default: false
+      });
+    });
+
+    choices = orderBy(choices, ['name'], ['asc']);
+    choices.push({
+      name: this.connection.i18n.TAKE_ME_OUT,
+      value: this.connection.i18n.TAKE_ME_OUT,
+      default: false
+    });
+
+    let prompt = [{
+      type: 'list',
+      name: 'protocol',
+      message: 'Please choose a Protocol: ',
+      choices: choices
+    }];
+    return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
+  }
+
+  private _getConnectorProvider(){
+    return Observable.fromPromise(
+      Relution.web.ajax(
+      {
+        method: 'GET',
+        url: this._providerUrl
+      })
+    );
+  }
   /**
    * choose first on which Server the App has to be deployed
    */
@@ -36,35 +148,99 @@ export class AddConnection {
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
 
-  add() {
-    let choosedServer:ServerModelRc;
+  add():Observable<any> {
+    let choosedServer:any;
+    let protocols: Array<{label: string, value: string}> = [];
+    let connectionModel = new ConnectionModel();
 
-    return this.getServerPrompt()
+    if (!this.connection.userRc.server.length) {
+      return Observable.throw(new Error('Please a first a Server'));
+    }
+    /**
+     * set a new connection name
+     */
+    return this._addConnectionNamePath()
+    /**
+     * add connection description
+     */
+    .map((answers: {connectionname:string}) => {
+      connectionModel.name = answers.connectionname;
+      return this._addConnectionDescription();
+    })
+    .exhaust()
+    /**
+     * add server
+     */
+    .map((answers: {connectiondescription:string}) => {
+      connectionModel.description = answers.connectiondescription;
+      return this.getServerPrompt();
+    })
+    .exhaust()
+    .filter((server: {connectserver: string}) => {
+      return server.connectserver !== this.connection.i18n.TAKE_ME_OUT;
+    })
+    /**
+     * login on relution
+     */
     .map((server:{connectserver:string}) => {
-      choosedServer = find(this.connection.userRc.server, { id: server.connectserver });
-      console.log(server);
+      if (server.connectserver.toString().trim() === this._defaultServer.toString().trim()) {
+        choosedServer = find(this.connection.userRc.config.server, { default: true });
+      } else {
+        choosedServer = find(this.connection.userRc.config.server, { id: server.connectserver });
+      }
       return this.connection.relutionSDK.login(choosedServer);
     })
     .exhaust()
-    .map( (resp:{user: Relution.security.User}) => {
-      console.log(resp.user);
+    .filter((resp:{user: Relution.security.User}) => {
+      return resp.user ? true : false;
     })
-
-    // return Observable.create((observer: any) => {
-    //   .subscribe({
-    //     next: (server: any) => {
-    //       this.connection.log.debug(server[this._promptkey]);
-    //       this.connection.log.debug(JSON.stringify(this.connection._parent.staticCommands.server, null, 2));
-    //       this._server = this.connection._parent.staticCommands.env.envCollection.isUnique(server[this._promptkey]);
-
-    //     },
-    //     complete: () => {
-    //       console.log(JSON.stringify(this._server, null, 2));
-    //       observer.complete();
-    //     }
-    //   }
-    //   );
-    // });
+    /**
+     * get the connectionProvider
+     */
+    .map( (resp:{user: Relution.security.User}) => {
+      return this._getConnectorProvider();
+    })
+    .exhaust()
+    .filter((resp:Array<{value:string, label:string}>) => {
+      return resp.length > 0;
+    })
+    /**
+     * choose the connection Provider
+     */
+    .map((resp:Array<{value:string, label:string}>) => {
+      return this._chooseConnectorProvider(resp);
+    })
+    .exhaust()
+    /**
+     * get protocols by Provider from Server
+     */
+    .map((answers: {connectionprovider: string}) => {
+      connectionModel.connectorProvider = answers.connectionprovider;
+      return this._getProtocols(answers.connectionprovider);
+    })
+    .exhaust()
+    .filter((resp:Array<{value:string, label:string}>) => {
+      return resp.length > 0;
+    })
+    .map((protocols:any) => {
+      protocols = protocols;
+      return this._chooseProtocol(protocols);
+    })
+    .exhaust()
+    .filter((answers: {protocol:string}) => {
+      return answers.protocol !== this.connection.i18n.TAKE_ME_OUT;
+    })
+    /**
+     * write file to the connections folder
+     */
+    .map((answers: {protocol:string}) => {
+      connectionModel.type = answers.protocol;
+      return this.connection.fileApi.writeHjson(connectionModel.toJson(), connectionModel.name, `${process.cwd()}/connections`);
+    })
+    .exhaust()
+    .map((file: any) => {
+      console.log('file', file);
+    });
   }
 
   public get connection(): Connection {

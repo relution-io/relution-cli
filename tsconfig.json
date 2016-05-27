@@ -61,6 +61,7 @@
         "src/gii/templates/new/RelutionIgnore.ts",
         "src/gii/templates/new/Routes.ts",
         "src/models/CertModelRc.ts",
+        "src/models/ConnectionModel.ts",
         "src/models/EnvModel.ts",
         "src/models/ServerModelRc.spec.ts",
         "src/models/ServerModelRc.ts",

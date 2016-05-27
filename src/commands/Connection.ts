@@ -1,13 +1,15 @@
 import {Command} from './../utility/Command';
+import {FileApi} from './../utility/FileApi';
 import * as Relution from 'relution-sdk';
 import * as path from 'path';
 import {AddConnection} from './connection/Add';
+
 
 export /**
  * Connection
  */
 class Connection extends Command{
-
+  public fileApi :FileApi = new FileApi();
   constructor(){
     super('connection');
   }
@@ -32,10 +34,6 @@ class Connection extends Command{
   };
 
   public helperAdd:AddConnection = new AddConnection(this);
-
-  chooseServer(){
-    //this._parent.staticCommands.server.
-  }
 
   add(path?:string) {
     return this.helperAdd.add();
