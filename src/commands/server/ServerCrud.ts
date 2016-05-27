@@ -184,10 +184,7 @@ export class ServerCrud {
    * ```
    */
   serverListPrompt(name: string = 'server', type: string = 'checkbox', message: string = 'Select Server(s) :') {
-    console.log(this.userRc.config.server);
-
     let choices = map(this.userRc.config.server, 'id');
-
     choices.push(Translation.TAKE_ME_OUT);
     return [
       {

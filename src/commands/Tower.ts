@@ -3,6 +3,11 @@ import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Command} from './../utility/Command';
 import {Welcome} from './../utility/Welcome';
+import {Server} from './Server';
+import {Environment} from './Environment';
+import {New} from './New';
+import {Deploy} from './Deploy';
+import {Connection} from './Connection';
 import * as chalk from 'chalk';
 import {Translation} from './../utility/Translation';
 const inquirer = require('inquirer');
@@ -16,7 +21,13 @@ export class Tower {
   //where is this command available
   public name: string = 'relution';
   //all commands are available
-  public staticCommands: any;
+  public staticCommands: {
+    env: Environment,
+    deploy: Deploy,
+    server: Server,
+    new: New,
+    connection: Connection
+  };
   //helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
   //which one are reserved
@@ -44,7 +55,7 @@ export class Tower {
   //to say hello
   public username: string;
 
-  constructor(staticCommands: Object) {
+  constructor(staticCommands: any) {
     this.table = new Table();
     this.staticCommands = staticCommands;
     this.staticCommandRootKeys = Object.keys(staticCommands);

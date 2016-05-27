@@ -38,7 +38,6 @@ export class ServerModelRc implements ServerModelInterface{
         }
       });
     }
-    console.log('params', this);
   }
 
   public get attributes(): Array<string> {
