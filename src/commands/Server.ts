@@ -91,7 +91,7 @@ export class Server extends Command {
     });
 
     return Observable.create((observer: any) => {
-      observer.next(this.table.sidebar(this.tableHeader, content));
+      observer.next(this.table.sidebar(content));
       observer.complete();
     });
   }

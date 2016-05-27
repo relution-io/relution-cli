@@ -25,10 +25,20 @@ export class ServerModelRc implements ServerModelInterface{
 
   constructor(params?: ServerModelInterface) {
     if (params) {
-      (<any>Object).assign(this, params);
+
       this.attributes = Object.keys(params);
-      // console.log('params', this.attributes);
+
+      this.attributes.forEach((key) => {
+        if(params[key] && key !== 'default') {
+          this[key] = params[key];
+        } else if (key === 'default'){
+          this[key] = params[key];
+        } else {
+          throw new Error(`${key} must be defined on a ServerModelRc`);
+        }
+      });
     }
+    console.log('params', this);
   }
 
   public get attributes(): Array<string> {
@@ -96,7 +106,7 @@ export class ServerModelRc implements ServerModelInterface{
   }
 
   public toJson():ServerModelInterface {
-    let model: ServerModelInterface;
+    let model: any = {};
     this.attributes.forEach((attr: string) => {
       if (attr && this[attr] !== undefined) {
         model[attr] = this[attr];

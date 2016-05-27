@@ -16,7 +16,7 @@ export class Translation {
   static NEW_CREATE = `create a new Project in Folder`;
   static DEPLOY = `deploy your Baas to the server`;
   static SELECT(name: string): string {
-    return `Select ${name}`;
+    return `Select ${name} :`;
   }
 
   static YOU_MOUST_CHOOSE(name: string): string {

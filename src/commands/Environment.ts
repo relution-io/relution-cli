@@ -58,7 +58,7 @@ export class Environment extends Command {
       description: 'List all environments by name'
     },
     help: {
-      description: Translation.LIST_COMMAND('Environment')
+      description: this.i18n.LIST_COMMAND('Environment')
     },
     quit: {
       description: 'Exit To Home'
@@ -149,7 +149,7 @@ export class Environment extends Command {
       {
         type: 'input',
         name: 'name',
-        message: Translation.ENTER_SOMETHING.concat('Environment name'),
+        message: this.i18n.ENTER_SOMETHING.concat('Environment name'),
         validate: function (value: string) {
           let done: any = this.async();
           if (self.envCollection.isUnique(value)) {
@@ -176,35 +176,27 @@ export class Environment extends Command {
     let prompt = this._addName;
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
-
-  getAttributes(store: Array<{ key: string, value: any }>) {
-    return Observable.create((observer: any) => {
-      this.addAttribute.store().subscribe(
-        (answers: any) => {
-          // this.log.debug('answers store', answers);
-          store.push({key: answers.key.trim(), value: answers.value.trim()});
-        },
-        (e: any) => console.error(e),
-        () => {
-          this.addAttribute.addAnother().subscribe(
-            (answers: any) => {
-              // this.log.debug('answers another', answers );
-              if (answers[this.addAttribute.addPromptName] === false) {
-                observer.next(store);
-                return observer.complete();
-              }
-              // this.log.debug('store', store);
-              this.getAttributes(store).subscribe({
-                complete: () => {
-                  observer.next(store);
-                  observer.complete();
-                }
-              });
-            }
-          );
+  /**
+   * inquirer for add a key valu store
+   */
+  getAttributes(store: Array<{ key: string, value: any }>):any {
+    return this.addAttribute.store()
+      .map((answers:{key:string, value:any}) => {
+        store.push({key: answers.key.trim(), value: answers.value.trim()});
+        return this.addAttribute.addAnother();
+      })
+      .exhaust()
+      .map((answers:{another:boolean}) => {
+        //no one more set stor back
+        if (!answers.another) {
+          return Observable.create((observer:any) => {
+            observer.next(store);
+            observer.complete();
+          });
         }
-      );
-    });
+        return this.getAttributes(store);
+      })
+      .exhaust();
   }
   /**
    * add a new key valu pair or many
@@ -212,28 +204,23 @@ export class Environment extends Command {
   update(name?: string):Observable<any> {
     let attributes: Array<any> = [];
     let names: Array<string> = [];
-    return Observable.create((observer:any) => {
-      this.chooseEnv.choose().subscribe(
-        (answers: any) => {
-          names = answers[this.chooseEnv.promptName];
-          // this.log.debug('names', names);
-          if (names.indexOf(Translation.TAKE_ME_OUT) !== -1) {
-            return observer.complete();
-          }
-
-          this.getAttributes([]).subscribe(
-            (attrs: any) => {
-              attributes = attrs;
-              // this.log.debug('result', attributes);
-              this.envCollection.bulkUpdate(names, attributes).subscribe({complete: () => {
-                    observer.complete();
-                  }
-                }
-              );
-            }
-          );
-        }
-      );
+    return this.chooseEnv.choose()
+    .filter((answers:{env:[string]}) => {
+      return answers[this.chooseEnv.promptName].indexOf(this.i18n.TAKE_ME_OUT) === -1;
+    })
+    /**
+     * get the attributes which one generated
+     */
+    .map((answers:{env:[string]}) => {
+      names = answers[this.chooseEnv.promptName];
+      return this.getAttributes([]);
+    })
+    .exhaust()
+    .map((attributes:Array<{key:string, value:any}>) => {
+      return this.envCollection.bulkUpdate(names, attributes);
+    })
+    .exhaust().map(() => {
+      return `Update complete`;
     });
   }
   /**
@@ -244,16 +231,18 @@ export class Environment extends Command {
     return Observable.create((observer: any) => {
       let content: any = [['']];
       let tableHeader: Array<string> = ['Environment Name'];
-      let list: Array<string> = this.envCollection.flatEnvArray();
-      list.forEach((name: string) => {
-        content.push([chalk.yellow(`${name}`)]);
-      });
-      if (content.length < 1) {
+      this.envCollection.getEnvironments().subscribe({complete: () => {
+        let list: Array<string> = this.envCollection.flatEnvArray();
+        list.forEach((name: string) => {
+          content.push([chalk.yellow(`${name}`)]);
+        });
+        if (content.length < 1) {
+          observer.complete();
+        }
+        observer.next(this.table.sidebar(content, tableHeader));
         observer.complete();
-      }
-      observer.next(this.table.sidebar(tableHeader, content));
-      observer.complete();
-    })
+      }})
+    });
   }
   /**
    * copy a exits environment and set the name
@@ -263,30 +252,16 @@ export class Environment extends Command {
     let toBeGenerate:string;
 
     if (!args || args && !args[0].length) {
-      return Observable.create((observer:any) => {
-        this.chooseEnv.choose('list', Translation.SELECT('Environment')).subscribe(
-          (answers:any) => {
-            tobeCopied = answers[this.chooseEnv.promptName];
-            //this.log.debug(tobeCopied);
-            this.enterName().subscribe((answers:any) => {
-                toBeGenerate = answers.name;
-                // this.log.debug(toBeGenerate);
-                this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
-                  next: (log:any) => {
-                    observer.next(log);
-                  },
-                  error: (e:any) => {
-                    observer.error(e);
-                  },
-                  complete: () => {
-                    // this.log.debug('copied');
-                    observer.complete();
-                  }
-                })
-            });
-          }
-        );
-      });
+      return this.chooseEnv.choose('list', this.i18n.SELECT('Environment'))
+      .map((answers:{env:string}) => {
+        tobeCopied = answers[this.chooseEnv.promptName];
+        return this.enterName();
+      })
+      .exhaust()
+      .map((answers:{name:string}) => {
+        toBeGenerate = answers.name;
+        return this.envCollection.copyByName(tobeCopied, toBeGenerate);
+      }).exhaust();
     }
 
     if(args && args[0].length && args[1].length) {
@@ -314,23 +289,16 @@ export class Environment extends Command {
   add(name?: string|Array<string>) {
     //['relution', 'env', 'add']
     if (!name || !name.length) {
-      return Observable.create((observer: any) => {
-        this.enterName().subscribe(
-          (answers: any) => {
-            this.createEnvironment(answers.name).subscribe({
-              next: (log: string) => {
-                this.log.info(`${log} \n`);
-                this.list().subscribe({
-                  complete: () => {
-                    observer.complete();
-                  }
-                })
-              }
-            });
-          },
-          (e: any) => console.error(e)
-        );
-      });
+      return this.enterName()
+        .map((answers: {name:string}) => {
+          return this.createEnvironment(answers.name);
+        })
+        .exhaust()
+        .map((log: string) => {
+          this.log.info(`${log} \n`);
+          return this.list();
+        })
+        .exhaust();
     }
     //>relution env add bubble
     // this.log.debug('name', name);

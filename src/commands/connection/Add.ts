@@ -1,6 +1,6 @@
 import {Connection} from './../Connection';
 import {Observable} from '@reactivex/rxjs';
-import {find} from 'lodash';
+import {find, findIndex} from 'lodash';
 import {ServerModelRc} from './../../models/ServerModelRc';
 import * as Relution from 'relution-sdk';
 
@@ -11,6 +11,7 @@ export class AddConnection {
   private _server: any;
   private _protocolsUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.protocol';
   private _providerUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.connectorProvider';
+  private _defaultServer: string;
 
   constructor(command: Connection) {
     this.connection = command;
@@ -20,15 +21,25 @@ export class AddConnection {
 
   }
 
-  private _getServer() {
-    let prompt = this.connection._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server');
+  /**
+   * choose first on which Server the App has to be deployed
+   */
+  getServerPrompt(): Observable<any> {
+    this._defaultServer = 'default';
+    let prompt = this.connection._copy(this.connection._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
+    let indexDefault: number = findIndex(this.connection.userRc.config.server, { default: true });
+    if (indexDefault > -1) {
+      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`
+      prompt[0].choices.splice(indexDefault, 1);
+      prompt[0].choices.unshift(this._defaultServer);
+    }
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
 
   add() {
     let choosedServer:ServerModelRc;
 
-    return this._getServer()
+    return this.getServerPrompt()
     .map((server:{connectserver:string}) => {
       choosedServer = find(this.connection.userRc.server, { id: server.connectserver });
       console.log(server);

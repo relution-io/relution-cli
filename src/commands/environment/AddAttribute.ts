@@ -68,13 +68,13 @@ export class AddAttribute {
   /**
    * create a key value question prompt
    */
-  store() {
+  store(): Observable<any> {
     return Observable.fromPromise(inquirer.prompt(this.prompt()));
   }
   /**
    * Darfs ein bischen mehr sein ?
    */
-  addAnother() {
+  addAnother():Observable<any> {
     return Observable.fromPromise(inquirer.prompt(this.addAnotherPrompt()));
   }
 }

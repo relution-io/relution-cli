@@ -147,7 +147,9 @@ export class EnvCollection {
       });
     });
   }
-
+  /**
+   * overwrite a existing env file with attributes
+   */
   public updateModelByName(name:string, attributes:Array<{key:string, value:any}>) {
     return Observable.create((observer:any) => {
       let modelIndex:number = findIndex(this.collection, {name: name});
@@ -173,29 +175,18 @@ export class EnvCollection {
   }
 
   public bulkUpdate(env:Array<string>, store:Array<{key:string, value:any}>):Observable<any>{
-    return Observable.create((observer:any) => {
-      if (!store.length){
-        observer.error('Store can not be empty');
-        return observer.complete()
-      }
+    if(!env.length) {
+      return Observable.throw(new Error('Please use env add before'));
+    }
 
-      let all:Array<any> = [];
-      env.forEach((envName:string) => {
-        all.push(this.updateModelByName(envName, store));
-      });
+    if (!store.length){
+      return Observable.throw(new Error('Store can not be empty'));
+    }
 
-      if (all.length) {
-        Observable.forkJoin(all).subscribe(
-          (answers:any) => {
-            observer.next(answers);
-          },
-          (e:any) => observer.error(),
-          () => {
-            observer.complete()
-            this.changeDispatcher.emit('changed', this);
-          }
-        )
-      }
+    let all:Array<any> = [];
+    env.forEach((envName:string) => {
+      all.push(this.updateModelByName(envName, store));
     });
+    return Observable.forkJoin(all);
   }
 }

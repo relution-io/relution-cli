@@ -28,17 +28,10 @@ export class ServerCrud {
       {
         type: 'input',
         name: 'id',
-        message: 'Server Name',
+        message: 'Server Name :',
         validate: (value: string): any => {
-          let testNameModel:ServerModelRc = new ServerModelRc({
-            id: value,
-            default: false,
-            serverUrl: '',
-            userName: '',
-            password: ''
-          });
-
-          if (!this.isUnique(testNameModel) && this._scenario === ADD){
+          let test:number = findIndex(this.userRc.config.server, {id: value});
+          if (!test && this._scenario === ADD){
             DebugLog.error(new Error(Translation.ALREADY_EXIST(value)));
             return false;
           }
@@ -54,7 +47,7 @@ export class ServerCrud {
       {
         type: 'input',
         name: 'serverUrl',
-        message: 'Enter the server url (http://....)',
+        message: 'Enter the server url (http://....) :',
         validate: (value: string): any => {
           var pass = value.match(Validator.urlPattern);
 
@@ -68,7 +61,7 @@ export class ServerCrud {
       {
         type: 'input',
         name: 'userName',
-        message: 'Enter your username',
+        message: 'Enter your username :',
         validate: (value: string) => {
           return Validator.notEmptyValidate(value);
         }
@@ -76,7 +69,7 @@ export class ServerCrud {
       {
         type: 'password',
         name: 'password',
-        message: 'Enter your Password',
+        message: 'Enter your Password :',
         validate: (value: string) => {
           return Validator.notEmptyValidate(value);
         }
@@ -130,11 +123,10 @@ export class ServerCrud {
   /**
    * add a server to the config server list.
    */
-  addServer(server:ServerModelRc, update:boolean = false):any{
+  public addServer(server:ServerModelRc, update:boolean = false):any{
     if (!this.isUnique(server) && !update) {
       throw new Error(Translation.ALREADY_EXIST(server.id, 'Server'));
     }
-
     if (server.default) {
       this.falseyDefaultServer();
     }
@@ -144,11 +136,10 @@ export class ServerCrud {
       if (pos) {
         this.userRc.config.server[pos] = server.toJson();
         this.userRc.server[pos] = server;
-
       }
     } else {
+      this.userRc.config.server.push(server.toJson());
       this.userRc.server.push(server);
-      this.userRc.config.server.push(server);
     }
     return this.userRc.updateRcFile();
   }
@@ -192,8 +183,11 @@ export class ServerCrud {
     validate: [Function] } ]
    * ```
    */
-  serverListPrompt(name: string = 'server', type: string = 'checkbox', message: string = 'Select Server/s') {
+  serverListPrompt(name: string = 'server', type: string = 'checkbox', message: string = 'Select Server(s) :') {
+    console.log(this.userRc.config.server);
+
     let choices = map(this.userRc.config.server, 'id');
+
     choices.push(Translation.TAKE_ME_OUT);
     return [
       {
@@ -269,8 +263,16 @@ export class ServerCrud {
     }
     return Observable.create((observer:any) => {
       this.createNewServer(name).subscribe((answers: ServerModelInterface) => {
-        this.addServer(new ServerModelRc(answers)).subscribe(
+        console.log('answers', answers);
+
+        let model = new ServerModelRc(answers);
+        console.log('model', model, model.id);
+        model.attributes.forEach((attr) => {
+          console.log(model[attr]);
+        })
+        this.addServer(model).subscribe(
           {
+            error: (e:Error) => console.error(e),
             complete: () => {
               observer.complete();
             }

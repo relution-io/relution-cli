@@ -23,8 +23,6 @@ export class Tower {
   public reserved: Array<string> = ['help', 'quit'];
   //create a Table in the Terminal
   public table: Table;
-  //standard Command Header
-  public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   //Back to home on this command
   public reset:Array<string> = [this.name];
   //Tower commands
@@ -184,7 +182,7 @@ export class Tower {
       content.unshift(this._rowDivider);
       //to say hello
       if (!asArray) {
-        observer.next(this.table.sidebar(this.tableHeader, content));
+        observer.next(this.table.sidebar(content));
       } else {
         observer.next(content);
       }

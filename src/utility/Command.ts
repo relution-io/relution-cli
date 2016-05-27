@@ -47,7 +47,6 @@ export class Command implements CommandInterface {
   public log = DebugLog;
   public reserved: Array<string> = ['help', this.i18n.QUIT];
   public table: Table = new Table();
-  public tableHeader: Array<string> = ['Command', 'Subcommand', 'Param/s', 'Description'];
   public _parent: Tower;
   public relutionSDK = new RelutionSdk();
   constructor(name: string) {
@@ -136,7 +135,7 @@ export class Command implements CommandInterface {
       });
       content.push(['', '', '', '']);
       if (!asArray) {
-        observer.next(this.table.sidebar(this.tableHeader, content));
+        observer.next(this.table.sidebar(content));
       } else {
         observer.next(content);
       }
@@ -224,7 +223,7 @@ export class Command implements CommandInterface {
     return temp;
   }
 
-  showCommands(message: string = "Please Choose Your Option: ", type: string = 'list'): any {
+  showCommands(message: string = "Please Choose Your Command: ", type: string = 'list'): any {
     //this.log.info(new Date().getTime());
     if (!this.commands) {
       return Observable.throw(new Error(`Command ${this.name} has no commands!`));
