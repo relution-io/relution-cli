@@ -103,7 +103,7 @@ export class AddConnection {
     protocols.forEach((protocol:{value:string, label:string}) => {
       choices.push({
         name: protocol.label,
-        value: protocol.value,
+        value: protocol.label.toLowerCase(),
         default: false
       });
     });
