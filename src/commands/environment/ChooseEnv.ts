@@ -13,36 +13,19 @@ export class ChooseEnv {
    * @param promptName return the key from the prompt
    */
   public promptName: string = 'env';
+  public promptType = 'checkbox';
+  public message: string;
 
   constructor(envCollection: EnvCollection) {
     this.envCollection = envCollection;
   }
-
-  /**
-   * @return Array<any>
-   */
-  prompt(type: string = 'checkbox', message: string = Translation.SELECT('Environment/s')): any {
-    let orderedNames: any = map(orderBy(this.envCollection.collection, ['name'], ['asc']), 'name');
-    let choices: Array<{ name: string, checked: boolean }> = [];
-
-    orderedNames.forEach((env: string) => {
-      choices.push({
-        name: env,
-        checked: type === 'checkbox' ? true : false
-      });
-    });
-
-    choices.push({
-      name: Translation.TAKE_ME_OUT,
-      checked: false
-    });
-
-    let prompt: Array<any> = [
+  public prompt(choices: Array<{ name: string, checked: boolean }>): Array<any> {
+    return [
       {
-        type: type,
-        message: message,
+        type: this.promptType,
+        message: this.message,
         name: this.promptName,
-        choices: choices,
+        choices: this.choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
             return Translation.YOU_MOUST_CHOOSE('environment');
@@ -51,13 +34,32 @@ export class ChooseEnv {
         }
       }
     ];
-    return prompt;
   }
   /**
    * @return Observable
    */
-  choose(type: string = 'checkbox', message: string = Translation.SELECT('Environment/s')): any {
-    return Observable.fromPromise(inquirer.prompt(this.prompt(type, message)));
+  choose(type = 'checkbox', message: string = Translation.SELECT('Environment/s')): any {
+    this.promptType = type;
+    this.message = message;
+    return Observable.fromPromise(inquirer.prompt(this.prompt(this.choices)));
+  }
+
+  get choices(): Array<{ name: string, checked: boolean }> {
+    let orderedNames: any = map(orderBy(this.envCollection.collection, ['name'], ['asc']), 'name');
+    let choices: Array<{ name: string, checked: boolean }> = [];
+
+    orderedNames.forEach((env: string) => {
+      choices.push({
+        name: env,
+        checked: this.promptType === 'checkbox' ? true : false
+      });
+    });
+
+    choices.push({
+      name: Translation.TAKE_ME_OUT,
+      checked: false
+    });
+    return choices;
   }
   /**
    * @return EnvCollection

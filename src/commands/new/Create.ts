@@ -3,10 +3,9 @@ import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
 import {Gii} from './../../gii/Gii';
 import {TemplateModel} from './../../gii/TemplateModel';
-import {FileApi} from './../../utility/FileApi'
+import {FileApi} from './../../utility/FileApi';
 import * as inquirer from 'inquirer';
 const npm = require('npm');
-const figures = require('figures');
 import {DebugLog} from './../../utility/DebugLog';
 
 export class Create {
@@ -14,8 +13,8 @@ export class Create {
   private _gii: Gii = new Gii();
   private _fsApi: FileApi = new FileApi();
 
-  public rootProjectFolder:string = process.cwd();
-  //create in the project folder a folder with a gitkeep file
+  public rootProjectFolder: string = process.cwd();
+  // create in the project folder a folder with a gitkeep file
   public emptyFolders: Array<string> = [
     'env',
     'routes',
@@ -24,7 +23,7 @@ export class Create {
     'push'
   ];
 
-  //files to be generated
+  // files to be generated
   public toGenTemplatesName: Array<string> = [
     'app',
     'editorconfig',
@@ -47,7 +46,7 @@ export class Create {
   /**
    * write folders to the project folder
    */
-  addStructure() {
+  addStructure(): any {
     let all: Array<any> = [];
     this.emptyFolders.forEach((folderName: string) => {
       all.push(this._fsApi.mkdirStructureFolder(`${this.rootProjectFolder}/${folderName}`));
@@ -60,7 +59,6 @@ export class Create {
    * @returns Array
    */
   get _addName(): Array<Object> {
-    let self = this;
     return [
       {
         type: 'input',
@@ -78,11 +76,12 @@ export class Create {
       }
     ];
   }
+
   /**
    * create a prompt to enter a name
    * @returns Observable
    */
-  enterName() {
+  enterName(): any {
     let prompt = this._addName;
     return Observable.fromPromise(inquirer.prompt(prompt));
   }
@@ -90,13 +89,12 @@ export class Create {
    * create the "toGenTemplatesName" as file
    */
   writeTemplates(name: string): Observable<any> {
-    let templates: Array<any> = [];
     let writingFiles: Array<any> = [];
 
     this.toGenTemplatesName.forEach((templateName: string) => {
       let templateGii: TemplateModel = this._gii.getTemplateByName(templateName);
       templateGii.instance.name = name;
-      //root or in a subfolder
+      // root or in a subfolder
       let toGenPath: string = templateGii.instance.parentFolder ? `${this.rootProjectFolder}/${templateGii.instance.parentFolder}/` : this.rootProjectFolder;
       // DebugLog.debug(toGenPath);
       writingFiles.push(this._fsApi.writeFile(templateGii.instance.template, templateGii.instance.publishName, toGenPath));
@@ -115,64 +113,61 @@ export class Create {
   /**
    * create a new project
    */
-  publish(name?: string, test:boolean = false): Observable<any> {
-
+  publish(name?: string, test = false): Observable<any> {
     if (!name || !name.length) {
-      return Observable.create((observer: any) => {
-        this.enterName().subscribe(
-          (answers: any) => {
-            this.name = answers.name;
-            DebugLog.debug(answers.name);
-          },
-          (e) => { console.error(e) },
-          () => {
-            this.addStructure().subscribe({
-              complete: () => {
-                observer.next(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
-                this.writeTemplates(this.name).subscribe({
-                  complete: () => {
-                    observer.next(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
-
-                    this.npmInstall().subscribe({
-                      complete: () => {
-                        observer.next(Translation.WRITTEN(this.name, 'Project'));
-                        observer.complete();
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
-        )
-      });
-    } else if(name && name.length) {
-      this.name = name;
-      return Observable.create((observer: any) => {
-        this.addStructure().subscribe({
-          complete: () => {
-            observer.next(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
-            this.writeTemplates(this.name).subscribe({
-              complete: () => {
-                observer.next(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
-                if(!test) {
-                  npm.load(() => {
-                    this.npmInstall().subscribe({
-                      complete: () => {
-                        observer.next(Translation.WRITTEN(this.name, 'Project'));
-                        observer.complete();
-                      }
-                    });
-                  });
-                } else {
-                  observer.next(Translation.WRITTEN(this.name, 'Project'));
-                  observer.complete();
-                }
-              }
-            });
-          }
+      return this.enterName()
+        /**
+         * choose name
+         */
+        .exhaustMap((answers: { name: string }) => {
+          this.name = answers.name;
+          return this.addStructure();
+        })
+        /**
+         * write templates to folder
+         */
+        .exhaustMap(() => {
+          DebugLog.info(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
+          return this.writeTemplates(this.name);
+        })
+        /**
+         * npm i
+         */
+        .exhaustMap(() => {
+          DebugLog.info(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
+          DebugLog.info(Translation.NPM_INSTALL);
+          return this.npmInstall();
+        })
+        /**
+         * done
+         */
+        .do(() => {
+          DebugLog.info(Translation.WRITTEN(this.name, 'Project'));
         });
-      });
+    } else if (name && name.length) {
+      this.name = name;
+      return this.addStructure()
+        /**
+         * write templates to folder
+         */
+        .exhaustMap(() => {
+          DebugLog.info(Translation.FOLDERS_WRITTEN(this.emptyFolders.toString()));
+          return this.writeTemplates(this.name);
+        })
+        /**
+         * npm i
+         */
+        .exhaustMap(() => {
+          DebugLog.info(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
+          DebugLog.info(Translation.NPM_INSTALL);
+          return this.npmInstall();
+        })
+        /**
+         * done
+         */
+        .do(() => {
+          DebugLog.info(Translation.WRITTEN(this.name, 'Project'));
+        });
     }
   }
 

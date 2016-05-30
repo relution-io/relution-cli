@@ -1,14 +1,11 @@
 import {FileApi} from './FileApi';
 import {RxFs} from './RxFs';
-
 import * as fs from 'fs';
 import * as path from 'path';
-
-const Hjson = require('hjson');
 const expect = require('expect.js');
 
 describe('File api', () => {
-  let api:FileApi;
+  let api: FileApi;
 
   beforeEach(() => {
     api = new FileApi();
@@ -17,23 +14,23 @@ describe('File api', () => {
   it('read from a folder files by ext', (done) => {
 
     api.fileList(api.path, '.hjson').subscribe(
-      (file:any) => {
+      (file: any) => {
         if (file) {
           expect(typeof file).to.be.equal('string');
           expect(file.indexOf('.hjson')).to.be.greaterThen(-1);
         }
       },
       (e: Error) => {
-        //console.error(e.message, e.stack);
+        // console.error(e.message, e.stack);
         done();
       },
-      () => {done();}
+      () => { done(); }
     );
   });
 
   it('copy a Object', (done) => {
-    let a:any = {name: 'a'};
-    let b:any = api.copyHjson(a);
+    let a: any = { name: 'a' };
+    let b: any = api.copyHjson(a);
     b.name = 'b';
     expect(a.name).to.be('a');
     expect(b.name).to.be('b');
@@ -41,7 +38,6 @@ describe('File api', () => {
   });
 
   it('write a hjson file to spec test folder', (done) => {
-    //wtf
     api.path = `${__dirname}/../../spec/gentest/`;
 
     let neenv = `{
@@ -54,12 +50,12 @@ describe('File api', () => {
         console.log(written);
         expect(RxFs.exist(path.join(api.path, 'test.hjson'))).to.be(true);
       },
-      error: (e:Error) => {
-        //console.error(e.message, e.stack);
+      error: (e: Error) => {
+        // console.error(e.message, e.stack);
         done();
       },
       complete: () => {
-        let exist:boolean = fs.existsSync(`${api.path}/test.hjson`);
+        let exist: boolean = fs.existsSync(`${api.path}/test.hjson`);
         expect(exist).to.be(true);
         done();
       }
@@ -68,16 +64,17 @@ describe('File api', () => {
 
   it('read a hjson file to spec test folder', (done) => {
     api.path = `${__dirname}/../../spec/gentest/`;
-    let filePath:string = `${api.path}/test.${api.hjsonSuffix}`;
+    let filePath = `${api.path}/test.${api.hjsonSuffix}`;
+
     api.readHjson(filePath).subscribe({
-      next: (file:any) => {
+      next: (file: any) => {
         expect(file.path).not.to.be(undefined);
         expect(file.path).to.be(filePath);
         expect(file.data).not.to.be(undefined);
         expect(file.data.name).to.be('test');
       },
-      error: (e:Error) => {
-        //console.error(e.message, e.stack);
+      error: (e: Error) => {
+        // console.error(e.message, e.stack);
         done();
       },
       complete: () => {
@@ -87,20 +84,19 @@ describe('File api', () => {
   });
 
   it('create a structure folder', (done) => {
-    //wtf
     let goalPath: string = path.join(`${__dirname}/../../spec/gentest/structureFolderTest`);
 
     api.mkdirStructureFolder(goalPath).subscribe(
       (log: any) => {
-        //console.log('mylog', JSON.stringify(log, null, 2));
+        // console.log('mylog', JSON.stringify(log, null, 2));
 
       },
-      (e:Error) => {
-        //console.error(e.message, e.stack);
+      (e: Error) => {
+        // console.error(e.message, e.stack);
         done();
       },
       () => {
-        //console.log('completed');
+        // console.log('completed');
         expect(RxFs.exist(goalPath)).to.be(true);
         expect(RxFs.exist(`${goalPath}/.gitkeep`)).to.be(true);
         done();
@@ -113,7 +109,7 @@ describe('File api', () => {
     RxFs.rmDir(goalPath).debounceTime(1000).subscribe({
       complete: () => {
         expect(RxFs.exist(goalPath)).to.be(false);
-        done()
+        done();
       }
     });
   });

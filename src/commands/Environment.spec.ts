@@ -2,13 +2,13 @@ import {Environment} from './Environment';
 const expect = require('expect.js');
 
 describe('Command Environment', () => {
-  let env:Environment = new Environment();
+  let env: Environment = new Environment();
   beforeEach(() => {
     env.preload().subscribe();
   });
 
-  let commands:Array<string> = env.flatCommands();
-  commands.forEach((method:string) => {
+  let commands: Array<string> = env.flatCommands();
+  commands.forEach((method: string) => {
     it(`has ${method} as method`, (done) => {
       expect(env[method]).not.to.be(undefined);
       done();
@@ -19,4 +19,4 @@ describe('Command Environment', () => {
     expect(env.name).to.be('env');
     done();
   });
-})
+});

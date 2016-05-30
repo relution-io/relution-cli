@@ -1,13 +1,10 @@
 import {Observable} from '@reactivex/rxjs';
-import {orderBy, map} from 'lodash';
 import {Translation} from './../../utility/Translation';
 import {Validator} from './../../utility/Validator';
 import {DebugLog} from './../../utility/DebugLog';
 import * as inquirer from 'inquirer';
-import * as chalk from 'chalk';
 
 export class AddAttribute {
-  private _store: Array<any> = [];
   /**
    * @param promptName return the key from the prompt
    */
@@ -16,14 +13,17 @@ export class AddAttribute {
      * @param promptName return the key from the prompt
      */
   public addPromptName: string = 'another';
-
-  prompt(): any {
-    return [
+  /**
+   * create a key value question prompt
+   * @return Observable
+   */
+  store(): any {
+    let prompt = [
       {
         type: 'input',
         name: 'key',
         message: Translation.ENTER_SOMETHING.concat('key'),
-        validate: (value: string):boolean =>  {
+        validate: (value: string): boolean => {
           if (value === 'name') {
             DebugLog.error(new Error(`\n Key ${value} is a reserved key attribute and cant be overwritten.`));
             return false;
@@ -41,7 +41,7 @@ export class AddAttribute {
         type: 'input',
         name: 'value',
         message: Translation.ENTER_SOMETHING.concat('value'),
-        validate: (value: string):boolean => {
+        validate: (value: string): boolean => {
           let pass: RegExpMatchArray = value.match(Validator.stringNumberPattern);
           if (pass) {
             return true;
@@ -52,10 +52,14 @@ export class AddAttribute {
         }
       }
     ];
+    return Observable.fromPromise(inquirer.prompt(prompt));
   }
-
-  addAnotherPrompt() {
-    let prompt: Array<any> = [
+  /**
+   * add another value ? y/n
+   * @return Observable
+   */
+  addAnother(): Observable<any> {
+    let prompt = [
       {
         type: 'confirm',
         name: this.addPromptName,
@@ -63,18 +67,6 @@ export class AddAttribute {
         message: 'Add one more ?'
       }
     ];
-    return prompt;
-  }
-  /**
-   * create a key value question prompt
-   */
-  store(): Observable<any> {
-    return Observable.fromPromise(inquirer.prompt(this.prompt()));
-  }
-  /**
-   * Darfs ein bischen mehr sein ?
-   */
-  addAnother():Observable<any> {
-    return Observable.fromPromise(inquirer.prompt(this.addAnotherPrompt()));
+    return Observable.fromPromise(inquirer.prompt(prompt));
   }
 }

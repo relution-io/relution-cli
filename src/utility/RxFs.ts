@@ -54,7 +54,7 @@ export class RxFs {
    * @link [fs.writeFile](https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options)
    * @params filename, data, options
    */
-  static writeFile(filename: string, data: any): Observable<any> {
+  static writeFile(filename: string, data: any): any {
     let write: any = Observable.bindNodeCallback(fs.writeFile);
     return write(filename, data);
   }

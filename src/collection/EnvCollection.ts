@@ -83,7 +83,7 @@ export class EnvCollection {
    * @param name the name: "" from your hjson file
    * @returns Observable
    */
-  public getEnvironments(): Observable<any> {
+  public getEnvironments(): any {
     this.envFiles = [];
     this.fsApi.path = this.envFolder;
     return this.loadCollection(

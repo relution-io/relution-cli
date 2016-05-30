@@ -169,7 +169,7 @@ export
    * create a prompt to enter a name
    * @returns Observable
    */
-  enterName() {
+  enterName():any {
     let prompt = this._addName;
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
@@ -179,12 +179,11 @@ export
    */
   getAttributes(store: Array<{ key: string, value: any }>): any {
     return this.addAttribute.store()
-      .map((answers: { key: string, value: any }) => {
+      .exhaustMap((answers: { key: string, value: any }) => {
         store.push({ key: answers.key.trim(), value: answers.value.trim() });
         return this.addAttribute.addAnother();
       })
-      .exhaust()
-      .map((answers: { another: boolean }) => {
+      .exhaustMap((answers: { another: boolean }) => {
         // no one more set stor back
         if (!answers.another) {
           return Observable.create((observer: any) => {
@@ -194,7 +193,7 @@ export
         }
         return this.getAttributes(store);
       })
-      .exhaust();
+      ;
   }
 
   /**
@@ -265,19 +264,10 @@ export
     if (args && args[0].length && args[1].length) {
       tobeCopied = args[0];
       toBeGenerate = args[1];
-      return Observable.create((observer: any) => {
-        this.envCollection.copyByName(tobeCopied, toBeGenerate).subscribe({
-          next: (data: any) => {
-            observer.next(this.i18n.HJSON_WRITTEN(toBeGenerate));
-          },
-          error: (e: any) => {
-            observer.error(e);
-          },
-          complete: () => {
-            observer.complete();
-          }
+      return this.envCollection.copyByName(tobeCopied, toBeGenerate)
+        .do((data: any) => {
+          this.log.info(this.i18n.HJSON_WRITTEN(toBeGenerate));
         });
-      });
     }
   }
   /**

@@ -3,10 +3,9 @@ import {RxFs} from './../../utility/RxFs';
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {find, findIndex, orderBy} from 'lodash';
-import {ServerModelInterface} from './../../models/ServerModelRc';
 import * as Relution from 'relution-sdk';
 import * as path from 'path';
-import {ConnectionInterface, ConnectionModel} from './../../models/ConnectionModel';
+import {ConnectionModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 
 /**
@@ -21,7 +20,7 @@ import {Gii} from './../../gii/Gii';
  */
 export class AddConnection {
   /**
-   * parnt command Connection
+   * parent command Connection
    */
   private _connection: Connection;
   /**
@@ -75,13 +74,13 @@ export class AddConnection {
   /**
    * input for enter name
    */
-  public _addConnectionNamePath(): Observable<any> {
+  public _addConnectionNamePath(): any {
     return Observable.fromPromise(
       this.connection.inquirer.prompt({
         type: 'input',
         name: 'connectionname',
         message: `Please enter name or an sep path('ews/ews-exchange')`,
-        validate: (value:string):boolean => {
+        validate: (value: string): boolean => {
           return Validator.notEmptyValidate(value);
         }
       })
@@ -96,7 +95,7 @@ export class AddConnection {
         type: 'input',
         name: 'connectiondescription',
         message: `Please enter a description:`,
-        validate: (value:string):boolean => {
+        validate: (value: string): boolean => {
           return Validator.notEmptyValidate(value);
         }
       })
@@ -211,7 +210,6 @@ export class AddConnection {
   private _createConnectionFolder() {
     let folder = this.path;
     if (RxFs.exist(`${folder}/${this.connectionName}.hjson`)) {
-      let write: boolean = false;
       return this._alreadyExist(`${folder}/${this.connectionName}.hjson`);
     }
     return this.connection.fileApi.mkdirp(folder);
@@ -225,7 +223,7 @@ export class AddConnection {
     let prompt = this.connection._copy(this.connection._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
     let indexDefault: number = findIndex(this.connection.userRc.config.server, { default: true });
     if (indexDefault > -1) {
-      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`
+      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
       prompt[0].choices.splice(indexDefault, 1);
       prompt[0].choices.unshift(this._defaultServer);
     }
@@ -234,7 +232,6 @@ export class AddConnection {
 
   add(): Observable<any> {
     let choosedServer: any;
-    let protocols: Array<{ label: string, value: string }> = [];
     this.connectionModel = new ConnectionModel();
 
     if (!this.connection.userRc.server.length) {
@@ -322,9 +319,9 @@ export class AddConnection {
       /**
        * write name.hjson file to the connections folder if the user want to overwrite or the connection is new
        */
-      .exhaustMap((writen:{connectionOverwrite:boolean}|any) => {
+      .exhaustMap((writen: { connectionOverwrite: boolean } | any) => {
         if (writen && !writen.connectionOverwrite) {
-          return Observable.create((observer:any) => {
+          return Observable.create((observer: any) => {
             observer.next(`Connection add ${this.connectionName} canceled`);
             observer.complete();
           });
@@ -350,7 +347,7 @@ export class AddConnection {
         return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.path);
       })
       .do((file: any) => {
-        return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`)
+        return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
       });
   }
 

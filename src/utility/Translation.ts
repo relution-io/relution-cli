@@ -15,6 +15,7 @@ export class Translation {
 
   static NEW_CREATE = `create a new Project in Folder`;
   static DEPLOY = `deploy your Baas to the server`;
+  static NPM_INSTALL = `Start npm install this take a while`;
   static SELECT(name: string): string {
     return `Select ${name} :`;
   }
