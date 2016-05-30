@@ -1,21 +1,15 @@
 import {Command} from './../utility/Command';
 import {FileApi} from './../utility/FileApi';
-import * as Relution from 'relution-sdk';
 import * as path from 'path';
 import {AddConnection} from './connection/Add';
-
+import {Observable} from '@reactivex/rxjs';
 
 export /**
  * Connection
  */
-class Connection extends Command{
-  public fileApi :FileApi = new FileApi();
-  constructor(){
-    super('connection');
-  }
-
-  public _connectionRoot: string = path.join(process.cwd(), 'connections');
-
+class Connection extends Command {
+  public fileApi: FileApi = new FileApi();
+  public connectionRoot: string = path.join(process.cwd(), 'connections');
   public commands: any = {
     add: {
       description: 'create a connection',
@@ -32,10 +26,13 @@ class Connection extends Command{
       description: this.i18n.EXIT_TO_HOME
     }
   };
+  public helperAdd: AddConnection = new AddConnection(this);
 
-  public helperAdd:AddConnection = new AddConnection(this);
+  constructor() {
+    super('connection');
+  }
 
-  add(path?:string) {
+  add(path?: string): Observable<any> {
     return this.helperAdd.add();
   }
 }

@@ -1,13 +1,8 @@
 import {Observable} from '@reactivex/rxjs';
 import {Command} from './../utility/Command';
-import {Validator} from './../utility/Validator';
 import {ServerCrud} from './server/ServerCrud';
-
-import {ServerModelRc, ServerModelInterface} from './../models/ServerModelRc';
-import {orderBy, partition, concat, map, findIndex} from 'lodash';
-
-
-const PRESS_ENTER = ' or press enter';
+import {ServerModelRc} from './../models/ServerModelRc';
+import {orderBy, partition, concat} from 'lodash';
 
 export class Server extends Command {
   public tableHeader: Array<string> = ['Name', 'Server url', 'Default', 'Username'];
@@ -59,12 +54,14 @@ export class Server extends Command {
     super('server');
   }
 
-  preload():Observable<any> {
+  preload(): Observable<any> {
     return Observable.create((observer: any) => {
-      super.preload().subscribe({complete: () => {
-        this.crudHelper = new ServerCrud(this);
-        observer.complete();
-      }})
+      super.preload().subscribe({
+        complete: () => {
+          this.crudHelper = new ServerCrud(this);
+          observer.complete();
+        }
+      });
     });
   }
 
@@ -77,7 +74,7 @@ export class Server extends Command {
     let _parts = partition(
       this.userRc.server,
       (server: ServerModelRc) => {
-        return server.default
+        return server.default;
       }
     );
 
@@ -99,20 +96,21 @@ export class Server extends Command {
   /**
    * update existing Server
    */
-  update(params?: Array<string>):Observable<any> {
+  update(params?: Array<string>): Observable<any> {
     return this.crudHelper.update(params);
   }
 
   /**
    * Delete a Server from the RC file Object
    */
-  rm(id?:string):Observable<any> {
+  rm(id?: string): Observable<any> {
     return this.crudHelper.rm(id);
   }
+
   /**
    * add method
    */
-  add(params: Array<string>):Observable<any> {
+  add(params: Array<string>): Observable<any> {
     return this.crudHelper.add(params);
   }
 }

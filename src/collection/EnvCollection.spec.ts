@@ -5,7 +5,7 @@ const expect = require('expect.js');
 import * as path from 'path';
 
 describe('EnVCollection a subset of environments', () => {
-  let command:Environment;
+  let command: Environment;
 
   before(() => {
     command = new Environment();
@@ -21,7 +21,7 @@ describe('EnVCollection a subset of environments', () => {
 
   it('create a environment "dev"', (done) => {
     command.add(['dev']).subscribe({
-      next: (log:any) => {
+      next: (log: any) => {
         console.log(log);
       },
       complete: () => {
@@ -32,7 +32,7 @@ describe('EnVCollection a subset of environments', () => {
     });
   });
 
-  it ('has collection with entry dev', (done) => {
+  it('has collection with entry dev', (done) => {
     console.log(command.envCollection.flatEnvArray());
     expect(command.envCollection.collection.length).to.be.greaterThan(0);
     expect(command.envCollection.flatEnvArray().indexOf('dev')).to.be.greaterThan(-1);
@@ -40,14 +40,11 @@ describe('EnVCollection a subset of environments', () => {
   });
 
   it('read a environment "dev"', (done) => {
-    let env:EnvModel = command.envCollection.isUnique('dev');
+    let env: EnvModel = command.envCollection.isUnique('dev');
     expect(env.name).to.be('dev');
     done();
   });
 
-  it('has a collection of envfiles', (done) => {
-
-  })
   after(() => {
     RxFs.rmDir(command.fsApi.path).subscribe({
       complete: () => {
@@ -55,4 +52,5 @@ describe('EnVCollection a subset of environments', () => {
       }
     });
   });
+
 });

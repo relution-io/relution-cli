@@ -1,8 +1,7 @@
 import {Command} from './../utility/Command';
 import * as chalk from 'chalk';
-import {find, findIndex, sortBy} from 'lodash';
-import {Observable, Observer} from '@reactivex/rxjs';
-import {ServerModelRc, ServerModelInterface} from './../models/ServerModelRc';
+import {find, findIndex} from 'lodash';
+import {Observable} from '@reactivex/rxjs';
 import * as Relution from 'relution-sdk';
 import {FileApi} from './../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
@@ -18,7 +17,6 @@ export class Deploy extends Command {
   constructor() {
     super('deploy');
   }
-  private _deployServer: ServerModelInterface;
   private _promptkey: string = 'deployserver';
   private _defaultServer: string = 'default';
   private _archiver: Archiver = new Archiver();
@@ -51,7 +49,7 @@ export class Deploy extends Command {
     let prompt = this._copy(this._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
     let indexDefault: number = findIndex(this.userRc.config.server, { default: true });
     if (indexDefault > -1) {
-      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`
+      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
       prompt[0].choices.splice(indexDefault, 1);
       prompt[0].choices.unshift(this._defaultServer);
     }
@@ -77,7 +75,7 @@ export class Deploy extends Command {
       name: this._relutionHjson.name,
       uuid: this._relutionHjson.uuid,
       // Pass optional meta-data with an 'options' object with style: {value: DATA, options: OPTIONS}
-      // Use case: for some types of streams, you'll need to provide "file"-related information manually.
+      // Use case: for some types of streams, you'll need to provide 'file'-related information manually.
       // See the `form-data` README for more information about options: https://github.com/form-data/form-data
       custom_file: {
         value: archiveresp.readStream,
@@ -91,16 +89,16 @@ export class Deploy extends Command {
       Relution.web.ajax({
         url: 'upload',
         headers: {
-          "Accept": "text/plain"
+          'Accept': 'text/plain'
         },
         method: 'POST',
         formData: formData,
-        responseCallback: (resp:Q.Promise<any>) => {
+        responseCallback: (resp: Q.Promise<any>) => {
           return resp.then(
-            (r:any) => {
+            (r: any) => {
               r.pipe(process.stdout, { 'end': false });
               return r;
-          });
+            });
         }
       })
     );
@@ -112,39 +110,38 @@ export class Deploy extends Command {
    */
   public deploy(): Observable<any> {
     this._fileApi.path = this.projectDir;
-    //loginresponse
+    // loginresponse
     let userResp: Relution.security.User;
-    //choosed environment
-    let envName: string = '';
-    //choosed Server
+    // choosed environment
+    let envName = '';
+    // choosed Server
     let choosedServer: any;
 
     if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || !RxFs.exist(path.join(process.cwd(), '.relutionignore'))) {
       return Observable.throw(new Error(`${process.cwd()} is not a valid Relution Project`));
     }
-    //load the environments before
+    // load the environments before
     return this._parent.staticCommands.env.envCollection.getEnvironments()
       /**
        * load the relution.hjson
        */
       .exhaustMap(() => {
-        return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'))
+        return this._fileApi.readHjson(path.join(this.projectDir, 'relution.hjson'));
       })
-
       /**
        * get a server from inquirer
        */
-      .exhaustMap((relutionHjson:{data:any, path:string}) => {
+      .exhaustMap((relutionHjson: { data: any, path: string }) => {
         this._relutionHjson = relutionHjson.data;
         return this.getServerPrompt()
-        .filter((server: {deployserver: string}) => {
-          return server.deployserver !== this.i18n.TAKE_ME_OUT;
-        })
+          .filter((server: { deployserver: string }) => {
+            return server.deployserver !== this.i18n.TAKE_ME_OUT;
+          });
       })
       /**
        * logged in on server
        */
-      .exhaustMap((server: {deployserver: string}) => {
+      .exhaustMap((server: { deployserver: string }) => {
         if (server.deployserver.toString().trim() === this._defaultServer.toString().trim()) {
           choosedServer = find(this.userRc.config.server, { default: true });
         } else {
@@ -155,52 +152,51 @@ export class Deploy extends Command {
       /**
        * choose environment
        */
-      .exhaustMap((resp:any) => {
+      .exhaustMap((resp: any) => {
         userResp = resp.user;
         if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
         }
         this.log.info(chalk.green(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`));
         return this._parent.staticCommands.env.chooseEnv.choose('list')
-          .filter((answers:{env:string}) => {
+          .filter((answers: { env: string }) => {
             return answers.env !== this.i18n.TAKE_ME_OUT;
           })
           /**
            * create the zip File
            */
-          .map((answers:{env:string}) => {
+          .map((answers: { env: string }) => {
             envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
-            return this._archiver.createBundle()
+            return this._archiver.createBundle();
           });
       })
       /**
        * loop into logs don when zip is coming upload start
        */
-      .exhaustMap((log:Observable<{file:string}|{directory:string}|{zip:string, readStream:any, message:string}>) => {
-        return log.map((log:any) => {
-          if (log.file || log.directory) {
-            this.log.info(chalk.magenta(log.file ? `add file ${log.file}` : `add directory ${log.directory}`));
-          } else if (log.processed) {
-            this.log.info(chalk.green(log.processed) + ' ' + figures.tick);
+      .exhaustMap((log: Observable<{ file: string } | { directory: string } | { zip: string, readStream: any, message: string }>) => {
+        return log.map((respLog: any) => {
+          if (respLog.file || respLog.directory) {
+            this.log.info(chalk.magenta(respLog.file ? `add file ${respLog.file}` : `add directory ${respLog.directory}`));
+          } else if (respLog.processed) {
+            this.log.info(chalk.green(respLog.processed) + ' ' + figures.tick);
           }
-          return log;
+          return respLog;
         })
-        .filter( (log: {file:string}|{directory:string}|{zip:string, readStream:any, message:string}) => {
-          return log['zip'];
-        })
-        /**
-         * upload zip to server
-         */
-
+          .filter((respLog: { file: string } | { directory: string } | { zip: string, readStream: any, message: string }) => {
+            return respLog['zip'];
+          });
       })
-      .exhaustMap((log: {zip:string, readStream:any, message:string}) => {
-        this.log.info(chalk.green(log.message) + ' ' + figures.tick);
-        return this.upload(log, envName);
+      /**
+       * upload zip to server
+       */
+      .exhaustMap((respLog: { zip: string, readStream: any, message: string }) => {
+        this.log.info(chalk.green(respLog.message) + ' ' + figures.tick);
+        return this.upload(respLog, envName);
       })
       /**
        * complete upload
        */
-      .map((resp:any) => {
+      .map((resp: any) => {
         loader.stop();
         return resp;
       });
