@@ -2,6 +2,7 @@ import {Observable, Observer} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
 import {ServerModelRc, ServerModelInterface} from './../../models/ServerModelRc';
+import {Server} from './../Server';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
@@ -15,13 +16,24 @@ const UPDATE = 'update';
 
 export class ServerCrud {
 
-  public userRc:UserRc;
-  public inquirer:any = inquirer;
+  public userRc: UserRc;
+  public inquirer: any = inquirer;
+  public server: Server;
 
-  constructor(userRc:UserRc) {
-    this.userRc = userRc;
+  constructor(connection: Server) {
+    this.userRc = connection.userRc;
+    this.server = connection;
   }
-  private _scenario:string = ADD;
+  private _scenario: string = ADD;
+
+  private _wannaTest() {
+    let prompt = {
+      type: 'confirm',
+      name: 'testconnection',
+      message: 'Would you like to test the server with the applied data ?'
+    }
+    return Observable.fromPromise(this.inquirer.prompt(prompt));
+  }
 
   get addConfig(): Array<Object> {
     return [
@@ -30,8 +42,8 @@ export class ServerCrud {
         name: 'id',
         message: 'Server Name :',
         validate: (value: string): any => {
-          let test:number = findIndex(this.userRc.config.server, {id: value});
-          if (!test && this._scenario === ADD){
+          let test: number = findIndex(this.userRc.config.server, { id: value });
+          if (!test && this._scenario === ADD) {
             DebugLog.error(new Error(Translation.ALREADY_EXIST(value)));
             return false;
           }
@@ -88,9 +100,9 @@ export class ServerCrud {
   /**
    * toggle all server to default false
    */
-  public falseyDefaultServer(){
+  public falseyDefaultServer() {
     this.userRc.server = [];
-    this.userRc.config.server.forEach((server:any) => {
+    this.userRc.config.server.forEach((server: any) => {
       if (server.default) {
         server.default = false;
       }
@@ -100,9 +112,9 @@ export class ServerCrud {
   /**
    * cheack if the server id already exist
    */
-  public isUnique(server:ServerModelRc) {
-    let isUnique:boolean = true;
-    this.userRc.config.server.forEach((cserver:any) => {
+  public isUnique(server: ServerModelRc) {
+    let isUnique: boolean = true;
+    this.userRc.config.server.forEach((cserver: any) => {
       if (cserver.id === server.id) {
         isUnique = false;
       }
@@ -112,10 +124,10 @@ export class ServerCrud {
   /**
    * remove a server from the list
    */
-  public removeServer(id:string){
-    let pos:number = findIndex(this.userRc.config.server, {id: id});
+  public removeServer(id: string) {
+    let pos: number = findIndex(this.userRc.config.server, { id: id });
     if (pos !== -1) {
-      this.userRc.config.server.splice(pos,1);
+      this.userRc.config.server.splice(pos, 1);
       return this.userRc.updateRcFile();
     }
     throw Error(`${id} not exist!`);
@@ -123,7 +135,7 @@ export class ServerCrud {
   /**
    * add a server to the config server list.
    */
-  public addServer(server:ServerModelRc, update:boolean = false):any{
+  public addServer(server: ServerModelRc, update: boolean = false): any {
     if (!this.isUnique(server) && !update) {
       throw new Error(Translation.ALREADY_EXIST(server.id, 'Server'));
     }
@@ -132,7 +144,7 @@ export class ServerCrud {
     }
 
     if (update) {
-      let pos:number = findIndex(this.userRc.config.server, server.id);
+      let pos: number = findIndex(this.userRc.config.server, server.id);
       if (pos) {
         this.userRc.config.server[pos] = server.toJson();
         this.userRc.server[pos] = server;
@@ -146,7 +158,7 @@ export class ServerCrud {
 
 
   setDefaults(defaults: ServerModelInterface) {
-    let myPrompt:any = this.addConfig;
+    let myPrompt: any = this.addConfig;
 
     if (defaults) {
       myPrompt.forEach((item: any) => {
@@ -158,10 +170,10 @@ export class ServerCrud {
     return myPrompt;
   }
 
-  createNewServer(id?: string){
+  createNewServer(id?: string) {
     let prompt = this.addConfig;
     if (id) {
-      prompt[0]['default']  = id;
+      prompt[0]['default'] = id;
     }
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
@@ -224,8 +236,8 @@ export class ServerCrud {
     );
    * ```
    */
-  rm(id?:string):any {
-    return Observable.create((observer:any) => {
+  rm(id?: string): any {
+    return Observable.create((observer: any) => {
       this.deletePrompt().subscribe((answers: any) => {
         let all: any = [];
         if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1) {
@@ -239,9 +251,11 @@ export class ServerCrud {
           all.push(this.removeServer(id));
         });
 
-        Observable.forkJoin(all).subscribe({complete: () => {
-          observer.complete();
-        }});
+        Observable.forkJoin(all).subscribe({
+          complete: () => {
+            observer.complete();
+          }
+        });
       });
     })
   }
@@ -251,32 +265,36 @@ export class ServerCrud {
    * @params Array<string>
    * @description add a server to the userrc file
    */
-  add(params?: Array<string>):any {
+  add(params?: Array<string>): any {
     // the name is here
     // console.log(params[0]);
     let name: string = '';
+    let model: ServerModelRc;
     if (params && params[0] && params[0].length) {
       name = params[0].trim();
     }
-    return Observable.create((observer:any) => {
-      this.createNewServer(name).subscribe((answers: ServerModelInterface) => {
-        console.log('answers', answers);
-
-        let model = new ServerModelRc(answers);
-        console.log('model', model, model.id);
-        model.attributes.forEach((attr) => {
-          console.log(model[attr]);
+    return this.createNewServer(name)
+      .exhaustMap((answers: ServerModelInterface) => {
+        model = new ServerModelRc(answers);
+        return this.addServer(model);
+      })
+      .exhaustMap(() => {
+        return this._wannaTest()
+          .filter((answers: { testconnection: boolean }) => {
+            return answers.testconnection;
+          });
+      })
+      .exhaustMap((answers: { testconnection: boolean }) => {
+        return this.server.relutionSDK.login(model)
+        .filter((resp: any) => {
+          return resp.user;
         })
-        this.addServer(model).subscribe(
-          {
-            error: (e:Error) => console.error(e),
-            complete: () => {
-              observer.complete();
-            }
-          }
-        );
+        .map((resp: any) => {
+          let userResp = resp.user;
+          return this.server.log.info(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`)
+        });
       });
-    });
+
   }
 
   /**
@@ -296,11 +314,11 @@ export class ServerCrud {
    * no server id is given we set the user server list to choose one
    * @private
    */
-  private _updateWithoutId(){
-    return Observable.create((observer:any) => {
+  private _updateWithoutId() {
+    return Observable.create((observer: any) => {
       this._updateServerChooserPrompt().subscribe(
-        (answers: any) => {observer.next(this._copy(answers.server));},
-        (e:any) => console.error(e),
+        (answers: any) => { observer.next(this._copy(answers.server)); },
+        (e: any) => console.error(e),
         () => observer.complete
       );
     });
@@ -308,9 +326,9 @@ export class ServerCrud {
   /**
    * inquirer a server with defaults
    */
-  private _updateWithId(id:string):any {
+  private _updateWithId(id: string): any {
     let serverId = this._copy(id);
-    let serverIndex = findIndex(this.userRc.config.server, {id:serverId});
+    let serverIndex = findIndex(this.userRc.config.server, { id: serverId });
     let prompt = this.setDefaults(this.userRc.config.server[serverIndex]);
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
@@ -333,13 +351,13 @@ export class ServerCrud {
    * @return Observable
    * @params Array<string>
    */
-  update(params?: Array<string>):any {
-    if (!this.userRc && !this.userRc.config && !this.userRc.config.server){
+  update(params?: Array<string>): any {
+    if (!this.userRc && !this.userRc.config && !this.userRc.config.server) {
       return Observable.throw(new Error('no server are available'));
     }
     this._scenario = UPDATE;
     if (!params || !params.length) {
-      return Observable.create((observer:any)=>{
+      return Observable.create((observer: any) => {
         this._updateWithoutId().subscribe((serverId: string) => {
           if (serverId === Translation.TAKE_ME_OUT) {
             return observer.complete();
@@ -347,18 +365,18 @@ export class ServerCrud {
           //maybe the user rename the server
           let oldId = this._copy(serverId);
           this._updateWithId(serverId).subscribe(
-            (answers:ServerModelInterface) => {
-              let serverIndex = findIndex(this.userRc.config.server, {id: oldId});
+            (answers: ServerModelInterface) => {
+              let serverIndex = findIndex(this.userRc.config.server, { id: oldId });
               this.userRc.config.server[serverIndex] = answers;
               this.userRc.updateRcFile().subscribe(() => observer.complete);
             },
-            (e:any) => console.error(e),
+            (e: any) => console.error(e),
             () => {
               observer.complete();
             }
           );
-      })
-    });;
+        })
+      });;
     }
     let serverId = params[0];
     return Observable.from(this._updateWithId(serverId));
