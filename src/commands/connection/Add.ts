@@ -13,19 +13,44 @@ import {Gii} from './../../gii/Gii';
  * this class add a new Connection
  * 1. get name
  * 2. get description
- * 3. get Connector Provider
- * 4. get Protocols to connector provider
+ * 3. create folder for connection if is needed
+ * 5. logon relution
+ * 5. get Connector Provider
+ * 6. get Protocols to connector provider
+ * 7. save the result to project
  */
 export class AddConnection {
-
+  /**
+   * parnt command Connection
+   */
   private _connection: Connection;
+  /**
+   * the key which is the server from the prompt available
+   */
   private _promptkey: string = 'connectserver';
-  private _server: any;
+  /**
+   * url to get protocols
+   */
   private _protocolsUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.protocol';
+  /**
+   * api to get conectorProvider
+   */
   private _providerUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.connectorProvider';
+  /**
+   * the default server
+   */
   private _defaultServer: string;
+  /**
+   * where the connection hav to be save
+   */
   private _rootFolder: string = `${process.cwd()}/connections/`;
+  /**
+   * the connectionModel
+   */
   public connectionModel: ConnectionModel;
+  /**
+   * template renderer
+   */
   private _gii = new Gii();
 
   constructor(command: Connection) {

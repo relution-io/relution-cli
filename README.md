@@ -14,7 +14,7 @@
 ```bash
 $: git clone git@github.com:relution-io/relution-cli.git
 $: cd relution-cli
-$: npm i -g tsconfig-cli typings istanbul
+$: npm i -g tsconfig-cli typings istanbul http-server
 $: npm i
 $: npm run watch
 ```
@@ -28,4 +28,5 @@ $: npm test
 ##### Api reference
 ```bash
 $: npm run api
+$: npm run serve-api
 ```

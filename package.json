@@ -11,6 +11,7 @@
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
+    "serve-api": "http-server public/docs",
     "watch": "npm run clean && tsconfig && tsc -p . -w",
     "postinstall": "typings install"
   },
