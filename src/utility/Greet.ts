@@ -1,8 +1,8 @@
-export class Welcome {
+export class Greet {
 
   public static pkg: any = require('./../../package.json');
 
-  static greets(username:string){
+  static hello(username:string){
 //     console.log(`
 //  _____      ​_       _   _​                 __   __      __
 // |  __ \    | |     | | (_)              /   | |  |    |  |
@@ -11,7 +11,7 @@ export class Welcome {
 // | | \ \  __/ | |_| | |_| | (_) | | | | |   \  |  |__  |  |
 // |_|  \_\___|_|\__,_|\__|_|\___/|_| |_|  \___| |_____| |__|
 //     `);
-    console.log(`Relution-Cli v${Welcome.pkg.version}: `);
+    console.log(`Relution-Cli v${Greet.pkg.version}: `);
     console.log(`Hi ${username}`);
   }
 

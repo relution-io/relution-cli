@@ -56,7 +56,9 @@ export class AddConnection {
   constructor(command: Connection) {
     this.connection = command;
   }
-
+  /**
+   * return the path for the folder where it have to be create
+   */
   public get path() {
     let myPath = path.dirname(this.connectionModel.name);
     if (myPath === '.') {
@@ -65,7 +67,7 @@ export class AddConnection {
     return path.join(this._rootFolder, myPath);
   }
   /**
-   * return the connection name without folder
+   * return the connection name without file name
    */
   public get connectionName() {
     return path.basename(this.connectionModel.name);

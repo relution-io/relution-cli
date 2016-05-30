@@ -2,7 +2,7 @@ import {Observable, Observer} from '@reactivex/rxjs';
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Command} from './../utility/Command';
-import {Welcome} from './../utility/Welcome';
+import {Greet} from './../utility/Greet';
 import {Server} from './Server';
 import {Environment} from './Environment';
 import {New} from './New';
@@ -84,9 +84,8 @@ export class Tower {
     username().then( (username:string) => {
       this.username = username;
       if (this.args.length === 1) {
-        Welcome.greets(this.username);
+        Greet.hello(this.username);
       }
-
     });
   }
   /**
@@ -269,9 +268,11 @@ export class Tower {
       });
     });
   }
-
+  /**
+   * quit relution-cli
+   */
   quit(){
-    Welcome.bye(this.username);
+    Greet.bye(this.username);
     process.exit();
   }
 }

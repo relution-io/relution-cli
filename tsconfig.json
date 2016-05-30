@@ -74,6 +74,7 @@
         "src/utility/DebugLog.ts",
         "src/utility/FileApi.spec.ts",
         "src/utility/FileApi.ts",
+        "src/utility/Greet.ts",
         "src/utility/InquirerHelper.ts",
         "src/utility/RelutionSDK.ts",
         "src/utility/RxFs.spec.ts",
@@ -81,7 +82,6 @@
         "src/utility/Table.ts",
         "src/utility/Translation.ts",
         "src/utility/UserRc.ts",
-        "src/utility/Validator.ts",
-        "src/utility/Welcome.ts"
+        "src/utility/Validator.ts"
     ]
 }
