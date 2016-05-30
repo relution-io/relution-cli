@@ -34,21 +34,19 @@ export class Command implements CommandInterface {
    * Command name
    */
   public name: string;
-
   public commandDispatcher: any;
-
   public directMode: boolean = false;
   public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
   public inquirer = inquirer;
-
   public i18n = Translation;
   public log = DebugLog;
   public reserved: Array<string> = ['help', this.i18n.QUIT];
   public table: Table = new Table();
   public _parent: Tower;
   public relutionSDK = new RelutionSdk();
+
   constructor(name: string) {
     if (!name) {
       throw Error('Command need a name');
@@ -241,11 +239,6 @@ export class Command implements CommandInterface {
         }
       }
     ];
-    return Observable.create((observer: any) => {
-      inquirer.prompt(questions).then((answers: Array<string>) => {
-        observer.next(answers);
-        observer.complete();
-      }).catch((e:any) => {this.log.error(e)});
-    });
+    return Observable.fromPromise(inquirer.prompt(questions));
   }
 }

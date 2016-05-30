@@ -70,13 +70,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>add a Server to Config from the UserRc and store it</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -98,7 +91,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_scenario" class="tsd-kind-icon">_scenario</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#inquirer" class="tsd-kind-icon">inquirer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#server" class="tsd-kind-icon">server</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#userrc" class="tsd-kind-icon">user<wbr>Rc</a></li>
 							</ul>
 						</section>
@@ -115,6 +110,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updateserverchooserprompt" class="tsd-kind-icon">_update<wbr>Server<wbr>Chooser<wbr>Prompt</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updatewithid" class="tsd-kind-icon">_update<wbr>With<wbr>Id</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updatewithoutid" class="tsd-kind-icon">_update<wbr>Without<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_wannatest" class="tsd-kind-icon">_wanna<wbr>Test</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#addserver" class="tsd-kind-icon">add<wbr>Server</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#createnewserver" class="tsd-kind-icon">create<wbr>New<wbr>Server</a></li>
@@ -137,19 +133,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Server<wbr>Crud<span class="tsd-signature-symbol">(</span>userRc<span class="tsd-signature-symbol">: </span><a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_commands_server_servercrud_.servercrud.html" class="tsd-signature-type">ServerCrud</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Server<wbr>Crud<span class="tsd-signature-symbol">(</span>connection<span class="tsd-signature-symbol">: </span><a href="_commands_server_.server.html" class="tsd-signature-type">Server</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_commands_server_servercrud_.servercrud.html" class="tsd-signature-type">ServerCrud</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L16">commands/server/ServerCrud.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L21">commands/server/ServerCrud.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>userRc: <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></h5>
+									<h5>connection: <a href="_commands_server_.server.html" class="tsd-signature-type">Server</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_commands_server_servercrud_.servercrud.html" class="tsd-signature-type">ServerCrud</a></h4>
@@ -159,13 +155,33 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_scenario" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scenario</h3>
+					<div class="tsd-signature tsd-kind-icon">_scenario<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L27">commands/server/ServerCrud.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="inquirer" class="tsd-anchor"></a>
 					<h3>inquirer</h3>
 					<div class="tsd-signature tsd-kind-icon">inquirer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L16">commands/server/ServerCrud.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L20">commands/server/ServerCrud.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="server" class="tsd-anchor"></a>
+					<h3>server</h3>
+					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="_commands_server_.server.html" class="tsd-signature-type">Server</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L21">commands/server/ServerCrud.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<wbr>Rc<span class="tsd-signature-symbol">:</span> <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L15">commands/server/ServerCrud.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L19">commands/server/ServerCrud.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L22">commands/server/ServerCrud.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L38">commands/server/ServerCrud.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -212,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L88">commands/server/ServerCrud.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L97">commands/server/ServerCrud.ts:97</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L281">commands/server/ServerCrud.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L303">commands/server/ServerCrud.ts:303</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -263,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L307">commands/server/ServerCrud.ts:307</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L329">commands/server/ServerCrud.ts:329</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -291,7 +307,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L295">commands/server/ServerCrud.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L317">commands/server/ServerCrud.ts:317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,6 +316,23 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_wannatest" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _wanna<wbr>Test</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_wanna<wbr>Test<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L29">commands/server/ServerCrud.ts:29</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -313,7 +346,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L258">commands/server/ServerCrud.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L268">commands/server/ServerCrud.ts:268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -350,7 +383,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L129">commands/server/ServerCrud.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L138">commands/server/ServerCrud.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -381,7 +414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L165">commands/server/ServerCrud.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L173">commands/server/ServerCrud.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -404,7 +437,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L212">commands/server/ServerCrud.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L220">commands/server/ServerCrud.ts:220</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -426,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L94">commands/server/ServerCrud.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L103">commands/server/ServerCrud.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -448,7 +481,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L106">commands/server/ServerCrud.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L115">commands/server/ServerCrud.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -476,7 +509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L118">commands/server/ServerCrud.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L127">commands/server/ServerCrud.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -504,7 +537,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L231">commands/server/ServerCrud.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L239">commands/server/ServerCrud.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -544,7 +577,7 @@ crud.rm(id).subscribe(
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L190">commands/server/ServerCrud.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L198">commands/server/ServerCrud.ts:198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,7 +608,7 @@ validate: [Function] } ]
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> type: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;checkbox&quot;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> message: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Select Server/s&quot;</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> message: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Select Server(s) :&quot;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -586,19 +619,19 @@ validate: [Function] } ]
 					<a name="setdefaults" class="tsd-anchor"></a>
 					<h3>set<wbr>Defaults</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Defaults<span class="tsd-signature-symbol">(</span>defaults<span class="tsd-signature-symbol">: </span><a href="../interfaces/_models_servermodelrc_.servermodel.html" class="tsd-signature-type">ServerModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Defaults<span class="tsd-signature-symbol">(</span>defaults<span class="tsd-signature-symbol">: </span><a href="../interfaces/_models_servermodelrc_.servermodelinterface.html" class="tsd-signature-type">ServerModelInterface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L152">commands/server/ServerCrud.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L160">commands/server/ServerCrud.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>defaults: <a href="../interfaces/_models_servermodelrc_.servermodel.html" class="tsd-signature-type">ServerModel</a></h5>
+									<h5>defaults: <a href="../interfaces/_models_servermodelrc_.servermodelinterface.html" class="tsd-signature-type">ServerModelInterface</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -615,7 +648,7 @@ validate: [Function] } ]
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/develop/src/commands/server/ServerCrud.ts#L332">commands/server/ServerCrud.ts:332</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L354">commands/server/ServerCrud.ts:354</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -677,8 +710,14 @@ validate: [Function] } ]
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_commands_server_servercrud_.servercrud.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_commands_server_servercrud_.servercrud.html#_scenario" class="tsd-kind-icon">_scenario</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_commands_server_servercrud_.servercrud.html#inquirer" class="tsd-kind-icon">inquirer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_commands_server_servercrud_.servercrud.html#server" class="tsd-kind-icon">server</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_commands_server_servercrud_.servercrud.html#userrc" class="tsd-kind-icon">user<wbr>Rc</a>
@@ -697,6 +736,9 @@ validate: [Function] } ]
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_commands_server_servercrud_.servercrud.html#_updatewithoutid" class="tsd-kind-icon">_update<wbr>Without<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_commands_server_servercrud_.servercrud.html#_wannatest" class="tsd-kind-icon">_wanna<wbr>Test</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_server_servercrud_.servercrud.html#add" class="tsd-kind-icon">add</a>
@@ -735,6 +777,12 @@ validate: [Function] } ]
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_commands_server_servercrud_.html#add" class="tsd-kind-icon">ADD</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_commands_server_servercrud_.html#update" class="tsd-kind-icon">UPDATE</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
