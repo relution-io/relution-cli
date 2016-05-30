@@ -203,7 +203,7 @@ export class ServerCrud {
   /**
    * remove a server frm a list
    */
-  deletePrompt() {
+  deletePrompt(): any {
     return Observable.fromPromise(this.inquirer.prompt(this.serverListPrompt()));
   }
   /**
@@ -223,27 +223,27 @@ export class ServerCrud {
    * ```
    */
   rm(id?: string): any {
-    return Observable.create((observer: any) => {
-      this.deletePrompt().subscribe((answers: any) => {
-        let all: any = [];
-        if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1) {
-          if (answers.server.length > 1) {
-            DebugLog.warn(`I see you choose servers and "Take me out of here" so you get out without remove`);
-          }
-          observer.complete();
+    let all: any = [];
+    return this.deletePrompt()
+      .filter((answers: { server: Array<string> }) => {
+        if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1 && answers.server.length > 1) {
+          DebugLog.warn(`I see you choose servers and "Take me out of here" so you get out without remove`);
+          return false;
         }
-
+        return true;
+      })
+      .filter((answers: { server: Array<string> }) => {
+        return answers.server.indexOf(Translation.TAKE_ME_OUT) === -1;
+      })
+      .exhaustMap((answers: { server: Array<string> }) => {
         answers.server.forEach((serverId: string) => {
           all.push(this.removeServer(serverId));
         });
-
-        Observable.forkJoin(all).subscribe({
-          complete: () => {
-            observer.complete();
-          }
-        });
+        return Observable.forkJoin(all)
+          .do(() => {
+            DebugLog.info(`Server ${answers.server.toString()} are removed.`);
+          });
       });
-    });
   }
   /**
    * @name add
