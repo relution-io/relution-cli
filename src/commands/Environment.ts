@@ -211,17 +211,15 @@ export class Environment extends Command {
     /**
      * get the attributes which one generated
      */
-    .map((answers:{env:[string]}) => {
+    .exhaustMap((answers:{env:[string]}) => {
       names = answers[this.chooseEnv.promptName];
       return this.getAttributes([]);
     })
-    .exhaust()
-    .map((attributes:Array<{key:string, value:any}>) => {
-      return this.envCollection.bulkUpdate(names, attributes);
+    .exhaustMap((attributes:Array<{key:string, value:any}>) => {
+      return this.envCollection.bulkUpdate(names, attributes).map(() => {
+        return `Update complete`;
+      });
     })
-    .exhaust().map(() => {
-      return `Update complete`;
-    });
   }
   /**
    * shows all available environments
@@ -253,15 +251,14 @@ export class Environment extends Command {
 
     if (!args || args && !args[0].length) {
       return this.chooseEnv.choose('list', this.i18n.SELECT('Environment'))
-      .map((answers:{env:string}) => {
+      .exhaustMap((answers:{env:string}) => {
         tobeCopied = answers[this.chooseEnv.promptName];
         return this.enterName();
       })
-      .exhaust()
-      .map((answers:{name:string}) => {
+      .exhaustMap((answers:{name:string}) => {
         toBeGenerate = answers.name;
         return this.envCollection.copyByName(tobeCopied, toBeGenerate);
-      }).exhaust();
+      });
     }
 
     if(args && args[0].length && args[1].length) {
@@ -290,15 +287,13 @@ export class Environment extends Command {
     //['relution', 'env', 'add']
     if (!name || !name.length) {
       return this.enterName()
-        .map((answers: {name:string}) => {
+        .exhaustMap((answers: {name:string}) => {
           return this.createEnvironment(answers.name);
         })
-        .exhaust()
-        .map((log: string) => {
+        .exhaustMap((log: string) => {
           this.log.info(`${log} \n`);
           return this.list();
-        })
-        .exhaust();
+        });
     }
     //>relution env add bubble
     // this.log.debug('name', name);

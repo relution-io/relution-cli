@@ -45,6 +45,8 @@
         "src/gii/Gii.ts",
         "src/gii/TemplateInterface.ts",
         "src/gii/TemplateModel.ts",
+        "src/gii/templates/connection/Connection.ts",
+        "src/gii/templates/connection/ConnectionGen.ts",
         "src/gii/templates/EnvironmentTemplate.ts",
         "src/gii/templates/new/App.ts",
         "src/gii/templates/new/ConnectionsReadme.ts",

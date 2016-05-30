@@ -18,6 +18,8 @@ import {EnvReadme as EnvReadmeTemplate} from './templates/new/EnvReadme';
 import {ConnectionsReadme as ConnectionsReadmeTemplate} from './templates/new/ConnectionsReadme';
 import {ModelReadme as ModelReadmeTemplate} from './templates/new/ModelReadme';
 import {Connectors as ConnectorsTemplate} from './templates/new/Connectors';
+import {Connection as ConnectionTemplate} from './templates/connection/Connection';
+import {ConnectionGen as ConnectionGenTemplate} from './templates/connection/ConnectionGen';
 
 import {TemplateModel} from './TemplateModel';
 
@@ -49,7 +51,9 @@ export class Gii {
     new TemplateModel('envreadme', new EnvReadmeTemplate()),
     new TemplateModel('modelreadme', new ModelReadmeTemplate()),
     new TemplateModel('connectionsreadme', new ConnectionsReadmeTemplate()),
-    new TemplateModel('connectors', new ConnectorsTemplate())
+    new TemplateModel('connectors', new ConnectorsTemplate()),
+    new TemplateModel('connection', new ConnectionTemplate()),
+    new TemplateModel('connectionGen', new ConnectionGenTemplate())
   ];
 
   public getTemplateByName(name:string) : TemplateModel {

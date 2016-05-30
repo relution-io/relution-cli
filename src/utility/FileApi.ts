@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {Observable} from '@reactivex/rxjs';
 import {RxFs} from './RxFs';
+import * as mkdirp from 'mkdirp';
 
 const Hjson = require('hjson');
 
@@ -34,6 +35,14 @@ export class FileApi {
         }
       });
     });
+  }
+
+  /**
+   * create a folder nested
+   */
+  mkdirp(path:string){
+    let writer = Observable.bindNodeCallback(mkdirp);
+    return writer(path);
   }
   /**
    * read a hjson file by path
