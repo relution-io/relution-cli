@@ -101,7 +101,7 @@ describe('File api', () => {
         expect(RxFs.exist(`${goalPath}/.gitkeep`)).to.be(true);
         done();
       }
-    )
+    );
   });
 
   it('delete the structure Folder', (done) => {
@@ -113,5 +113,4 @@ describe('File api', () => {
       }
     });
   });
-
 });

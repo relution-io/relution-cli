@@ -4,28 +4,28 @@ import {Observable} from '@reactivex/rxjs';
 import {RxFs} from './RxFs';
 import * as mkdirp from 'mkdirp';
 
-const Hjson = require('hjson');
+const hjson = require('hjson');
 
 export class FileApi {
-  //standard file encoding
+  // standard file encoding
   public encode: string = 'utf8';
-  //hjson extension name
+  // hjson extension name
   public hjsonSuffix: string = 'hjson';
-  //test
+  // test
   public path: string = `${__dirname}/../../devtest/`;
-  //options abouthjson
+  // options abouthjson
   public hjsonOptions: any = { keepWsc: true };
   /**
    * create a Folder with a .gitkeep file
    */
-  mkdirStructureFolder(path:string):Observable<any> {
+  mkdirStructureFolder(path: string): Observable<any> {
     let exist: any = RxFs.exist(path);
     if (exist) {
       return Observable.throw(new Error(`${path} already exist`));
     }
-    return Observable.create((observer:any) => {
+    return Observable.create((observer: any) => {
       RxFs.mkdir(path).subscribe({
-        next: (folder:any) => {
+        next: (folder: any) => {
           observer.next(folder);
         },
         complete: () => {
@@ -40,7 +40,7 @@ export class FileApi {
   /**
    * create a folder nested
    */
-  mkdirp(path:string){
+  mkdirp(path: string) {
     let writer = Observable.bindNodeCallback(mkdirp);
     return writer(path);
   }
@@ -66,7 +66,7 @@ export class FileApi {
         (file: any) => {
           observer.next({
             path: path,
-            data: Hjson.parse(file, this.hjsonOptions)
+            data: hjson.parse(file, this.hjsonOptions)
           });
         },
         (e: any) => observer.error(e),
@@ -78,8 +78,8 @@ export class FileApi {
    * copy a exist hjson Object
    */
   copyHjson(org: any) {
-    let c: any = Hjson.stringify(org, this.hjsonOptions);
-    return Hjson.parse(c, this.hjsonOptions);
+    let c: any = hjson.stringify(org, this.hjsonOptions);
+    return hjson.parse(c, this.hjsonOptions);
   }
 
   /**
@@ -94,7 +94,7 @@ export class FileApi {
       It can throw a SyntaxError exception.
       Hjson.stringify(value, options)
    */
-  writeHjson(content: any, fileName: string, path:string = this.path) {
+  writeHjson(content: any, fileName: string, path: string = this.path) {
     return RxFs.writeFile(`${path}/${fileName}.${this.hjsonSuffix}`, this.copyHjson(content));
   }
   /**
@@ -106,12 +106,11 @@ export class FileApi {
 
   // String -> [String]
   fileList(dir: string, ext?: string): Observable<string> {
-    let files: Array<string> = [];
     if (!fs.existsSync(dir)) {
       return Observable.throw(`${dir} not exist or maybe not readable`);
     }
     let loadingFiles: Array<string> = fs.readdirSync(dir);
-    //files by extension
+    // files by extension
     if (ext && ext.length) {
       return Observable.from(loadingFiles).filter(
         (file: any): any => {
@@ -119,7 +118,7 @@ export class FileApi {
         }
       );
     }
-    //all
+    // all
     return Observable.from(loadingFiles);
   }
 }

@@ -7,7 +7,6 @@ import {Translation} from './Translation';
 import {DebugLog} from './DebugLog';
 import {RelutionSdk} from './RelutionSDK';
 const inquirer = require('inquirer');
-const username = require('username');
 
 interface CommandInterface {
   name: string;
@@ -22,7 +21,6 @@ interface CommandInterface {
  * export class Server extends Command {
  *   constructor() {
  *    super('server');
- *    this.commandDispatcher.subscribe(this.init.bind(this));
  *   }
  * }
  * ```
@@ -65,8 +63,8 @@ export class Command implements CommandInterface {
   /**
    * preload data
    */
-  preload():Observable<any> {
-    return Observable.create((observer:Observer<any>) => {
+  preload(): Observable<any> {
+    return Observable.create((observer: Observer<any>) => {
       this.userRc.rcFileExist().subscribe((exist: boolean) => {
         if (exist) {
           this.userRc.streamRc().subscribe((data: any) => {
@@ -78,11 +76,11 @@ export class Command implements CommandInterface {
     });
   }
 
-  home(){
+  home() {
     return this.init([this.name], this._parent);
   }
 
-  quit(){
+  quit() {
     return this.init([this.name], this._parent);
   }
   /**
@@ -98,24 +96,24 @@ export class Command implements CommandInterface {
      └─────────┴────────────┴─────────┴────────────────────────────────┘
    * ```
    */
-  help(asArray: boolean = false) {
-    //this.log.info('help', asArray);
+  help(asArray = false) {
+    // this.log.info('help', asArray);
     return Observable.create((observer: any) => {
       let content: any = [['', '', '', '']];
-      //[this.name, '', '', '']
+      // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
         let command: Array<string> = [chalk.green(this.name), chalk.cyan(commandName)];
         if (this.commands[commandName]) {
           if (commandName !== 'relution') {
-            // && this.reserved.indexOf(commandName) === -1
+            //  && this.reserved.indexOf(commandName) === -1
             if (this.commands[commandName].vars) {
               let vars: Array<string> = Object.keys(this.commands[commandName].vars);
-              let params:string = '';
+              let params = '';
               vars.forEach((param, index) => {
                 params += chalk.yellow(`<$${param}>`);
                 // this.log.info(index, vars.length, index !== (vars.length -1));
-                if (index !== (vars.length -1) ){
+                if (index !== (vars.length - 1)) {
                   params += ' ';
                 }
               });
@@ -144,16 +142,16 @@ export class Command implements CommandInterface {
   init(args: Array<string>, back: Tower) {
     // this.log.info(`Command.ts ${this.name}`, args);
     this._parent = back;
-    let myObservable:Observable<any>;
+    let myObservable: Observable<any>;
 
-    //directly
+    // directly
     if (args[0] === this.name && args.length === 1) {
-      //is the help or command without any params
+      // is the help or command without any params
       return this.showCommands().subscribe(
         (answers: Array<string>) => {
           return this.init(answers[this.name], this._parent);
         },
-        (e:any) => this.log.error(e)
+        (e: any) => this.log.error(e)
       );
     }
 
@@ -162,32 +160,32 @@ export class Command implements CommandInterface {
       return this._parent.home();
     }
 
-    //we have this method maybe help we get ['server', 'help', 'param']
-    //build this.help('param');
+    // we have this method maybe help we get ['server', 'help', 'param']
+    // build this.help('param');
     // this.log.info('this[args[0]]', this[args[0]]);
     if (this[args[0]]) {
       // this.log.info('args.length > 1', args.length > 1);
       if (args.length > 1) {
         let params = this._copy(args);
-        params.splice(0, 1);//remove 'update' or 'create'
+        params.splice(0, 1); // remove 'update' or 'create'
         myObservable = this[args[0]](params);
       } else {
-        myObservable =  this[args[0]]();
+        myObservable = this[args[0]]();
       }
     }
 
     // this.log.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
-    //server add
+    // server add
 
     if (args[0] === this.name && this[args[1]]) {
 
       if (args.length > 2) {
         this.log.info('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);
-          subArgs.splice(0, 2);
-          myObservable = this[args[1]](subArgs);
+        subArgs.splice(0, 2);
+        myObservable = this[args[1]](subArgs);
       } else {
-        myObservable =  this[args[1]]();
+        myObservable = this[args[1]]();
       }
     }
 
@@ -197,7 +195,7 @@ export class Command implements CommandInterface {
           this.log.log('cyan', log);
         }
       },
-      (e:any) => this.log.error(e),
+      (e: any) => this.log.error(e),
       () => {
         this.home();
       }
@@ -218,13 +216,13 @@ export class Command implements CommandInterface {
       temp.push({
         name: command,
         value: [this.name, command]
-      })
-    })
+      });
+    });
     return temp;
   }
 
-  showCommands(message: string = `Please Choose Your ${this.name} Command: `, type: string = 'list'): any {
-    //this.log.info(new Date().getTime());
+  showCommands(message = `Please Choose Your ${this.name} Command: `, type = 'list'): any {
+    // this.log.info(new Date().getTime());
     if (!this.commands) {
       return Observable.throw(new Error(`Command ${this.name} has no commands!`));
     }

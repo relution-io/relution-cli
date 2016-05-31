@@ -1,14 +1,12 @@
 import * as chalk from 'chalk';
-import * as Relution from 'relution-sdk';
-
 export
-/**
- * DebugLog
- */
+  /**
+   * DebugLog
+   */
 
   class DebugLog {
-  static withStack:boolean = true;
-  static badge(label:string, color:string = 'green'): string{
+  static withStack: boolean = true;
+  static badge(label: string, color = 'green'): string {
     return chalk.bgBlack(chalk[color](` ${label} : `));
   }
   static log(color: string, message: string, submessage?: any): void {
@@ -22,15 +20,15 @@ export
     return DebugLog.log('red', `${DebugLog.badge('ERROR', 'red')} ${chalk.green(e.message)}`, e.stack && DebugLog.withStack ? e.stack : '');
   }
 
-  static info(message:string, submessage?:any) {
+  static info(message: string, submessage?: any) {
     return DebugLog.log('cyan', `${DebugLog.badge('INFO', 'cyan')} ${message}`, submessage);
   }
 
-  static warn(message:string, submessage?:any) {
+  static warn(message: string, submessage?: any) {
     return DebugLog.log('yellow', `${DebugLog.badge('WARNING', 'yellow')} ${chalk.green(message)}`, submessage);
   }
 
-  static debug(message:string, submessage?:any) {
+  static debug(message: string, submessage?: any) {
     return DebugLog.log('magenta', `${DebugLog.badge('DEBUG', 'magenta')} ${chalk.green(message)}`, submessage);
   }
 }

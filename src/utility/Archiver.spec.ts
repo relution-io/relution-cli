@@ -1,7 +1,6 @@
 import {Archiver} from './Archiver';
 import {RxFs} from './RxFs';
 import * as path from 'path';
-import * as assert from 'assert';
 import * as chalk from 'chalk';
 const figures = require('figures');
 
@@ -41,4 +40,4 @@ describe('Utility Archiver', () => {
   after(() => {
     return RxFs.rmDir(commandRoot).toPromise();
   });
-})
+});

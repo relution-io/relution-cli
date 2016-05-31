@@ -2,9 +2,9 @@ export interface ConnectionInterface {
   name: string;
   description: string;
   type: string;
-  connectorProvider: string,
-  properties: any,
-  calls: any
+  connectorProvider: string;
+  properties: any;
+  calls: any;
 };
 
 export class ConnectionModel implements ConnectionInterface {

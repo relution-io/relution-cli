@@ -2,7 +2,7 @@ import {Command} from './Command';
 const expect = require('expect.js');
 
 describe('Utility Command', () => {
-  let command:Command;
+  let command: Command;
 
   beforeEach(() => {
     command = new Command('test');
@@ -13,7 +13,7 @@ describe('Utility Command', () => {
       help: {
         description: 'whatever'
       }
-    }
+    };
     return command;
   });
 

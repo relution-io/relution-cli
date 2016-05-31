@@ -1,6 +1,5 @@
 import {Observable} from '@reactivex/rxjs';
 import * as fs from 'fs';
-import * as path from 'path';
 import {RxFs} from './RxFs';
 
 import {ServerModelRc} from './../models/ServerModelRc';
@@ -41,7 +40,9 @@ export class UserRc {
    */
   streamRc() {
     return Observable.create((observer: any) => {
+      /* tslint:disable:no-bitwise */
       return fs.access(this._rcHome, fs.R_OK | fs.W_OK, (err) => {
+      /* tslint:enable:no-bitwise */
         if (err) {
           observer.error(err);
         }

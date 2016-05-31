@@ -5,7 +5,7 @@
 export class CertModelRc {
 
   private _cert: any;
-  private _passphrase : string;
+  private _passphrase: string;
   private _attributes: Array<string> = ['cert', 'passphrase'];
 
   constructor(cert?: any, passphrase?: string) {
@@ -13,23 +13,23 @@ export class CertModelRc {
     this._passphrase = passphrase;
   }
 
-  public get cert() : string {
+  public get cert(): string {
     return this._cert;
   }
 
-  public set cert(v : string) {
+  public set cert(v: string) {
     this._cert = v;
   }
 
-  public get passphrase() : string {
+  public get passphrase(): string {
     return this._passphrase;
   }
 
-  public set passphrase(v : string) {
+  public set passphrase(v: string) {
     this._passphrase = v;
   }
 
-  public get attributes() : Array<string> {
+  public get attributes(): Array<string> {
     return this._attributes;
   }
 

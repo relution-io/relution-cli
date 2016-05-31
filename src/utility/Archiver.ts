@@ -11,8 +11,6 @@ export /**
   class Archiver {
   private _path: string;
   private _relIgnore: string = '.relutionignore';
-
-  private _files: Array<any> = [];
   public zipFilePath: string = '';
 
   constructor(path: string = process.cwd()) {
@@ -22,8 +20,8 @@ export /**
    * zip all files which not in .relutionignore and next the zip path
    * @return Observable
    */
-  createBundle(zipPath?:string) :Observable<{file:string}|{directory:string}|{zip:string, readStream:any, message:string}> {
-    let count: number = 0;
+  createBundle(zipPath?: string): Observable<{ file: string } | { directory: string } | { zip: string, readStream: any, message: string }> {
+    let count = 0;
     if (!zipPath) {
       this.zipFilePath = path.resolve(os.tmpdir() + '/relution_app_' + Date.now() + '.zip');
     } else {
@@ -36,7 +34,7 @@ export /**
      */
     let archiver = archive('zip');
 
-    //console.log(this.zipFilePath);
+    // console.log(this.zipFilePath);
     return Observable.create((observer: any) => {
       /**
        * @link [fstream-ignore](https://github.com/npm/fstream-ignore)
@@ -51,7 +49,7 @@ export /**
         if (c.type === 'File') {
           ++count;
           archiver.append(c, { name: name });
-          observer.next({ file: name })
+          observer.next({ file: name });
         } else if (c.type === 'Directory') {
           archiver.append(null, { name: name + '/' });
           observer.next({ directory: name });
@@ -67,12 +65,12 @@ export /**
         /**
          * readstream for the formdata
          */
-          observer.next({
-            zip: this.zipFilePath,
-            message: `Zip created at ${this.zipFilePath}`,
-            readStream: fs.createReadStream(this.zipFilePath)
-          });
-          observer.complete();
+        observer.next({
+          zip: this.zipFilePath,
+          message: `Zip created at ${this.zipFilePath}`,
+          readStream: fs.createReadStream(this.zipFilePath)
+        });
+        observer.complete();
       });
 
       output.on('error', (e: Error) => {

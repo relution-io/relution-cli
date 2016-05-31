@@ -1,4 +1,3 @@
-import {Validator} from './../utility/Validator';
 import {CertModelRc} from './CertModelRc';
 const chalk = require('chalk');
 const figures = require('figures');
@@ -12,7 +11,7 @@ export interface ServerModelInterface {
   clientcertificate?: CertModelRc;
 }
 
-export class ServerModelRc implements ServerModelInterface{
+export class ServerModelRc implements ServerModelInterface {
 
   private _id: string;
   private _default: boolean;
@@ -29,9 +28,9 @@ export class ServerModelRc implements ServerModelInterface{
       this.attributes = Object.keys(params);
 
       this.attributes.forEach((key) => {
-        if(params[key] && key !== 'default') {
+        if (params[key] && key !== 'default') {
           this[key] = params[key];
-        } else if (key === 'default'){
+        } else if (key === 'default') {
           this[key] = params[key];
         } else {
           throw new Error(`${key} must be defined on a ServerModelRc`);
@@ -95,7 +94,7 @@ export class ServerModelRc implements ServerModelInterface{
     this._default = v;
   }
 
-  public toTableRow(): Array<string>{
+  public toTableRow(): Array<string> {
     return [
       chalk.magenta(this.id),
       chalk.yellow(this.serverUrl),
@@ -104,7 +103,7 @@ export class ServerModelRc implements ServerModelInterface{
     ];
   }
 
-  public toJson():ServerModelInterface {
+  public toJson(): ServerModelInterface {
     let model: any = {};
     this.attributes.forEach((attr: string) => {
       if (attr && this[attr] !== undefined) {

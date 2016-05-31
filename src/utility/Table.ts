@@ -1,4 +1,4 @@
-let Clitable = require('cli-table2');
+let clitable = require('cli-table2');
 export class Table {
   private _table: any;
 
@@ -20,27 +20,27 @@ export class Table {
     'middle': '│'
   };
 
-  public set table(v:any) {
+  public set table(v: any) {
     this._table = v;
   }
 
-  public get table() : any {
+  public get table(): any {
     return this._table;
   }
 
-  notice(content:any) {
-    this.table = new Clitable({chars: this.tableChars});
+  notice(content: any) {
+    this.table = new clitable({ chars: this.tableChars });
     this.table.push(content);
     console.log(this.table.toString());
   }
 
-  sidebar(content:any, header:Array<string> = ['Options', 'Commands', 'Param(s)', 'Description']) {
-    let grid = new Clitable({
+  sidebar(content: any, header: Array<string> = ['Options', 'Commands', 'Param(s)', 'Description']) {
+    let grid = new clitable({
       head: header,
-      options:{hAlign:'center', vAlign: 'center'},
-      chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
+      options: { hAlign: 'center', vAlign: 'center' },
+      chars: { 'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' }
     });
-    content.forEach((item:Object) => {
+    content.forEach((item: Object) => {
       grid.push(item);
     });
     return grid.toString();

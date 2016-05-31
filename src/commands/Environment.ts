@@ -169,7 +169,7 @@ export
    * create a prompt to enter a name
    * @returns Observable
    */
-  enterName():any {
+  enterName(): any {
     let prompt = this._addName;
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }

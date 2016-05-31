@@ -1,5 +1,3 @@
-let credential = '';
-
 export class Translation {
 
   static PRESS_ENTER = ' or press enter';
@@ -48,10 +46,10 @@ export class Translation {
     return Translation.WRITTEN(name, 'Files');
   }
 
-  static WRITTEN(name: string, type: string = 'File'): string {
+  static WRITTEN(name: string, type = 'File'): string {
     return `${type} "${name}" are created`;
   }
-  static ALREADY_EXIST(name: string, type: string = 'Name'): string {
+  static ALREADY_EXIST(name: string, type = 'Name'): string {
     return `\n ${type} "${name}" already exist please choose another one`;
   }
 

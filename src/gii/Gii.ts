@@ -56,8 +56,8 @@ export class Gii {
     new TemplateModel('connectionGen', new ConnectionGenTemplate())
   ];
 
-  public getTemplateByName(name:string) : TemplateModel {
-    let templateIndex:number = findIndex(this.templates, {name: name});
+  public getTemplateByName(name: string): TemplateModel {
+    let templateIndex: number = findIndex(this.templates, { name: name });
     if (templateIndex < 0) {
       return undefined;
     }

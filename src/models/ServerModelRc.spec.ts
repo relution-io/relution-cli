@@ -2,17 +2,17 @@ import {ServerModelRc} from './ServerModelRc';
 const expect = require('expect.js');
 
 describe('ServerModelRc', () => {
-  let model:ServerModelRc;
-  let temp =  {
-    "default": false,
-    "id": "beckmann new",
-    "serverUrl": "http://10.21.4.60:8080",
-    "userName": "ibxdev",
-    "password": "ibxdev"
+  let model: ServerModelRc;
+  let temp = {
+    'default': false,
+    'id': 'beckmann new',
+    'serverUrl': 'http://10.21.4.60:8080',
+    'userName': 'ibxdev',
+    'password': 'ibxdev'
   };
 
   beforeEach(() => {
-    model = new ServerModelRc(temp)
+    model = new ServerModelRc(temp);
   });
 
   it('has attributes', (done) => {

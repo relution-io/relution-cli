@@ -1,5 +1,4 @@
 import {Tower} from './Tower';
-import {Observable, Subscriber} from '@reactivex/rxjs';
 const expect = require('expect.js');
 
 describe('Commands Tower Relution', () => {
@@ -15,15 +14,12 @@ describe('Commands Tower Relution', () => {
   });
 
   it('help command on relution', done => {
-    let temp:any = command.init();
+    expect(command.help).to.be(!undefined);
     done();
   });
 
   it('quit command on relution', done => {
-    // let temp:any = command.init(['relution', 'quit']);
-    // expect(temp.isUnsubscribed).to.be(true);
-    // expect(temp.syncErrorValue).to.be(null);
-    // expect(temp.syncErrorThrown).to.be(false);
+    expect(command.quit).to.be(!undefined);
     done();
   });
 });

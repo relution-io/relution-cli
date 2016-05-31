@@ -1,10 +1,9 @@
 export class TemplateModel {
-  private _path: string;
   private _name: string;
   public templatesFolder: string;
-  private _instance : any;
+  private _instance: any;
 
-  constructor(name: string, instance:any) {
+  constructor(name: string, instance: any) {
     this.name = name;
     this.instance = instance;
   }
@@ -17,11 +16,11 @@ export class TemplateModel {
     this._name = v;
   }
 
-  public get instance() : any {
+  public get instance(): any {
     return this._instance;
   }
 
-  public set instance(v : any) {
+  public set instance(v: any) {
     this._instance = v;
   }
 }

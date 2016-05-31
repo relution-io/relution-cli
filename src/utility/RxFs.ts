@@ -31,7 +31,7 @@ export class RxFs {
    * @link [rimraf](https://github.com/isaacs/rimraf)
    * @params dir the dir path which one has to be deleted
    */
-  static rmDir(dir: string): Observable<any>{
+  static rmDir(dir: string): Observable<any> {
     if (!RxFs.exist(dir)) {
       return Observable.throw(new Error(`${dir} not exists.`));
     }
