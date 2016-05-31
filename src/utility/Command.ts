@@ -9,10 +9,20 @@ import {RelutionSdk} from './RelutionSDK';
 const inquirer = require('inquirer');
 
 interface CommandInterface {
+  _parent: Tower;
   name: string;
   commandDispatcher: any;
   config: Object;
   commands?: Object;
+  i18n: Translation;
+  log: DebugLog;
+  table: Table;
+  userRc: UserRc;
+  inquirer: any;
+  relutionSDK: RelutionSdk;
+  help: () => {};
+  quit: () => {};
+  showCommands: () => {};
 }
 /**
  *
@@ -221,11 +231,11 @@ export class Command implements CommandInterface {
   setupCommandsForList() {
     let temp: Array<Object> = [];
     this.flatCommands().forEach((command) => {
-        temp.push({
-          name: command,
-          value: [this.name, command],
-          disabled: this.commandIsDisabled(this.commands[command])
-        });
+      temp.push({
+        name: command,
+        value: [this.name, command],
+        disabled: this.commandIsDisabled(this.commands[command])
+      });
     });
     return temp;
   }
