@@ -9,7 +9,7 @@ import {Connection} from './commands/Connection';
 import {Observable} from '@reactivex/rxjs';
 // const loader = require('cli-loader')();
 // loader.start();
-//all sub commands add to be here
+// all sub commands add to be here
 let staticCommands = {
   server: new Server(),
   env: new Environment(),
@@ -18,13 +18,13 @@ let staticCommands = {
   connection: new Connection()
 };
 
-//observable to wait for before loading the tower some commands need a some data befor it can be initialised
+// observable to wait for before loading the tower some commands need a some data befor it can be initialised
 let all:any = [];
 Object.keys(staticCommands).forEach((commandName:any) => {
   all.push(staticCommands[commandName].preload());
 });
 
-//preload done
+// preload done
 Observable.forkJoin(all).subscribe(
   () => {
 
