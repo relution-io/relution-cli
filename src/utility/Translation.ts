@@ -18,6 +18,9 @@ export class Translation {
     return `Select ${name} :`;
   }
 
+  static CHOOSE_LIST(name: string): string {
+    return `Please choose a ${name}:`;
+  }
   static YOU_MOUST_CHOOSE(name: string): string {
     return `You must choose at least one ${name}.`;
   }

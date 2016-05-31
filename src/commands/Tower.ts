@@ -7,6 +7,7 @@ import {Environment} from './Environment';
 import {New} from './New';
 import {Deploy} from './Deploy';
 import {Connection} from './Connection';
+import {Push} from './Push';
 import * as chalk from 'chalk';
 import {Translation} from './../utility/Translation';
 const inquirer = require('inquirer');
@@ -25,7 +26,8 @@ export class Tower {
     deploy: Deploy,
     server: Server,
     new: New,
-    connection: Connection
+    connection: Connection,
+    push: Push
   };
   // helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
