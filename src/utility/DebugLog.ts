@@ -5,7 +5,7 @@ export
    */
 
   class DebugLog {
-  static withStack: boolean = true;
+  static withStack: boolean = false;
   static badge(label: string, color = 'green'): string {
     return chalk.bgBlack(chalk[color](` ${label} : `));
   }

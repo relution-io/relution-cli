@@ -7,6 +7,7 @@ import {Environment} from './Environment';
 import {New} from './New';
 import {Deploy} from './Deploy';
 import {Connection} from './Connection';
+import {Push} from './Push';
 import * as chalk from 'chalk';
 import {Translation} from './../utility/Translation';
 const inquirer = require('inquirer');
@@ -25,7 +26,8 @@ export class Tower {
     deploy: Deploy,
     server: Server,
     new: New,
-    connection: Connection
+    connection: Connection,
+    push: Push
   };
   // helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
@@ -66,26 +68,26 @@ export class Tower {
     } else {
       this.args.splice(0, 2);
     }
-    this.userRc.rcFileExist().subscribe((exist: boolean) => {
-      if (exist) {
-        this.userRc.streamRc().subscribe((data: any) => {
-          this.config = data;
-        });
-      }
-    },
-      (e: any) => {
-        console.log(`no rc file `);
-      },
-      () => {
-        this.init();
-      });
 
-    usernameLib().then((username: string) => {
-      this.username = username;
-      if (this.args.length === 1) {
-        Greet.hello(this.username);
-      }
-    });
+    this.userRc.rcFileExist()
+      .exhaustMap((exist: boolean) => {
+        return this.userRc.streamRc()
+          .map((data: any) => {
+            this.config = data;
+          });
+      })
+      .exhaustMap((data: any) => {
+        return Observable.fromPromise(usernameLib());
+      })
+      .map((username: string) => {
+        this.username = username;
+        if (this.args.length === 1) {
+          Greet.hello(this.username);
+        }
+      })
+      .subscribe({
+        complete: () => this.init()
+      });
   }
 
   /**

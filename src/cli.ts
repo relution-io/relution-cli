@@ -5,6 +5,7 @@ import {Tower} from './commands/Tower';
 import {New} from './commands/New';
 import {Deploy} from './commands/Deploy';
 import {Connection} from './commands/Connection';
+import {Push} from './commands/Push';
 
 import {Observable} from '@reactivex/rxjs';
 // const loader = require('cli-loader')();
@@ -15,12 +16,13 @@ let staticCommands = {
   env: new Environment(),
   new: new New(),
   deploy: new Deploy(),
-  connection: new Connection()
+  connection: new Connection(),
+  push: new Push()
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised
-let all:any = [];
-Object.keys(staticCommands).forEach((commandName:any) => {
+let all: any = [];
+Object.keys(staticCommands).forEach((commandName: any) => {
   all.push(staticCommands[commandName].preload());
 });
 
@@ -29,7 +31,7 @@ Observable.forkJoin(all).subscribe(
   () => {
 
   },
-  (e:any) => {
+  (e: any) => {
     console.error(e);
     // loader.stop();
     process.exit();
