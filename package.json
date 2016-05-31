@@ -6,8 +6,7 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "npm run build && node testrunner.js",
-    "testfile": "jasmine --verbose --autotest --watch --color --test-dir lib/gii/templates/new",
+    "test": "istanbul cover lib/**/*.js && npm run build && node testrunner.js",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
