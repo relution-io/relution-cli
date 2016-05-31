@@ -1,8 +1,10 @@
 import {FileApi} from './../utility/FileApi';
 import {RxFs}  from './../utility/RxFs';
+import {DebugLog} from './../utility/DebugLog';
+import * as path from 'path';
 
 export interface PushInterface {
-  providers: Array<IOSPush | AndroidPush>;
+  providers: Array<PushModel>;
   pushFiles: Array<{ name: string, path: string }>;
 };
 
@@ -27,11 +29,18 @@ export class PushModel implements PushModelInterface {
   private _path: string;
 
   constructor(params?: Array<PushModelInterface>) {
-    Object.keys(params[0]).forEach((key) => {
-      this[key] = params[0][key];
-    });
+    if (params) {
+      Object.keys(params[0]).forEach((key) => {
+        this[key] = params[0][key];
+      });
+    }
   }
 
+  public toJson() {
+    return JSON.stringify({
+      providers: this._providers
+    }, null, 2);
+  }
   public get name(): string {
     return this._name;
   }
@@ -57,6 +66,7 @@ export class PushModel implements PushModelInterface {
   }
 
 };
+
 export interface IOSPush {
   type: string;
   certificateFile: string;
@@ -73,30 +83,44 @@ export interface AndroidPush {
  */
 export class PushCollection implements PushInterface {
   public pushRootFolder = `${process.cwd()}/push`;
-  private _pushFiles: Array<{ name: string, path: string }> = [];
-  private _providers: Array<IOSPush | AndroidPush> = [];
+  private _pushFiles: Array<{ name: string, path: string }>;
+  private _providers: Array<PushModel> = [];
   private _pushConfigs: string;
   private _fileApi = new FileApi();
 
   constructor() {
+    console.log(this.pushRootFolder);
     if (RxFs.exist(this.pushRootFolder)) {
-      this._fileApi.fileList(this.pushRootFolder, '.hjson').zip(
-        (files: Array<string>) => {
-          console.log('files', files);
-        }
-      );
+      console.log(this.pushRootFolder);
+      this.loadModels().subscribe({complete: () => console.log(this._pushFiles)});
     }
   }
 
-  addProvider(provider: IOSPush | AndroidPush, name: string) {
-    this._providers.push(provider);
+  public add(model: PushModel) {
+    return this._fileApi.writeHjson(model.toJson(), model.name, this.pushRootFolder)
+    .exhaustMap((written: any) => {
+      console.log(written);
+      return this.loadModels();
+    });
   }
 
-  public get providers(): Array<IOSPush | AndroidPush> {
+  public loadModels(): any {
+    this._pushFiles = [];
+    return this._fileApi.fileList(this.pushRootFolder, '.hjson')
+    .map((file: any) => {
+        this._pushFiles.push({
+          name: path.basename(file, '.hjson'),
+          path: path.join(this.pushRootFolder, file)
+        });
+      }
+    );
+  }
+
+  public get providers(): Array<PushModel> {
     return this._providers;
   }
 
-  public set providers(v: Array<IOSPush | AndroidPush>) {
+  public set providers(v: Array<PushModel>) {
     this._providers = v;
   }
 

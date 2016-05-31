@@ -17,7 +17,9 @@ export class Translation {
   static SELECT(name: string): string {
     return `Select ${name} :`;
   }
-
+  static NOT_EMPTY(name:string):string {
+    return `${name} can not be empty`;
+  }
   static CHOOSE_LIST(name: string): string {
     return `Please choose a ${name}:`;
   }
@@ -62,5 +64,13 @@ export class Translation {
 
   static FOLDER_NOT_EMPTY(path: string): string {
     return `${path} is not empty please clean it up before!`;
+  }
+
+  static ADD_ANOTHER(name: string): string {
+    return `You want to add another ${name} ?`;
+  }
+
+  static ADD_ALSO(name: string): string {
+    return `You want to add also ${name} ?`;
   }
 }

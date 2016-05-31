@@ -11,6 +11,10 @@ export class Validator {
    */
   public static urlPattern: RegExp = /(http|https):\/\/[\w-]+(\.[\w-]+)|(\:[0-9])([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
   /**
+   * allowed many string numbers chars
+   */
+  public static stringNumberCharsPattern: RegExp = /^[\w\d]+$/;
+  /**
    * allow a-Z 0-9 for the server name
    * @type {RegExp}
    */
@@ -20,6 +24,11 @@ export class Validator {
    * @type {RegExp}
    */
   public static stringPattern: RegExp = /^[a-zA-Z\s]+$/;
+  /**
+   * allow a-Z for the given value and must have at end a .p12 extension
+   * @type {RegExp}
+   */
+  public static p12Pattern: RegExp = /^[a-zA-Z\s]+(\.p12)+$/;
   /**
    * check if the string is not empty
    */
