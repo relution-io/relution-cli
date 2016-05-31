@@ -12,6 +12,7 @@ class Connection extends Command {
   public connectionRoot: string = path.join(process.cwd(), 'connections');
   public commands: any = {
     add: {
+      when: this.enabled,
       description: 'create a connection',
       vars: {
         name: {
@@ -20,6 +21,8 @@ class Connection extends Command {
       }
     },
     help: {
+      when: () => false,
+      why: () => `so halt`,
       description: this.i18n.LIST_COMMAND('Deploy')
     },
     quit: {
@@ -34,5 +37,9 @@ class Connection extends Command {
 
   add(path?: string): Observable<any> {
     return this.helperAdd.add();
+  }
+
+  enabled(): boolean {
+    return true;
   }
 }

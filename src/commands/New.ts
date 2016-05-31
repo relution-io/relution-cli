@@ -1,7 +1,9 @@
 import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {Create} from './new/Create';
+import * as path from  'path';
 
 /**
  * create a new Baas for the Developer
@@ -10,6 +12,17 @@ export class New extends Command {
 
   public commands: any = {
     create: {
+      when: () => {
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson'))) {
+          return false;
+        }
+
+        return true;
+      },
+      why: () => {
+        console.log('hallo', RxFs.exist(path.join(process.cwd(), 'relution.hjson')));
+        return this.i18n.FOLDER_NOT_EMPTY(process.cwd());
+      },
       description: this.i18n.NEW_CREATE,
       vars: {
         name: {

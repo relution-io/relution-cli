@@ -58,7 +58,7 @@ export class AddConnection {
   /**
    * return the path for the folder where it have to be create
    */
-  public get path() {
+  public get connectionHomeFolder() {
     let myPath = path.dirname(this.connectionModel.name);
     if (myPath === '.') {
       return this._rootFolder;
@@ -116,7 +116,7 @@ export class AddConnection {
   }
 
   /**
-   * return a prompt with protocols as value
+   * return a prompt with providers as value
    */
   private _chooseConnectorProvider(providers: Array<{ value: string, label: string }>): Observable<any> {
     let choices: Array<{
@@ -208,7 +208,7 @@ export class AddConnection {
    * if is a subfolder we have to create it if is connection exist the user have to be confirm the overwrite
    */
   private _createConnectionFolder() {
-    let folder = this.path;
+    let folder = this.connectionHomeFolder;
     if (RxFs.exist(`${folder}/${this.connectionName}.hjson`)) {
       return this._alreadyExist(`${folder}/${this.connectionName}.hjson`);
     }
@@ -279,8 +279,8 @@ export class AddConnection {
        */
       .exhaustMap((resp: { user: Relution.security.User }) => {
         return this._getConnectorProvider()
-          .filter((resp: Array<{ value: string, label: string }>) => {
-            return resp.length > 0;
+          .filter((response: Array<{ value: string, label: string }>) => {
+            return response.length > 0;
           });
       })
       /**
@@ -319,14 +319,14 @@ export class AddConnection {
       /**
        * write name.hjson file to the connections folder if the user want to overwrite or the connection is new
        */
-      .exhaustMap((writen: { connectionOverwrite: boolean } | any) => {
-        if (writen && !writen.connectionOverwrite) {
+      .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
+        if (written && !written.connectionOverwrite) {
           return Observable.create((observer: any) => {
             observer.next(`Connection add ${this.connectionName} canceled`);
             observer.complete();
           });
         }
-        return this.connection.fileApi.writeHjson(this.connectionModel.toJson(), this.connectionName, this.path);
+        return this.connection.fileApi.writeHjson(this.connectionModel.toJson(), this.connectionName, this.connectionHomeFolder);
       })
       /**
        * write name.gen.js file to the connections folder
@@ -335,7 +335,7 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connectionGen');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.path);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.connectionHomeFolder);
       })
       /**
        * write name.js file to the connections folder
@@ -344,7 +344,7 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connection');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.path);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.connectionHomeFolder);
       })
       .do((file: any) => {
         return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);

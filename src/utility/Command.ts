@@ -103,7 +103,8 @@ export class Command implements CommandInterface {
       // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
-        let command: Array<string> = [chalk.green(this.name), chalk.cyan(commandName)];
+        let color = this.commandIsEnabled(this.commands[commandName]) ? 'green' : 'red';
+        let command: Array<string> = [chalk[color](this.name), chalk.cyan(commandName)];
         if (this.commands[commandName]) {
           if (commandName !== 'relution') {
             //  && this.reserved.indexOf(commandName) === -1
@@ -139,8 +140,18 @@ export class Command implements CommandInterface {
     });
   }
 
-  init(args: Array<string>, back: Tower) {
-    // this.log.info(`Command.ts ${this.name}`, args);
+  commandIsEnabled(command: any): boolean {
+    // console.log('command.when && !command.when()', command.when && !command.when());
+    if (command.when && !command.when()) {
+      let message = command.why ? command.why() : `is not enabled`;
+      this.log.warn(message);
+      return this.home();
+    }
+    return true;
+  }
+
+  init(args: Array<string>, back: Tower): any {
+    this.log.info(`Command.ts ${this.name}`, args);
     this._parent = back;
     let myObservable: Observable<any>;
 
@@ -163,7 +174,7 @@ export class Command implements CommandInterface {
     // we have this method maybe help we get ['server', 'help', 'param']
     // build this.help('param');
     // this.log.info('this[args[0]]', this[args[0]]);
-    if (this[args[0]]) {
+    if (this[args[0]] && this.commandIsEnabled(this.commands[args[0]])) {
       // this.log.info('args.length > 1', args.length > 1);
       if (args.length > 1) {
         let params = this._copy(args);
@@ -176,9 +187,7 @@ export class Command implements CommandInterface {
 
     // this.log.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     // server add
-
-    if (args[0] === this.name && this[args[1]]) {
-
+    if (args[0] === this.name && this[args[1]] && this.commandIsEnabled(this.commands[args[1]])) {
       if (args.length > 2) {
         this.log.info('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);

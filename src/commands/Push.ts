@@ -177,7 +177,7 @@ export /**
   /**
    * enter name for new push config
    */
-  _enterName(): Observable<Object> {
+  _enterName(): any {
     let prompt = {
       type: 'input',
       name: 'pushName',
