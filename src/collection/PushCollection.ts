@@ -89,7 +89,6 @@ export class PushCollection implements PushInterface {
   private _fileApi = new FileApi();
 
   constructor() {
-    console.log(this.pushRootFolder);
     if (RxFs.exist(this.pushRootFolder)) {
       console.log(this.pushRootFolder);
       this.loadModels().subscribe({complete: () => console.log(this._pushFiles)});
@@ -99,7 +98,6 @@ export class PushCollection implements PushInterface {
   public add(model: PushModel) {
     return this._fileApi.writeHjson(model.toJson(), model.name, this.pushRootFolder)
     .exhaustMap((written: any) => {
-      console.log(written);
       return this.loadModels();
     });
   }

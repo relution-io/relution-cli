@@ -242,8 +242,11 @@ export /**
         }
         model.path = path.join(this.collection.pushRootFolder, `${model.name}.hjson`);
         model.providers = providers;
-        console.log(model);
-        return this.collection.add(model);
+        return this.collection.add(model)
+          .last()
+          .do(() => {
+            this.log.info(this.i18n.FILES_WRITTEN(model.name));
+          });
       });
   }
 }
