@@ -23,7 +23,7 @@ export class Validator {
   /**
    * check if the string is not empty
    */
-  public static notEmptyValidate(label: any): boolean {
+  public static notEmptyValidate(label:any): boolean {
     // console.log(label);
     if (label && label.length) {
       return true;
