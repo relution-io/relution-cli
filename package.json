@@ -1,6 +1,6 @@
 {
   "name": "relution-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,10 @@
   },
   "bin": {
     "relution": "lib/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:relution-io/relution-cli.git"
   },
   "author": "Pascal Brewing",
   "license": "Apache License",

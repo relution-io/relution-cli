@@ -92,12 +92,15 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_environment_chooseenv_.chooseenv.html#_envcollection" class="tsd-kind-icon">_env<wbr>Collection</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_chooseenv_.chooseenv.html#message" class="tsd-kind-icon">message</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_chooseenv_.chooseenv.html#promptname" class="tsd-kind-icon">prompt<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_environment_chooseenv_.chooseenv.html#prompttype" class="tsd-kind-icon">prompt<wbr>Type</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_commands_environment_chooseenv_.chooseenv.html#choices" class="tsd-kind-icon">choices</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="_commands_environment_chooseenv_.chooseenv.html#envcollection" class="tsd-kind-icon">env<wbr>Collection</a></li>
 							</ul>
 						</section>
@@ -123,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L15">commands/environment/ChooseEnv.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L17">commands/environment/ChooseEnv.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -157,6 +160,16 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="message" class="tsd-anchor"></a>
+					<h3>message</h3>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L17">commands/environment/ChooseEnv.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="promptname" class="tsd-anchor"></a>
 					<h3>prompt<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">prompt<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -173,9 +186,36 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="prompttype" class="tsd-anchor"></a>
+					<h3>prompt<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">prompt<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L16">commands/environment/ChooseEnv.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="choices" class="tsd-anchor"></a>
+					<h3>choices</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> choices<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L47">commands/environment/ChooseEnv.ts:47</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
 					<a name="envcollection" class="tsd-anchor"></a>
 					<h3>env<wbr>Collection</h3>
@@ -187,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L65">commands/environment/ChooseEnv.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L67">commands/environment/ChooseEnv.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -198,7 +238,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L69">commands/environment/ChooseEnv.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L71">commands/environment/ChooseEnv.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -225,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L59">commands/environment/ChooseEnv.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L41">commands/environment/ChooseEnv.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,28 +288,22 @@
 					<a name="prompt" class="tsd-anchor"></a>
 					<h3>prompt</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">prompt<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">prompt<span class="tsd-signature-symbol">(</span>choices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L24">commands/environment/ChooseEnv.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/environment/ChooseEnv.ts#L22">commands/environment/ChooseEnv.ts:22</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> type: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;checkbox&quot;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> message: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;Translation.SELECT(&#x27;Environment/s&#x27;)</span></h5>
+									<h5>choices: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-							<p>Array<any></p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -300,7 +334,16 @@
 								<a href="_commands_environment_chooseenv_.chooseenv.html#_envcollection" class="tsd-kind-icon">_env<wbr>Collection</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_commands_environment_chooseenv_.chooseenv.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_commands_environment_chooseenv_.chooseenv.html#promptname" class="tsd-kind-icon">prompt<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_commands_environment_chooseenv_.chooseenv.html#prompttype" class="tsd-kind-icon">prompt<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_commands_environment_chooseenv_.chooseenv.html#choices" class="tsd-kind-icon">choices</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="_commands_environment_chooseenv_.chooseenv.html#envcollection" class="tsd-kind-icon">env<wbr>Collection</a>

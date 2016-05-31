@@ -109,7 +109,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#_copy" class="tsd-kind-icon">_copy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updateserverchooserprompt" class="tsd-kind-icon">_update<wbr>Server<wbr>Chooser<wbr>Prompt</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updatewithid" class="tsd-kind-icon">_update<wbr>With<wbr>Id</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_updatewithoutid" class="tsd-kind-icon">_update<wbr>Without<wbr>Id</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_server_servercrud_.servercrud.html#_wannatest" class="tsd-kind-icon">_wanna<wbr>Test</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_server_servercrud_.servercrud.html#addserver" class="tsd-kind-icon">add<wbr>Server</a></li>
@@ -245,13 +244,13 @@
 					<a name="_updateserverchooserprompt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _update<wbr>Server<wbr>Chooser<wbr>Prompt</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">_update<wbr>Server<wbr>Chooser<wbr>Prompt<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">_update<wbr>Server<wbr>Chooser<wbr>Prompt<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L303">commands/server/ServerCrud.ts:303</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L301">commands/server/ServerCrud.ts:301</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -265,7 +264,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -279,7 +278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L329">commands/server/ServerCrud.ts:329</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L314">commands/server/ServerCrud.ts:314</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -293,28 +292,6 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="_updatewithoutid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _update<wbr>Without<wbr>Id</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">_update<wbr>Without<wbr>Id<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L317">commands/server/ServerCrud.ts:317</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>no server id is given we set the user server list to choose one</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -346,7 +323,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L268">commands/server/ServerCrud.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L254">commands/server/ServerCrud.ts:254</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -408,7 +385,7 @@
 					<a name="createnewserver" class="tsd-anchor"></a>
 					<h3>create<wbr>New<wbr>Server</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>New<wbr>Server<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>New<wbr>Server<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -423,7 +400,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -431,13 +408,13 @@
 					<a name="deleteprompt" class="tsd-anchor"></a>
 					<h3>delete<wbr>Prompt</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Prompt<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Prompt<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L220">commands/server/ServerCrud.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L206">commands/server/ServerCrud.ts:206</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -445,7 +422,7 @@
 									<p>remove a server frm a list</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -537,7 +514,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L239">commands/server/ServerCrud.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L225">commands/server/ServerCrud.ts:225</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -577,26 +554,12 @@ crud.rm(id).subscribe(
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L198">commands/server/ServerCrud.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L184">commands/server/ServerCrud.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>create a prompt like this</p>
-									<pre><code class="lang-json">[ { type: &#39;list&#39;,
-message: &#39;Select Server/s&#39;,
-name: &#39;server&#39;,
-choices:
-[ &#39;cordev&#39;,
-&#39;cordev2&#39;,
-&#39;local dev&#39;,
-&#39;ibx&#39;,
-&#39;t.beckmann&#39;,
-&#39;beckmann new&#39;,
-&#39;mdmdev2&#39;,
-&#39;Take me out of here&#39; ],
-validate: [Function] } ]
-</code></pre>
+									<p>return a prompt with available servers</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -648,25 +611,10 @@ validate: [Function] } ]
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L354">commands/server/ServerCrud.ts:354</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/server/ServerCrud.ts#L325">commands/server/ServerCrud.ts:325</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>```javascript
-										const crudHelper = new ServerCrud(userRc);
-										crudHelper.update(params).subscribe(
-									() =&gt; {</p>
-								</div>
-								<p>},
-									(e:any) =&gt; {
-									console.error(e);
-									},
-									() =&gt; {
-									console.log(&#39;server added&#39;);
-									}
-									);
-								```</p>
 								<dl class="tsd-comment-tags">
 									<dt>name</dt>
 									<dd><p>update</p>
@@ -733,9 +681,6 @@ validate: [Function] } ]
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_commands_server_servercrud_.servercrud.html#_updatewithid" class="tsd-kind-icon">_update<wbr>With<wbr>Id</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_commands_server_servercrud_.servercrud.html#_updatewithoutid" class="tsd-kind-icon">_update<wbr>Without<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_commands_server_servercrud_.servercrud.html#_wannatest" class="tsd-kind-icon">_wanna<wbr>Test</a>
