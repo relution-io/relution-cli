@@ -64,7 +64,6 @@ export class PushModel implements PushModelInterface {
   public set providers(v: Array<IOSPush | AndroidPush>) {
     this._providers = v;
   }
-
 };
 
 export interface IOSPush {
@@ -90,8 +89,11 @@ export class PushCollection implements PushInterface {
 
   constructor() {
     if (RxFs.exist(this.pushRootFolder)) {
-      console.log(this.pushRootFolder);
-      this.loadModels().subscribe({complete: () => console.log(this._pushFiles)});
+      this.loadModels().subscribe({
+        error: (e:Error) => {
+          DebugLog.error(e);
+        }
+      });
     }
   }
 

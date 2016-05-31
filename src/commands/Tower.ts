@@ -68,26 +68,26 @@ export class Tower {
     } else {
       this.args.splice(0, 2);
     }
-    this.userRc.rcFileExist().subscribe((exist: boolean) => {
-      if (exist) {
-        this.userRc.streamRc().subscribe((data: any) => {
-          this.config = data;
-        });
-      }
-    },
-      (e: any) => {
-        console.log(`no rc file `);
-      },
-      () => {
-        this.init();
-      });
 
-    usernameLib().then((username: string) => {
-      this.username = username;
-      if (this.args.length === 1) {
-        Greet.hello(this.username);
-      }
-    });
+    this.userRc.rcFileExist()
+      .exhaustMap((exist: boolean) => {
+        return this.userRc.streamRc()
+          .map((data: any) => {
+            this.config = data;
+          });
+      })
+      .exhaustMap((data: any) => {
+        return Observable.fromPromise(usernameLib());
+      })
+      .map((username: string) => {
+        this.username = username;
+        if (this.args.length === 1) {
+          Greet.hello(this.username);
+        }
+      })
+      .subscribe({
+        complete: () => this.init()
+      });
   }
 
   /**
