@@ -94,16 +94,14 @@ export class Deploy extends Command {
         method: 'POST',
         formData: formData,
         responseCallback: (resp: Q.Promise<any>) => {
-          return resp.then(
-            (r: any) => {
-              r.pipe(process.stdout, { 'end': false });
-              return r;
-            });
+          return resp.then((r: any) => {
+            r.pipe(process.stdout, { 'end': false });
+            return r;
+          });
         }
       })
     );
   }
-
 
   /**
    * deploy the baas to the server
@@ -147,6 +145,7 @@ export class Deploy extends Command {
         } else {
           choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
+        loader.start();
         return this.relutionSDK.login(choosedServer);
       })
       /**
@@ -154,6 +153,7 @@ export class Deploy extends Command {
        */
       .exhaustMap((resp: any) => {
         userResp = resp.user;
+        loader.stop();
         if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
         }
@@ -198,7 +198,7 @@ export class Deploy extends Command {
        */
       .map((resp: any) => {
         loader.stop();
-        return resp;
+        return Observable.empty();
       });
   }
 

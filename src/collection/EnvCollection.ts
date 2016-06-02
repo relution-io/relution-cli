@@ -53,8 +53,7 @@ export class EnvCollection {
       return this.fsApi.readHjson(`${this.envFolder}/${envFile}`);
     })
       .concatAll()
-      .map(
-      (model: { data: any, path: string }) => {
+      .map((model: { data: any, path: string, comments: any }) => {
         return new EnvModel(model.data.name, model.path, model.data);
       })
       .reduce((collection: [EnvModel], model: EnvModel) => {
@@ -166,7 +165,7 @@ export class EnvCollection {
       attributes.forEach((attr: any) => {
         model.data[attr.key] = attr.value;
       });
-      // console.log(model);
+      console.log(model.data);
       this.fsApi.writeHjson(hjson.stringify(model.data, this.fsApi.hjsonOptions), model.name)
         .subscribe(
         (answer: any) => {

@@ -52,6 +52,12 @@ let startMocha = () => {
 };
 
 Observable.from(traverseFiles(filteredTree))
+  .filter((path) => {
+    if (process.argv[2]) {
+      return path.indexOf(process.argv[2]) !== -1
+    }
+    return true;
+  })
   .map((path) => {
     if (path.indexOf('.spec') < 0) {
       watcher.unwatch(path);
@@ -76,35 +82,35 @@ Observable.from(traverseFiles(filteredTree))
     }
   });
 
-Observable.fromEvent(watcher, 'add')
-  .debounce(500)
-  .map((path) => {
-    console.log('added', path);
-    if (path.indexOf('.spec') < 0) {
-      watcher.unwatch(path);
-    }
-    return path;
-  })
-  .filter((path) => {
-    return path.indexOf('.spec') > -1;
-  })
-  .subscribe(
-    (file) => {
-      addFile(file);
-  },
-    (e) => { console.error(e) },
-    () => { startMocha() }
-)
+// Observable.fromEvent(watcher, 'add')
+//   .debounce(500)
+//   .map((path) => {
+//     console.log('added', path);
+//     if (path.indexOf('.spec') < 0) {
+//       watcher.unwatch(path);
+//     }
+//     return path;
+//   })
+//   .filter((path) => {
+//     return path.indexOf('.spec') > -1;
+//   })
+//   .subscribe(
+//     (file) => {
+//       addFile(file);
+//   },
+//     (e) => { console.error(e) },
+//     () => { startMocha() }
+// )
 
-// watcher.on('change', (path) => {
-//   console.log('path', path);
-// })
+// // watcher.on('change', (path) => {
+// //   console.log('path', path);
+// // })
 
-let ev = Observable.fromEvent(watcher, 'change');
-ev
-  .debounce(1000)
-  .subscribe((path) => {
-    console.log('path', path);
-    startMocha();
-  })
+// let ev = Observable.fromEvent(watcher, 'change');
+// ev
+//   .debounce(1000)
+//   .subscribe((path) => {
+//     console.log('path', path);
+//     startMocha();
+//   })
 

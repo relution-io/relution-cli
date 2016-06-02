@@ -20,9 +20,15 @@ export class Translation {
   static NOT_EMPTY(name:string):string {
     return `${name} can not be empty`;
   }
+
+  static ENTER_SOMETHING_LABEL(name: string) {
+    return `Please enter ${name}`;
+  }
+
   static CHOOSE_LIST(name: string): string {
     return `Please choose a ${name}:`;
   }
+
   static YOU_MOUST_CHOOSE(name: string): string {
     return `You must choose at least one ${name}.`;
   }
@@ -54,6 +60,7 @@ export class Translation {
   static WRITTEN(name: string, type = 'File'): string {
     return `${type} "${name}" are created`;
   }
+
   static ALREADY_EXIST(name: string, type = 'Name'): string {
     return `\n ${type} "${name}" already exist please choose another one`;
   }

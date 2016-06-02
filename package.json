@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "istanbul cover lib/**/*.js && npm run build && node testrunner.js",
+    "test": "istanbul cover lib/**/*.js && node testrunner.js",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
@@ -46,7 +46,7 @@
     "cli-loader": "^1.1.1",
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
-    "common-tags": "^0.1.1",
+    "common-tags": "^1.2.0",
     "directory-tree": "^1.0.0",
     "figures": "^1.5.0",
     "fstream-ignore": "^1.0.5",
@@ -59,7 +59,7 @@
     "nopt": "^3.0.6",
     "npm": "^3.9.0",
     "progress": "^1.1.8",
-    "relution-sdk": "git+ssh://git@github.com/relution-io/relution-sdk.git",
+    "relution-sdk": "git+ssh://git@github.com/relution-io/relution-sdk.git#feature/async-response",
     "rimraf": "^2.5.2",
     "to-iso-string": "0.0.2",
     "username": "^2.1.0"

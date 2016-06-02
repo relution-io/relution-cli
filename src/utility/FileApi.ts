@@ -47,6 +47,7 @@ export class FileApi {
   /**
    * read a hjson file by path
    * on next you will get following:
+   * read the comments is avalaible in data.__WSC__
    * ```json
    * {
    *  path: path,

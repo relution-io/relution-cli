@@ -1,4 +1,5 @@
 import {Archiver} from './Archiver';
+import {Observable} from '@reactivex/rxjs';
 import {RxFs} from './RxFs';
 import * as path from 'path';
 import * as chalk from 'chalk';
@@ -14,6 +15,9 @@ describe('Utility Archiver', () => {
 
   before(() => {
     commandCreate = new Create();
+    commandCreate.npmInstall = () => {
+      return Observable.empty();
+    }
     commandCreate.rootProjectFolder = commandRoot;
     return RxFs.mkdir(commandRoot).toPromise().then(() => {
       expect(RxFs.exist(commandRoot)).to.be(true);

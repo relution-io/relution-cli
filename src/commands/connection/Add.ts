@@ -5,7 +5,7 @@ import {Validator} from './../../utility/Validator';
 import {find, findIndex, orderBy} from 'lodash';
 import * as Relution from 'relution-sdk';
 import * as path from 'path';
-import {ConnectionModel} from './../../models/ConnectionModel';
+import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 
 /**
@@ -16,6 +16,7 @@ import {Gii} from './../../gii/Gii';
  * 5. logon relution
  * 5. get Connector Provider
  * 6. get Protocols to connector provider
+ * 7. get metadata to protocols
  * 7. save the result to project
  */
 export class AddConnection {
@@ -35,6 +36,12 @@ export class AddConnection {
    * api to get conectorProvider
    */
   private _providerUrl = '/gofer/form/rest/enumerables/pairs/com.mwaysolutions.mcap.connector.domain.ServiceConnection.connectorProvider';
+  /**
+   * api to get metadata
+   * pid is the provider protocol
+   * bsp. /gofer/meta-model/meta-type-adapter/rest/meta-type-adapters?pid=com.mwaysolutions.mcap.connector.http.RestConnectionConfig
+   */
+  private _metaDataUrl = '/gofer/meta-model/meta-type-adapter/rest/meta-type-adapters?pid=';
   /**
    * the default server
    */
@@ -70,6 +77,16 @@ export class AddConnection {
    */
   public get connectionName() {
     return path.basename(this.connectionModel.name);
+  }
+
+  public getMetadata(provider:string): any{
+    return Observable.fromPromise(
+      Relution.web.ajax(
+        {
+          method: 'GET',
+          url: `${this._metaDataUrl}${encodeURIComponent(provider)}`
+        })
+    );
   }
   /**
    * input for enter name
@@ -161,7 +178,7 @@ export class AddConnection {
     protocols.forEach((protocol: { value: string, label: string }) => {
       choices.push({
         name: protocol.label,
-        value: protocol.label.toLowerCase(),
+        value: protocol.value,
         default: false
       });
     });
@@ -233,7 +250,7 @@ export class AddConnection {
   add(): Observable<any> {
     let choosedServer: any;
     this.connectionModel = new ConnectionModel();
-
+    let fileWritten = true;
     if (!this.connection.userRc.server.length) {
       return Observable.throw(new Error('Please add first a Server!'));
     }
@@ -279,8 +296,8 @@ export class AddConnection {
        */
       .exhaustMap((resp: { user: Relution.security.User }) => {
         return this._getConnectorProvider()
-          .filter((resp: Array<{ value: string, label: string }>) => {
-            return resp.length > 0;
+          .filter((response: Array<{ value: string, label: string }>) => {
+            return response.length > 0;
           });
       })
       /**
@@ -293,9 +310,11 @@ export class AddConnection {
        * get protocols by Provider from Server
        */
       .exhaustMap((answers: { connectionprovider: string }) => {
+
         this.connectionModel.connectorProvider = answers.connectionprovider;
         return this._getProtocols(answers.connectionprovider)
           .filter((resp: Array<{ value: string, label: string }>) => {
+            // console.log(resp);
             return resp.length > 0;
           });
       })
@@ -313,20 +332,44 @@ export class AddConnection {
        * create the folder if is needed
        */
       .exhaustMap((answers: { protocol: string }) => {
-        this.connectionModel.type = answers.protocol;
-        return this._createConnectionFolder();
+        this.connectionModel.protocol = answers.protocol;
+        console.log()
+        return this.getMetadata(this.connectionModel.protocol);
+      })
+      .exhaustMap((resp: any) => {
+        // console.log('resp', resp);
+        if (resp.metaModels && resp.metaModels.length) {
+          this.connectionModel.metaModel = new MetaModel().fromJSON(resp.metaModels[0]);
+          // console.log(this.connectionModel.metaModel.prompt);
+          return this.connectionModel.metaModel.questions()
+            .map((answers: any) => {
+              // console.log(answers);
+              Object.keys(answers).forEach((key) => {
+                if (key !== this.connection.i18n.TAKE_ME_OUT) {
+                  this.connectionModel.metaModel.fieldDefinitions[key].defaultValue = answers[key];
+                  // console.log(this.connectionModel.metaModel.fieldDefinitions[key]);
+                }
+              });
+              return this._createConnectionFolder();
+            }).exhaust();
+        } else {
+          return this._createConnectionFolder();
+        }
       })
       /**
        * write name.hjson file to the connections folder if the user want to overwrite or the connection is new
        */
-      .exhaustMap((writen: { connectionOverwrite: boolean } | any) => {
-        if (writen && !writen.connectionOverwrite) {
+      .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
+        let template = this.connectionModel.toJson();
+
+        if (written && !written.connectionOverwrite) {
+          fileWritten = written.connectionOverwrite;
           return Observable.create((observer: any) => {
-            observer.next(`Connection add ${this.connectionName} canceled`);
-            observer.complete();
+            this.connection.log.warn(`Connection add ${this.connectionName} canceled`);
+            return observer.complete();
           });
         }
-        return this.connection.fileApi.writeHjson(this.connectionModel.toJson(), this.connectionName, this.path);
+        return this.connection.fileApi.writeHjson(template, this.connectionName, this.path);
       })
       /**
        * write name.gen.js file to the connections folder
@@ -344,10 +387,12 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connection');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.path);
-      })
-      .do((file: any) => {
-        return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.path)
+          .do((file: any) => {
+            if (fileWritten) {
+              return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
+            }
+          });
       });
   }
 

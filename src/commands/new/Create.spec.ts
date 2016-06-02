@@ -4,8 +4,8 @@ import {RxFs} from './../../utility/RxFs';
 const expect = require('expect.js');
 
 describe('New Create', () => {
-  let commandCreate:Create;
-  let commandRoot:string = path.join(process.cwd(), 'spec', 'gentest', 'create');
+  let commandCreate: Create;
+  let commandRoot: string = path.join(process.cwd(), 'spec', 'gentest', 'create');
   before(() => {
     RxFs.mkdir(commandRoot).subscribe({
       complete: () => {
