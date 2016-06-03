@@ -81,6 +81,7 @@
 							<li>logon relution</li>
 							<li>get Connector Provider</li>
 							<li>get Protocols to connector provider</li>
+							<li>get metadata to protocols</li>
 							<li>save the result to project</li>
 						</ol>
 					</div>
@@ -110,6 +111,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_connection" class="tsd-kind-icon">_connection</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_defaultserver" class="tsd-kind-icon">_default<wbr>Server</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_gii" class="tsd-kind-icon">_gii</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_metadataurl" class="tsd-kind-icon">_meta<wbr>Data<wbr>Url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_promptkey" class="tsd-kind-icon">_promptkey</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_protocolsurl" class="tsd-kind-icon">_protocols<wbr>Url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_providerurl" class="tsd-kind-icon">_provider<wbr>Url</a></li>
@@ -137,6 +139,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_getconnectorprovider" class="tsd-kind-icon">_get<wbr>Connector<wbr>Provider</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_commands_connection_add_.addconnection.html#_getprotocols" class="tsd-kind-icon">_get<wbr>Protocols</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_add_.addconnection.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_add_.addconnection.html#getmetadata" class="tsd-kind-icon">get<wbr>Metadata</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_add_.addconnection.html#getserverprompt" class="tsd-kind-icon">get<wbr>Server<wbr>Prompt</a></li>
 							</ul>
 						</section>
@@ -155,7 +158,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L53">commands/connection/Add.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L60">commands/connection/Add.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -177,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <a href="_commands_connection_.connection.html" class="tsd-signature-type">Connection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L25">commands/connection/Add.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L26">commands/connection/Add.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -192,7 +195,7 @@
 					<div class="tsd-signature tsd-kind-icon">_default<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L41">commands/connection/Add.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L48">commands/connection/Add.ts:48</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,7 +210,7 @@
 					<div class="tsd-signature tsd-kind-icon">_gii<span class="tsd-signature-symbol">:</span> <a href="_gii_gii_.gii.html" class="tsd-signature-type">Gii</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L53">commands/connection/Add.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L60">commands/connection/Add.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -217,12 +220,29 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_metadataurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _meta<wbr>Data<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">_meta<wbr>Data<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L44">commands/connection/Add.ts:44</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>api to get metadata
+								pid is the provider protocol
+							bsp. /gofer/meta-model/meta-type-adapter/rest/meta-type-adapters?pid=com.mwaysolutions.mcap.connector.http.RestConnectionConfig</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_promptkey" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _promptkey</h3>
 					<div class="tsd-signature tsd-kind-icon">_promptkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L29">commands/connection/Add.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L30">commands/connection/Add.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -237,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">_protocols<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L33">commands/connection/Add.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L34">commands/connection/Add.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,7 +272,7 @@
 					<div class="tsd-signature tsd-kind-icon">_provider<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L37">commands/connection/Add.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L38">commands/connection/Add.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -267,7 +287,7 @@
 					<div class="tsd-signature tsd-kind-icon">_root<wbr>Folder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L45">commands/connection/Add.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L52">commands/connection/Add.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -282,7 +302,7 @@
 					<div class="tsd-signature tsd-kind-icon">connection<wbr>Model<span class="tsd-signature-symbol">:</span> <a href="_models_connectionmodel_.connectionmodel.html" class="tsd-signature-type">ConnectionModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L49">commands/connection/Add.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L56">commands/connection/Add.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L354">commands/connection/Add.ts:354</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L399">commands/connection/Add.ts:399</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_commands_connection_.connection.html" class="tsd-signature-type">Connection</a></h4>
@@ -313,7 +333,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L358">commands/connection/Add.ts:358</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L403">commands/connection/Add.ts:403</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -336,7 +356,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L71">commands/connection/Add.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L78">commands/connection/Add.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -358,7 +378,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L61">commands/connection/Add.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L68">commands/connection/Add.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,7 +403,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L92">commands/connection/Add.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L109">commands/connection/Add.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -405,7 +425,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L77">commands/connection/Add.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L94">commands/connection/Add.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -427,7 +447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L187">commands/connection/Add.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L204">commands/connection/Add.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -455,7 +475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L121">commands/connection/Add.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L138">commands/connection/Add.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -483,7 +503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L154">commands/connection/Add.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L171">commands/connection/Add.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -511,7 +531,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L210">commands/connection/Add.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L227">commands/connection/Add.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -533,7 +553,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L198">commands/connection/Add.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L215">commands/connection/Add.ts:215</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -555,7 +575,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L108">commands/connection/Add.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L125">commands/connection/Add.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,10 +604,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L233">commands/connection/Add.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L250">commands/connection/Add.ts:250</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getmetadata" class="tsd-anchor"></a>
+					<h3>get<wbr>Metadata</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Metadata<span class="tsd-signature-symbol">(</span>provider<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L82">commands/connection/Add.ts:82</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>provider: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -601,7 +644,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/connection/Add.ts#L221">commands/connection/Add.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/connection/Add.ts#L238">commands/connection/Add.ts:238</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -644,6 +687,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_commands_connection_add_.addconnection.html#_gii" class="tsd-kind-icon">_gii</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_commands_connection_add_.addconnection.html#_metadataurl" class="tsd-kind-icon">_meta<wbr>Data<wbr>Url</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_commands_connection_add_.addconnection.html#_promptkey" class="tsd-kind-icon">_promptkey</a>
@@ -695,6 +741,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_connection_add_.addconnection.html#add" class="tsd-kind-icon">add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_add_.addconnection.html#getmetadata" class="tsd-kind-icon">get<wbr>Metadata</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_connection_add_.addconnection.html#getserverprompt" class="tsd-kind-icon">get<wbr>Server<wbr>Prompt</a>

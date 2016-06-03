@@ -6,6 +6,16 @@ import {Observable} from '@reactivex/rxjs';
 
 export /**
  * Connection
+ * ```bash
+ * ┌────────────┬──────────┬──────────┬─────────────────────────┐
+ * │ Options    │ Commands │ Param(s) │ Description             │
+ * │            │          │          │                         │
+ * │ connection │ add      │ <$name>  │ create a connection     │
+ * │ connection │ help     │ --       │ List the Deploy Command │
+ * │ connection │ quit     │ --       │ Exit to Home            │
+ * │            │          │          │                         │
+ * └────────────┴──────────┴──────────┴─────────────────────────┘
+ * ```
  */
 class Connection extends Command {
   public fileApi: FileApi = new FileApi();

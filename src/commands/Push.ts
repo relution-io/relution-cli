@@ -8,8 +8,20 @@ import {Validator} from './../utility/Validator';
 
 import {find} from 'lodash';
 
-export /**
- * Connection
+export
+/**
+ * Push
+ * ```bash
+ * ┌─────────┬──────────┬──────────┬─────────────────────────────┐
+ * │ Options │ Commands │ Param(s) │ Description                 │
+ * │         │          │          │                             │
+ * │ push    │ add      │ <$name>  │ create a push config        │
+ * │ push    │ list     │ --       │ list available push configs │
+ * │ push    │ help     │ --       │ List the Push Command       │
+ * │ push    │ quit     │ --       │ Exit to Home                │
+ * │         │          │          │                             │
+ * └─────────┴──────────┴──────────┴─────────────────────────────┘
+ * ```
  */
   class Push extends Command {
   public collection = new PushCollection();

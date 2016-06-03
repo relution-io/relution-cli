@@ -74,6 +74,51 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Command Tower all Commmands go inside here</p>
+						<pre><code class="lang-bash">┌────────────┬──────────┬─────────────────┬───────────────────────────────────────────────┐
+│ Options    │ Commands │ Param(s)        │ Description                                   │
+│            │          │                 │                                               │
+│ quit       │          │                 │ Exit Relution CLI                             │
+│ <span class="hljs-built_in">help</span>       │          │                 │ List the relution Command                     │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ server     │ add      │ &lt;<span class="hljs-variable">$name</span>&gt;         │ Add a new Server to the config                │
+│ server     │ list     │ &lt;<span class="hljs-variable">$name</span>&gt;         │ List all available Server from config         │
+│ server     │ update   │ &lt;<span class="hljs-variable">$name</span>&gt;         │ Update a exist server from the Server list    │
+│ server     │ rm       │ &lt;<span class="hljs-variable">$name</span>&gt;         │ Remove a Server from the config               │
+│ server     │ <span class="hljs-built_in">help</span>     │ --              │ List the Server Command                       │
+│ server     │ quit     │ --              │ Exit to Home                                  │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ env        │ add      │ &lt;<span class="hljs-variable">$name</span>&gt;         │ add a new Environment                         │
+│ env        │ update   │ &lt;<span class="hljs-variable">$name</span>&gt;         │ Add a new key value pair to your Environment. │
+│ env        │ copy     │ &lt;<span class="hljs-variable">$from</span>&gt; &lt;<span class="hljs-variable">$name</span>&gt; │ copy a exist Environment                      │
+│ env        │ list     │ --              │ List all environments by name                 │
+│ env        │ <span class="hljs-built_in">help</span>     │ --              │ List the Environment Command                  │
+│ env        │ quit     │ --              │ Exit To Home                                  │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ new        │ create   │ &lt;<span class="hljs-variable">$name</span>&gt;         │ create a new Project <span class="hljs-keyword">in</span> Folder                │
+│ new        │ <span class="hljs-built_in">help</span>     │ --              │ List the New Command                          │
+│ new        │ quit     │ --              │ Exit to Home                                  │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ deploy     │ deploy   │ &lt;<span class="hljs-variable">$name</span>&gt;         │ deploy your Baas to the server                │
+│ deploy     │ <span class="hljs-built_in">help</span>     │ --              │ List the Deploy Command                       │
+│ deploy     │ quit     │ --              │ Exit to Home                                  │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ connection │ add      │ &lt;<span class="hljs-variable">$name</span>&gt;         │ create a connection                           │
+│ connection │ <span class="hljs-built_in">help</span>     │ --              │ List the Deploy Command                       │
+│ connection │ quit     │ --              │ Exit to Home                                  │
+│            │          │                 │                                               │
+│            │          │                 │                                               │
+│ push       │ add      │ &lt;<span class="hljs-variable">$name</span>&gt;         │ create a push config                          │
+│ push       │ list     │ --              │ list available push configs                   │
+│ push       │ <span class="hljs-built_in">help</span>     │ --              │ List the Push Command                         │
+│ push       │ quit     │ --              │ Exit to Home                                  │
+│            │          │                 │                                               │
+└────────────┴──────────┴─────────────────┴───────────────────────────────────────────────┘
+</code></pre>
 					</div>
 				</div>
 			</section>
@@ -145,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L57">commands/Tower.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L104">commands/Tower.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">_row<wbr>Divider<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L55">commands/Tower.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L102">commands/Tower.ts:102</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L53">commands/Tower.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L100">commands/Tower.ts:100</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L50">commands/Tower.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L97">commands/Tower.ts:97</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -197,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L22">commands/Tower.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L69">commands/Tower.ts:69</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">reserved<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L35">commands/Tower.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L82">commands/Tower.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -217,7 +262,7 @@
 					<div class="tsd-signature tsd-kind-icon">reset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L39">commands/Tower.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L86">commands/Tower.ts:86</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -227,7 +272,7 @@
 					<div class="tsd-signature tsd-kind-icon">static<wbr>Command<wbr>Root<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L33">commands/Tower.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L80">commands/Tower.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -237,7 +282,7 @@
 					<div class="tsd-signature tsd-kind-icon">static<wbr>Commands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L24">commands/Tower.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L71">commands/Tower.ts:71</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -270,7 +315,7 @@
 					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="_utility_table_.table.html" class="tsd-signature-type">Table</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L37">commands/Tower.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L84">commands/Tower.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -280,7 +325,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<wbr>Rc<span class="tsd-signature-symbol">:</span> <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L20">commands/Tower.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L67">commands/Tower.ts:67</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -290,7 +335,7 @@
 					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L57">commands/Tower.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L104">commands/Tower.ts:104</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -307,7 +352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L221">commands/Tower.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L268">commands/Tower.ts:268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -335,7 +380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L212">commands/Tower.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L259">commands/Tower.ts:259</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -359,7 +404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L177">commands/Tower.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L224">commands/Tower.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -398,7 +443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L96">commands/Tower.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L143">commands/Tower.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -420,7 +465,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L104">commands/Tower.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L151">commands/Tower.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -442,7 +487,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L277">commands/Tower.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L324">commands/Tower.ts:324</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -464,7 +509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L233">commands/Tower.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L280">commands/Tower.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -491,7 +536,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L254">commands/Tower.ts:254</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L301">commands/Tower.ts:301</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,7 +572,7 @@ quit
 					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L41">commands/Tower.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L88">commands/Tower.ts:88</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -536,7 +581,7 @@ quit
 						<div class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L42">commands/Tower.ts:42</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L89">commands/Tower.ts:89</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -545,7 +590,7 @@ quit
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L43">commands/Tower.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L90">commands/Tower.ts:90</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -556,7 +601,7 @@ quit
 						<div class="tsd-signature tsd-kind-icon">quit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L45">commands/Tower.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L92">commands/Tower.ts:92</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -565,7 +610,7 @@ quit
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/MDM-11007/src/commands/Tower.ts#L46">commands/Tower.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Tower.ts#L93">commands/Tower.ts:93</a></li>
 								</ul>
 							</aside>
 						</section>

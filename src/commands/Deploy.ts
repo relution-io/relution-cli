@@ -11,7 +11,16 @@ import * as path from 'path';
 
 const loader = require('cli-loader')();
 /**
- * create a new Baas for the Developer
+ * ```bash
+ * ┌─────────┬──────────┬──────────┬────────────────────────────────┐
+ * │ Options │ Commands │ Param(s) │ Description                    │
+ * │         │          │          │                                │
+ * │ deploy  │ deploy   │ <$name>  │ deploy your Baas to the server │
+ * │ deploy  │ help     │ --       │ List the Deploy Command        │
+ * │ deploy  │ quit     │ --       │ Exit to Home                   │
+ * │         │          │          │                                │
+ * └─────────┴──────────┴──────────┴────────────────────────────────┘
+ * ```
  */
 export class Deploy extends Command {
   constructor() {

@@ -3,7 +3,22 @@ import {Command} from './../utility/Command';
 import {ServerCrud} from './server/ServerCrud';
 import {ServerModelRc} from './../models/ServerModelRc';
 import {orderBy, partition, concat} from 'lodash';
-
+/**
+ * Relution Server Command
+ * ```bash
+ * ┌─────────┬──────────┬──────────┬────────────────────────────────────────────┐
+ * │ Options │ Commands │ Param(s) │ Description                                │
+ * │         │          │          │                                            │
+ * │ server  │ add      │ <$name>  │ Add a new Server to the config             │
+ * │ server  │ list     │ <$name>  │ List all available Server from config      │
+ * │ server  │ update   │ <$name>  │ Update a exist server from the Server list │
+ * │ server  │ rm       │ <$name>  │ Remove a Server from the config            │
+ * │ server  │ help     │ --       │ List the Server Command                    │
+ * │ server  │ quit     │ --       │ Exit to Home                               │
+ * │         │          │          │                                            │
+ * └─────────┴──────────┴──────────┴────────────────────────────────────────────┘
+ * ```
+ */
 export class Server extends Command {
   public tableHeader: Array<string> = ['Name', 'Server url', 'Default', 'Username'];
   public debug: boolean = true;
