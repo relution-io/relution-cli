@@ -59,7 +59,7 @@
     "nopt": "^3.0.6",
     "npm": "^3.9.0",
     "progress": "^1.1.8",
-    "relution-sdk": "git+ssh://git@github.com/relution-io/relution-sdk.git#feature/async-response",
+    "relution-sdk": "git+ssh://git@github.com/relution-io/relution-sdk.git",
     "rimraf": "^2.5.2",
     "to-iso-string": "0.0.2",
     "username": "^2.1.0"

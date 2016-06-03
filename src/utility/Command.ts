@@ -103,7 +103,8 @@ export class Command implements CommandInterface {
       // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
-        let command: Array<string> = [chalk.green(this.name), chalk.cyan(commandName)];
+        let name: string = this.commands[commandName].label ? this.commands[commandName].label : commandName;
+        let command: Array<string> = [chalk.green(this.name), chalk.cyan(name)];
         if (this.commands[commandName]) {
           if (commandName !== 'relution') {
             //  && this.reserved.indexOf(commandName) === -1
@@ -214,8 +215,8 @@ export class Command implements CommandInterface {
     let temp: Array<Object> = [];
     this.flatCommands().forEach((command) => {
       temp.push({
-        name: command,
-        value: [this.name, command]
+        name: this.commands[command].label ? this.commands[command].label : command,
+        value: [this.name, this.commands[command].method ? this.commands[command].method : command]
       });
     });
     return temp;

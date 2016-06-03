@@ -21,6 +21,7 @@ const loader = require('cli-loader')();
  * │         │          │          │                                │
  * └─────────┴──────────┴──────────┴────────────────────────────────┘
  * ```
+ * @todo remove zip file after deploy
  */
 export class Deploy extends Command {
   constructor() {
@@ -102,11 +103,9 @@ export class Deploy extends Command {
         },
         method: 'POST',
         formData: formData,
-        responseCallback: (resp: Q.Promise<any>) => {
-          return resp.then((r: any) => {
-            r.pipe(process.stdout, { 'end': false });
-            return r;
-          });
+        requestCallback: (request: Relution.web.HttpRequest) => {
+          request.pipe(process.stdout, { 'end': false });
+          return request;
         }
       })
     );

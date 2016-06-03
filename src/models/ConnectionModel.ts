@@ -5,12 +5,12 @@ import {Translation} from './../utility/Translation';
 import {Validator} from './../utility/Validator';
 import * as chalk from 'chalk';
 import {FileApi} from './../utility/FileApi';
-
+import * as path from 'path';
 const hjson = require('hjson');
 const stripIndents = require('common-tags').stripIndents;
 const oneLineTrim = require('common-tags').oneLineTrim;
 const commaListsOr = require('common-tags').commaListsOr;
-const html = require('common-tags').html;
+
 
 import * as os from 'os';
 
@@ -223,7 +223,7 @@ export class ConnectionModel implements ConnectionInterface {
 
   public toJson(): string {
     let myJson = {
-      name: this.name,
+      name: path.basename(this.name),
       connectorProvider: this.connectorProvider,
       description: this.description,
       protocol: this.protocol,

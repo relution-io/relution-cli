@@ -6,13 +6,29 @@ export class Translation {
   static TAKE_ME_OUT: string = 'Take me out of here';
   static NOT_VALID: string = `Your Input is not valid`;
   static EXIT_TO_HOME: string = 'Exit to Home';
+  /**
+   * Server Command
+   */
   static SERVER_ADD: string = 'Add a new Server to the config';
   static SERVER_LIST: string = 'List all available Server from config';
   static SERVER_RM: string = 'Remove a Server from the config';
   static SERVER_UPDATE: string = 'Update a exist server from the Server list';
-
+  /**
+   * New Command
+   */
   static NEW_CREATE = `create a new Project in Folder`;
+  /**
+   * Deploy Command
+   */
   static DEPLOY = `deploy your Baas to the server`;
+  /**
+   * Connection Command
+   */
+  static CONNECTION_ADD_LABEL = `Add new Connection`;
+  static CONNECTION_ADD_DESCRIPTION = `Create a new connection`;
+  static CONNECTION_API_LIST_LABEL= `Add some calls from you deployed Connection`;
+  static CONNECTION_API_LIST_DESCRIPTION = `Add some calls to the exists Connection`;
+
   static NPM_INSTALL = `Start npm install this take a while`;
   static SELECT(name: string): string {
     return `Select ${name} :`;

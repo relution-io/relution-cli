@@ -7,7 +7,7 @@ import * as Relution from 'relution-sdk';
 import * as path from 'path';
 import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
-
+import * as chalk from 'chalk';
 /**
  * this class add a new Connection
  * 1. get name
@@ -45,7 +45,7 @@ export class AddConnection {
   /**
    * the default server
    */
-  private _defaultServer: string;
+  public defaultServer: string;
   /**
    * where the connection hav to be save
    */
@@ -98,7 +98,20 @@ export class AddConnection {
         name: 'connectionname',
         message: `Please enter name or an sep path('ews/ews-exchange')`,
         validate: (value: string): boolean => {
-          return Validator.notEmptyValidate(value);
+          let names: string[] = this.connection.getConnectionNames();
+          let notEmpty = Validator.notEmptyValidate(value);
+
+          if (!notEmpty) {
+            this.connection.log.error(new Error(`Name can not be empty`));
+            return false;
+          }
+
+          if (names.indexOf(value) !== -1 ) {
+            this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exist Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
+            return false;
+          }
+
+          return true;
         }
       })
     );
@@ -236,13 +249,13 @@ export class AddConnection {
    * choose first on which Server the App has to be deployed
    */
   getServerPrompt(): Observable<any> {
-    this._defaultServer = 'default';
+    this.defaultServer = 'default';
     let prompt = this.connection._copy(this.connection._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
     let indexDefault: number = findIndex(this.connection.userRc.config.server, { default: true });
     if (indexDefault > -1) {
-      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
+      this.defaultServer += ` ${prompt[0].choices[indexDefault]}`;
       prompt[0].choices.splice(indexDefault, 1);
-      prompt[0].choices.unshift(this._defaultServer);
+      prompt[0].choices.unshift(this.defaultServer);
     }
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
@@ -280,7 +293,7 @@ export class AddConnection {
        * login on relution
        */
       .exhaustMap((server: { connectserver: string }) => {
-        if (server.connectserver.toString().trim() === this._defaultServer.toString().trim()) {
+        if (server.connectserver.toString().trim() === this.defaultServer.toString().trim()) {
           choosedServer = find(this.connection.userRc.config.server, { default: true });
         } else {
           choosedServer = find(this.connection.userRc.config.server, { id: server.connectserver });
@@ -333,7 +346,6 @@ export class AddConnection {
        */
       .exhaustMap((answers: { protocol: string }) => {
         this.connectionModel.protocol = answers.protocol;
-        console.log()
         return this.getMetadata(this.connectionModel.protocol);
       })
       .exhaustMap((resp: any) => {
@@ -361,8 +373,8 @@ export class AddConnection {
        */
       .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
         let template = this.connectionModel.toJson();
-
-        if (written && !written.connectionOverwrite) {
+        // console.log(written);
+        if (written && written.connectionOverwrite === false) {
           fileWritten = written.connectionOverwrite;
           return Observable.create((observer: any) => {
             this.connection.log.warn(`Connection add ${this.connectionName} canceled`);
