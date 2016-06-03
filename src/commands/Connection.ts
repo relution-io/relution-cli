@@ -72,6 +72,7 @@ export /**
 
 
   flatTree(tree: any, store: TreeDirectory[] = []): TreeDirectory[] {
+	if (!tree) return store;
     if (tree.children) {
       return this.flatTree(tree.children, store);
     }

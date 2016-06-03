@@ -60,7 +60,7 @@ export class MetaModel extends Relution.model.MetaModel {
     if (questions.length) {
       questions.forEach((question: Relution.model.FieldDefinition) => {
         if (this._isList(question)) {
-          let choices = question.enumDefinition.items.toJSON().map(( item: Relution.model.Item) => {
+          let choices = question.enumDefinition.items.map(( item: Relution.model.Item) => {
             return {name: item.label, value: item.value };
           });
           choices.push({
@@ -172,13 +172,9 @@ export class ConnectionModel implements ConnectionInterface {
   }
   public getCommentvalue(fieldDefinition: Relution.model.FieldDefinition) {
     let comment = '';
-    if (fieldDefinition.enumDefinition && fieldDefinition.enumDefinition.items && fieldDefinition.enumDefinition.items.toJSON().length) {
+    if (fieldDefinition.enumDefinition && fieldDefinition.enumDefinition.items && fieldDefinition.enumDefinition.items.length) {
       // console.log(fieldDefinition.enumDefinition);
-      let values: Array<string> = [];
-      let list: any = fieldDefinition.enumDefinition.items.toJSON();
-      Object.keys(list).forEach((key: any, index: number) => {
-        values.push(list[key].value);
-      });
+      let values = fieldDefinition.enumDefinition.items.map((item) => item.value);
       comment += commaListsOr`//${fieldDefinition.name}: ${values}`;
     } else {
       comment += `//${fieldDefinition.name}: ${fieldDefinition.defaultValue || fieldDefinition.dataType}`;
