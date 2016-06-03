@@ -76,7 +76,7 @@ export class ApiList {
 
   private _filterCallsByName = function (call: Call): boolean {
     return call.name.indexOf(this) !== - 1;
-  }
+  };
 
   private _pleaseFilterCalls(calls: CallModel[]) {
     let prompt: any = {
@@ -109,12 +109,13 @@ export class ApiList {
         })
     );
   }
+
   private _chooseCalls(calls: CallModel[]) {
     let choices = calls.map((call: CallModel) => {
       return {
         name: call.name,
-        value: call.action,
-        short: call.name.substr(0, 5)
+        value: call,
+        short: call.name.substr(0, 10)
       };
     });
 
@@ -134,6 +135,7 @@ export class ApiList {
     };
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
+
   private _chooseConnection() {
     let choices = this.connection.getConnectionNames();
     choices.push(this.connection.i18n.TAKE_ME_OUT);
@@ -164,7 +166,7 @@ export class ApiList {
       })
       .exhaustMap((resp: { data: any, path: string }) => {
         relutionHjson = resp.data;
-        console.log(relutionHjson);
+        // console.log(relutionHjson);
 
         return this.connection.helperAdd.getServerPrompt();
       })
@@ -202,7 +204,7 @@ export class ApiList {
         // console.log(this._callsCollection);
         return this._pleaseFilterCalls(this._callsCollection)
           .map((answers: { callsFilter: string }) => {
-            if (answers.callsFilter && answers.callsFilter.length) {
+            if (answers.callsFilter && answers.callsFilter.length < 0) {
               calls = this._callsCollection.filter(this._filterCallsByName, answers.callsFilter);
               return this._chooseCalls(calls);
             }
@@ -210,7 +212,7 @@ export class ApiList {
           }).exhaust();
       })
       .map((answers: { choosedCalls: Array<string> }) => {
-        // console.log('answers', answers);
+        console.log('answers', answers);
       });
   }
 };
