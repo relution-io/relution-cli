@@ -7,6 +7,16 @@ import * as path from  'path';
 import * as fs from 'fs';
 /**
  * create a new Baas for the Developer
+ * ```bash
+ * ┌─────────┬──────────┬──────────┬────────────────────────────────┐
+ * │ Options │ Commands │ Param(s) │ Description                    │
+ * │         │          │          │                                │
+ * │ new     │ create   │ <$name>  │ create a new Project in Folder │
+ * │ new     │ help     │ --       │ List the New Command           │
+ * │ new     │ quit     │ --       │ Exit to Home                   │
+ * │         │          │          │                                │
+ * └─────────┴──────────┴──────────┴────────────────────────────────┘
+ * ```
  */
 export class New extends Command {
 

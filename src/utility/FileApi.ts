@@ -3,7 +3,7 @@ import * as path from 'path';
 import {Observable} from '@reactivex/rxjs';
 import {RxFs} from './RxFs';
 import * as mkdirp from 'mkdirp';
-
+const dirTree = require('directory-tree');
 const hjson = require('hjson');
 
 export class FileApi {
@@ -47,6 +47,7 @@ export class FileApi {
   /**
    * read a hjson file by path
    * on next you will get following:
+   * read the comments is avalaible in data.__WSC__
    * ```json
    * {
    *  path: path,
@@ -120,5 +121,15 @@ export class FileApi {
     }
     // all
     return Observable.from(loadingFiles);
+  }
+
+  /**
+   * read recurisv a folder and get all files by filter
+   */
+  dirTree(folderPath: string, filter?: Array<string>) {
+    if (filter && filter.length) {
+      return dirTree(folderPath, filter);
+    }
+    return dirTree(folderPath);
   }
 }

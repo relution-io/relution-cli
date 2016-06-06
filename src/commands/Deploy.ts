@@ -11,7 +11,17 @@ import * as path from 'path';
 
 const loader = require('cli-loader')();
 /**
- * create a new Baas for the Developer
+ * ```bash
+ * ┌─────────┬──────────┬──────────┬────────────────────────────────┐
+ * │ Options │ Commands │ Param(s) │ Description                    │
+ * │         │          │          │                                │
+ * │ deploy  │ deploy   │ <$name>  │ deploy your Baas to the server │
+ * │ deploy  │ help     │ --       │ List the Deploy Command        │
+ * │ deploy  │ quit     │ --       │ Exit to Home                   │
+ * │         │          │          │                                │
+ * └─────────┴──────────┴──────────┴────────────────────────────────┘
+ * ```
+ * @todo remove zip file after deploy
  */
 export class Deploy extends Command {
   constructor() {
@@ -99,17 +109,13 @@ export class Deploy extends Command {
         },
         method: 'POST',
         formData: formData,
-        responseCallback: (resp: Q.Promise<any>) => {
-          return resp.then(
-            (r: any) => {
-              r.pipe(process.stdout, { 'end': false });
-              return r;
-            });
+        requestCallback: (request: Relution.web.HttpRequest) => {
+          request.pipe(process.stdout, { 'end': false });
+          return request;
         }
       })
     );
   }
-
 
   /**
    * deploy the baas to the server
@@ -153,6 +159,7 @@ export class Deploy extends Command {
         } else {
           choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
+        loader.start();
         return this.relutionSDK.login(choosedServer);
       })
       /**
@@ -160,6 +167,7 @@ export class Deploy extends Command {
        */
       .exhaustMap((resp: any) => {
         userResp = resp.user;
+        loader.stop();
         if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
         }
@@ -204,7 +212,7 @@ export class Deploy extends Command {
        */
       .map((resp: any) => {
         loader.stop();
-        return resp;
+        return Observable.empty();
       });
   }
 

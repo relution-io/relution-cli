@@ -27,6 +27,7 @@
         "src/collection/PushCollection.ts",
         "src/commands/Connection.ts",
         "src/commands/connection/Add.ts",
+        "src/commands/connection/ApiList.ts",
         "src/commands/Deploy.ts",
         "src/commands/Environment.spec.ts",
         "src/commands/Environment.ts",

@@ -9,17 +9,17 @@ const html = require('common-tags').html;
 
 export class RelutionHjson implements TemplateInterface {
 
-  public publishName: string = 'relution.hjson'
+  public publishName: string = 'relution.hjson';
   public name: string = 'app';
 
-  private _description : string;
+  private _description: string;
   private _fileApi: FileApi = new FileApi();
   private _uuid: string;
   private _directoryIndex: boolean = false;
   private _server: string = 'app.js';
   private _private: boolean = false;
-  private _baseAlias : string;
-  private _client : string = './www';
+  private _baseAlias: string;
+  private _client: string = './www';
 
   get template() {
     return this._fileApi.copyHjson(html`
@@ -46,14 +46,14 @@ export class RelutionHjson implements TemplateInterface {
   /**
    * The Description for the Project
    */
-  public get description() : string {
+  public get description(): string {
     if (!this._description || !this._description.length) {
       this._description = Translation.RH_DESCRIPTION(this.name);
     }
     return this._description;
   }
 
-  public set description(v : string) {
+  public set description(v: string) {
     this._description = v;
   }
   /**
@@ -106,22 +106,22 @@ export class RelutionHjson implements TemplateInterface {
   /**
    * set the baseALias to the app
    */
-  public get baseAlias() : string {
+  public get baseAlias(): string {
     if (!this._baseAlias || !this._baseAlias.length) {
       this.baseAlias = this.name;
     }
     return `/${this._baseAlias}`;
   }
 
-  public set baseAlias(v : string) {
+  public set baseAlias(v: string) {
     this._baseAlias = v;
   }
 
-  public get client() : string {
+  public get client(): string {
     return this._client;
   }
 
-  public set client(v : string) {
+  public set client(v: string) {
     this._client = v;
   }
 

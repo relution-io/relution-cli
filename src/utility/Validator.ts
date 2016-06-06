@@ -20,6 +20,11 @@ export class Validator {
    */
   public static stringNumberPattern: RegExp = /^[a-zA-Z\s]|[0-9\s]+$/;
   /**
+   * allow 0-9 for the server name
+   * @type {RegExp}
+   */
+  public static numberPattern: RegExp = /^[0-9\s]+$/;
+  /**
    * allow a-Z for the given value
    * @type {RegExp}
    */
@@ -45,5 +50,35 @@ export class Validator {
    */
   public static url(url: string): any {
     return url.match(Validator.urlPattern);
+  }
+  /**
+   * map the Javatype to a Javascript pattern
+   *  public static columnTypeMapping = {
+      'java.lang.Boolean': lf.Type.BOOLEAN,
+      'java.lang.Double': lf.Type.NUMBER,
+      'java.lang.Float': lf.Type.NUMBER,
+      'java.lang.Integer': lf.Type.INTEGER,
+      'java.lang.String': lf.Type.STRING,
+      'java.lang.Object': lf.Type.OBJECT,
+      'java.math.BigDecimal': lf.Type.NUMBER,
+      'java.math.BigInteger': lf.Type.NUMBER,
+      'java.util.Date': lf.Type.DATE_TIME
+    };
+   */
+  public static mapJavaType(javaType: string): RegExp {
+    let pattern: RegExp;
+    switch (javaType) {
+      case 'java.lang.String':
+        pattern = Validator.stringPattern;
+        break;
+      case 'java.lang.Number':
+      case 'java.lang.Long':
+        pattern = Validator.numberPattern;
+        break;
+      default:
+        pattern = Validator.stringNumberCharsPattern;
+        break;
+    }
+    return pattern;
   }
 }

@@ -6,12 +6,12 @@
   "scripts": {
     "precommit": "npm run tslint",
     "tslint": "tslint src/**/*.ts",
-    "test": "istanbul cover lib/**/*.js && npm run build && node testrunner.js",
+    "test": "istanbul cover lib/**/*.js && node testrunner.js",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
     "serve-api": "http-server public/docs",
-    "watch": "npm run clean && tsconfig && tsc -p . -w",
+    "watch": "tsconfig && tsc -p . -w",
     "postinstall": "typings install"
   },
   "bin": {
@@ -46,7 +46,7 @@
     "cli-loader": "^1.1.1",
     "cli-table": "^0.3.1",
     "cli-table2": "^0.2.0",
-    "common-tags": "^0.1.1",
+    "common-tags": "^1.2.0",
     "directory-tree": "^1.0.0",
     "figures": "^1.5.0",
     "fstream-ignore": "^1.0.5",
