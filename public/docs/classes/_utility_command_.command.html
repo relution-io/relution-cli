@@ -89,13 +89,13 @@
      label: <span class="hljs-string">'My Label'</span>, <span class="hljs-comment">// is shown in the showCommands list</span>
      description: <span class="hljs-string">'My own Command'</span>, <span class="hljs-comment">// is shown in the help as description</span>
      method: <span class="hljs-string">'mySubCommandMethod'</span>, <span class="hljs-comment">// you can set the method if you want default MyCommand.subcommand()</span>
-     when: (): boolean =&gt; { <span class="hljs-comment">// diabled ?</span>
+     when: (): boolean =&gt; { <span class="hljs-comment">// disabled ?</span>
        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
      },
      why: () =&gt; { <span class="hljs-comment">// why is it disabled</span>
        <span class="hljs-keyword">return</span> <span class="hljs-string">`is disabled why`</span>;
      },
-     vars: {
+     vars: { <span class="hljs-comment">// allow params on this subcommand</span>
        name: {
          pos: <span class="hljs-number">0</span>
        }
@@ -202,7 +202,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L84">utility/Command.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L84">utility/Command.ts:84</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -225,7 +225,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#_parent">_parent</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L83">utility/Command.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L83">utility/Command.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -236,7 +236,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commanddispatcher">commandDispatcher</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L73">utility/Command.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L73">utility/Command.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -247,7 +247,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L77">utility/Command.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L77">utility/Command.ts:77</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,7 +258,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L76">utility/Command.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L76">utility/Command.ts:76</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -268,7 +268,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<div class="tsd-signature tsd-kind-icon">direct<wbr>Mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L74">utility/Command.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L74">utility/Command.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -279,7 +279,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#i18n">i18n</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L79">utility/Command.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L79">utility/Command.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -290,7 +290,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#inquirer">inquirer</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L78">utility/Command.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L78">utility/Command.ts:78</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -301,7 +301,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#log">log</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L80">utility/Command.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L80">utility/Command.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -312,7 +312,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L72">utility/Command.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L72">utility/Command.ts:72</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -328,7 +328,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#relutionsdk">relutionSDK</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L84">utility/Command.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L84">utility/Command.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -338,7 +338,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<div class="tsd-signature tsd-kind-icon">reserved<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L81">utility/Command.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L81">utility/Command.ts:81</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -349,7 +349,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#table">table</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L82">utility/Command.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L82">utility/Command.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -360,7 +360,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#userrc">userRc</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L75">utility/Command.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L75">utility/Command.ts:75</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -377,7 +377,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L255">utility/Command.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L255">utility/Command.ts:255</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -400,7 +400,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L186">utility/Command.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L186">utility/Command.ts:186</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -426,7 +426,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L259">utility/Command.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L259">utility/Command.ts:259</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -443,7 +443,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L141">utility/Command.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L141">utility/Command.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -482,7 +482,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L121">utility/Command.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L121">utility/Command.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -499,7 +499,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L195">utility/Command.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L195">utility/Command.ts:195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -519,13 +519,13 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 					<a name="preload" class="tsd-anchor"></a>
 					<h3>preload</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">preload<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">preload<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L104">utility/Command.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L104">utility/Command.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -533,7 +533,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 									<p>preload data</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -547,7 +547,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L125">utility/Command.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L125">utility/Command.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -564,7 +564,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L263">utility/Command.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L263">utility/Command.ts:263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -581,7 +581,7 @@ public mySubCommandMethod(name?:string): Observable&lt;empty&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L275">utility/Command.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L275">utility/Command.ts:275</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
