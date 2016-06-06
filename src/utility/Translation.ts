@@ -13,7 +13,7 @@ export class Translation {
   static SERVER_ADD: string = 'Add a new Server to the config';
   static SERVER_LIST: string = 'List all available Server from config';
   static SERVER_RM: string = 'Remove a Server from the config';
-  static SERVER_UPDATE: string = 'Update a exist server from the Server list';
+  static SERVER_UPDATE: string = 'Update a exists server from the Server list';
   /**
    * New Command
    */
@@ -37,7 +37,7 @@ export class Translation {
    * Environment
    */
   static ENV_UPDATE = 'Add a new key value pair to your Environment.';
-  static ENV_COPY = 'copy a exist Environment';
+  static ENV_COPY = 'copy a exists Environment';
   static ENV_IS_CREATED(name: string): string {
     return `Environment ${name} is generated.`;
   }
@@ -104,7 +104,7 @@ export class Translation {
   }
 
   static ALREADY_EXIST(name: string, type = 'Name'): string {
-    return `\n ${type} "${name}" already exist please choose another one`;
+    return `\n ${type} "${name}" already exists please choose another one`;
   }
 
   static NOT_ALLOWED(name: string, pattern: RegExp) {
