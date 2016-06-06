@@ -16,8 +16,7 @@ interface TreeDirectory {
   children?: Array<TreeDirectory>;
   connection?: ConnectionModel;
 }
-
-export /**
+/**
  * Connection
  * ```bash
  * ┌────────────┬──────────┬──────────┬─────────────────────────┐
@@ -30,14 +29,14 @@ export /**
  * └────────────┴──────────┴──────────┴─────────────────────────┘
  * ```
  */
-  class Connection extends Command {
+export class Connection extends Command {
   public fileApi: FileApi = new FileApi();
-  public connectionRoot: string = path.join(process.cwd(), 'connections');
+  public rootFolder: string = path.join(process.cwd(), 'connections');
 
   public commands: any = {
     add: {
-      when: this.addEnabled,
-      why: this.addWhyDisabled,
+      when: () => this.addEnabled(),
+      why: () => this.addWhyDisabled(),
       label: this.i18n.CONNECTION_ADD_LABEL,
       method: 'add',
       description: this.i18n.CONNECTION_ADD_DESCRIPTION,
@@ -49,10 +48,10 @@ export /**
     },
     apilist: {
       when: (): boolean => {
-        return this.connectionsDirTree.length < 0 ? true : false;
+        return this.connectionsDirTree.length <= 0 ? false : true;
       },
       why: () => {
-        return `Please add first a Connection for this feature.`;
+        return this.i18n.CONNECTION_ADD_CONNECTION_BEFORE;
       },
       label: this.i18n.CONNECTION_API_LIST_LABEL,
       method: 'apiList',
@@ -72,8 +71,7 @@ export /**
   };
   public helperAdd: AddConnection = new AddConnection(this);
   public helperApiList: ApiList = new ApiList(this);
-  public connectionsDirTree: Array<TreeDirectory>;
-  public rootFolder = `${process.cwd()}/connections`;
+  public connectionsDirTree: Array<TreeDirectory> = [];
 
   constructor() {
     super('connection');
@@ -128,16 +126,10 @@ export /**
   }
 
   preload() {
-    return Observable.create((observer: any) => {
-      return this.streamConnectionFromFileSystem().subscribe({
-        error: (e: Error) => {
-          this.log.error(e);
-          return super.preload();
-        },
-        complete: () => {
-          return super.preload();
-        }
-      });
+    return super.preload().do({
+      complete: () => {
+        this.streamConnectionFromFileSystem().exhaust();
+      }
     });
   }
 
@@ -152,10 +144,10 @@ export /**
    * check if the connection add command is disabled
    */
   addEnabled(): boolean {
-    if (!RxFs.exist(`${process.cwd()}/connections`)) {
+    if (!this.userRc.server.length) {
       return false;
     }
-    if (!this.userRc.server.length) {
+    if (!RxFs.exist(this.rootFolder)) {
       return false;
     }
     return true;
@@ -165,12 +157,12 @@ export /**
    */
   addWhyDisabled(): string {
 
-    if (!RxFs.exist(`${process.cwd()}/connections`)) {
-      return `Folder Connections not exist in ${process.cwd()}.`;
+    if (!this.userRc.server.length) {
+      return this.i18n.CONNECTION_ADD_SERVER_BEFORE;
     }
 
-    if (!this.userRc.server.length) {
-      return `Please add first a Server to create a Connection.`;
+    if (!RxFs.exist(this.rootFolder)) {
+      return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
     }
   }
 }

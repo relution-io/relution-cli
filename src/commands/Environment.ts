@@ -51,16 +51,16 @@ export
    * prompt for add key value pair
    */
   public addAttribute: AddAttribute = new AddAttribute();
-    /**
-   * available commands
-   */
+  /**
+ * available commands
+ */
   public commands: Object = {
     add: {
       when: () => {
         return RxFs.exist(`${process.cwd()}/env/`);
       },
       why: () => {
-        return `Folder ${process.cwd()}/env/ not exist.`;
+        return this.i18n.FOLDER_NOT_EXIST(`${process.cwd()}/env/`);
       },
       description: 'add a new Environment',
       vars: {
@@ -70,9 +70,13 @@ export
       }
     },
     update: {
-      when: this.envExists,
-      why: this.envNotExistDesc,
-      description: 'Add a new key value pair to your Environment.',
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.ENV_UPDATE,
       vars: {
         name: {
           pos: 0
@@ -80,9 +84,13 @@ export
       }
     },
     copy: {
-      when: this.envExists,
-      why: this.envNotExistDesc,
-      description: 'copy a exist Environment',
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.ENV_COPY,
       vars: {
         from: {
           pos: 0
@@ -93,15 +101,19 @@ export
       }
     },
     list: {
-      when: this.envExists,
-      why: this.envNotExistDesc,
-      description: 'List all environments by name'
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.LIST_AVAILABLE_CONFIG('Environments')
     },
     help: {
       description: this.i18n.LIST_COMMAND('Environment')
     },
     quit: {
-      description: 'Exit To Home'
+      description: this.i18n.EXIT_TO_HOME
     }
   };
   constructor() {
@@ -116,12 +128,11 @@ export
    * @returns Observable
    */
   createEnvironment(name: string) {
-
     return Observable.create((observer: any) => {
       let template = this.gii.getTemplateByName(this.name);
       this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase()).subscribe(
         (pipe: any) => {
-          observer.next(`Environment ${name} is generated`);
+          observer.next(this.i18n.ENV_IS_CREATED(name));
         },
         (e: any) => { observer.error(e); },
         () => {
@@ -138,17 +149,13 @@ export
    * @returns Observable
    */
   preload() {
-    return Observable.create((observer: any) => {
-      this.envCollection.getEnvironments().subscribe({
-        error: (e: Error) => {
-          return super.preload();
-        },
-        complete: () => {
-          this.chooseEnv = new ChooseEnv(this.envCollection);
-          return super.preload();
+    return super.preload()
+      .exhaustMap(() => {
+        if (!this.fsApi.rxFs.exist(this.fsApi.path)) {
+          return Observable.empty();
         }
+        return this.envCollection.getEnvironments();
       });
-    });
   }
 
   /**
@@ -229,7 +236,7 @@ export
       })
       .exhaustMap((store: Array<{ key: string, value: any }>) => {
         return this.envCollection.bulkUpdate(names, store).map(() => {
-          return `Update complete`;
+          return this.i18n.ENV_UPDATE_COMPLETE;
         });
       });
   }
@@ -347,10 +354,10 @@ export
     if (!RxFs.exist(`${process.cwd()}/env/`)) {
       return false;
     }
-    return this.envCollection.collection.length < 0 ? false : true;
+    return this.envCollection.collection.length <= 0 ? false : true;
   }
 
   envNotExistDesc(): string {
-    return `Please add first a Environment.`;
+    return this.i18n.ENV_ADD_FIRSTLY;
   }
 }

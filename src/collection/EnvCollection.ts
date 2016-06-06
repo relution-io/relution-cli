@@ -50,6 +50,7 @@ export class EnvCollection {
   public loadCollection(envFiles: Observable<string>) {
     this.collection = [];
     return envFiles.map((envFile) => {
+      // console.log(envFile);
       return this.fsApi.readHjson(`${this.envFolder}/${envFile}`);
     })
       .concatAll()
@@ -58,6 +59,7 @@ export class EnvCollection {
       })
       .reduce((collection: [EnvModel], model: EnvModel) => {
         collection.push(model);
+        // console.log('collection', collection);
         return collection;
       }, this.collection);
   }
@@ -88,7 +90,14 @@ export class EnvCollection {
     return this.loadCollection(
       this.fsApi.fileList(this.envFolder, '.hjson').do(
         (filePath: string) => {
+          // console.log(filePath);
           this.envFiles.push(filePath);
+        },
+        (e: Error) => {
+          return e;
+        },
+        () => {
+          return this.envFiles;
         }
       )
     );
