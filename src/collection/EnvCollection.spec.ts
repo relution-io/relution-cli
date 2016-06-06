@@ -5,50 +5,45 @@ const expect = require('expect.js');
 import * as path from 'path';
 
 describe('EnVCollection a subset of environments', () => {
-  let command: Environment;
+  let env = new Environment();
+  // let question: any;
+  let envFolder = path.join(process.cwd(), 'spec', 'gentest', 'envcollectiontest');
+  let name = 'dev';
 
   before(() => {
-    command = new Environment();
-    command.fsApi.path = path.join(process.cwd(), 'spec', 'gentest', 'env') + '/';
-    command.envCollection.envFolder = command.fsApi.path;
-    console.log(command.fsApi.path);
-    RxFs.mkdir(command.fsApi.path).subscribe({
-      complete: () => {
-        console.log(`${command.fsApi.path} is created.`);
-      }
-    });
-  });
+    env.fsApi.path = envFolder;
+    env._rootFolder = envFolder;
+    env.envCollection.envFolder = envFolder;
+    if (!RxFs.exist(envFolder)) {
+      return RxFs.mkdir(envFolder).toPromise().then(() => {
+        return env.preload().toPromise().then(() => {
+          return env.createEnvironment(name).toPromise();
+        });
+      });
+    }
 
-  it('create a environment "dev"', (done) => {
-    command.add(['dev']).subscribe({
-      next: (log: any) => {
-        console.log(log);
-      },
-      complete: () => {
-        expect(RxFs.exist(path.join(command.fsApi.path, 'dev.hjson'))).to.be(true);
-        console.log('envCollection.collection', command.envCollection.collection);
-        done();
-      }
+    return env.preload().toPromise().then(() => {
+      return env.createEnvironment(name).toPromise();
     });
   });
 
   it('has collection with entry dev', (done) => {
-    console.log(command.envCollection.flatEnvArray());
-    expect(command.envCollection.collection.length).to.be.greaterThan(0);
-    expect(command.envCollection.flatEnvArray().indexOf('dev')).to.be.greaterThan(-1);
+    console.log(env.envCollection.flatEnvArray());
+    expect(env.envCollection.collection.length).to.be.greaterThan(0);
+    expect(env.envCollection.flatEnvArray().indexOf('dev')).to.be.greaterThan(-1);
     done();
   });
 
   it('read a environment "dev"', (done) => {
-    let env: EnvModel = command.envCollection.isUnique('dev');
-    expect(env.name).to.be('dev');
+    // let envModel: EnvModel = env.envCollection.isUnique('dev');
+    expect(env.envCollection.collection[0].name).to.be(name);
     done();
   });
 
   after(() => {
-    RxFs.rmDir(command.fsApi.path).subscribe({
+    RxFs.rmDir(env.fsApi.path).subscribe({
       complete: () => {
-        console.log(`${command.fsApi.path} is removed.`);
+        console.log(`${env.fsApi.path} is removed.`);
       }
     });
   });

@@ -226,7 +226,7 @@ export class ServerCrud {
     return this.deletePrompt()
       .filter((answers: { server: Array<string> }) => {
         if (answers.server.indexOf(this.server.i18n.TAKE_ME_OUT) !== -1 && answers.server.length > 1) {
-          DebugLog.warn(`I see you choose servers and "Take me out of here" so you get out without remove`);
+          DebugLog.warn(`I see you choose "servers" and "${this.server.i18n.TAKE_ME_OUT}" so you get out without remove.`);
           return false;
         }
         return true;

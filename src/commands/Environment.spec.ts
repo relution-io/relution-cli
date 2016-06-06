@@ -1,52 +1,55 @@
 import {Environment} from './Environment';
+import {EnvModel} from './../models/EnvModel';
 const expect = require('expect.js');
 import * as sinon from 'sinon';
 import * as path from 'path';
 import {RxFs} from './../utility/RxFs';
 
 describe('Command Environment', () => {
-  let env: Environment = new Environment();
-  let question: any;
+  let env = new Environment();
+  // let question: any;
+  let envFolder = path.join(process.cwd(), 'spec', 'gentest', 'env');
+  let name = 'dev';
 
   before(() => {
-    question = env._addName;
-    env.fsApi.path = path.join(process.cwd(), 'spec', 'gentest', 'env');
-    return RxFs.mkdir(env.fsApi.path).toPromise().then(() => {
-      expect(RxFs.exist(env.fsApi.path)).to.be(true);
-      return env.preload().toPromise();
+    env.fsApi.path = envFolder;
+    env._rootFolder = envFolder;
+    env.envCollection.envFolder = envFolder;
+    if (!RxFs.exist(envFolder)) {
+      return RxFs.mkdir(envFolder).toPromise().then(() => {
+        return env.preload().toPromise().then(() => {
+          return env.createEnvironment(name).toPromise();
+        });
+      });
+    }
+
+    return env.preload().toPromise().then(() => {
+      return env.createEnvironment(name).toPromise();
     });
   });
 
-  it('have commands', (done) => {
-    env.flatCommands().forEach((method: string) => {
+  env.flatCommands().forEach((method: string) => {
+    it(`have command ${method}`, (done) => {
       expect(env[method]).not.to.be(undefined);
+      done();
     });
+  });
+
+  it('have a root folder', (done) => {
+    expect(env._rootFolder).to.be(envFolder);
+    expect(RxFs.exist(envFolder)).to.be(true);
     done();
   });
 
-  it('create a env with name dev', (done) => {
-    sinon.stub(env.inquirer, 'prompt', (questions: any, cb: any) => {
-      setTimeout(function () {
-        cb({
-          name: ['dev']
-        });
-      }, 0);
-    });
-    env.add().subscribe(
-      (answers: any) => {
-        console.log(answers);
-      },
-      (e: Error) => done(),
-      () => done()
-    );
-  });
-
-  it('has env as name', (done) => {
-    expect(env.name).to.be('env');
+  it('envCollection has Model with name dev', (done) => {
+    expect(env.envCollection.collection.length).to.be(1);
+    expect(env.envCollection.collection[0].name).to.be(name);
     done();
   });
 
   after(() => {
-    return RxFs.rmDir(env.fsApi.path).toPromise();
+    setTimeout(() => {
+      return RxFs.rmDir(env.fsApi.path).toPromise();
+    }, 1800);
   });
 });

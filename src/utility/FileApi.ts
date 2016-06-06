@@ -57,7 +57,7 @@ export class FileApi {
    * ```
    * @returns Observable
    */
-  readHjson(path: string): Observable<{
+  readHjson(path: string): any | Observable<{
     data: any,
     path: string
   }> {

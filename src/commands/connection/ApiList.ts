@@ -109,7 +109,11 @@ export class ApiList {
     );
   }
 
-  private _chooseCalls(calls: CallModel[]) {
+  private _chooseCalls(calls: CallModel[]): any | Array<{
+        name: string,
+        value: Call,
+        short: string
+      }>  {
     let choices = calls.map((call: CallModel) => {
       return {
         name: call.name,
@@ -135,7 +139,7 @@ export class ApiList {
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
 
-  private _chooseConnection() {
+  private _chooseConnection(): any | Observable<any> {
     let choices = this.connection.getConnectionNames();
     choices.push(this.connection.i18n.TAKE_ME_OUT);
 
@@ -154,15 +158,23 @@ export class ApiList {
     let relutionHjson: any;
     let choosedServer: any;
     let calls: Call[];
-
+     /**
+     * get the server connection name
+     */
     return this._chooseConnection()
       .filter((answers: { connectionname: string }) => {
         return answers.connectionname !== this.connection.i18n.TAKE_ME_OUT;
       })
+      /**
+       * read the relution.hjson
+       */
       .exhaustMap((answers: { connectionname: string }) => {
         choosedConnectionName = answers.connectionname;
         return this.connection.fileApi.readHjson(path.join(process.cwd(), 'relution.hjson'));
       })
+      /**
+       * server choose
+       */
       .exhaustMap((resp: { data: any, path: string }) => {
         relutionHjson = resp.data;
         // console.log(relutionHjson);
@@ -185,13 +197,22 @@ export class ApiList {
             return resp.user ? true : false;
           });
       })
+      /**
+       * get the connection uuid from the server
+       */
       .exhaustMap((resp: { user: Relution.security.User }) => {
         return this._getConnectionUUid(relutionHjson.uuid, choosedConnectionName);
       })
+      /**
+       * read the calls from the server
+       */
       .exhaustMap((resp: { empty: boolean, items: Array<{ uuid: string }> }) => {
         // console.log(resp.items[0].uuid);
         return this._getConnectionCalls(resp.items[0].uuid);
       })
+      /**
+       * add the calls to the _callsCollection as a Model
+       */
       .exhaustMap((callsResp: [CallModel]) => {
         this._callsCollection = [];
         // console.log(Object.keys(callsResp).length);
@@ -200,6 +221,9 @@ export class ApiList {
           let model: CallModel = new CallModel(params.connectionId, params.outputModel, params.name, params.inputModel, params.action);
           this._callsCollection.push(model);
         });
+        /**
+         * Prompt a Filter
+         */
         // console.log(this._callsCollection);
         return this._pleaseFilterCalls(this._callsCollection)
           .map((answers: { callsFilter: string }) => {
@@ -208,10 +232,11 @@ export class ApiList {
               return this._chooseCalls(calls);
             }
             return this._chooseCalls(this._callsCollection);
-          }).exhaust();
+          });
       })
-      .map((answers: { choosedCalls: Array<string> }) => {
+      .exhaustMap((answers: { choosedCalls: Array<string> }) => {
         console.log('answers', answers);
+        return Observable.empty();
       });
   }
 };

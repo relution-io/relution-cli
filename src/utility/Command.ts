@@ -101,7 +101,7 @@ export class Command implements CommandInterface {
   /**
    * preload data
    */
-  preload(): Observable<any> {
+  preload(): any {
     return this.userRc.rcFileExist().do(
       (exist: boolean) => {
       // if (this.name === 'env') {

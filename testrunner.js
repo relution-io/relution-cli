@@ -54,7 +54,7 @@ let startMocha = () => {
 Observable.from(traverseFiles(filteredTree))
   .filter((path) => {
     if (process.argv[2]) {
-      return path.indexOf(process.argv[2]) !== -1
+      return path.indexOf(`${process.argv[2]}.spec.js`) !== -1;
     }
     return true;
   })

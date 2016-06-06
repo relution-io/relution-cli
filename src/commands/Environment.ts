@@ -38,7 +38,9 @@ export
   /**
    * code generator
    */
-  public gii: Gii = new Gii();
+  public gii = new Gii();
+
+  public _rootFolder = `${process.cwd()}/env/`;
   /**
    * the collection of the available environments
    */
@@ -57,10 +59,10 @@ export
   public commands: Object = {
     add: {
       when: () => {
-        return RxFs.exist(`${process.cwd()}/env/`);
+        return RxFs.exist(this._rootFolder);
       },
       why: () => {
-        return this.i18n.FOLDER_NOT_EXIST(`${process.cwd()}/env/`);
+        return this.i18n.FOLDER_NOT_EXIST(this._rootFolder);
       },
       description: 'add a new Environment',
       vars: {
@@ -118,7 +120,7 @@ export
   };
   constructor() {
     super('env');
-    this.fsApi.path = `${process.cwd()}/env/`;
+    this.fsApi.path = this._rootFolder;
   }
 
   /**
@@ -130,7 +132,7 @@ export
   createEnvironment(name: string) {
     return Observable.create((observer: any) => {
       let template = this.gii.getTemplateByName(this.name);
-      this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase()).subscribe(
+      this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase(), this._rootFolder).subscribe(
         (pipe: any) => {
           observer.next(this.i18n.ENV_IS_CREATED(name));
         },
@@ -353,7 +355,7 @@ export
   }
 
   envExists(): boolean {
-    if (!RxFs.exist(`${process.cwd()}/env/`)) {
+    if (!RxFs.exist(this._rootFolder)) {
       return false;
     }
     return this.envCollection.collection.length <= 0 ? false : true;

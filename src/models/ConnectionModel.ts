@@ -88,7 +88,7 @@ export class MetaModel extends Relution.model.MetaModel {
     return prompt;
   }
 
-  questions(): Observable<any> {
+  questions(): any |  Observable<any> {
     return Observable.fromPromise(inquirer.prompt(this.prompt()));
   }
 }
