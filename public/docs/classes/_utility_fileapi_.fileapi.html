@@ -88,12 +88,14 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#encode" class="tsd-kind-icon">encode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#hjsonsuffix" class="tsd-kind-icon">hjson<wbr>Suffix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#rxfs" class="tsd-kind-icon">rx<wbr>Fs</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#copyhjson" class="tsd-kind-icon">copy<wbr>Hjson</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#dirtree" class="tsd-kind-icon">dir<wbr>Tree</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#filelist" class="tsd-kind-icon">file<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#mkdirstructurefolder" class="tsd-kind-icon">mkdir<wbr>Structure<wbr>Folder</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_fileapi_.fileapi.html#mkdirp" class="tsd-kind-icon">mkdirp</a></li>
@@ -119,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">encode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L11">utility/FileApi.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L11">utility/FileApi.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,7 +131,7 @@
 					<div class="tsd-signature tsd-kind-icon">hjson<wbr>Suffix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L13">utility/FileApi.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L13">utility/FileApi.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -139,7 +141,17 @@
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L15">utility/FileApi.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L15">utility/FileApi.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="rxfs" class="tsd-anchor"></a>
+					<h3>rx<wbr>Fs</h3>
+					<div class="tsd-signature tsd-kind-icon">rx<wbr>Fs<span class="tsd-signature-symbol">:</span> <a href="_utility_rxfs_.rxfs.html" class="tsd-signature-type">RxFs</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L18">utility/FileApi.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -156,7 +168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L81">utility/FileApi.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L82">utility/FileApi.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -175,6 +187,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="dirtree" class="tsd-anchor"></a>
+					<h3>dir<wbr>Tree</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">dir<wbr>Tree<span class="tsd-signature-symbol">(</span>folderPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L130">utility/FileApi.ts:130</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>read recurisv a folder and get all files by filter</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>folderPath: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> filter: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="filelist" class="tsd-anchor"></a>
 					<h3>file<wbr>List</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -184,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L109">utility/FileApi.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L110">utility/FileApi.ts:110</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -210,7 +253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L21">utility/FileApi.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L22">utility/FileApi.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -238,7 +281,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L43">utility/FileApi.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L44">utility/FileApi.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -266,7 +309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L59">utility/FileApi.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L60">utility/FileApi.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -302,7 +345,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L104">utility/FileApi.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L105">utility/FileApi.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +379,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L98">utility/FileApi.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L99">utility/FileApi.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -378,7 +421,7 @@
 					<div class="tsd-signature tsd-kind-icon">hjson<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L17">utility/FileApi.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L17">utility/FileApi.ts:17</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -387,7 +430,7 @@
 						<div class="tsd-signature tsd-kind-icon">keep<wbr>Wsc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/FileApi.ts#L17">utility/FileApi.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/FileApi.ts#L17">utility/FileApi.ts:17</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -421,8 +464,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_utility_fileapi_.fileapi.html#path" class="tsd-kind-icon">path</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_utility_fileapi_.fileapi.html#rxfs" class="tsd-kind-icon">rx<wbr>Fs</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_utility_fileapi_.fileapi.html#copyhjson" class="tsd-kind-icon">copy<wbr>Hjson</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_utility_fileapi_.fileapi.html#dirtree" class="tsd-kind-icon">dir<wbr>Tree</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_utility_fileapi_.fileapi.html#filelist" class="tsd-kind-icon">file<wbr>List</a>
@@ -449,6 +498,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_utility_fileapi_.html#dirtree" class="tsd-kind-icon">dir<wbr>Tree</a>
+					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/_utility_fileapi_.html#hjson" class="tsd-kind-icon">hjson</a>
 					</li>

@@ -82,8 +82,7 @@ export class ApiList {
     let prompt: any = {
       type: 'input',
       message: `We found ${calls.length} you can filter by Name ${this.connection.i18n.PRESS_ENTER} ?`,
-      name: 'callsFilter',
-      default: '_TKN'
+      name: 'callsFilter'
     };
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }

@@ -26,14 +26,42 @@ interface CommandInterface {
 }
 /**
  *
- * ```javascript
+ * Important All Subcommand have to return an Observable
+ * ##### Add a new Command
+ *
+ *```javascript
+ *
  * import {Command} from './../utility/Command';
- * export class Server extends Command {
- *   constructor() {
- *    super('server');
- *   }
+ *
+ * export MyCommand extends Command{
+ *  constructor(){
+ *    super('myCommand');
+ *  }
+ *
+ *  public commmands = {
+ *    subcommand: {
+ *      label: 'My Label', // is shown in the showCommands list
+ *      description: 'My own Command', // is shown in the help as description
+ *      method: 'mySubCommandMethod', // you can set the method if you want default MyCommand.subcommand()
+ *      when: (): boolean => { // disabled ?
+ *        return true;
+ *      },
+ *      why: () => { // why is it disabled
+ *        return `is disabled why`;
+ *      },
+ *      vars: { // allow params on this subcommand
+ *        name: {
+ *          pos: 0
+ *        }
+ *      }
+ *    }
+ *  }
  * }
- * ```
+ *
+ * public mySubCommandMethod(name?:string): Observable<empty> {
+ *  return Observable.empty();
+ * }
+ *```
  */
 
 

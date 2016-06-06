@@ -117,20 +117,22 @@ export class Connection extends Command {
       (hjsonsRead: Array<{ path: string, data: ConnectionModel }>) => {
         hjsonsRead.forEach((hjsonFile: { path: string, data: ConnectionModel }) => {
           let index: number = findIndex(this.connectionsDirTree, { path: hjsonFile.path });
+          console.log(index);
           if (index > - 1) {
             this.connectionsDirTree[index].connection = new ConnectionModel(hjsonFile.data);
           }
         });
+        console.log(this.connectionsDirTree);
       }
     );
   }
 
   preload() {
-    return super.preload().do({
-      complete: () => {
-        this.streamConnectionFromFileSystem().exhaust();
+    return super.preload().exhaustMap(
+      () => {
+        return this.streamConnectionFromFileSystem();
       }
-    });
+    );
   }
 
   apiList(name?: string) {

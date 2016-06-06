@@ -57,7 +57,7 @@ export class Translation {
   }
 
   static NOT_EMPTY(name: string): string {
-    return `${name} can not be empty`;
+    return `${name} must be specified.`;
   }
 
   static ENTER_SOMETHING_LABEL(name: string) {

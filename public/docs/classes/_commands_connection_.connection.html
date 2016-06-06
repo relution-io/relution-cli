@@ -70,6 +70,22 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Connection</p>
+						<pre><code class="lang-bash">┌────────────┬──────────┬──────────┬─────────────────────────┐
+│ Options    │ Commands │ Param(s) │ Description             │
+│            │          │          │                         │
+│ connection │ add      │ &lt;<span class="hljs-variable">$name</span>&gt;  │ create a connection     │
+│ connection │ <span class="hljs-built_in">help</span>     │ --       │ List the Deploy Command │
+│ connection │ quit     │ --       │ Exit to Home            │
+│            │          │          │                         │
+└────────────┴──────────┴──────────┴─────────────────────────┘
+</code></pre>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -105,16 +121,18 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#_parent" class="tsd-kind-icon">_parent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#commanddispatcher" class="tsd-kind-icon">command<wbr>Dispatcher</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#config" class="tsd-kind-icon">config</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#connectionroot" class="tsd-kind-icon">connection<wbr>Root</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#connectionsdirtree" class="tsd-kind-icon">connections<wbr>Dir<wbr>Tree</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#directmode" class="tsd-kind-icon">direct<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#fileapi" class="tsd-kind-icon">file<wbr>Api</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#helperadd" class="tsd-kind-icon">helper<wbr>Add</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#helperapilist" class="tsd-kind-icon">helper<wbr>Api<wbr>List</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#i18n" class="tsd-kind-icon">i18n</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#inquirer" class="tsd-kind-icon">inquirer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#log" class="tsd-kind-icon">log</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#relutionsdk" class="tsd-kind-icon">relutionSDK</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#reserved" class="tsd-kind-icon">reserved</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_commands_connection_.connection.html#rootfolder" class="tsd-kind-icon">root<wbr>Folder</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#table" class="tsd-kind-icon">table</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#userrc" class="tsd-kind-icon">user<wbr>Rc</a></li>
 							</ul>
@@ -124,14 +142,21 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#_copy" class="tsd-kind-icon">_copy</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#addenabled" class="tsd-kind-icon">add<wbr>Enabled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#addwhydisabled" class="tsd-kind-icon">add<wbr>Why<wbr>Disabled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#apilist" class="tsd-kind-icon">api<wbr>List</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#commandisdisabled" class="tsd-kind-icon">command<wbr>IsDisabled</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#flatcommands" class="tsd-kind-icon">flat<wbr>Commands</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#flattree" class="tsd-kind-icon">flat<wbr>Tree</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#getconnectionnames" class="tsd-kind-icon">get<wbr>Connection<wbr>Names</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#help" class="tsd-kind-icon">help</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#home" class="tsd-kind-icon">home</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#init" class="tsd-kind-icon">init</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#preload" class="tsd-kind-icon">preload</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_commands_connection_.connection.html#preload" class="tsd-kind-icon">preload</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#quit" class="tsd-kind-icon">quit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#setupcommandsforlist" class="tsd-kind-icon">setup<wbr>Commands<wbr>For<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_commands_connection_.connection.html#showcommands" class="tsd-kind-icon">show<wbr>Commands</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_commands_connection_.connection.html#streamconnectionfromfilesystem" class="tsd-kind-icon">stream<wbr>Connection<wbr>From<wbr>File<wbr>System</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -156,7 +181,7 @@
 							<aside class="tsd-sources">
 								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L39">commands/Connection.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L74">commands/Connection.ts:74</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_commands_connection_.connection.html" class="tsd-signature-type">Connection</a></h4>
@@ -171,9 +196,10 @@
 					<h3>_parent</h3>
 					<div class="tsd-signature tsd-kind-icon">_parent<span class="tsd-signature-symbol">:</span> <a href="_commands_tower_.tower.html" class="tsd-signature-type">Tower</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#_parent">_parent</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#_parent">_parent</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L45">utility/Command.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L83">utility/Command.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -185,7 +211,7 @@
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commanddispatcher">commandDispatcher</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commanddispatcher">commandDispatcher</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L35">utility/Command.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L73">utility/Command.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -197,17 +223,17 @@
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#config">config</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L38">utility/Command.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L76">utility/Command.ts:76</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="connectionroot" class="tsd-anchor"></a>
-					<h3>connection<wbr>Root</h3>
-					<div class="tsd-signature tsd-kind-icon">connection<wbr>Root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="connectionsdirtree" class="tsd-anchor"></a>
+					<h3>connections<wbr>Dir<wbr>Tree</h3>
+					<div class="tsd-signature tsd-kind-icon">connections<wbr>Dir<wbr>Tree<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-signature-type">TreeDirectory</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L22">commands/Connection.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L74">commands/Connection.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -218,7 +244,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#directmode">directMode</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L36">utility/Command.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L74">utility/Command.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +254,7 @@
 					<div class="tsd-signature tsd-kind-icon">file<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="_utility_fileapi_.fileapi.html" class="tsd-signature-type">FileApi</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L21">commands/Connection.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L33">commands/Connection.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -238,7 +264,17 @@
 					<div class="tsd-signature tsd-kind-icon">helper<wbr>Add<span class="tsd-signature-symbol">:</span> <a href="_commands_connection_add_.addconnection.html" class="tsd-signature-type">AddConnection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L39">commands/Connection.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L72">commands/Connection.ts:72</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="helperapilist" class="tsd-anchor"></a>
+					<h3>helper<wbr>Api<wbr>List</h3>
+					<div class="tsd-signature tsd-kind-icon">helper<wbr>Api<wbr>List<span class="tsd-signature-symbol">:</span> <a href="_commands_connection_apilist_.apilist.html" class="tsd-signature-type">ApiList</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L73">commands/Connection.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -247,9 +283,10 @@
 					<h3>i18n</h3>
 					<div class="tsd-signature tsd-kind-icon">i18n<span class="tsd-signature-symbol">:</span> <a href="_utility_translation_.translation.html" class="tsd-signature-type">Translation</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#i18n">i18n</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#i18n">i18n</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L41">utility/Command.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L79">utility/Command.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,9 +295,10 @@
 					<h3>inquirer</h3>
 					<div class="tsd-signature tsd-kind-icon">inquirer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#inquirer">inquirer</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#inquirer">inquirer</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L40">utility/Command.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L78">utility/Command.ts:78</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -269,9 +307,10 @@
 					<h3>log</h3>
 					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <a href="_utility_debuglog_.debuglog.html" class="tsd-signature-type">DebugLog</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#log">log</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#log">log</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L42">utility/Command.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L80">utility/Command.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -283,7 +322,7 @@
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#name">name</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L34">utility/Command.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L72">utility/Command.ts:72</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -297,9 +336,10 @@
 					<h3>relutionSDK</h3>
 					<div class="tsd-signature tsd-kind-icon">relutionSDK<span class="tsd-signature-symbol">:</span> <a href="_utility_relutionsdk_.relutionsdk.html" class="tsd-signature-type">RelutionSdk</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#relutionsdk">relutionSDK</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#relutionsdk">relutionSDK</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L46">utility/Command.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L84">utility/Command.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -310,7 +350,17 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#reserved">reserved</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L43">utility/Command.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L81">utility/Command.ts:81</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="rootfolder" class="tsd-anchor"></a>
+					<h3>root<wbr>Folder</h3>
+					<div class="tsd-signature tsd-kind-icon">root<wbr>Folder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L34">commands/Connection.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -319,9 +369,10 @@
 					<h3>table</h3>
 					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <a href="_utility_table_.table.html" class="tsd-signature-type">Table</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#table">table</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#table">table</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L44">utility/Command.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L82">utility/Command.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -330,9 +381,10 @@
 					<h3>user<wbr>Rc</h3>
 					<div class="tsd-signature tsd-kind-icon">user<wbr>Rc<span class="tsd-signature-symbol">:</span> <a href="_utility_userrc_.userrc.html" class="tsd-signature-type">UserRc</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#userrc">userRc</a></p>
 						<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#userrc">userRc</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L37">utility/Command.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L75">utility/Command.ts:75</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -350,7 +402,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#_copy">_copy</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L205">utility/Command.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L255">utility/Command.ts:255</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -373,7 +425,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L45">commands/Connection.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L142">commands/Connection.ts:142</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -383,6 +435,100 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addenabled" class="tsd-anchor"></a>
+					<h3>add<wbr>Enabled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Enabled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L148">commands/Connection.ts:148</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>check if the connection add command is disabled</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addwhydisabled" class="tsd-anchor"></a>
+					<h3>add<wbr>Why<wbr>Disabled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Why<wbr>Disabled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L160">commands/Connection.ts:160</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>return why is is not enabld</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="apilist" class="tsd-anchor"></a>
+					<h3>api<wbr>List</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">api<wbr>List<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L138">commands/Connection.ts:138</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="commandisdisabled" class="tsd-anchor"></a>
+					<h3>command<wbr>IsDisabled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">command<wbr>IsDisabled<span class="tsd-signature-symbol">(</span>command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commandisdisabled">commandIsDisabled</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L186">utility/Command.ts:186</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>command: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -397,10 +543,58 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#flatcommands">flatCommands</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L209">utility/Command.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L259">utility/Command.ts:259</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="flattree" class="tsd-anchor"></a>
+					<h3>flat<wbr>Tree</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">flat<wbr>Tree<span class="tsd-signature-symbol">(</span>tree<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, store<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-signature-type">TreeDirectory</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-signature-type">TreeDirectory</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L83">commands/Connection.ts:83</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get all Connections form the rootfolder</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tree: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> store: <a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-signature-type">TreeDirectory</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-signature-type">TreeDirectory</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getconnectionnames" class="tsd-anchor"></a>
+					<h3>get<wbr>Connection<wbr>Names</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Connection<wbr>Names<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L103">commands/Connection.ts:103</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -415,7 +609,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#help">help</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L99">utility/Command.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L141">utility/Command.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -455,7 +649,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#home">home</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L79">utility/Command.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L121">utility/Command.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -473,7 +667,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L142">utility/Command.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L195">utility/Command.ts:195</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -489,26 +683,21 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="preload" class="tsd-anchor"></a>
 					<h3>preload</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">preload<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">preload<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#preload">preload</a></p>
+								<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#preload">preload</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L66">utility/Command.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L130">commands/Connection.ts:130</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>preload data</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -523,7 +712,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#quit">quit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L83">utility/Command.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L125">utility/Command.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -541,7 +730,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#setupcommandsforlist">setupCommandsForList</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L213">utility/Command.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L263">utility/Command.ts:263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -559,7 +748,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#showcommands">showCommands</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Command.ts#L224">utility/Command.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/utility/Command.ts#L275">utility/Command.ts:275</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -575,6 +764,23 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="streamconnectionfromfilesystem" class="tsd-anchor"></a>
+					<h3>stream<wbr>Connection<wbr>From<wbr>File<wbr>System</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">stream<wbr>Connection<wbr>From<wbr>File<wbr>System<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L109">commands/Connection.ts:109</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Object literals</h2>
@@ -586,7 +792,7 @@
 						<p>Implementation of <a href="../interfaces/_utility_command_.commandinterface.html">CommandInterface</a>.<a href="../interfaces/_utility_command_.commandinterface.html#commands">commands</a></p>
 						<p>Overwrites <a href="_utility_command_.command.html">Command</a>.<a href="_utility_command_.command.html#commands">commands</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L23">commands/Connection.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L36">commands/Connection.ts:36</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -595,7 +801,7 @@
 						<div class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L24">commands/Connection.ts:24</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L37">commands/Connection.ts:37</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -604,9 +810,63 @@
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L25">commands/Connection.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L42">commands/Connection.ts:42</a></li>
 								</ul>
 							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.add-1.label" class="tsd-anchor"></a>
+							<h3>label</h3>
+							<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L40">commands/Connection.ts:40</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.add-1.method" class="tsd-anchor"></a>
+							<h3>method</h3>
+							<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L41">commands/Connection.ts:41</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+							<a name="commands.add-1.when" class="tsd-anchor"></a>
+							<h3>when</h3>
+							<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+								<li class="tsd-signature tsd-kind-icon">when<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L38">commands/Connection.ts:38</a></li>
+										</ul>
+									</aside>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+							<a name="commands.add-1.why" class="tsd-anchor"></a>
+							<h3>why</h3>
+							<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+								<li class="tsd-signature tsd-kind-icon">why<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L39">commands/Connection.ts:39</a></li>
+										</ul>
+									</aside>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+								</li>
+							</ul>
 						</section>
 						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
 							<a name="commands.add-1.vars" class="tsd-anchor"></a>
@@ -614,7 +874,7 @@
 							<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L26">commands/Connection.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L43">commands/Connection.ts:43</a></li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -623,7 +883,7 @@
 								<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L27">commands/Connection.ts:27</a></li>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L44">commands/Connection.ts:44</a></li>
 									</ul>
 								</aside>
 								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -632,7 +892,111 @@
 									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 									<aside class="tsd-sources">
 										<ul>
-											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L28">commands/Connection.ts:28</a></li>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L45">commands/Connection.ts:45</a></li>
+										</ul>
+									</aside>
+								</section>
+							</section>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+						<a name="commands.apilist-1" class="tsd-anchor"></a>
+						<h3>apilist</h3>
+						<div class="tsd-signature tsd-kind-icon">apilist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L49">commands/Connection.ts:49</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.description-1" class="tsd-anchor"></a>
+							<h3>description</h3>
+							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L58">commands/Connection.ts:58</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.label-1" class="tsd-anchor"></a>
+							<h3>label</h3>
+							<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L56">commands/Connection.ts:56</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.method-1" class="tsd-anchor"></a>
+							<h3>method</h3>
+							<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L57">commands/Connection.ts:57</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.when-1" class="tsd-anchor"></a>
+							<h3>when</h3>
+							<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+								<li class="tsd-signature tsd-kind-icon">when<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L50">commands/Connection.ts:50</a></li>
+										</ul>
+									</aside>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.why-1" class="tsd-anchor"></a>
+							<h3>why</h3>
+							<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+								<li class="tsd-signature tsd-kind-icon">why<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L53">commands/Connection.ts:53</a></li>
+										</ul>
+									</aside>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+							<a name="commands.apilist-1.vars-1" class="tsd-anchor"></a>
+							<h3>vars</h3>
+							<div class="tsd-signature tsd-kind-icon">vars<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L59">commands/Connection.ts:59</a></li>
+								</ul>
+							</aside>
+							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+								<a name="commands.apilist-1.vars-1.name-2" class="tsd-anchor"></a>
+								<h3>name</h3>
+								<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L60">commands/Connection.ts:60</a></li>
+									</ul>
+								</aside>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="commands.apilist-1.vars-1.name-2.pos-1" class="tsd-anchor"></a>
+									<h3>pos</h3>
+									<div class="tsd-signature tsd-kind-icon">pos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L61">commands/Connection.ts:61</a></li>
 										</ul>
 									</aside>
 								</section>
@@ -645,16 +1009,16 @@
 						<div class="tsd-signature tsd-kind-icon">help<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L32">commands/Connection.ts:32</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L65">commands/Connection.ts:65</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="commands.help-1.description-1" class="tsd-anchor"></a>
+							<a name="commands.help-1.description-2" class="tsd-anchor"></a>
 							<h3>description</h3>
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L33">commands/Connection.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L66">commands/Connection.ts:66</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -665,16 +1029,16 @@
 						<div class="tsd-signature tsd-kind-icon">quit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L35">commands/Connection.ts:35</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L68">commands/Connection.ts:68</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-							<a name="commands.quit-1.description-2" class="tsd-anchor"></a>
+							<a name="commands.quit-1.description-3" class="tsd-anchor"></a>
 							<h3>description</h3>
 							<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/commands/Connection.ts#L36">commands/Connection.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/feature/disable-command/src/commands/Connection.ts#L69">commands/Connection.ts:69</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -713,7 +1077,7 @@
 								<a href="_commands_connection_.connection.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_commands_connection_.connection.html#connectionroot" class="tsd-kind-icon">connection<wbr>Root</a>
+								<a href="_commands_connection_.connection.html#connectionsdirtree" class="tsd-kind-icon">connections<wbr>Dir<wbr>Tree</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#directmode" class="tsd-kind-icon">direct<wbr>Mode</a>
@@ -723,6 +1087,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_commands_connection_.connection.html#helperadd" class="tsd-kind-icon">helper<wbr>Add</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#helperapilist" class="tsd-kind-icon">helper<wbr>Api<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#i18n" class="tsd-kind-icon">i18n</a>
@@ -742,6 +1109,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#reserved" class="tsd-kind-icon">reserved</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#rootfolder" class="tsd-kind-icon">root<wbr>Folder</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#table" class="tsd-kind-icon">table</a>
 							</li>
@@ -754,8 +1124,26 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_commands_connection_.connection.html#add" class="tsd-kind-icon">add</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#addenabled" class="tsd-kind-icon">add<wbr>Enabled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#addwhydisabled" class="tsd-kind-icon">add<wbr>Why<wbr>Disabled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#apilist" class="tsd-kind-icon">api<wbr>List</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_commands_connection_.connection.html#commandisdisabled" class="tsd-kind-icon">command<wbr>IsDisabled</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#flatcommands" class="tsd-kind-icon">flat<wbr>Commands</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#flattree" class="tsd-kind-icon">flat<wbr>Tree</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#getconnectionnames" class="tsd-kind-icon">get<wbr>Connection<wbr>Names</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#help" class="tsd-kind-icon">help</a>
@@ -766,7 +1154,7 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#init" class="tsd-kind-icon">init</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_commands_connection_.connection.html#preload" class="tsd-kind-icon">preload</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -778,6 +1166,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_commands_connection_.connection.html#showcommands" class="tsd-kind-icon">show<wbr>Commands</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_commands_connection_.connection.html#streamconnectionfromfilesystem" class="tsd-kind-icon">stream<wbr>Connection<wbr>From<wbr>File<wbr>System</a>
+							</li>
 							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_commands_connection_.connection.html#commands" class="tsd-kind-icon">commands</a>
 							</li>
@@ -785,6 +1176,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_commands_connection_.treedirectory.html" class="tsd-kind-icon">Tree<wbr>Directory</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
