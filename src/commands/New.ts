@@ -1,8 +1,10 @@
 import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {Create} from './new/Create';
-
+import * as path from  'path';
+import * as fs from 'fs';
 /**
  * create a new Baas for the Developer
  * ```bash
@@ -20,6 +22,16 @@ export class New extends Command {
 
   public commands: any = {
     create: {
+      when: () => {
+        let files = fs.readdirSync(process.cwd());
+        if (files.length) {
+          return false;
+        }
+        return true;
+      },
+      why: () => {
+        return this.i18n.FOLDER_NOT_EMPTY(process.cwd());
+      },
       description: this.i18n.NEW_CREATE,
       vars: {
         name: {
@@ -53,7 +65,7 @@ export class New extends Command {
           files.push(file);
         },
         complete: () => {
-          if (!files.length) {
+          if (!files.length) { // is empty the folder
             this._create.publish().subscribe(
               (resp: any) => { observer.next(resp); },
               (e: Error) => observer.error(e),
@@ -67,5 +79,4 @@ export class New extends Command {
       });
     });
   }
-
 }

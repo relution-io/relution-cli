@@ -222,6 +222,7 @@ export class Tower {
    * ```
    */
   help(asArray = false) {
+    // console.log('help tower', this.staticCommandRootKeys);
     return Observable.create((observer: any) => {
       let content: any = [this._rowDivider];
       // to say hello
@@ -229,6 +230,7 @@ export class Tower {
         if (commandName !== this.name && this.reserved.indexOf(commandName) === -1) {
           this.staticCommands[commandName].help(true).subscribe(
             (commands: Array<string>) => {
+              // console.log(commands, commandName);
               commands.forEach((command: any) => {
                 content.push(command);
               });

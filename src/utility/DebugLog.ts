@@ -1,10 +1,8 @@
 import * as chalk from 'chalk';
-export
-  /**
-   * DebugLog
-   */
-
-  class DebugLog {
+/**
+ * DebugLog
+ */
+export class DebugLog {
   static withStack: boolean = false;
   static badge(label: string, color = 'green'): string {
     return chalk.bgBlack(chalk[color](` ${label} : `));

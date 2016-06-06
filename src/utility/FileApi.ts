@@ -15,6 +15,7 @@ export class FileApi {
   public path: string = `${__dirname}/../../devtest/`;
   // options abouthjson
   public hjsonOptions: any = { keepWsc: true };
+  public rxFs = RxFs;
   /**
    * create a Folder with a .gitkeep file
    */

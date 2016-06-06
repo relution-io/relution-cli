@@ -5,11 +5,12 @@ import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../utility/Validator';
 import {EnvCollection} from './../collection/EnvCollection';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {Gii} from './../gii/Gii';
 import {EnvModel} from './../models/EnvModel';
 import {ChooseEnv} from './environment/ChooseEnv';
 import {AddAttribute} from './environment/AddAttribute';
-
+import * as fs from 'fs';
 export
   /**
    * Environment
@@ -31,47 +32,6 @@ export
    */
   class Environment extends Command {
   /**
-   * available commands
-   */
-  public commands: Object = {
-    add: {
-      description: 'add a new Environment',
-      vars: {
-        name: {
-          pos: 0
-        }
-      }
-    },
-    update: {
-      description: 'Add a new key value pair to your Environment.',
-      vars: {
-        name: {
-          pos: 0
-        }
-      }
-    },
-    copy: {
-      description: 'copy a exist Environment',
-      vars: {
-        from: {
-          pos: 0
-        },
-        name: {
-          pos: 1
-        }
-      }
-    },
-    list: {
-      description: 'List all environments by name'
-    },
-    help: {
-      description: this.i18n.LIST_COMMAND('Environment')
-    },
-    quit: {
-      description: 'Exit To Home'
-    }
-  };
-  /**
    * hjson file helper
    */
   public fsApi: FileApi = new FileApi();
@@ -91,7 +51,71 @@ export
    * prompt for add key value pair
    */
   public addAttribute: AddAttribute = new AddAttribute();
-
+  /**
+ * available commands
+ */
+  public commands: Object = {
+    add: {
+      when: () => {
+        return RxFs.exist(`${process.cwd()}/env/`);
+      },
+      why: () => {
+        return this.i18n.FOLDER_NOT_EXIST(`${process.cwd()}/env/`);
+      },
+      description: 'add a new Environment',
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
+    update: {
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.ENV_UPDATE,
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
+    copy: {
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.ENV_COPY,
+      vars: {
+        from: {
+          pos: 0
+        },
+        name: {
+          pos: 1
+        }
+      }
+    },
+    list: {
+      when: () => {
+        return this.envExists();
+      },
+      why: () => {
+        return this.envNotExistDesc();
+      },
+      description: this.i18n.LIST_AVAILABLE_CONFIG('Environments')
+    },
+    help: {
+      description: this.i18n.LIST_COMMAND('Environment')
+    },
+    quit: {
+      description: this.i18n.EXIT_TO_HOME
+    }
+  };
   constructor() {
     super('env');
     this.fsApi.path = `${process.cwd()}/env/`;
@@ -104,12 +128,11 @@ export
    * @returns Observable
    */
   createEnvironment(name: string) {
-
     return Observable.create((observer: any) => {
       let template = this.gii.getTemplateByName(this.name);
       this.fsApi.writeHjson(template.instance.render(name.toLowerCase()), name.toLowerCase()).subscribe(
         (pipe: any) => {
-          observer.next(`Environment ${name} is generated`);
+          observer.next(this.i18n.ENV_IS_CREATED(name));
         },
         (e: any) => { observer.error(e); },
         () => {
@@ -126,24 +149,13 @@ export
    * @returns Observable
    */
   preload() {
-    return Observable.create((observer: any) => {
-      this.envCollection.getEnvironments().subscribe({
-        error: (e: Error) => {
-          console.log(e);
-          // observer.error('no environments available');
-          super.preload().subscribe({
-            complete: () => observer.complete()
-          });
-        },
-        complete: () => {
-          // this.log.debug(this.envCollection.collection);
-          this.chooseEnv = new ChooseEnv(this.envCollection);
-          super.preload().subscribe({
-            complete: () => observer.complete()
-          });
+    return super.preload()
+      .exhaustMap(() => {
+        if (!this.fsApi.rxFs.exist(this.fsApi.path)) {
+          return Observable.empty();
         }
+        return this.envCollection.getEnvironments();
       });
-    });
   }
 
   /**
@@ -224,7 +236,7 @@ export
       })
       .exhaustMap((store: Array<{ key: string, value: any }>) => {
         return this.envCollection.bulkUpdate(names, store).map(() => {
-          return `Update complete`;
+          return this.i18n.ENV_UPDATE_COMPLETE;
         });
       });
   }
@@ -336,5 +348,16 @@ export
         observer.complete();
       });
     }
+  }
+
+  envExists(): boolean {
+    if (!RxFs.exist(`${process.cwd()}/env/`)) {
+      return false;
+    }
+    return this.envCollection.collection.length <= 0 ? false : true;
+  }
+
+  envNotExistDesc(): string {
+    return this.i18n.ENV_ADD_FIRSTLY;
   }
 }

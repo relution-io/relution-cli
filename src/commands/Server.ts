@@ -70,14 +70,10 @@ export class Server extends Command {
   }
 
   preload(): Observable<any> {
-    return Observable.create((observer: any) => {
-      super.preload().subscribe({
-        complete: () => {
-          this.crudHelper = new ServerCrud(this);
-          observer.complete();
-        }
+    return super.preload()
+      .map(() => {
+        this.crudHelper = new ServerCrud(this);
       });
-    });
   }
 
   /**

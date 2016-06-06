@@ -1,5 +1,6 @@
 import {Command} from './../utility/Command';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {findIndex, map} from 'lodash';
 import * as path from 'path';
 import {AddConnection} from './connection/Add';
@@ -15,8 +16,7 @@ interface TreeDirectory {
   children?: Array<TreeDirectory>;
   connection?: ConnectionModel;
 }
-
-export /**
+/**
  * Connection
  * ```bash
  * ┌────────────┬──────────┬──────────┬─────────────────────────┐
@@ -29,12 +29,14 @@ export /**
  * └────────────┴──────────┴──────────┴─────────────────────────┘
  * ```
  */
-  class Connection extends Command {
+export class Connection extends Command {
   public fileApi: FileApi = new FileApi();
-  public connectionRoot: string = path.join(process.cwd(), 'connections');
+  public rootFolder: string = path.join(process.cwd(), 'connections');
 
   public commands: any = {
     add: {
+      when: () => this.addEnabled(),
+      why: () => this.addWhyDisabled(),
       label: this.i18n.CONNECTION_ADD_LABEL,
       method: 'add',
       description: this.i18n.CONNECTION_ADD_DESCRIPTION,
@@ -45,6 +47,12 @@ export /**
       }
     },
     apilist: {
+      when: (): boolean => {
+        return this.connectionsDirTree.length <= 0 ? false : true;
+      },
+      why: () => {
+        return this.i18n.CONNECTION_ADD_CONNECTION_BEFORE;
+      },
       label: this.i18n.CONNECTION_API_LIST_LABEL,
       method: 'apiList',
       description: this.i18n.CONNECTION_API_LIST_DESCRIPTION,
@@ -63,16 +71,19 @@ export /**
   };
   public helperAdd: AddConnection = new AddConnection(this);
   public helperApiList: ApiList = new ApiList(this);
-  public connectionsDirTree: Array<TreeDirectory>;
-  public rootFolder = `${process.cwd()}/connections`;
+  public connectionsDirTree: Array<TreeDirectory> = [];
 
   constructor() {
     super('connection');
   }
 
-
+  /**
+   * get all Connections form the rootfolder
+   */
   flatTree(tree: any, store: TreeDirectory[] = []): TreeDirectory[] {
-	if (!tree) return store;
+    if (!tree) {
+      return store;
+    };
     if (tree.children) {
       return this.flatTree(tree.children, store);
     }
@@ -95,7 +106,7 @@ export /**
     });
   }
 
-  streamConnectionFromFileSystem(){
+  streamConnectionFromFileSystem() {
     this.connectionsDirTree = this.flatTree(this.fileApi.dirTree(this.rootFolder, ['.hjson']));
     let forkjoin: any = [];
     this.connectionsDirTree.forEach((connection: TreeDirectory) => {
@@ -115,17 +126,11 @@ export /**
   }
 
   preload() {
-    return Observable.create((observer: any) => {
-      return this.streamConnectionFromFileSystem().subscribe({
-        error: (e: Error) => {
-          this.log.error(e);
-          return super.preload();
-        },
-        complete: () => {
-          return super.preload();
-        }
-      });
-    });
+    return super.preload().exhaustMap(
+      () => {
+        return this.streamConnectionFromFileSystem();
+      }
+    );
   }
 
   apiList(name?: string) {
@@ -135,5 +140,29 @@ export /**
   add(path?: string): Observable<any> {
     return this.helperAdd.add();
   }
+  /**
+   * check if the connection add command is disabled
+   */
+  addEnabled(): boolean {
+    if (!this.userRc.server.length) {
+      return false;
+    }
+    if (!RxFs.exist(this.rootFolder)) {
+      return false;
+    }
+    return true;
+  }
+  /**
+   * return why is is not enabld
+   */
+  addWhyDisabled(): string {
 
+    if (!this.userRc.server.length) {
+      return this.i18n.CONNECTION_ADD_SERVER_BEFORE;
+    }
+
+    if (!RxFs.exist(this.rootFolder)) {
+      return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
+    }
+  }
 }

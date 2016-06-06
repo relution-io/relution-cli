@@ -9,21 +9,59 @@ import {RelutionSdk} from './RelutionSDK';
 const inquirer = require('inquirer');
 
 interface CommandInterface {
+  _parent: Tower;
   name: string;
   commandDispatcher: any;
   config: Object;
   commands?: Object;
+  i18n: Translation;
+  log: DebugLog;
+  table: Table;
+  userRc: UserRc;
+  inquirer: any;
+  relutionSDK: RelutionSdk;
+  help: () => {};
+  quit: () => {};
+  showCommands: () => {};
 }
 /**
  *
- * ```javascript
+ * Important All Subcommand have to return an Observable
+ * ##### Add a new Command
+ *
+ *```javascript
+ *
  * import {Command} from './../utility/Command';
- * export class Server extends Command {
- *   constructor() {
- *    super('server');
- *   }
+ *
+ * export MyCommand extends Command{
+ *  constructor(){
+ *    super('myCommand');
+ *  }
+ *
+ *  public commmands = {
+ *    subcommand: {
+ *      label: 'My Label', // is shown in the showCommands list
+ *      description: 'My own Command', // is shown in the help as description
+ *      method: 'mySubCommandMethod', // you can set the method if you want default MyCommand.subcommand()
+ *      when: (): boolean => { // disabled ?
+ *        return true;
+ *      },
+ *      why: () => { // why is it disabled
+ *        return `is disabled why`;
+ *      },
+ *      vars: { // allow params on this subcommand
+ *        name: {
+ *          pos: 0
+ *        }
+ *      }
+ *    }
+ *  }
  * }
- * ```
+ *
+ * public mySubCommandMethod(name?:string): Observable<empty> {
+ *  return Observable.empty();
+ * }
+ *```
  */
 
 
@@ -64,15 +102,19 @@ export class Command implements CommandInterface {
    * preload data
    */
   preload(): Observable<any> {
-    return Observable.create((observer: Observer<any>) => {
-      this.userRc.rcFileExist().subscribe((exist: boolean) => {
-        if (exist) {
-          this.userRc.streamRc().subscribe((data: any) => {
-            this.config = data;
-            observer.complete();
-          });
-        }
-      });
+    return this.userRc.rcFileExist().do(
+      (exist: boolean) => {
+      // if (this.name === 'env') {
+        // console.log(this.name);
+      // }
+      if (exist) {
+        this.userRc.streamRc().do((data: any) => {
+          this.config = data;
+        });
+      }
+    },
+    (e: Error) => {
+      console.error(e);
     });
   }
 
@@ -103,8 +145,9 @@ export class Command implements CommandInterface {
       // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
+        let color = this.commandIsDisabled(this.commands[commandName], commandName) ? 'red' : 'green' ;
         let name: string = this.commands[commandName].label ? this.commands[commandName].label : commandName;
-        let command: Array<string> = [chalk.green(this.name), chalk.cyan(name)];
+        let command: Array<string> = [chalk[color](this.name), chalk.cyan(name)];
         if (this.commands[commandName]) {
           if (commandName !== 'relution') {
             //  && this.reserved.indexOf(commandName) === -1
@@ -140,7 +183,16 @@ export class Command implements CommandInterface {
     });
   }
 
-  init(args: Array<string>, back: Tower) {
+  commandIsDisabled(command: any, name: string): boolean {
+    if (command.when && !command.when()) {
+      let message = command.why ? command.why() : `is not enabled`;
+      this.log.info(`"${chalk.magenta(this.name)} ${chalk.magenta(name)}" is disabled because: ${message}`);
+      return true;
+    }
+    return false;
+  }
+
+  init(args: Array<string>, back: Tower): any {
     // this.log.info(`Command.ts ${this.name}`, args);
     this._parent = back;
     let myObservable: Observable<any>;
@@ -177,9 +229,7 @@ export class Command implements CommandInterface {
 
     // this.log.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     // server add
-
     if (args[0] === this.name && this[args[1]]) {
-
       if (args.length > 2) {
         this.log.info('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);
@@ -189,7 +239,6 @@ export class Command implements CommandInterface {
         myObservable = this[args[1]]();
       }
     }
-
     return myObservable.subscribe(
       (log: any) => {
         if (log && log.length) {
@@ -215,6 +264,7 @@ export class Command implements CommandInterface {
     let temp: Array<Object> = [];
     this.flatCommands().forEach((command) => {
       temp.push({
+        disabled: this.commandIsDisabled(this.commands[command], command),
         name: this.commands[command].label ? this.commands[command].label : command,
         value: [this.name, this.commands[command].method ? this.commands[command].method : command]
       });

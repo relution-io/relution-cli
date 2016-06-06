@@ -45,9 +45,9 @@ export class MetaModel extends Relution.model.MetaModel {
   }
 
   prompt(): any {
-    let questions = (<Relution.model.FieldDefinition[]>this.fieldDefinitions)
+    let questions = this.fieldDefinitions
       .filter(this.filterPrompts, this);
-
+      // console.log('this.fieldDefinitions', this.fieldDefinitions);
     let prompt: Array<{
       choices?: Array<{name: string, value: string|number}>,
       type: string,
@@ -173,7 +173,7 @@ export class ConnectionModel implements ConnectionInterface {
   public getCommentvalue(fieldDefinition: Relution.model.FieldDefinition) {
     let comment = '';
     if (fieldDefinition.enumDefinition && fieldDefinition.enumDefinition.items && fieldDefinition.enumDefinition.items.length) {
-      // console.log(fieldDefinition.enumDefinition);
+      console.log(fieldDefinition.enumDefinition.items);
       let values = fieldDefinition.enumDefinition.items.map((item) => item.value);
       comment += commaListsOr`//${fieldDefinition.name}: ${values}`;
     } else {

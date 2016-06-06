@@ -65,7 +65,7 @@ export class AddConnection {
   /**
    * return the path for the folder where it have to be create
    */
-  public get path() {
+  public get connectionHomeFolder() {
     let myPath = path.dirname(this.connectionModel.name);
     if (myPath === '.') {
       return this._rootFolder;
@@ -79,7 +79,7 @@ export class AddConnection {
     return path.basename(this.connectionModel.name);
   }
 
-  public getMetadata(provider:string): any{
+  public getMetadata(provider: string): any {
     return Observable.fromPromise(
       Relution.web.ajax(
         {
@@ -98,16 +98,16 @@ export class AddConnection {
         name: 'connectionname',
         message: `Please enter name or an sep path('ews/ews-exchange')`,
         validate: (value: string): boolean => {
+
           let names: string[] = this.connection.getConnectionNames();
           let notEmpty = Validator.notEmptyValidate(value);
-
           if (!notEmpty) {
             this.connection.log.error(new Error(`Name can not be empty`));
             return false;
           }
 
-          if (names.indexOf(value) !== -1 ) {
-            this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exist Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
+          if (names.indexOf(value) !== -1) {
+            this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
             return false;
           }
 
@@ -146,7 +146,7 @@ export class AddConnection {
   }
 
   /**
-   * return a prompt with protocols as value
+   * return a prompt with providers as value
    */
   private _chooseConnectorProvider(providers: Array<{ value: string, label: string }>): Observable<any> {
     let choices: Array<{
@@ -218,7 +218,7 @@ export class AddConnection {
     let prompt = {
       type: 'confirm',
       name: 'connectionOverwrite',
-      message: `${path} already exist you want to overwrite it ?`
+      message: `${path} already exists you want to overwrite it ?`
     };
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
@@ -238,7 +238,7 @@ export class AddConnection {
    * if is a subfolder we have to create it if is connection exist the user have to be confirm the overwrite
    */
   private _createConnectionFolder() {
-    let folder = this.path;
+    let folder = this.connectionHomeFolder;
     if (RxFs.exist(`${folder}/${this.connectionName}.hjson`)) {
       return this._alreadyExist(`${folder}/${this.connectionName}.hjson`);
     }
@@ -265,7 +265,7 @@ export class AddConnection {
     this.connectionModel = new ConnectionModel();
     let fileWritten = true;
     if (!this.connection.userRc.server.length) {
-      return Observable.throw(new Error('Please add first a Server!'));
+      return Observable.throw(new Error('Please add a Server firstly!'));
     }
     /**
      * set a new connection name
@@ -352,18 +352,18 @@ export class AddConnection {
         // console.log('resp', resp);
         if (resp.metaModels && resp.metaModels.length) {
           this.connectionModel.metaModel = new MetaModel().fromJSON(resp.metaModels[0]);
-          // console.log(this.connectionModel.metaModel.prompt);
+          // console.log('this.connectionModel.metaModel.prompt', this.connectionModel.metaModel.prompt);
           return this.connectionModel.metaModel.questions()
-            .map((answers: any) => {
-              // console.log(answers);
+            .exhaustMap((answers: any) => {
+              // console.log('answers', answers);
               Object.keys(answers).forEach((key) => {
                 if (key !== this.connection.i18n.TAKE_ME_OUT) {
-                  this.connectionModel.metaModel.fieldDefinitions[key].defaultValue = answers[key];
+                  this.connectionModel.metaModel.fieldDefinitions.index[key].defaultValue = answers[key];
                   // console.log(this.connectionModel.metaModel.fieldDefinitions[key]);
                 }
               });
               return this._createConnectionFolder();
-            }).exhaust();
+            });
         } else {
           return this._createConnectionFolder();
         }
@@ -373,15 +373,15 @@ export class AddConnection {
        */
       .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
         let template = this.connectionModel.toJson();
-        // console.log(written);
         if (written && written.connectionOverwrite === false) {
           fileWritten = written.connectionOverwrite;
           return Observable.create((observer: any) => {
-            this.connection.log.warn(`Connection add ${this.connectionName} canceled`);
+            this.connection.log.warn(`Connection add ${this.connectionName} canceled.`);
             return observer.complete();
           });
         }
-        return this.connection.fileApi.writeHjson(template, this.connectionName, this.path);
+
+        return this.connection.fileApi.writeHjson(template, this.connectionName, this._rootFolder);
       })
       /**
        * write name.gen.js file to the connections folder
@@ -390,7 +390,7 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connectionGen');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.path);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.connectionHomeFolder);
       })
       /**
        * write name.js file to the connections folder
@@ -399,12 +399,15 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connection');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this.path)
-          .do((file: any) => {
-            if (fileWritten) {
-              return this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
-            }
-          });
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this._rootFolder);
+      })
+      .exhaustMap(() => {
+        return this.connection.streamConnectionFromFileSystem();
+      })
+      .do({
+        complete: (file: any) => {
+          this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
+        }
       });
   }
 

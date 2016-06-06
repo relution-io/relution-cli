@@ -35,8 +35,14 @@ export class Deploy extends Command {
   private _fileApi: FileApi = new FileApi();
 
   public commands: any = {
-    deploy: {
-      description: this.i18n.DEPLOY,
+    publish: {
+      description: this.i18n.DEPLOY_PUBLISH,
+      when: () => {
+        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
+      },
+      why: () => {
+        return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
+      },
       vars: {
         name: {
           pos: 0
@@ -114,7 +120,7 @@ export class Deploy extends Command {
   /**
    * deploy the baas to the server
    */
-  public deploy(): Observable<any> {
+  public publish(): Observable<any> {
     this._fileApi.path = this.projectDir;
     // loginresponse
     let userResp: Relution.security.User;
@@ -163,9 +169,9 @@ export class Deploy extends Command {
         userResp = resp.user;
         loader.stop();
         if (!this.checkOrga(userResp)) {
-          return Observable.throw(new Error(`Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`));
+          return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
-        this.log.info(chalk.green(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`));
+        this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
         return this._parent.staticCommands.env.chooseEnv.choose('list')
           .filter((answers: { env: string }) => {
             return answers.env !== this.i18n.TAKE_ME_OUT;

@@ -6,6 +6,7 @@ export class Translation {
   static TAKE_ME_OUT: string = 'Take me out of here';
   static NOT_VALID: string = `Your Input is not valid`;
   static EXIT_TO_HOME: string = 'Exit to Home';
+  static NPM_INSTALL = `Start npm install this take a while`;
   /**
    * Server Command
    */
@@ -20,7 +21,8 @@ export class Translation {
   /**
    * Deploy Command
    */
-  static DEPLOY = `deploy your Baas to the server`;
+  static DEPLOY_PUBLISH = `deploy your Baas to the server`;
+  static DEPLOY_NO_ORGA = `Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`;
   /**
    * Connection Command
    */
@@ -28,13 +30,34 @@ export class Translation {
   static CONNECTION_ADD_DESCRIPTION = `Create a new connection`;
   static CONNECTION_API_LIST_LABEL= `Add some calls from you deployed Connection`;
   static CONNECTION_API_LIST_DESCRIPTION = `Add some calls to the exists Connection`;
+  static CONNECTION_ADD_CONNECTION_BEFORE = `Please add first a Connection for this feature.`;
+  static CONNECTION_ADD_SERVER_BEFORE = `Please add first a Server to create a Connection.`;
 
-  static NPM_INSTALL = `Start npm install this take a while`;
+  /**
+   * Environment
+   */
+  static ENV_UPDATE = 'Add a new key value pair to your Environment.';
+  static ENV_COPY = 'copy a exist Environment';
+  static ENV_IS_CREATED(name: string): string {
+    return `Environment ${name} is generated.`;
+  }
+  static ENV_UPDATE_COMPLETE = `Update complete`;
+  static ENV_ADD_FIRSTLY = `Please add an Environment firstly!`;
+
+  static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
+    return `The folder "${folder}" is not a Relution project. Please read the manual "How to migrate exists Project into a relution Project".`;
+  }
+
+  static LIST_AVAILABLE_CONFIG(name: string ): string {
+    return `List available ${name} configs.`;
+  }
+
   static SELECT(name: string): string {
     return `Select ${name} :`;
   }
-  static NOT_EMPTY(name:string):string {
-    return `${name} can not be empty`;
+
+  static NOT_EMPTY(name: string): string {
+    return `${name} must be specified.`;
   }
 
   static ENTER_SOMETHING_LABEL(name: string) {
@@ -53,6 +76,9 @@ export class Translation {
     return `List the ${name} Command`;
   }
 
+  static FOLDER_NOT_EXIST(folder: string): string {
+    return `Folder ${folder} not exists!`;
+  }
   static RH_DESCRIPTION(name: string): string {
     return `Auto Generated Description for ${name}.`;
   }

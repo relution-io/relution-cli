@@ -1,6 +1,5 @@
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
-import {Translation} from './../../utility/Translation';
 import {ServerModelRc, ServerModelInterface} from './../../models/ServerModelRc';
 import {Server} from './../Server';
 import {findIndex, map} from 'lodash';
@@ -44,7 +43,7 @@ export class ServerCrud {
         validate: (value: string): any => {
           let test: number = findIndex(this.userRc.config.server, { id: value });
           if (!test && this._scenario === ADD) {
-            DebugLog.error(new Error(Translation.ALREADY_EXIST(value)));
+            DebugLog.error(new Error(this.server.i18n.ALREADY_EXIST(value)));
             return false;
           }
 
@@ -137,7 +136,7 @@ export class ServerCrud {
    */
   public addServer(server: ServerModelRc, update = false): any {
     if (!this.isUnique(server) && !update) {
-      throw new Error(Translation.ALREADY_EXIST(server.id, 'Server'));
+      throw new Error(this.server.i18n.ALREADY_EXIST(server.id, 'Server'));
     }
     if (server.default) {
       this.falseyDefaultServer();
@@ -162,8 +161,8 @@ export class ServerCrud {
 
     if (defaults) {
       myPrompt.forEach((item: any) => {
-        item.default = () => { return defaults[item.name] };
-        item.message += Translation.PRESS_ENTER;
+        item.default = () => { return defaults[item.name]; };
+        item.message += this.server.i18n.PRESS_ENTER;
       });
     }
 
@@ -183,7 +182,7 @@ export class ServerCrud {
    */
   serverListPrompt(name = 'server', type = 'checkbox', message = 'Select Server(s) :') {
     let choices = map(this.userRc.config.server, 'id');
-    choices.push(Translation.TAKE_ME_OUT);
+    choices.push(this.server.i18n.TAKE_ME_OUT);
     return [
       {
         type: type,
@@ -192,7 +191,7 @@ export class ServerCrud {
         choices: choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
-            return Translation.YOU_MOUST_CHOOSE('Server');
+            return this.server.i18n.YOU_MOUST_CHOOSE('Server');
           }
           return true;
         }
@@ -226,14 +225,14 @@ export class ServerCrud {
     let all: any = [];
     return this.deletePrompt()
       .filter((answers: { server: Array<string> }) => {
-        if (answers.server.indexOf(Translation.TAKE_ME_OUT) !== -1 && answers.server.length > 1) {
+        if (answers.server.indexOf(this.server.i18n.TAKE_ME_OUT) !== -1 && answers.server.length > 1) {
           DebugLog.warn(`I see you choose servers and "Take me out of here" so you get out without remove`);
           return false;
         }
         return true;
       })
       .filter((answers: { server: Array<string> }) => {
-        return answers.server.indexOf(Translation.TAKE_ME_OUT) === -1;
+        return answers.server.indexOf(this.server.i18n.TAKE_ME_OUT) === -1;
       })
       .exhaustMap((answers: { server: Array<string> }) => {
         answers.server.forEach((serverId: string) => {
@@ -302,7 +301,7 @@ export class ServerCrud {
     let prompt: any = this.serverListPrompt('server', 'list', 'choose a Server');
 
     if (id && id.length) {
-      prompt.default = () => { return id; }
+      prompt.default = () => { return id; };
     }
 
     return Observable.fromPromise(this.inquirer.prompt(prompt));
@@ -334,7 +333,7 @@ export class ServerCrud {
        */
       return this._updateServerChooserPrompt()
         .filter((answers: { server: string }) => {
-          return answers.server !== Translation.TAKE_ME_OUT;
+          return answers.server !== this.server.i18n.TAKE_ME_OUT;
         })
         .map((answers: { server: string }) => {
           return this._copy(answers.server);

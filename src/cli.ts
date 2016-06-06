@@ -28,17 +28,15 @@ Object.keys(staticCommands).forEach((commandName: any) => {
 
 // preload done
 Observable.forkJoin(all).subscribe(
-  () => {
-
+  (a: any) => {
+    // console.log(a);
   },
   (e: any) => {
-    console.error(e);
-    // loader.stop();
+    console.error('preload', e);
     process.exit();
   },
   () => {
     // console.log(`cli is preloaded`);
     return new Tower(staticCommands);
-    // loader.stop();
   }
 );

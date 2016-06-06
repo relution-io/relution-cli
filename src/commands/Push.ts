@@ -1,14 +1,13 @@
 import {Command} from './../utility/Command';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {PushCollection, PushModel, IOSPush, AndroidPush} from './../collection/PushCollection';
 import {Observable} from '@reactivex/rxjs';
 import * as path from 'path';
 import * as chalk from 'chalk';
 import {Validator} from './../utility/Validator';
-
 import {find} from 'lodash';
 
-export
 /**
  * Push
  * ```bash
@@ -23,13 +22,19 @@ export
  * └─────────┴──────────┴──────────┴─────────────────────────────┘
  * ```
  */
-  class Push extends Command {
+export class Push extends Command {
   public collection = new PushCollection();
   public types = ['ios', 'android'];
   public fsApi: FileApi = new FileApi();
-
+  public rootFolder = `${process.cwd()}/push`;
   public commands: any = {
     add: {
+      when: () => {
+        return RxFs.exist(this.rootFolder);
+      },
+      why: () => {
+        return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
+      },
       description: 'create a push config',
       vars: {
         name: {
@@ -38,7 +43,13 @@ export
       }
     },
     list: {
-      description: 'list available push configs',
+      when: () => {
+        return RxFs.exist(this.rootFolder);
+      },
+      why: () => {
+        return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
+      },
+      description: this.i18n.LIST_AVAILABLE_CONFIG('push'),
     },
     help: {
       description: this.i18n.LIST_COMMAND('Push')
@@ -189,7 +200,7 @@ export
   /**
    * enter name for new push config
    */
-  _enterName(): Observable<Object> {
+  _enterName(): any {
     let prompt = {
       type: 'input',
       name: 'pushName',
