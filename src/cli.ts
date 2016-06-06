@@ -36,8 +36,7 @@ Observable.forkJoin(all).subscribe(
     process.exit();
   },
   () => {
-    console.log(`cli is preloaded`);
-    console.log(staticCommands.connection.connectionsDirTree);
+    // console.log(`cli is preloaded`);
     return new Tower(staticCommands);
   }
 );

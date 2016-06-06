@@ -222,7 +222,7 @@ export class Tower {
    * ```
    */
   help(asArray = false) {
-    console.log('help tower', this.staticCommandRootKeys);
+    // console.log('help tower', this.staticCommandRootKeys);
     return Observable.create((observer: any) => {
       let content: any = [this._rowDivider];
       // to say hello

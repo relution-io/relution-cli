@@ -101,7 +101,6 @@ export class AddConnection {
 
           let names: string[] = this.connection.getConnectionNames();
           let notEmpty = Validator.notEmptyValidate(value);
-          console.log(names, notEmpty);
           if (!notEmpty) {
             this.connection.log.error(new Error(`Name can not be empty`));
             return false;
@@ -374,8 +373,6 @@ export class AddConnection {
        */
       .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
         let template = this.connectionModel.toJson();
-
-        console.log(template);
         if (written && written.connectionOverwrite === false) {
           fileWritten = written.connectionOverwrite;
           return Observable.create((observer: any) => {
