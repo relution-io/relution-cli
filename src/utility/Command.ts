@@ -113,7 +113,7 @@ export class Command implements CommandInterface {
       // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
-        let color = this.commandIsDisabled(this.commands[commandName]) ? 'green' : 'red';
+        let color = this.commandIsDisabled(this.commands[commandName]) ? 'red' : 'green' ;
         let name: string = this.commands[commandName].label ? this.commands[commandName].label : commandName;
         let command: Array<string> = [chalk[color](this.name), chalk.cyan(name)];
         if (this.commands[commandName]) {

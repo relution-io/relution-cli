@@ -5,11 +5,12 @@ import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../utility/Validator';
 import {EnvCollection} from './../collection/EnvCollection';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {Gii} from './../gii/Gii';
 import {EnvModel} from './../models/EnvModel';
 import {ChooseEnv} from './environment/ChooseEnv';
 import {AddAttribute} from './environment/AddAttribute';
-
+import * as fs from 'fs';
 export
   /**
    * Environment
@@ -31,47 +32,6 @@ export
    */
   class Environment extends Command {
   /**
-   * available commands
-   */
-  public commands: Object = {
-    add: {
-      description: 'add a new Environment',
-      vars: {
-        name: {
-          pos: 0
-        }
-      }
-    },
-    update: {
-      description: 'Add a new key value pair to your Environment.',
-      vars: {
-        name: {
-          pos: 0
-        }
-      }
-    },
-    copy: {
-      description: 'copy a exist Environment',
-      vars: {
-        from: {
-          pos: 0
-        },
-        name: {
-          pos: 1
-        }
-      }
-    },
-    list: {
-      description: 'List all environments by name'
-    },
-    help: {
-      description: this.i18n.LIST_COMMAND('Environment')
-    },
-    quit: {
-      description: 'Exit To Home'
-    }
-  };
-  /**
    * hjson file helper
    */
   public fsApi: FileApi = new FileApi();
@@ -91,7 +51,59 @@ export
    * prompt for add key value pair
    */
   public addAttribute: AddAttribute = new AddAttribute();
-
+    /**
+   * available commands
+   */
+  public commands: Object = {
+    add: {
+      when: () => {
+        return RxFs.exist(`${process.cwd()}/env/`);
+      },
+      why: () => {
+        return `Folder ${process.cwd()}/env/ not exist.`;
+      },
+      description: 'add a new Environment',
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
+    update: {
+      when: this.envExists,
+      why: this.envNotExistDesc,
+      description: 'Add a new key value pair to your Environment.',
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
+    copy: {
+      when: this.envExists,
+      why: this.envNotExistDesc,
+      description: 'copy a exist Environment',
+      vars: {
+        from: {
+          pos: 0
+        },
+        name: {
+          pos: 1
+        }
+      }
+    },
+    list: {
+      when: this.envExists,
+      why: this.envNotExistDesc,
+      description: 'List all environments by name'
+    },
+    help: {
+      description: this.i18n.LIST_COMMAND('Environment')
+    },
+    quit: {
+      description: 'Exit To Home'
+    }
+  };
   constructor() {
     super('env');
     this.fsApi.path = `${process.cwd()}/env/`;
@@ -129,18 +141,11 @@ export
     return Observable.create((observer: any) => {
       this.envCollection.getEnvironments().subscribe({
         error: (e: Error) => {
-          console.log(e);
-          // observer.error('no environments available');
-          super.preload().subscribe({
-            complete: () => observer.complete()
-          });
+          return super.preload();
         },
         complete: () => {
-          // this.log.debug(this.envCollection.collection);
           this.chooseEnv = new ChooseEnv(this.envCollection);
-          super.preload().subscribe({
-            complete: () => observer.complete()
-          });
+          return super.preload();
         }
       });
     });
@@ -336,5 +341,16 @@ export
         observer.complete();
       });
     }
+  }
+
+  envExists(): boolean {
+    if (!RxFs.exist(`${process.cwd()}/env/`)) {
+      return false;
+    }
+    return this.envCollection.collection.length < 0 ? false : true;
+  }
+
+  envNotExistDesc(): string {
+    return `Please add first a Environment.`;
   }
 }

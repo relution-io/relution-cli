@@ -1,5 +1,6 @@
 import {Command} from './../utility/Command';
 import {FileApi} from './../utility/FileApi';
+import {RxFs} from './../utility/RxFs';
 import {PushCollection, PushModel, IOSPush, AndroidPush} from './../collection/PushCollection';
 import {Observable} from '@reactivex/rxjs';
 import * as path from 'path';
@@ -30,6 +31,12 @@ export
 
   public commands: any = {
     add: {
+      when: () => {
+        return RxFs.exist(`${process.cwd()}/push`);
+      },
+      why: () => {
+        return `${process.cwd()}/push not exists.`;
+      },
       description: 'create a push config',
       vars: {
         name: {
@@ -38,6 +45,12 @@ export
       }
     },
     list: {
+      when: () => {
+        return RxFs.exist(`${process.cwd()}/push`);
+      },
+      why: () => {
+        return `${process.cwd()}/push not exists.`;
+      },
       description: 'list available push configs',
     },
     help: {
