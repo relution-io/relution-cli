@@ -18,6 +18,7 @@ export class ChooseEnv {
 
   constructor(envCollection: EnvCollection) {
     this.envCollection = envCollection;
+    console.log('this.envCollection', this.envCollection);
   }
   public prompt(choices: Array<{ name: string, checked: boolean }>): Array<any> {
     return [

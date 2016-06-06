@@ -188,7 +188,7 @@ export class EnvCollection {
           this.changeDispatcher.emit('changed', this);
           observer.complete();
         }
-      );
+        );
     });
   }
 

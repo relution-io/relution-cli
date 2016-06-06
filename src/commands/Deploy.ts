@@ -38,10 +38,20 @@ export class Deploy extends Command {
     publish: {
       description: this.i18n.DEPLOY_PUBLISH,
       when: () => {
-        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || this._parent.staticCommands.env.envCollection.collection.length <= 0 ) {
+          return false;
+        }
+        return true;
       },
       why: () => {
-        return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson'))) {
+          return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
+        }
+
+        if (this._parent.staticCommands.env.envCollection.collection.length <= 0) {
+          return this.i18n.ENV_ADD_FIRSTLY;
+        }
+
       },
       vars: {
         name: {
@@ -160,6 +170,7 @@ export class Deploy extends Command {
           choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
         loader.start();
+        console.log(choosedServer);
         return this.relutionSDK.login(choosedServer);
       })
       /**
@@ -172,6 +183,7 @@ export class Deploy extends Command {
           return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
         this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
+        console.log(this._parent.staticCommands.env.chooseEnv);
         return this._parent.staticCommands.env.chooseEnv.choose('list')
           .filter((answers: { env: string }) => {
             return answers.env !== this.i18n.TAKE_ME_OUT;

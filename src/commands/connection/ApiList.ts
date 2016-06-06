@@ -81,7 +81,7 @@ export class ApiList {
   private _pleaseFilterCalls(calls: CallModel[]) {
     let prompt: any = {
       type: 'input',
-      message: `We found ${calls.length} you can filter by Name ${this.connection.i18n.PRESS_ENTER} ?`,
+      message: `We found ${calls.length} ${calls.length === 1 ? `call` : `calls`} you can filter by Name ${this.connection.i18n.PRESS_ENTER} ?`,
       name: 'callsFilter'
     };
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));

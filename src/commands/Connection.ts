@@ -63,7 +63,7 @@ export class Connection extends Command {
       }
     },
     help: {
-      description: this.i18n.LIST_COMMAND('Deploy')
+      description: this.i18n.LIST_COMMAND('connections')
     },
     quit: {
       description: this.i18n.EXIT_TO_HOME

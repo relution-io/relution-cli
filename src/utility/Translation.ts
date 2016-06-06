@@ -5,7 +5,7 @@ export class Translation {
   static ENTER_SOMETHING = `Please enter a `;
   static TAKE_ME_OUT: string = 'Take me out of here';
   static NOT_VALID: string = `Your Input is not valid`;
-  static EXIT_TO_HOME: string = 'Exit to Home';
+  static EXIT_TO_HOME: string = 'Back to Home';
   static NPM_INSTALL = `Start npm install this take a while`;
   /**
    * Server Command
@@ -26,11 +26,11 @@ export class Translation {
   /**
    * Connection Command
    */
-  static CONNECTION_ADD_LABEL = `Add new Connection`;
-  static CONNECTION_ADD_DESCRIPTION = `Create a new connection`;
-  static CONNECTION_API_LIST_LABEL= `Add some calls from you deployed Connection`;
-  static CONNECTION_API_LIST_DESCRIPTION = `Add some calls to the exists Connection`;
-  static CONNECTION_ADD_CONNECTION_BEFORE = `Please add first a Connection for this feature.`;
+  static CONNECTION_ADD_LABEL = `new connection`;
+  static CONNECTION_ADD_DESCRIPTION = `Create a new connection.`;
+  static CONNECTION_API_LIST_LABEL = `assign calls`;
+  static CONNECTION_API_LIST_DESCRIPTION = `assign some calls to the choosen connection.`;
+  static CONNECTION_ADD_CONNECTION_BEFORE = `Please add first a connection for this feature.`;
   static CONNECTION_ADD_SERVER_BEFORE = `Please add first a Server to create a Connection.`;
 
   /**

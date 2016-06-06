@@ -154,7 +154,9 @@ export
         if (!this.fsApi.rxFs.exist(this.fsApi.path)) {
           return Observable.empty();
         }
-        return this.envCollection.getEnvironments();
+        return this.envCollection.getEnvironments().map((env: any) => {
+          this.chooseEnv = new ChooseEnv(this.envCollection);
+        });
       });
   }
 
