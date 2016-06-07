@@ -170,7 +170,7 @@ export class Deploy extends Command {
           choosedServer = find(this.userRc.config.server, { id: server.deployserver });
         }
         loader.start();
-        console.log(choosedServer);
+        // console.log(choosedServer);
         return this.relutionSDK.login(choosedServer);
       })
       /**
@@ -183,7 +183,7 @@ export class Deploy extends Command {
           return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
         this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
-        console.log(this._parent.staticCommands.env.chooseEnv);
+        // console.log(this._parent.staticCommands.env.chooseEnv);
         return this._parent.staticCommands.env.chooseEnv.choose('list')
           .filter((answers: { env: string }) => {
             return answers.env !== this.i18n.TAKE_ME_OUT;

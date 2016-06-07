@@ -2,6 +2,7 @@ import {TemplateInterface} from './../../TemplateInterface';
 import {CallModel} from './../../../models/CallModel';
 
 const html = require('common-tags').html;
+const stripIndents = require('common-tags').stripIndents;
 
 export /**
  * ConnectionGen
@@ -53,23 +54,22 @@ export /**
 
       module.exports = factory;
 
-    ${this.metaData.map((model: CallModel) => `
-      /**
-       * ${this.name}['${model.name}']
-       *
-       * ${model.action}
-       *
-       * @params input "Object" ${model.inputModel}
-       * @return Promise ${model.outputModel}
-       */
+    ${this.metaData.map((model: CallModel) => ` /**
+      * ${this.name}['${model.name}']
+      *
+      * ${model.action}
+      *
+      * @params input "Object" ${model.inputModel}
+      * @return Promise ${model.outputModel}
+      */
       module.exports['${model.name}'] = function(input) {
         return connector.runCall(
           '${this.name}',
           '${model.name}',
           input
         );
-      }
-    `).join('')}
-    `);
+      };
+    `)}
+  `);
   }
 }

@@ -10,7 +10,7 @@ const hjson = require('hjson');
 const stripIndents = require('common-tags').stripIndents;
 const oneLineTrim = require('common-tags').oneLineTrim;
 const commaListsOr = require('common-tags').commaListsOr;
-
+import {Call} from './CallModel';
 
 import * as os from 'os';
 
@@ -47,9 +47,9 @@ export class MetaModel extends Relution.model.MetaModel {
   prompt(): any {
     let questions = this.fieldDefinitions
       .filter(this.filterPrompts, this);
-      // console.log('this.fieldDefinitions', this.fieldDefinitions);
+    // console.log('this.fieldDefinitions', this.fieldDefinitions);
     let prompt: Array<{
-      choices?: Array<{name: string, value: string|number}>,
+      choices?: Array<{ name: string, value: string | number }>,
       type: string,
       default?: string,
       name: string,
@@ -60,8 +60,8 @@ export class MetaModel extends Relution.model.MetaModel {
     if (questions.length) {
       questions.forEach((question: Relution.model.FieldDefinition) => {
         if (this._isList(question)) {
-          let choices = question.enumDefinition.items.map(( item: Relution.model.Item) => {
-            return {name: item.label, value: item.value };
+          let choices = question.enumDefinition.items.map((item: Relution.model.Item) => {
+            return { name: item.label, value: item.value };
           });
           choices.push({
             name: Translation.TAKE_ME_OUT,
@@ -88,7 +88,7 @@ export class MetaModel extends Relution.model.MetaModel {
     return prompt;
   }
 
-  questions(): any |  Observable<any> {
+  questions(): any | Observable<any> {
     return Observable.fromPromise(inquirer.prompt(this.prompt()));
   }
 }
@@ -173,7 +173,7 @@ export class ConnectionModel implements ConnectionInterface {
   public getCommentvalue(fieldDefinition: Relution.model.FieldDefinition) {
     let comment = '';
     if (fieldDefinition.enumDefinition && fieldDefinition.enumDefinition.items && fieldDefinition.enumDefinition.items.length) {
-      console.log(fieldDefinition.enumDefinition.items);
+      // console.log(fieldDefinition.enumDefinition.items);
       let values = fieldDefinition.enumDefinition.items.map((item) => item.value);
       comment += commaListsOr`//${fieldDefinition.name}: ${values}`;
     } else {
@@ -228,18 +228,18 @@ export class ConnectionModel implements ConnectionInterface {
     };
     // console.log(hjson.stringify(myJson, {keepWsc: true}));
 
-    return hjson.stringify(myJson, {keepWsc: true});
+    return hjson.stringify(myJson, { keepWsc: true });
   }
 
-  public fromJson(path: string){
+  public fromJson(path: string) {
     return this._fileApi.readHjson(path)
-      .map((connectionHjson: any) => {
-        this.name = connectionHjson.name;
-        this.connectorProvider = connectionHjson.connectorProvider;
-        this.description = connectionHjson.description;
-        this.protocol = connectionHjson.protocol;
-        this.properties = connectionHjson.properties;
-        this.calls = connectionHjson.calls;
+      .map((connectionHjson: { name: String, data: ConnectionInterface }) => {
+        this.name = connectionHjson.data.name;
+        this.connectorProvider = connectionHjson.data.connectorProvider;
+        this.description = connectionHjson.data.description;
+        this.protocol = connectionHjson.data.protocol;
+        this.properties = connectionHjson.data.properties;
+        this.calls = connectionHjson.data.calls;
         return this;
       });
   }
@@ -252,8 +252,21 @@ export class ConnectionModel implements ConnectionInterface {
    * *\/
    * "getAccount": "MOBILE_SST_NEWNEW/_-KP_MOB_DEMANDORDER_GET",
    */
-  public addCall() {
+  public getCallsForHjson(calls: Call[]) {
+    let outputCalls = this._fileApi.copyHjson({});
+    outputCalls['__WSC__'].c[''] = `// please add APIs in use by the backend here`;
 
+    calls.forEach((call) => {
+      outputCalls[call.name] = call.action;
+      outputCalls = this._fileApi.copyHjson(outputCalls);
+      // outputCalls['__WSC__'].c[call.name] =
+      // `/**
+      // * @inputModel: ${call.inputModel}
+      // * @outpuModel: ${call.outputModel}
+      // */
+      // `;
+    });
+    return outputCalls;
   }
 
 }
