@@ -204,7 +204,7 @@ export class ConnectionModel implements ConnectionInterface {
     `);
   }
 
-  private _getProperties(): any {
+  public getProperties(): any {
     let properties: any = this._fileApi.copyHjson({});
     (<Relution.model.FieldDefinition[]>this.metaModel.fieldDefinitions).forEach((fieldDefinition: Relution.model.FieldDefinition) => {
       // console.log(fieldDefinition)
@@ -224,10 +224,36 @@ export class ConnectionModel implements ConnectionInterface {
       description: this.description,
       protocol: this.protocol,
       calls: this.calls || {},
-      properties: this._getProperties()
+      properties: this.properties
     };
     // console.log(hjson.stringify(myJson, {keepWsc: true}));
 
     return hjson.stringify(myJson, {keepWsc: true});
   }
+
+  public fromJson(path: string){
+    return this._fileApi.readHjson(path)
+      .map((connectionHjson: any) => {
+        this.name = connectionHjson.name;
+        this.connectorProvider = connectionHjson.connectorProvider;
+        this.description = connectionHjson.description;
+        this.protocol = connectionHjson.protocol;
+        this.properties = connectionHjson.properties;
+        this.calls = connectionHjson.calls;
+        return this;
+      });
+  }
+  /**
+   * add to the calls on the connection.hjson
+   * "calls":  {
+   * /**
+   * * @inputModel: _KP_MOB_DEMANDORDER_GETMessage
+   * * @outpuModel: MOBILE_SST_NEW/_-DK_-KP_MOB_DEMANDORDER_GET
+   * *\/
+   * "getAccount": "MOBILE_SST_NEWNEW/_-KP_MOB_DEMANDORDER_GET",
+   */
+  public addCall() {
+
+  }
+
 }

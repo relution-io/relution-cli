@@ -8,7 +8,7 @@ import {ApiList} from './connection/ApiList';
 import {Observable} from '@reactivex/rxjs';
 import {ConnectionModel} from './../models/ConnectionModel';
 
-interface TreeDirectory {
+export interface TreeDirectory {
   name: string;
   path: string;
   size: number;
@@ -100,9 +100,9 @@ export class Connection extends Command {
     return store;
   }
 
-  getConnectionNames(): string[] {
-    return map(this.connectionsDirTree, (item: any) => {
-      return item.connection.name;
+  getConnectionNames(): {name: string, value: TreeDirectory | any}[] {
+    return map(this.connectionsDirTree, (item: TreeDirectory) => {
+      return {name: item.connection.name, value: item};
     });
   }
 

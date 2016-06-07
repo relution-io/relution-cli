@@ -4,26 +4,10 @@ import * as Relution from 'relution-sdk';
 import {Observable} from '@reactivex/rxjs';
 import * as path from 'path';
 import {find} from 'lodash';
-
+import {Call, CallModel} from './../../models/CallModel';
 import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
+import {TreeDirectory} from './../Connection';
 
-interface Call {
-  connectionId: string;
-  name: string;
-  inputModel: string;
-  outputModel: string;
-  action: any;
-}
-
-class CallModel implements Call {
-  constructor(
-    public connectionId: string,
-    public outputModel: string,
-    public name: string,
-    public inputModel: string,
-    public action: any
-  ) { }
-}
 
 export class ApiList {
 
@@ -141,7 +125,7 @@ export class ApiList {
 
   private _chooseConnection(): any | Observable<any> {
     let choices = this.connection.getConnectionNames();
-    choices.push(this.connection.i18n.TAKE_ME_OUT);
+    choices.push({name: this.connection.i18n.TAKE_ME_OUT, value: this.connection.i18n.TAKE_ME_OUT});
 
     return Observable.fromPromise(
       this.connection.inquirer.prompt({
@@ -158,18 +142,21 @@ export class ApiList {
     let relutionHjson: any;
     let choosedServer: any;
     let calls: Call[];
+    let model: ConnectionModel;
      /**
      * get the server connection name
      */
     return this._chooseConnection()
-      .filter((answers: { connectionname: string }) => {
+      .filter((answers: { connectionname: TreeDirectory | string }) => {
         return answers.connectionname !== this.connection.i18n.TAKE_ME_OUT;
       })
       /**
        * read the relution.hjson
        */
-      .exhaustMap((answers: { connectionname: string }) => {
-        choosedConnectionName = answers.connectionname;
+      .exhaustMap((answers: { connectionname: TreeDirectory }) => {
+        choosedConnectionName = answers.connectionname.connection.name;
+        model = new ConnectionModel(answers.connectionname);
+        console.log(model.properties);
         return this.connection.fileApi.readHjson(path.join(process.cwd(), 'relution.hjson'));
       })
       /**

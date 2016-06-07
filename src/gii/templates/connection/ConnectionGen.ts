@@ -1,18 +1,24 @@
 import {TemplateInterface} from './../../TemplateInterface';
+import {CallModel} from './../../../models/CallModel';
+
 const html = require('common-tags').html;
 
 export /**
  * ConnectionGen
  */
-  class ConnectionGen {
+  class ConnectionGen implements TemplateInterface{
   public name: string = '';
   public path: string = 'connections';
+  public metaData: Array<CallModel> = [];
+  public publishName: string;
+
   private _pad(num: number): string | number {
     if (num < 10) {
       return '0' + num;
     }
     return num;
   }
+
   get template() {
     let date = new Date();
     return (html`
@@ -46,6 +52,24 @@ export /**
       // generated calls go here
 
       module.exports = factory;
+
+    ${this.metaData.map((model: CallModel) => `
+      /**
+       * ${this.name}['${model.name}']
+       *
+       * ${model.action}
+       *
+       * @params input "Object" ${model.inputModel}
+       * @return Promise ${model.outputModel}
+       */
+      module.exports['${model.name}'] = function(input) {
+        return connector.runCall(
+          '${this.name}',
+          '${model.name}',
+          input
+        );
+      }
+    `).join('')}
     `);
   }
 }
