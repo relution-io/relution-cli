@@ -95,15 +95,15 @@ export class Push extends Command {
       },
       {
         type: 'input',
-        name: 'certificatFile',
+        name: 'certificateFile',
 
-        message: this.i18n.ENTER_SOMETHING.concat('Certificatfile'),
+        message: this.i18n.ENTER_SOMETHING.concat('Certificatefile'),
         validate: (value: string): boolean => {
           if (value.indexOf('.p12') === -1) {
-            this.log.error(new Error('Certificatfile must end with .p12'));
+            this.log.error(new Error('Certificatefile must end with .p12'));
             return false;
           }
-          return this._keyValid(value, 'Certificatfile', Validator.p12Pattern);
+          return this._keyValid(value, 'Certificatefile', Validator.p12Pattern);
         }
       },
       {
