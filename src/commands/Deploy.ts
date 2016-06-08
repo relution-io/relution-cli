@@ -90,11 +90,14 @@ export class Deploy extends Command {
     let orga: any = Relution.security.getCurrentOrganization('defaultRoles');
     return orga && orga.defaultRoles.length > 0;
   }
+
   /**
    * upload the generated zip to the server
    */
   upload(archiveresp: any, env: string): Observable<any> {
     loader.start();
+
+    // data to upload
     let formData = {
       // Pass a simple key-value pair
       env: env,
@@ -111,6 +114,37 @@ export class Deploy extends Command {
         }
       }
     };
+
+    // continuously queries deployment status if server supports this
+    let deploymentUrl: string;
+    let deploymentCheck = (response: any): any => {
+      if (!deploymentUrl) {
+        return response;
+      }
+
+      let statusCode: number;
+      return Relution.web.get({
+        url: deploymentUrl,
+        responseCallback: (response: Relution.web.HttpResponse) => {
+          statusCode = response.statusCode;
+          return response;
+        }
+      }).then((body) => {
+        if (statusCode === 202) {
+          // deployment ongoing, repeat request
+          Relution.debug.assert(!body);
+          return deploymentCheck(response);
+        }
+        return response;
+      }, (error: Relution.web.HttpError) => {
+        if (error && error.statusCode === 404) {
+          // relution server does not support deployment status query
+          return response;
+        }
+        throw error;
+      });
+    };
+
     return Observable.fromPromise(
       Relution.web.ajax({
         url: 'upload',
@@ -120,9 +154,30 @@ export class Deploy extends Command {
         method: 'POST',
         formData: formData,
         requestCallback: (request: Relution.web.HttpRequest) => {
+          request.once('data', () => loader.stop());
           request.pipe(process.stdout, { 'end': false });
           return request;
+        },
+        responseCallback: (response: Relution.web.HttpResponse) => {
+          deploymentUrl = response.headers['X-Relution-Studio-Deployment-Url'.toLowerCase()];
+          return response;
         }
+      })
+      .finally(() => loader.start())
+      .then(deploymentCheck)
+      .finally(() => loader.stop())
+      .then((result) => {
+        this.log.info(this.i18n.DEPLOY_SUCCESS);
+
+        // be nice and output URL of application
+        const url = Relution.web.resolveApp(this._relutionHjson);
+        if (url) {
+          this.log.info(this.i18n.DEPLOY_APPURL, url);
+        }
+        return result;
+      }, (error: Relution.web.HttpError) => {
+        this.log.error(new Error(this.i18n.DEPLOY_FAILED));
+        throw error;
       })
     );
   }
@@ -222,10 +277,8 @@ export class Deploy extends Command {
       /**
        * complete upload
        */
-      .map((resp: any) => {
-        loader.stop();
-        return Observable.empty();
-      });
+      .ignoreElements() // log piped already
+      .finally(() => loader.stop());
   }
 
   public get projectDir(): string {

@@ -23,6 +23,9 @@ export class Translation {
    */
   static DEPLOY_PUBLISH = `deploy your Baas to the server`;
   static DEPLOY_NO_ORGA = `Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.`;
+  static DEPLOY_SUCCESS = 'Deployment completed.';
+  static DEPLOY_FAILED = 'Deployment failed!';
+  static DEPLOY_APPURL = 'Your application is available at';
   /**
    * Connection Command
    */

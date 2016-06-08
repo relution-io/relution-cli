@@ -10,8 +10,9 @@ export class DebugLog {
   static log(color: string, message: string, submessage?: any): void {
     if (submessage) {
       console.log(chalk[color](message, submessage));
+    } else {
+      console.log(chalk[color](message));
     }
-    console.log(chalk[color](message));
   }
 
   static error(e: Error): void {
