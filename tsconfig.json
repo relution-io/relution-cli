@@ -66,6 +66,7 @@
         "src/gii/templates/new/RelutionIgnore.ts",
         "src/gii/templates/new/Routes.ts",
         "src/gii/templates/Push.ts",
+        "src/models/CallModel.ts",
         "src/models/CertModelRc.ts",
         "src/models/ConnectionModel.ts",
         "src/models/EnvModel.ts",

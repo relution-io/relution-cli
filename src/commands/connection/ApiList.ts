@@ -1,29 +1,12 @@
 import {Connection} from './../Connection';
-import {FileApi} from './../../utility/FileApi';
 import * as Relution from 'relution-sdk';
 import {Observable} from '@reactivex/rxjs';
 import * as path from 'path';
-import {find} from 'lodash';
-
-import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
-
-interface Call {
-  connectionId: string;
-  name: string;
-  inputModel: string;
-  outputModel: string;
-  action: any;
-}
-
-class CallModel implements Call {
-  constructor(
-    public connectionId: string,
-    public outputModel: string,
-    public name: string,
-    public inputModel: string,
-    public action: any
-  ) { }
-}
+import {find, findIndex} from 'lodash';
+import {Call, CallModel} from './../../models/CallModel';
+import {ConnectionModel} from './../../models/ConnectionModel';
+import {Gii} from './../../gii/Gii';
+import {TreeDirectory} from './../Connection';
 
 export class ApiList {
 
@@ -31,6 +14,10 @@ export class ApiList {
 
   private _callsUrl: string;
   private _callsCollection: CallModel[];
+  /**
+   * template renderer
+   */
+  private _gii = new Gii();
 
   constructor(public connection: Connection) {
 
@@ -72,6 +59,20 @@ export class ApiList {
     this._connectionFilter.filters[1].value = connectionName;
     let query = encodeURIComponent(`${JSON.stringify(this._connectionFilter)}`);
     this._uuidConnectionUrl = (`/mcap/connector/rest/connectors/?filter=${query}&field=uuid`);
+  }
+
+  private _enterCallName(calls: CallModel[]): any {
+    let prompt: Array<{type: string, name: string, value: CallModel, default: string, message: string}> = [];
+    calls.forEach((call) => {
+      prompt.push({
+        type: 'input',
+        name: call.name,
+        message: this.connection.i18n.ENTER_SOMETHING.concat(`name for ${call.name}`),
+        default: call.name,
+        value: call
+      });
+    });
+    return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
 
   private _filterCallsByName = function (call: Call): boolean {
@@ -141,7 +142,7 @@ export class ApiList {
 
   private _chooseConnection(): any | Observable<any> {
     let choices = this.connection.getConnectionNames();
-    choices.push(this.connection.i18n.TAKE_ME_OUT);
+    choices.push({name: this.connection.i18n.TAKE_ME_OUT, value: this.connection.i18n.TAKE_ME_OUT});
 
     return Observable.fromPromise(
       this.connection.inquirer.prompt({
@@ -154,22 +155,28 @@ export class ApiList {
   }
 
   apiList(name?: string) {
-    let choosedConnectionName = '';
     let relutionHjson: any;
     let choosedServer: any;
-    let calls: Call[];
+    let calls: any;
+    let connectionModel: ConnectionModel = new ConnectionModel();
+    let choosedCalls: any;
+    let treeDirectory: TreeDirectory;
      /**
      * get the server connection name
      */
     return this._chooseConnection()
-      .filter((answers: { connectionname: string }) => {
+      .filter((answers: { connectionname: TreeDirectory | string }) => {
         return answers.connectionname !== this.connection.i18n.TAKE_ME_OUT;
+      })
+      .exhaustMap((answers: { connectionname: TreeDirectory }) => {
+        treeDirectory = answers.connectionname;
+        return connectionModel.fromJson(treeDirectory.path);
       })
       /**
        * read the relution.hjson
        */
-      .exhaustMap((answers: { connectionname: string }) => {
-        choosedConnectionName = answers.connectionname;
+      .exhaustMap((newModel: ConnectionModel) => {
+        connectionModel = newModel;
         return this.connection.fileApi.readHjson(path.join(process.cwd(), 'relution.hjson'));
       })
       /**
@@ -177,8 +184,6 @@ export class ApiList {
        */
       .exhaustMap((resp: { data: any, path: string }) => {
         relutionHjson = resp.data;
-        // console.log(relutionHjson);
-
         return this.connection.helperAdd.getServerPrompt();
       })
       /**
@@ -201,13 +206,12 @@ export class ApiList {
        * get the connection uuid from the server
        */
       .exhaustMap((resp: { user: Relution.security.User }) => {
-        return this._getConnectionUUid(relutionHjson.uuid, choosedConnectionName);
+        return this._getConnectionUUid(relutionHjson.uuid, connectionModel.name);
       })
       /**
        * read the calls from the server
        */
       .exhaustMap((resp: { empty: boolean, items: Array<{ uuid: string }> }) => {
-        // console.log(resp.items[0].uuid);
         return this._getConnectionCalls(resp.items[0].uuid);
       })
       /**
@@ -226,7 +230,7 @@ export class ApiList {
          */
         // console.log(this._callsCollection);
         return this._pleaseFilterCalls(this._callsCollection)
-          .map((answers: { callsFilter: string }) => {
+          .exhaustMap((answers: { callsFilter: string }) => {
             if (answers.callsFilter && answers.callsFilter.length < 0) {
               calls = this._callsCollection.filter(this._filterCallsByName, answers.callsFilter);
               return this._chooseCalls(calls);
@@ -234,9 +238,32 @@ export class ApiList {
             return this._chooseCalls(this._callsCollection);
           });
       })
-      .exhaustMap((answers: { choosedCalls: Array<string> }) => {
-        console.log('answers', answers);
-        return Observable.empty();
+      .exhaustMap((answers: { choosedCalls: Array<CallModel> }) => {
+        choosedCalls = answers.choosedCalls;
+        return this._enterCallName(choosedCalls);
+      })
+      .exhaustMap((answers: any) => {
+        Object.keys(answers).forEach((key: string) => {
+          let index = findIndex(choosedCalls, {name: key});
+          choosedCalls[index].name = answers[key];
+        });
+        connectionModel.calls = connectionModel.getCallsForHjson(choosedCalls);
+        return this.connection.fileApi.writeHjson(connectionModel.toJson(), treeDirectory.connection.name, path.dirname(treeDirectory.path));
+      })
+      /**
+       * write name.gen.js file to the connections folder
+       */
+      .exhaustMap(() => {
+        let template = this._gii.getTemplateByName('connectionGen');
+        template.instance.name = connectionModel.name;
+        template.instance.path = path.dirname(connectionModel.name);
+        template.instance.metaData = choosedCalls;
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.connection.rootFolder);
+      })
+      .do({
+        complete: () => {
+          return this.connection.log.info(`${connectionModel.name} are updated!`);
+        }
       });
   }
 };

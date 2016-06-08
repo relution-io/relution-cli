@@ -8,6 +8,7 @@ import * as path from 'path';
 import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 import * as chalk from 'chalk';
+import {TreeDirectory} from './../Connection';
 /**
  * this class add a new Connection
  * 1. get name
@@ -98,20 +99,22 @@ export class AddConnection {
         name: 'connectionname',
         message: `Please enter name or an sep path('ews/ews-exchange')`,
         validate: (value: string): boolean => {
-
-          let names: string[] = this.connection.getConnectionNames();
+          let connections = this.connection.getConnectionNames();
           let notEmpty = Validator.notEmptyValidate(value);
+          let isUnique = true;
+
           if (!notEmpty) {
             this.connection.log.error(new Error(`Name can not be empty`));
             return false;
           }
 
-          if (names.indexOf(value) !== -1) {
-            this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
-            return false;
-          }
-
-          return true;
+          connections.forEach((item) => {
+            if (item.value.connection && item.value.connection.name === value) {
+              this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
+              isUnique = false;
+            }
+          });
+          return isUnique;
         }
       })
     );
@@ -372,6 +375,7 @@ export class AddConnection {
        * write name.hjson file to the connections folder if the user want to overwrite or the connection is new
        */
       .exhaustMap((written: { connectionOverwrite: boolean } | any) => {
+        this.connectionModel.properties = this.connectionModel.getProperties();
         let template = this.connectionModel.toJson();
         if (written && written.connectionOverwrite === false) {
           fileWritten = written.connectionOverwrite;
