@@ -21,9 +21,8 @@ let staticCommands = {
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised
-let all: any = [];
-Object.keys(staticCommands).forEach((commandName: any) => {
-  all.push(staticCommands[commandName].preload());
+let all = Object.keys(staticCommands).map((commandName: any) => {
+  return staticCommands[commandName].preload().defaultIfEmpty();
 });
 
 // preload done
