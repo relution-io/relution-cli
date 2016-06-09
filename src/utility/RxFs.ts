@@ -49,12 +49,16 @@ export class RxFs {
     });
   }
 
+  static readFile = Observable.bindNodeCallback(fs.readFile);
+
   /**
    * create a File to filename
    * @link [fs.writeFile](https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options)
    * @params filename, data, options
+   * @return an empty Observable.
    */
-  static writeFile(filename: string, data: any): any {
+  static writeFile(filename: string, data: any): Observable<any> {
+    // following can not deduce return type
     let write: any = Observable.bindNodeCallback(fs.writeFile);
     return write(filename, data);
   }

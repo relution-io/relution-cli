@@ -49,6 +49,14 @@ export class Server extends Command {
         }
       }
     },
+    clientcert: {
+      description: this.i18n.SERVER_CLIENTCERT,
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
     rm: {
       description: this.i18n.SERVER_RM,
       vars: {
@@ -123,5 +131,9 @@ export class Server extends Command {
    */
   add(params: Array<string>): Observable<any> {
     return this.crudHelper.add(params);
+  }
+
+  clientcert(params: Array<string>): Observable<any> {
+    return this.crudHelper.clientcert(params);
   }
 }

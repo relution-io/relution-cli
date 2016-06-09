@@ -14,6 +14,8 @@ export class Translation {
   static SERVER_LIST: string = 'List all available Server from config';
   static SERVER_RM: string = 'Remove a Server from the config';
   static SERVER_UPDATE: string = 'Update a exists server from the Server list';
+  static SERVER_CLIENTCERT: string = 'Specify a client certificate for contacting a Server';
+  static SERVER_CLIENTCERT_NOT_FOUND = 'File not found.';
   /**
    * New Command
    */

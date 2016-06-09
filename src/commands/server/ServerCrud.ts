@@ -1,3 +1,9 @@
+import * as fs from 'fs';
+import * as _ from 'lodash';
+import * as Q from 'q';
+
+import * as Relution from 'relution-sdk';
+
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {ServerModelRcInterface, ServerModelRc} from './../../models/ServerModelRc';
@@ -6,12 +12,16 @@ import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
 import {DebugLog} from './../../utility/DebugLog';
+import {CertModelRc} from "../../models/CertModelRc";
+import {RxFs} from "../../utility/RxFs";
+import {CertModelRcInterface} from "../../models/CertModelRc";
 /**
  * add a Server to Config from the UserRc and store it
  */
 
 const ADD = 'add';
 const UPDATE = 'update';
+const CLIENTCERT = 'clientcert';
 
 export class ServerCrud {
 
@@ -93,7 +103,11 @@ export class ServerCrud {
       }
     ];
   };
+
   _copy(org: any) {
+    if (!_.isObject(org)) {
+      return org;
+    }
     return JSON.parse(JSON.stringify(org));
   }
   /**
@@ -272,7 +286,7 @@ export class ServerCrud {
        * yes i want test login
        */
       .exhaustMap((answers: { testconnection: boolean }) => {
-        return this.server.relutionSDK.login(model)
+        return this.server.relutionSDK.login(model, true)
           .filter((resp: any) => {
             return resp.user;
           })
@@ -357,5 +371,84 @@ export class ServerCrud {
             DebugLog.info('Server is updated');
           });
       });
+  }
+
+  get clientcertConfig(): Array<inquirer.Question> {
+    return [
+      {
+        type: 'input',
+        name: 'pfx',
+        message: 'Client Certificate (file path, enter to clear) :',
+        validate: (value: string): any => {
+          if (value && !fs.existsSync(value)) {
+            DebugLog.error(new Error(this.server.i18n.SERVER_CLIENTCERT_NOT_FOUND));
+            return false;
+          }
+          return true;
+        }
+      },
+      {
+        type: 'password',
+        name: 'passphrase',
+        message: 'Passphrase (enter for none) :',
+        when: (answers: inquirer.Answers) => !!answers['pfx']
+      }
+    ];
+  };
+
+  /**
+   * @name clientcert
+   */
+  clientcert(params: Array<string> = []): any {
+    if (!this.userRc || !this.userRc.server) {
+      return Observable.throw(new Error('no servers available'));
+    }
+    this._scenario = CLIENTCERT;
+
+    const serverId = params[0];
+    if (!serverId) {
+      // get server list
+      return this._updateServerChooserPrompt()
+        .filter((answers: { server: string }) => {
+          return answers.server !== this.server.i18n.TAKE_ME_OUT;
+        })
+        .map((answers: { server: string }) => {
+          return this._copy(answers.server);
+        })
+        /**
+         * update server with defaults
+         */
+        .exhaustMap((serverId: string) => {
+          params[0] = serverId;
+          return this.clientcert(params);
+        });
+    }
+
+    const server = this.userRc.getServer(serverId);
+    if (!server) {
+      return Observable.throw(new Error('unknown server: ' + serverId));
+    }
+
+    return Observable.fromPromise(this.inquirer.prompt(this.clientcertConfig)).mergeMap((answers: CertModelRcInterface) => {
+      const pfx = answers['pfx'];
+      if (!pfx) {
+        return Observable.of(undefined);
+      }
+
+      return RxFs.readFile(pfx).map((pfx: Buffer) => {
+        return new CertModelRc(_.defaults({
+          pfx: pfx
+        }, answers));
+      });
+    }).filter((clientCertificate?: CertModelRc) => {
+      return !_.isEqual(this._copy(server.clientCertificate), this._copy(clientCertificate));
+    }).map((clientCertificate?: CertModelRc) => {
+      server.clientCertificate = clientCertificate;
+      return server;
+    }).mergeMap((server) => {
+      return this.server.relutionSDK.login(server, true);
+    }).takeLast(1).mergeMap(() => {
+      return this.userRc.updateRcFile();
+    });
   }
 }

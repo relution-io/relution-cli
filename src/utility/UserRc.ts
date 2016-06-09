@@ -42,6 +42,15 @@ export class UserRc {
     return model;
   }
 
+  public getServer(serverIdOrSample: string | any) {
+    if (_.isString(serverIdOrSample)) {
+      serverIdOrSample = {
+        id: serverIdOrSample
+      };
+    }
+    return _.find(this.server, serverIdOrSample);
+  }
+
   /**
    * check  if the relutionrc file exist
    */
@@ -58,7 +67,7 @@ export class UserRc {
   /**
    * read the relutionrc file
    */
-  streamRc() {
+  streamRc(): Observable<UserRc> {
     return Observable.create((observer: any) => {
       /* tslint:disable:no-bitwise */
       return fs.access(this._rcHome, fs.R_OK | fs.W_OK, (err) => {
@@ -99,6 +108,7 @@ export class UserRc {
    * ```
    */
   public updateRcFile(): Observable<UserRc> {
+    console.log(this._rcHome, JSON.stringify(this, null, 2));
     return RxFs.writeFile(this._rcHome, JSON.stringify(this, null, 2))
       .exhaustMap(() => {
         return this.streamRc();
