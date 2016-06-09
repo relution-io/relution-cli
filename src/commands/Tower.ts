@@ -1,4 +1,5 @@
 import {Observable} from '@reactivex/rxjs';
+import * as RelutionSDK from '../utility/RelutionSDK';
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Greet} from './../utility/Greet';
@@ -10,6 +11,7 @@ import {Connection} from './Connection';
 import {Push} from './Push';
 import * as chalk from 'chalk';
 import {Translation} from './../utility/Translation';
+
 const inquirer = require('inquirer');
 const usernameLib = require('username');
 
@@ -107,13 +109,13 @@ export class Tower {
     this.table = new Table();
     this.staticCommands = staticCommands;
     this.staticCommandRootKeys = Object.keys(staticCommands);
-    this.args = this._copy(process.argv);
 
-    // if the bin is used there are n params so we add it again to args
-    if (this.args.length === 2) {
+    this.args = this._copy(process.argv);
+    this.args.splice(0, 2); // node cli.js
+    RelutionSDK.initFromArgs(this.args);
+    if (this.args.length <= 0) {
+      // go interactive
       this.args = this.reset;
-    } else {
-      this.args.splice(0, 2);
     }
 
     this.userRc.rcFileExist()
