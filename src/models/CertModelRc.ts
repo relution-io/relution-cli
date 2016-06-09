@@ -1,43 +1,43 @@
+import * as _ from 'lodash';
+import * as tls from 'tls';
+
+export type CertModelRcInterface = tls.SecureContextOptions;
+
 /**
  * @class CertModelRc
  * @description add to a server a Clientcertificate as Base64
  */
-export class CertModelRc {
+export class CertModelRc implements CertModelRcInterface {
 
-  private _cert: any;
-  private _passphrase: string;
-  private _attributes: Array<string> = ['cert', 'passphrase'];
+  public pfx: Buffer | string;
+  public passphrase: string;
 
-  constructor(cert?: any, passphrase?: string) {
-    this._cert = cert;
-    this._passphrase = passphrase;
+  private static attributes = ['pfx', 'passphrase'];
+
+  constructor(params: CertModelRcInterface) {
+    this.fromJSON(params);
   }
 
-  public get cert(): string {
-    return this._cert;
+  public fromJSON(params: CertModelRcInterface) {
+    _.assignWith(this, params, (objValue: any, srcValue: any, key: string) => {
+      if (CertModelRc.attributes.indexOf(key) >= 0) {
+        if (key === 'pfx' && _.isString(srcValue)) {
+          srcValue = new Buffer(srcValue, 'base64');
+        }
+        return srcValue;
+      }
+    });
   }
 
-  public set cert(v: string) {
-    this._cert = v;
-  }
-
-  public get passphrase(): string {
-    return this._passphrase;
-  }
-
-  public set passphrase(v: string) {
-    this._passphrase = v;
-  }
-
-  public get attributes(): Array<string> {
-    return this._attributes;
-  }
-
-  public toJson() {
+  public toJSON() {
     let model: Object = {};
-    this.attributes.forEach((attr: string) => {
-      if (attr && this[attr] !== undefined) {
-        model[attr] = this[attr];
+    CertModelRc.attributes.forEach((attr: string) => {
+      let value = this[attr];
+      if (value !== undefined) {
+        if (_.isBuffer(value)) {
+          value = value.toString('base64');
+        }
+        model[attr] = value;
       }
     });
     return model;

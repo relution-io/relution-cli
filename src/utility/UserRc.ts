@@ -1,32 +1,52 @@
-import {Observable} from '@reactivex/rxjs';
 import * as fs from 'fs';
+import * as _ from 'lodash';
+
+import {Observable} from '@reactivex/rxjs';
 import {RxFs} from './RxFs';
 
-import {ServerModelRc} from './../models/ServerModelRc';
+import {ServerModelRcInterface, ServerModelRc} from './../models/ServerModelRc';
 
 export class UserRc {
   private _rcHome: string;
-  public appPrefix: string = 'relution';
+
+  static appPrefix: string = 'relution';
+
   public server: Array<ServerModelRc> = [];
-  public config: any;
+
+  static attributes = [ 'server' ];
 
   constructor() {
-    this._rcHome = `${this.getUserHome()}/.${this.appPrefix}rc`;
+    this._rcHome = `${this.getUserHome()}/.${UserRc.appPrefix}rc`;
   }
 
-  public get rc(): string {
-    return this.rc;
+  public fromJSON(params: any) {
+    _.assignWith(this, params, (objValue: any, srcValue: any, key: string) => {
+      if (UserRc.attributes.indexOf(key) >= 0) {
+        if (key === 'server') {
+          srcValue = srcValue.map((server: ServerModelRcInterface) => {
+            return new ServerModelRc(server);
+          });
+        }
+        return srcValue;
+      }
+    });
   }
 
-  public set rc(v: string) {
-    this.rc = v;
+  public toJSON(): any {
+    let model: any = {};
+    UserRc.attributes.forEach((attr: string) => {
+      if (attr && this[attr] !== undefined) {
+        model[attr] = this[attr];
+      }
+    });
+    return model;
   }
+
   /**
    * check  if the relutionrc file exist
    */
   public rcFileExist() {
     if (!RxFs.exist(this._rcHome)) {
-      this.config = { server: [] };
       return this.updateRcFile();
     }
 
@@ -50,33 +70,21 @@ export class UserRc {
           if (error) {
             observer.error(error);
           }
-          this.config = JSON.parse(data);
-          observer.next(this.config);
+          this.fromJSON(JSON.parse(data));
+          observer.next(this);
           observer.complete();
         });
       });
-    }).map((config: any) => {
-      this.setServer();
-      return config;
     });
   }
-  /**
-   * set a collection the server models
-   *
-   */
-  public setServer() {
-    this.server = [];
-    this.config.server.forEach((server: any, index: number) => {
-      let model: ServerModelRc = new ServerModelRc(server);
-      this.server.push(model);
-    });
-  }
+
   /**
    * the home path form the reluitonrc file
    */
   public getUserHome() {
     return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
   }
+
   /**
    * logger
    */
@@ -90,13 +98,10 @@ export class UserRc {
    * updateRcFile().subscribe((written:boolean) => {console.log(written)});
    * ```
    */
-  public updateRcFile() {
-    return RxFs.writeFile(this._rcHome, JSON.stringify(this.config, null, 2))
+  public updateRcFile(): Observable<UserRc> {
+    return RxFs.writeFile(this._rcHome, JSON.stringify(this, null, 2))
       .exhaustMap(() => {
         return this.streamRc();
-      })
-      .do(() => {
-        // console.log('rc file written');
       });
   }
 }

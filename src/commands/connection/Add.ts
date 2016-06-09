@@ -254,7 +254,7 @@ export class AddConnection {
   getServerPrompt(): Observable<any> {
     this.defaultServer = 'default';
     let prompt = this.connection._copy(this.connection._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
-    let indexDefault: number = findIndex(this.connection.userRc.config.server, { default: true });
+    let indexDefault: number = findIndex(this.connection.userRc.server, { default: true });
     if (indexDefault > -1) {
       this.defaultServer += ` ${prompt[0].choices[indexDefault]}`;
       prompt[0].choices.splice(indexDefault, 1);
@@ -297,9 +297,9 @@ export class AddConnection {
        */
       .exhaustMap((server: { connectserver: string }) => {
         if (server.connectserver.toString().trim() === this.defaultServer.toString().trim()) {
-          choosedServer = find(this.connection.userRc.config.server, { default: true });
+          choosedServer = find(this.connection.userRc.server, { default: true });
         } else {
-          choosedServer = find(this.connection.userRc.config.server, { id: server.connectserver });
+          choosedServer = find(this.connection.userRc.server, { id: server.connectserver });
         }
         return this.connection.relutionSDK.login(choosedServer)
           .filter((resp: { user: Relution.security.User }) => {

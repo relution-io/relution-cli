@@ -1,6 +1,6 @@
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
-import {ServerModelRc, ServerModelInterface} from './../../models/ServerModelRc';
+import {ServerModelRcInterface, ServerModelRc} from './../../models/ServerModelRc';
 import {Server} from './../Server';
 import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
@@ -41,7 +41,7 @@ export class ServerCrud {
         name: 'id',
         message: 'Server Name :',
         validate: (value: string): any => {
-          let test: number = findIndex(this.userRc.config.server, { id: value });
+          let test: number = findIndex(this.userRc.server, { id: value });
           if (!test && this._scenario === ADD) {
             DebugLog.error(new Error(this.server.i18n.ALREADY_EXIST(value)));
             return false;
@@ -100,36 +100,29 @@ export class ServerCrud {
    * toggle all server to default false
    */
   public falseyDefaultServer() {
-    this.userRc.server = [];
-    this.userRc.config.server.forEach((server: any) => {
+    this.userRc.server.forEach((server: any) => {
       if (server.default) {
         server.default = false;
       }
-      this.userRc.server.push(new ServerModelRc(server));
     });
   }
   /**
    * cheack if the server id already exist
    */
   public isUnique(server: ServerModelRc) {
-    let isUnique = true;
-    this.userRc.config.server.forEach((cserver: any) => {
-      if (cserver.id === server.id) {
-        isUnique = false;
-      }
-    });
-    return isUnique;
+    return findIndex(this.userRc.server, { id: server.id }) < 0;
   }
   /**
    * remove a server from the list
    */
   public removeServer(id: string) {
-    let pos: number = findIndex(this.userRc.config.server, { id: id });
-    if (pos !== -1) {
-      this.userRc.config.server.splice(pos, 1);
-      return this.userRc.updateRcFile();
+    let pos: number = findIndex(this.userRc.server, { id: id });
+    if (pos < 0) {
+      throw Error(`${id} not exist!`);
     }
-    throw Error(`${id} not exist!`);
+
+    this.userRc.server.splice(pos, 1);
+    return this.userRc.updateRcFile();
   }
   /**
    * add a server to the config server list.
@@ -143,20 +136,17 @@ export class ServerCrud {
     }
 
     if (update) {
-      let pos: number = findIndex(this.userRc.config.server, server.id);
+      let pos: number = findIndex(this.userRc.server, { id: server.id });
       if (pos) {
-        this.userRc.config.server[pos] = server.toJson();
         this.userRc.server[pos] = server;
       }
     } else {
-      this.userRc.config.server.push(server.toJson());
       this.userRc.server.push(server);
     }
     return this.userRc.updateRcFile();
   }
 
-
-  setDefaults(defaults: ServerModelInterface) {
+  setDefaults(defaults: ServerModelRcInterface) {
     let myPrompt: any = this.addConfig;
 
     if (defaults) {
@@ -181,7 +171,7 @@ export class ServerCrud {
    * return a prompt with available servers
    */
   serverListPrompt(name = 'server', type = 'checkbox', message = 'Select Server(s) :') {
-    let choices = map(this.userRc.config.server, 'id');
+    let choices = map(this.userRc.server, 'id');
     choices.push(this.server.i18n.TAKE_ME_OUT);
     return [
       {
@@ -265,7 +255,7 @@ export class ServerCrud {
       /**
        * write a ServerModelInterface  into the relutionrc
        */
-      .exhaustMap((answers: ServerModelInterface) => {
+      .exhaustMap((answers: ServerModelRcInterface) => {
         model = new ServerModelRc(answers);
         return this.addServer(model);
       })
@@ -312,8 +302,8 @@ export class ServerCrud {
    */
   private _updateWithId(id: string): any {
     let serverId = this._copy(id);
-    let serverIndex = findIndex(this.userRc.config.server, { id: serverId });
-    let prompt = this.setDefaults(this.userRc.config.server[serverIndex]);
+    let serverIndex = findIndex(this.userRc.server, { id: serverId });
+    let prompt = this.setDefaults(this.userRc.server[serverIndex]);
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
   /**
@@ -322,8 +312,8 @@ export class ServerCrud {
    * @params Array<string>
    */
   update(params?: Array<string>): any {
-    if (!this.userRc && !this.userRc.config && !this.userRc.config.server) {
-      return Observable.throw(new Error('no server are available'));
+    if (!this.userRc || !this.userRc.server) {
+      return Observable.throw(new Error('no servers available'));
     }
     this._scenario = UPDATE;
     let oldId: any = null;
@@ -348,9 +338,9 @@ export class ServerCrud {
         /**
          * write to relutionrc
          */
-        .exhaustMap((answers: ServerModelInterface) => {
-          let serverIndex = findIndex(this.userRc.config.server, { id: oldId });
-          this.userRc.config.server[serverIndex] = answers;
+        .exhaustMap((answers: ServerModelRcInterface) => {
+          let serverIndex = findIndex(this.userRc.server, { id: oldId });
+          this.userRc.server[serverIndex] = new ServerModelRc(answers);
           return this.userRc.updateRcFile().do(() => {
             DebugLog.info('Server is updated');
           });
@@ -358,9 +348,9 @@ export class ServerCrud {
     }
     oldId = this._copy(params[0]);
     return this._updateWithId(params[0])
-      .exhaustMap((answers: ServerModelInterface) => {
-        let serverIndex = findIndex(this.userRc.config.server, { id: oldId });
-        this.userRc.config.server[serverIndex] = answers;
+      .exhaustMap((answers: ServerModelRcInterface) => {
+        let serverIndex = findIndex(this.userRc.server, { id: oldId });
+        this.userRc.server[serverIndex] = new ServerModelRc(answers);
 
         return this.userRc.updateRcFile()
           .do(() => {

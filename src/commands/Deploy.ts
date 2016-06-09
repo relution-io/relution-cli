@@ -73,7 +73,7 @@ export class Deploy extends Command {
   getServerPrompt(): Observable<any> {
     this._defaultServer = 'default';
     let prompt = this._copy(this._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
-    let indexDefault: number = findIndex(this.userRc.config.server, { default: true });
+    let indexDefault: number = findIndex(this.userRc.server, { default: true });
     if (indexDefault > -1) {
       this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
       prompt[0].choices.splice(indexDefault, 1);
@@ -220,9 +220,9 @@ export class Deploy extends Command {
        */
       .exhaustMap((server: { deployserver: string }) => {
         if (server.deployserver.toString().trim() === this._defaultServer.toString().trim()) {
-          choosedServer = find(this.userRc.config.server, { default: true });
+          choosedServer = find(this.userRc.server, { default: true });
         } else {
-          choosedServer = find(this.userRc.config.server, { id: server.deployserver });
+          choosedServer = find(this.userRc.server, { id: server.deployserver });
         }
         loader.start();
         // console.log(choosedServer);

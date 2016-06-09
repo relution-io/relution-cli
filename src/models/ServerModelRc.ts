@@ -1,97 +1,54 @@
-import {CertModelRc} from './CertModelRc';
+import * as _ from 'lodash';
+import * as tls from 'tls';
+
+import {CertModelRcInterface, CertModelRc} from './CertModelRc';
+
 const chalk = require('chalk');
 const figures = require('figures');
 
-export interface ServerModelInterface {
+export interface ServerModelRcInterface {
   id: string;
   default: boolean;
   serverUrl: string;
   userName: string;
   password: string;
-  clientcertificate?: CertModelRc;
+  clientCertificate?: CertModelRcInterface;
 }
 
-export class ServerModelRc implements ServerModelInterface {
+export class ServerModelRc implements ServerModelRcInterface {
 
-  private _id: string;
-  private _default: boolean;
-  private _serverUrl: string;
-  private _userName: string;
-  private _password: string;
-  private _clientcertificate: CertModelRc;
+  public id: string;
+  public default: boolean;
+  public serverUrl: string;
+  public userName: string;
+  public password: string;
+  public clientCertificate: CertModelRc;
 
-  private _attributes: Array<string>;
+  private static attributes = [ 'id', 'default', 'serverUrl', 'userName', 'password', 'clientCertificate' ];
 
-  constructor(params?: ServerModelInterface) {
-    if (params) {
+  constructor(params: ServerModelRcInterface) {
+    this.fromJSON(params);
+  }
 
-      this.attributes = Object.keys(params);
-
-      this.attributes.forEach((key) => {
-        if (params[key] && key !== 'default') {
-          this[key] = params[key];
-        } else if (key === 'default') {
-          this[key] = params[key];
-        } else {
-          throw new Error(`${key} must be defined on a ServerModelRc`);
+  public fromJSON(params: ServerModelRcInterface) {
+    _.assignWith(this, params, (objValue: any, srcValue: any, key: string) => {
+      if (ServerModelRc.attributes.indexOf(key) >= 0) {
+        if (key === 'clientCertificate') {
+          srcValue = new CertModelRc(srcValue);
         }
-      });
-    }
+        return srcValue;
+      }
+    });
   }
 
-  public get attributes(): Array<string> {
-    return this._attributes;
-  }
-
-  public set attributes(v: Array<string>) {
-    this._attributes = v;
-  }
-
-  public get id(): string {
-    return this._id;
-  }
-
-  public set id(v: string) {
-    this._id = v;
-  }
-
-  public get serverUrl(): string {
-    return this._serverUrl;
-  }
-
-  public set serverUrl(v: string) {
-    this._serverUrl = v;
-  }
-
-  public get userName(): string {
-    return this._userName;
-  }
-  public set userName(v: string) {
-    this._userName = v;
-  }
-
-  public get password(): string {
-    return this._password;
-  }
-
-  public set password(v: string) {
-    this._password = v;
-  }
-
-  public get clientcertificate(): CertModelRc {
-    return this._clientcertificate;
-  }
-
-  public set clientcertificate(v: CertModelRc) {
-    this._clientcertificate = v;
-  }
-
-  public get default(): boolean {
-    return this._default;
-  }
-
-  public set default(v: boolean) {
-    this._default = v;
+  public toJSON(): ServerModelRcInterface {
+    let model: any = {};
+    ServerModelRc.attributes.forEach((attr: string) => {
+      if (attr && this[attr] !== undefined) {
+        model[attr] = this[attr];
+      }
+    });
+    return model;
   }
 
   public toTableRow(): Array<string> {
@@ -101,15 +58,5 @@ export class ServerModelRc implements ServerModelInterface {
       this.default ? chalk.green(figures.tick) : chalk.red(figures.cross),
       chalk.yellow(this.userName)
     ];
-  }
-
-  public toJson(): ServerModelInterface {
-    let model: any = {};
-    this.attributes.forEach((attr: string) => {
-      if (attr && this[attr] !== undefined) {
-        model[attr] = this[attr];
-      }
-    });
-    return model;
   }
 }

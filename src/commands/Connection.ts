@@ -121,6 +121,7 @@ export class Connection extends Command {
             this.connectionsDirTree[index].connection = new ConnectionModel(hjsonFile.data);
           }
         });
+        return this.connectionsDirTree;
       }
     );
   }

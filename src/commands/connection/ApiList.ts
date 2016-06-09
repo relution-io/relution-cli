@@ -193,9 +193,9 @@ export class ApiList {
         this._defaultServer = this.connection.helperAdd.defaultServer;
 
         if (server.connectserver.toString().trim() === this._defaultServer.toString().trim()) {
-          choosedServer = find(this.connection.userRc.config.server, { default: true });
+          choosedServer = find(this.connection.userRc.server, { default: true });
         } else {
-          choosedServer = find(this.connection.userRc.config.server, { id: server.connectserver });
+          choosedServer = find(this.connection.userRc.server, { id: server.connectserver });
         }
         return this.connection.relutionSDK.login(choosedServer)
           .filter((resp: { user: Relution.security.User }) => {

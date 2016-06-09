@@ -15,15 +15,9 @@ describe('ServerModelRc', () => {
     model = new ServerModelRc(temp);
   });
 
-  it('has attributes', (done) => {
-    expect(model.attributes).not.to.be(undefined);
-    expect(model.attributes.toString()).to.be.equal(Object.keys(temp).toString());
-    done();
-  });
-
   it('convert into a json object', (done) => {
-    expect(model.toJson).not.to.be(undefined);
-    expect(Object.keys(model.toJson()).toString()).to.be.equal(Object.keys(temp).toString());
+    expect(model.toJSON).not.to.be(undefined);
+    expect(Object.keys(model.toJSON()).toString()).to.be.equal(Object.keys(temp).toString());
     done();
   });
 });
