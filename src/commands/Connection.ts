@@ -1,8 +1,10 @@
+import * as path from 'path';
+import * as chalk from 'chalk';
+
 import {Command} from './../utility/Command';
 import {FileApi} from './../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
 import {findIndex, map} from 'lodash';
-import * as path from 'path';
 import {AddConnection} from './connection/Add';
 import {ApiList} from './connection/ApiList';
 import {Observable} from '@reactivex/rxjs';
@@ -62,6 +64,15 @@ export class Connection extends Command {
           pos: 0
         }
       }
+    },
+    list: {
+      when: () => {
+        return RxFs.exist(this.rootFolder);
+      },
+      why: () => {
+        return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
+      },
+      description: this.i18n.LIST_AVAILABLE_CONFIG('Connections'),
     },
     help: {
       description: this.i18n.HELP_COMMAND('Connections')
@@ -158,7 +169,6 @@ export class Connection extends Command {
    * return why is is not enabld
    */
   addWhyDisabled(): string {
-
     if (!this.userRc.server.length) {
       return this.i18n.CONNECTION_ADD_SERVER_BEFORE;
     }
@@ -167,4 +177,23 @@ export class Connection extends Command {
       return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
     }
   }
+
+  /**
+   * shows all available connections
+   * @returns Observable
+   */
+  list() {
+    return Observable.create((observer: any) => {
+      let content: any = [['']];
+      this.getConnectionNames().forEach((connection) => {
+        content.push([chalk.yellow(`${connection.name}`)]);
+      });
+      if (content.length < 1) {
+        observer.complete();
+      }
+      observer.next(this.table.sidebar(content, this.i18n.CONNECTION_LIST_TABLEHEADERS));
+      observer.complete();
+    });
+  }
+
 }

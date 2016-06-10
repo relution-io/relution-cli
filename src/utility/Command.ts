@@ -249,7 +249,10 @@ export class Command implements CommandInterface {
           this.log.log('cyan', log);
         }
       },
-      (e: any) => this.log.error(e),
+      (e: any) => {
+        this.log.error(e);
+        this.home();
+      },
       () => {
         this.home();
       }

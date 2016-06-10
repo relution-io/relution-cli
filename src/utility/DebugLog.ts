@@ -24,7 +24,7 @@ export class DebugLog {
   }
 
   static error(e: Error): void {
-    return DebugLog.log('red', `${DebugLog.badge('ERROR', 'red')}${chalk.green(e.message)}`, e.stack && DebugLog.withStack ? e.stack : '');
+    return DebugLog.log('red', `${DebugLog.badge('ERROR', 'red')}${chalk.red(e.message)}`, e.stack && DebugLog.withStack ? e.stack : '');
   }
 
   static info(message: string, submessage?: any) {
