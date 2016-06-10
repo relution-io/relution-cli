@@ -66,7 +66,7 @@ export class Server extends Command {
       }
     },
     help: {
-      description: this.i18n.LIST_COMMAND('Server')
+      description: this.i18n.HELP_COMMAND('Server')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

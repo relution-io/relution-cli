@@ -192,7 +192,7 @@ export class ServerCrud {
         choices: choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
-            return this.server.i18n.YOU_MOUST_CHOOSE('Server');
+            return this.server.i18n.YOU_MUST_CHOOSE('Server');
           }
           return true;
         }

@@ -29,7 +29,7 @@ export class ChooseEnv {
         choices: this.choices,
         validate: (answer: Array<string>): any => {
           if (answer.length < 1) {
-            return Translation.YOU_MOUST_CHOOSE('environment');
+            return Translation.YOU_MUST_CHOOSE('environment');
           }
           return true;
         }

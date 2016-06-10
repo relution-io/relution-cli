@@ -60,7 +60,7 @@ export class Deploy extends Command {
       }
     },
     help: {
-      description: this.i18n.LIST_COMMAND('Deploy')
+      description: this.i18n.HELP_COMMAND('Deploy')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

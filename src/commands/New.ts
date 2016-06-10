@@ -39,7 +39,7 @@ export class New extends Command {
       }
     },
     help: {
-      description: this.i18n.LIST_COMMAND('New')
+      description: this.i18n.HELP_COMMAND('New')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

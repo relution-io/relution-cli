@@ -64,7 +64,7 @@ export class Connection extends Command {
       }
     },
     help: {
-      description: this.i18n.LIST_COMMAND('connections')
+      description: this.i18n.HELP_COMMAND('Connections')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

@@ -1,3 +1,13 @@
+import * as path from 'path';
+
+function relative(pathname: string) {
+  try {
+    return path.relative(process.cwd(), pathname) || path.basename(pathname) || '.';
+  } catch (error) {
+    return pathname;
+  }
+}
+
 export class Translation {
 
   static PRESS_ENTER = ' or press enter';
@@ -63,7 +73,7 @@ export class Translation {
   static PUSH_LIST_TABLEHEADERS = ['Push'];
 
   static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
-    return `The folder "${folder}" is not a Relution project. Please read the manual "How to migrate exists Project into a relution Project".`;
+    return `Folder ${relative(folder)} does not contain a Relution project, see "How to migrate existing Project into a Relution Project".`;
   }
 
   static LIST_AVAILABLE_CONFIG(name: string ): string {
@@ -86,16 +96,16 @@ export class Translation {
     return `Please choose a ${name}:`;
   }
 
-  static YOU_MOUST_CHOOSE(name: string): string {
+  static YOU_MUST_CHOOSE(name: string): string {
     return `You must choose at least one ${name}.`;
   }
 
-  static LIST_COMMAND(name: string): string {
-    return `List the ${name} Command`;
+  static HELP_COMMAND(name: string): string {
+    return `Help on ${name}`;
   }
 
   static FOLDER_NOT_EXIST(folder: string): string {
-    return `Folder ${folder} not exists!`;
+    return `Folder ${relative(folder)} does not exist!`;
   }
   static RH_DESCRIPTION(name: string): string {
     return `Auto Generated Description for ${name}.`;
@@ -130,7 +140,7 @@ export class Translation {
   }
 
   static FOLDER_NOT_EMPTY(path: string): string {
-    return `${path} is not empty please clean it up before!`;
+    return `Folder ${relative(path)} is not empty.`;
   }
 
   static ADD_ANOTHER(name: string): string {

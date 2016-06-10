@@ -1,14 +1,13 @@
 import {Observable} from '@reactivex/rxjs';
+import * as _ from 'lodash';
+import * as chalk from 'chalk';
+
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Greet} from './../utility/Greet';
+import {Command} from './../utility/Command';
 import {Server} from './Server';
 import {Environment} from './Environment';
-import {New} from './New';
-import {Deploy} from './Deploy';
-import {Connection} from './Connection';
-import {Push} from './Push';
-import * as chalk from 'chalk';
 import {Translation} from './../utility/Translation';
 
 const inquirer = require('inquirer');
@@ -62,20 +61,17 @@ const usernameLib = require('username');
  * │            │          │                 │                                               │
  * └────────────┴──────────┴─────────────────┴───────────────────────────────────────────────┘
     ```
-
  */
 export class Tower {
   public userRc: UserRc = new UserRc();
   // where is this command available
-  public name: string = 'relution';
+  public name: string = 'Relution CLI';
   // all commands are available
   public staticCommands: {
-    env: Environment,
-    deploy: Deploy,
+    [name: string]: Command;
+
     server: Server,
-    new: New,
-    connection: Connection,
-    push: Push
+    env: Environment
   };
   // helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;
@@ -88,10 +84,10 @@ export class Tower {
   // Tower commands
   public commands: Object = {
     help: {
-      description: Translation.LIST_COMMAND(this.name)
+      description: Translation.HELP_COMMAND(this.name)
     },
     quit: {
-      description: 'Exit Relution CLI'
+      description: 'Exit the Relution CLI'
     }
   };
 
@@ -104,15 +100,18 @@ export class Tower {
   // to say hello
   public username: string;
 
-  constructor(staticCommands: any, argv: string[] = []) {
-    this.args = argv;
+  constructor(staticCommands: _.Dictionary<Command>, argv: string[] = []) {
     this.table = new Table();
-    this.staticCommands = staticCommands;
-    this.staticCommandRootKeys = Object.keys(staticCommands);
 
+    this.staticCommands = <any>staticCommands;
+    this.staticCommandRootKeys = Object.keys(staticCommands);
+    this.staticCommandRootKeys.forEach((name) => {
+      staticCommands[name]._parent = this;
+    });
+
+    this.args = argv;
     if (this.args.length <= 0) {
-      // go interactive
-      this.args = this.reset;
+      this.args = this.reset; // go interactive
     }
 
     this.userRc.rcFileExist()
@@ -191,13 +190,13 @@ export class Tower {
         // only ['server']
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
           //  console.log(`trigger static ${subArgs.toString()} showCommands`);
-          return this.staticCommands[subArgs[0]].init(subArgs, this);
+          return this.staticCommands[subArgs[0]].init(subArgs);
           // only ['server', 'add', 'name']
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
           params.splice(0, 1);
           if (params.length) {
-            return this.staticCommands[subArgs[0]].init(params, this);
+            return this.staticCommands[subArgs[0]].init(params);
           }
 
         } else {
@@ -229,11 +228,9 @@ export class Tower {
         if (commandName !== this.name && this.reserved.indexOf(commandName) === -1) {
           this.staticCommands[commandName].help(true).subscribe(
             (commands: Array<string>) => {
-              // console.log(commands, commandName);
-              commands.forEach((command: any) => {
+              commands.forEach((command: string) => {
                 content.push(command);
               });
-              // console.log(commands);
             }
           );
         } else if (this.reserved.indexOf(commandName) !== -1) {

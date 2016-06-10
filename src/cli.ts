@@ -1,6 +1,7 @@
 #!/usr/bin/env node --harmony
 import {Observable} from '@reactivex/rxjs';
 import * as RelutionSDK from './utility/RelutionSDK';
+import * as _ from 'lodash';
 
 import {Server} from './commands/Server';
 import {Environment} from './commands/Environment';
@@ -9,6 +10,7 @@ import {New} from './commands/New';
 import {Deploy} from './commands/Deploy';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
+import {Command} from './utility/Command';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
@@ -16,7 +18,7 @@ argv.splice(0, 2); // node cli.js
 RelutionSDK.initFromArgs(argv);
 
 // all sub commands add to be here
-const staticCommands = {
+const staticCommands: _.Dictionary<Command>  = {
   server: new Server(),
   env: new Environment(),
   new: new New(),

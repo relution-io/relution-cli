@@ -111,7 +111,7 @@ export class Environment extends Command {
       description: this.i18n.LIST_AVAILABLE_CONFIG('Environments')
     },
     help: {
-      description: this.i18n.LIST_COMMAND('Environment')
+      description: this.i18n.HELP_COMMAND('Environment')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

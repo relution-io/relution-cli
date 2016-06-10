@@ -49,10 +49,10 @@ export class Push extends Command {
       why: () => {
         return this.i18n.FOLDER_NOT_EXIST(this.rootFolder);
       },
-      description: this.i18n.LIST_AVAILABLE_CONFIG('push'),
+      description: this.i18n.LIST_AVAILABLE_CONFIG('Push'),
     },
     help: {
-      description: this.i18n.LIST_COMMAND('Push')
+      description: this.i18n.HELP_COMMAND('Push')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME

@@ -1,11 +1,14 @@
 import {Observable} from '@reactivex/rxjs';
 import * as chalk from 'chalk';
+import * as _ from 'lodash';
+
 import {UserRc} from './UserRc';
 import {Table} from './Table';
 import {Tower} from './../commands/Tower';
 import {Translation} from './Translation';
 import {DebugLog} from './DebugLog';
 import {RelutionSdk} from './RelutionSDK';
+
 const inquirer = require('inquirer');
 
 interface CommandInterface {
@@ -24,6 +27,7 @@ interface CommandInterface {
   back: () => {};
   showCommands: () => {};
 }
+
 /**
  *
  * Important All Subcommand have to return an Observable
@@ -63,8 +67,6 @@ interface CommandInterface {
  * }
  *```
  */
-
-
 export class Command implements CommandInterface {
   /**
    * Command name
@@ -119,11 +121,11 @@ export class Command implements CommandInterface {
   }
 
   home() {
-    return this.init([this.name], this._parent);
+    return this.init([this.name]);
   }
 
   back() {
-    return this.init([this.name], this._parent);
+    return this.init([this.name]);
   }
   /**
    * @description shows a list of Available commands form the Command like this
@@ -145,8 +147,9 @@ export class Command implements CommandInterface {
       // [this.name, '', '', '']
       let i = 0;
       this.flatCommands().forEach((commandName: string) => {
-        let color = this.commandIsDisabled(this.commands[commandName], commandName) ? 'red' : 'green' ;
-        let name: string = this.commands[commandName].label ? this.commands[commandName].label : commandName;
+        let disabled = this.commandIsDisabled(this.commands[commandName], commandName, this.commands[commandName].description);
+        let color = _.isNil(disabled) ? 'green' : 'red';
+        let name: string = this.commands[commandName].label || commandName;
         let command: Array<string> = [chalk[color](this.name), chalk.cyan(name)];
         if (this.commands[commandName]) {
           if (commandName !== 'relution') {
@@ -167,7 +170,11 @@ export class Command implements CommandInterface {
             } else {
               command.push('--');
             }
-            command.push(this.commands[commandName].description || '--');
+            if (disabled) {
+              command.push(chalk['red'](disabled));
+            } else {
+              command.push(this.commands[commandName].description || '--');
+            }
             content.push(command);
             i++;
           }
@@ -183,18 +190,15 @@ export class Command implements CommandInterface {
     });
   }
 
-  commandIsDisabled(command: any, name: string): boolean {
+  commandIsDisabled(command: any, name: string, defaultWhy = `is not enabled`): string {
     if (command.when && !command.when()) {
-      let message = command.why ? command.why() : `is not enabled`;
-      this.log.info(`"${chalk.magenta(this.name)} ${chalk.magenta(name)}" is disabled because: ${message}`);
-      return true;
+      return command.why ? command.why() : defaultWhy;
     }
-    return false;
+    return null;
   }
 
-  init(args: Array<string>, back: Tower): any {
+  init(args: Array<string>): any {
     // this.log.info(`Command.ts ${this.name}`, args);
-    this._parent = back;
     let myObservable: Observable<any>;
 
     // directly
@@ -202,7 +206,7 @@ export class Command implements CommandInterface {
       // is the help or command without any params
       return this.showCommands().subscribe(
         (answers: Array<string>) => {
-          return this.init(answers[this.name], this._parent);
+          return this.init(answers[this.name]);
         },
         (e: any) => this.log.error(e)
       );
@@ -263,9 +267,14 @@ export class Command implements CommandInterface {
   setupCommandsForList() {
     let temp: Array<Object> = [];
     this.flatCommands().forEach((command) => {
+      let name = this.commands[command].label || this.commands[command].name || command;
+      let message = this.commandIsDisabled(this.commands[command], command);
+      if (!_.isNil(message)) {
+        // this.log.info(`"${chalk.magenta(name)}" is disabled because: ${message}`);
+      }
       temp.push({
-        disabled: this.commandIsDisabled(this.commands[command], command),
-        name: this.commands[command].label ? this.commands[command].label : command,
+        disabled: message,
+        name: name,
         value: [this.name, this.commands[command].method ? this.commands[command].method : command]
       });
     });
