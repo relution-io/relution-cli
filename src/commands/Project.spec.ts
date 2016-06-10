@@ -1,8 +1,8 @@
-import {New} from './New';
+import {Project} from './Project';
 const expect = require('expect.js');
 
-describe('Command New', () => {
-  let project: New = new New();
+describe('Command Project', () => {
+  let project: Project = new Project();
   beforeEach(() => {
     project.preload().subscribe();
   });
@@ -15,8 +15,8 @@ describe('Command New', () => {
     });
   });
 
-  it('has new as name', (done) => {
-    expect(project.name).to.be('new');
+  it('has project as name', (done) => {
+    expect(project.name).to.be('project');
     done();
   });
 });

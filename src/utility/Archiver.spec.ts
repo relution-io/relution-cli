@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as chalk from 'chalk';
 const figures = require('figures');
 
-import {Create} from './../commands/new/Create';
+import {Create} from './../commands/project/Create';
 const expect = require('expect.js');
 
 describe('Utility Archiver', () => {

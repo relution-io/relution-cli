@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {Server} from './commands/Server';
 import {Environment} from './commands/Environment';
 import {Tower} from './commands/Tower';
-import {New} from './commands/New';
+import {Project} from './commands/Project';
 import {Deploy} from './commands/Deploy';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
@@ -20,8 +20,8 @@ RelutionSDK.initFromArgs(argv);
 // all sub commands add to be here
 const staticCommands: _.Dictionary<Command>  = {
   server: new Server(),
+  project: new Project(),
   env: new Environment(),
-  new: new New(),
   deploy: new Deploy(),
   connection: new Connection(),
   push: new Push()

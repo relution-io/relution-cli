@@ -1,7 +1,7 @@
 import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
-import {Create} from './new/Create';
+import {Create} from './project/Create';
 import * as fs from 'fs';
 
 /**
@@ -17,7 +17,7 @@ import * as fs from 'fs';
  * └─────────┴──────────┴──────────┴────────────────────────────────┘
  * ```
  */
-export class New extends Command {
+export class Project extends Command {
 
   public commands: any = {
     create: {
@@ -39,7 +39,7 @@ export class New extends Command {
       }
     },
     help: {
-      description: this.i18n.HELP_COMMAND('New')
+      description: this.i18n.HELP_COMMAND('Project')
     },
     back: {
       description: this.i18n.EXIT_TO_HOME
@@ -49,7 +49,7 @@ export class New extends Command {
   private _create: Create = new Create();
 
   constructor() {
-    super('new');
+    super('project');
   }
 
   /**
