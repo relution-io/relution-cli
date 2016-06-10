@@ -129,7 +129,7 @@ export class Translation {
   }
 
   static WRITTEN(name: string, type = 'File'): string {
-    return `${type} "${name}" are created`;
+    return `${type} ${name} was created successfully.`;
   }
 
   static ALREADY_EXIST(name: string, type = 'Name'): string {

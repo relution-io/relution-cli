@@ -24,18 +24,7 @@ export class FileApi {
     if (exist) {
       return Observable.throw(new Error(`${path} already exist`));
     }
-    return Observable.create((observer: any) => {
-      RxFs.mkdir(path).subscribe({
-        next: (folder: any) => {
-          observer.next(folder);
-        },
-        complete: () => {
-          RxFs.writeFile(`${path}/.gitkeep`, '').subscribe({
-            complete: () => observer.complete()
-          });
-        }
-      });
-    });
+    return RxFs.mkdir(path);
   }
 
   /**

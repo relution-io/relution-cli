@@ -1,11 +1,13 @@
+import * as path from 'path';
+import * as inquirer from 'inquirer';
+const npm = require('npm');
+
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
 import {Translation} from './../../utility/Translation';
 import {Gii} from './../../gii/Gii';
 import {TemplateModel} from './../../gii/TemplateModel';
 import {FileApi} from './../../utility/FileApi';
-import * as inquirer from 'inquirer';
-const npm = require('npm');
 import {DebugLog} from './../../utility/DebugLog';
 
 export class Create {
@@ -63,6 +65,7 @@ export class Create {
       {
         type: 'input',
         name: 'name',
+        default: path.basename(process.cwd()),
         message: Translation.ENTER_SOMETHING.concat('Project name'),
         validate: (value: string): boolean => {
           let pass: any = value.match(Validator.stringPattern);
