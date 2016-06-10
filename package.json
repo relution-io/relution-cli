@@ -8,6 +8,7 @@
     "tslint": "tslint src/**/*.ts",
     "coverage": "istanbul cover lib/**/*.js",
     "test": "node testrunner.js",
+	"debug": "node-debug --web-port 8088 lib/cli.js --debug",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
