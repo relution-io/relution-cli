@@ -7,7 +7,6 @@ import {Server} from './commands/Server';
 import {Environment} from './commands/Environment';
 import {Tower} from './commands/Tower';
 import {Project} from './commands/Project';
-import {Deploy} from './commands/Deploy';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
 import {Command} from './utility/Command';
@@ -22,7 +21,6 @@ const staticCommands: _.Dictionary<Command>  = {
   server: new Server(),
   project: new Project(),
   env: new Environment(),
-  deploy: new Deploy(),
   connection: new Connection(),
   push: new Push()
 };

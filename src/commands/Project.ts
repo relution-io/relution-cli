@@ -1,8 +1,13 @@
 import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
+
 import {Create} from './project/Create';
+import {Deploy} from './project/Deploy';
+
+import {RxFs} from './../utility/RxFs';
 import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * create a new Baas for the Developer
@@ -32,6 +37,30 @@ export class Project extends Command {
         return this.i18n.FOLDER_NOT_EMPTY(process.cwd());
       },
       description: this.i18n.NEW_CREATE,
+      vars: {
+        name: {
+          pos: 0
+        }
+      }
+    },
+    deploy: {
+      description: this.i18n.DEPLOY_PUBLISH,
+      when: () => {
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || this._parent.staticCommands.env.envCollection.collection.length <= 0 ) {
+          return false;
+        }
+        return true;
+      },
+      why: () => {
+        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson'))) {
+          return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
+        }
+
+        if (this._parent.staticCommands.env.envCollection.collection.length <= 0) {
+          return this.i18n.ENV_ADD_FIRSTLY;
+        }
+
+      },
       vars: {
         name: {
           pos: 0
@@ -77,5 +106,9 @@ export class Project extends Command {
         }
       });
     });
+  }
+
+  deploy() {
+    return new Deploy(this).publish();
   }
 }

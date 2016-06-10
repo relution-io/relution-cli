@@ -1,13 +1,18 @@
-import {Command} from './../utility/Command';
 import * as chalk from 'chalk';
+import * as path from 'path';
+const figures = require('figures');
+
 import {find, findIndex} from 'lodash';
 import {Observable} from '@reactivex/rxjs';
 import * as Relution from 'relution-sdk';
-import {FileApi} from './../utility/FileApi';
-import {RxFs} from './../utility/RxFs';
-import {Archiver} from './../utility/Archiver';
-const figures = require('figures');
-import * as path from 'path';
+import {FileApi} from '../../utility/FileApi';
+import {RxFs} from '../../utility/RxFs';
+import {Archiver} from '../../utility/Archiver';
+import {Command} from '../../utility/Command';
+import {Translation} from '../../utility/Translation';
+import {DebugLog} from '../../utility/DebugLog';
+import {UserRc} from '../../utility/UserRc';
+import {RelutionSdk} from '../../utility/RelutionSDK';
 
 const loader = require('cli-loader')();
 /**
@@ -23,10 +28,14 @@ const loader = require('cli-loader')();
  * ```
  * @todo remove zip file after deploy
  */
-export class Deploy extends Command {
-  constructor() {
-    super('deploy');
-  }
+export class Deploy {
+  private owner: Command;
+  private userRc: UserRc;
+  private i18n: typeof Translation;
+  private relutionSDK: RelutionSdk;
+  private log = DebugLog;
+  private inquirer: any;
+
   private _promptkey: string = 'deployserver';
   private _defaultServer: string = 'default';
   private _archiver: Archiver = new Archiver();
@@ -34,45 +43,25 @@ export class Deploy extends Command {
   private _projectDir: string;
   private _fileApi: FileApi = new FileApi();
 
-  public commands: any = {
-    publish: {
-      description: this.i18n.DEPLOY_PUBLISH,
-      when: () => {
-        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || this._parent.staticCommands.env.envCollection.collection.length <= 0 ) {
-          return false;
-        }
-        return true;
-      },
-      why: () => {
-        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson'))) {
-          return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
-        }
+  constructor(owner: Command) {
+    this.owner = owner;
+    this.userRc = owner.userRc;
+    this.i18n = owner.i18n;
+    this.relutionSDK = owner.relutionSDK;
+    this.log = owner.log;
+    this.inquirer = owner.inquirer;
+  }
 
-        if (this._parent.staticCommands.env.envCollection.collection.length <= 0) {
-          return this.i18n.ENV_ADD_FIRSTLY;
-        }
-
-      },
-      vars: {
-        name: {
-          pos: 0
-        }
-      }
-    },
-    help: {
-      description: this.i18n.HELP_COMMAND('Deploy')
-    },
-    back: {
-      description: this.i18n.EXIT_TO_HOME
-    }
-  };
+  _copy(org: any) {
+    return JSON.parse(JSON.stringify(org));
+  }
 
   /**
    * choose first on which Server the App has to be deployed
    */
   getServerPrompt(): Observable<any> {
     this._defaultServer = 'default';
-    let prompt = this._copy(this._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
+    let prompt = this._copy(this.owner._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
     let indexDefault: number = findIndex(this.userRc.server, { default: true });
     if (indexDefault > -1) {
       this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
@@ -198,7 +187,7 @@ export class Deploy extends Command {
       return Observable.throw(new Error(`${process.cwd()} is not a valid Relution Project`));
     }
     // load the environments before
-    return this._parent.staticCommands.env.envCollection.getEnvironments()
+    return this.owner._parent.staticCommands.env.envCollection.getEnvironments()
       /**
        * load the relution.hjson
        */
@@ -238,8 +227,8 @@ export class Deploy extends Command {
           return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
         this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
-        // console.log(this._parent.staticCommands.env.chooseEnv);
-        return this._parent.staticCommands.env.chooseEnv.choose('list')
+        // console.log(this.owner._parent.staticCommands.env.chooseEnv);
+        return this.owner._parent.staticCommands.env.chooseEnv.choose('list')
           .filter((answers: { env: string }) => {
             return answers.env !== this.i18n.CANCEL;
           })
@@ -247,7 +236,7 @@ export class Deploy extends Command {
            * create the zip File
            */
           .map((answers: { env: string }) => {
-            envName = answers[this._parent.staticCommands.env.chooseEnv.promptName];
+            envName = answers[this.owner._parent.staticCommands.env.chooseEnv.promptName];
             return this._archiver.createBundle();
           });
       })
