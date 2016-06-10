@@ -16,6 +16,7 @@ export interface TreeDirectory {
   children?: Array<TreeDirectory>;
   connection?: ConnectionModel;
 }
+
 /**
  * Connection
  * ```bash

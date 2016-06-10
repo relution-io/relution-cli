@@ -125,9 +125,9 @@ export class Deploy extends Command {
       let statusCode: number;
       return Relution.web.get({
         url: deploymentUrl,
-        responseCallback: (response: Relution.web.HttpResponse) => {
-          statusCode = response.statusCode;
-          return response;
+        responseCallback: (resp: Relution.web.HttpResponse) => {
+          statusCode = resp.statusCode;
+          return resp;
         }
       }).then((body) => {
         if (statusCode === 202) {

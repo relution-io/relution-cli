@@ -2,12 +2,11 @@ import {TemplateInterface} from './../../TemplateInterface';
 import {CallModel} from './../../../models/CallModel';
 
 const html = require('common-tags').html;
-const stripIndents = require('common-tags').stripIndents;
 
-export /**
+/**
  * ConnectionGen
  */
-  class ConnectionGen implements TemplateInterface{
+export class ConnectionGen implements TemplateInterface {
   public name: string = '';
   public path: string = 'connections';
   public metaData: Array<CallModel> = [];
@@ -28,7 +27,7 @@ export /**
        * @file ${this.path}/${this.name}.gen.js
        * Simple MADP Application
        *
-       * Created by Relution CLI on ${this._pad(date.getDate())}.${this._pad(date.getMonth()+1)}.${date.getFullYear()}
+       * Created by Relution CLI on ${this._pad(date.getDate())}.${this._pad(date.getMonth() + 1)}.${date.getFullYear()}
        * Copyright (c)
        * ${date.getFullYear()}
        * All rights reserved.

@@ -1,12 +1,12 @@
 import {TemplateInterface} from './../../TemplateInterface';
 const html = require('common-tags').html;
 
-export class Routes implements TemplateInterface{
-  public name:string = 'routes';
-  public publishName:string = 'routes.js';
-  public parentFolder:string = 'routes';
+export class Routes implements TemplateInterface {
+  public name: string = 'routes';
+  public publishName: string = 'routes.js';
+  public parentFolder: string = 'routes';
 
-  get template(){
+  get template() {
     return (html`
       'use strict';
       /**

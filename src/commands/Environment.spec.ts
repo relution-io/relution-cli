@@ -1,7 +1,5 @@
 import {Environment} from './Environment';
-import {EnvModel} from './../models/EnvModel';
 const expect = require('expect.js');
-import * as sinon from 'sinon';
 import * as path from 'path';
 import {RxFs} from './../utility/RxFs';
 

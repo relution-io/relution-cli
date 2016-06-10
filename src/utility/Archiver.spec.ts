@@ -17,7 +17,7 @@ describe('Utility Archiver', () => {
     commandCreate = new Create();
     commandCreate.npmInstall = () => {
       return Observable.empty();
-    }
+    };
     commandCreate.rootProjectFolder = commandRoot;
     return RxFs.mkdir(commandRoot).toPromise().then(() => {
       expect(RxFs.exist(commandRoot)).to.be(true);

@@ -8,7 +8,7 @@ import * as path from 'path';
 import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 import * as chalk from 'chalk';
-import {TreeDirectory} from './../Connection';
+
 /**
  * this class add a new Connection
  * 1. get name

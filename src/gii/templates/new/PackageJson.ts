@@ -4,8 +4,8 @@ const html = require('common-tags').html;
 export class PackageJson implements TemplateInterface {
   public publishName: string = 'package.json';
   public name: string = 'app';
-  public main: string = 'app.js'
-  public description:string = `Auto description ${this.name}`;
+  public main: string = 'app.js';
+  public description: string = `Auto description ${this.name}`;
   public version: string = '0.0.1';
   /**
    * ```json

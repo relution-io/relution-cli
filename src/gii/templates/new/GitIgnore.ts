@@ -1,13 +1,13 @@
 import {TemplateInterface} from './../../TemplateInterface';
 const html = require('common-tags').html;
+
 /**
  * create the RelutionHjson file for the Project
  * @link [template](https://github.com/github/gitignore/blob/master/Node.gitignore)
  */
-
 export class GitIgnore implements TemplateInterface {
 
-  public publishName: string = '.gitignore'
+  public publishName: string = '.gitignore';
   public name: string = 'gitignore';
 
   get template() {

@@ -1,4 +1,3 @@
-import {EnvModel} from './../models/EnvModel';
 import {Environment} from './../commands/Environment';
 import {RxFs} from './../utility/RxFs';
 const expect = require('expect.js');

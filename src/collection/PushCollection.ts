@@ -90,7 +90,7 @@ export class PushCollection implements PushInterface {
   constructor() {
     if (RxFs.exist(this.pushRootFolder)) {
       this.loadModels().subscribe({
-        error: (e:Error) => {
+        error: (e: Error) => {
           DebugLog.error(e);
         }
       });

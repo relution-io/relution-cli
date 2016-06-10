@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as tls from 'tls';
 
 import {CertModelRcInterface, CertModelRc} from './CertModelRc';
 

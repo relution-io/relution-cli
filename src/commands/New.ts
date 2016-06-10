@@ -1,10 +1,9 @@
 import {Command} from './../utility/Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
-import {RxFs} from './../utility/RxFs';
 import {Create} from './new/Create';
-import * as path from  'path';
 import * as fs from 'fs';
+
 /**
  * create a new Baas for the Developer
  * ```bash

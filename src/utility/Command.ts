@@ -1,4 +1,4 @@
-import {Observable, Observer} from '@reactivex/rxjs';
+import {Observable} from '@reactivex/rxjs';
 import * as chalk from 'chalk';
 import {UserRc} from './UserRc';
 import {Table} from './Table';

@@ -2,9 +2,9 @@ import {TemplateInterface} from './../../TemplateInterface';
 const html = require('common-tags').html;
 
 export class Connectors implements TemplateInterface {
-  public parentFolder:string = 'routes';
-  public publishName:string = 'connectors.js'
-  public name:string = 'connectors';
+  public parentFolder: string = 'routes';
+  public publishName: string = 'connectors.js';
+  public name: string = 'connectors';
 
   get template(): string{
     return (html`

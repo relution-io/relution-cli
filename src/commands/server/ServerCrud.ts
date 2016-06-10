@@ -1,8 +1,5 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import * as Q from 'q';
-
-import * as Relution from 'relution-sdk';
 
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
@@ -12,13 +9,13 @@ import {findIndex, map} from 'lodash';
 import {UserRc} from './../../utility/UserRc';
 import * as inquirer from 'inquirer';
 import {DebugLog} from './../../utility/DebugLog';
-import {CertModelRc} from "../../models/CertModelRc";
-import {RxFs} from "../../utility/RxFs";
-import {CertModelRcInterface} from "../../models/CertModelRc";
+import {CertModelRc} from '../../models/CertModelRc';
+import {RxFs} from '../../utility/RxFs';
+import {CertModelRcInterface} from '../../models/CertModelRc';
+
 /**
  * add a Server to Config from the UserRc and store it
  */
-
 const ADD = 'add';
 const UPDATE = 'update';
 const CLIENTCERT = 'clientcert';
@@ -40,7 +37,7 @@ export class ServerCrud {
       type: 'confirm',
       name: 'testconnection',
       message: 'Would you like to test the server with the applied data ?'
-    }
+    };
     return Observable.fromPromise(this.inquirer.prompt(prompt));
   }
 
@@ -418,8 +415,8 @@ export class ServerCrud {
         /**
          * update server with defaults
          */
-        .exhaustMap((serverId: string) => {
-          params[0] = serverId;
+        .exhaustMap((id: string) => {
+          params[0] = id;
           return this.clientcert(params);
         });
     }
@@ -435,9 +432,9 @@ export class ServerCrud {
         return Observable.of(undefined);
       }
 
-      return RxFs.readFile(pfx).map((pfx: Buffer) => {
+      return RxFs.readFile(pfx).map((pfxContent: Buffer) => {
         return new CertModelRc(_.defaults({
-          pfx: pfx
+          pfx: pfxContent
         }, answers));
       });
     }).filter((clientCertificate?: CertModelRc) => {
@@ -445,8 +442,8 @@ export class ServerCrud {
     }).map((clientCertificate?: CertModelRc) => {
       server.clientCertificate = clientCertificate;
       return server;
-    }).mergeMap((server) => {
-      return this.server.relutionSDK.login(server, true);
+    }).mergeMap((s) => {
+      return this.server.relutionSDK.login(s, true);
     }).takeLast(1).mergeMap(() => {
       return this.userRc.updateRcFile();
     });

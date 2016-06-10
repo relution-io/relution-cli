@@ -42,10 +42,12 @@ export class RelutionSdk {
     });
 
     if (!force) {
-      let currentUser:Relution.security.User = Relution.security.getCurrentUser();
+      let currentUser: Relution.security.User = Relution.security.getCurrentUser();
       if (currentUser) {
-        return Observable.create((observer:any) => {
-          observer.next({user: currentUser});
+        return Observable.create((observer: any) => {
+          observer.next({
+            user: currentUser
+          });
           observer.complete();
         });
       }
