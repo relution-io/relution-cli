@@ -1,5 +1,4 @@
 import {Observable} from '@reactivex/rxjs';
-import * as RelutionSDK from '../utility/RelutionSDK';
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Greet} from './../utility/Greet';
@@ -105,14 +104,12 @@ export class Tower {
   // to say hello
   public username: string;
 
-  constructor(staticCommands: any) {
+  constructor(staticCommands: any, argv: string[] = []) {
+    this.args = argv;
     this.table = new Table();
     this.staticCommands = staticCommands;
     this.staticCommandRootKeys = Object.keys(staticCommands);
 
-    this.args = this._copy(process.argv);
-    this.args.splice(0, 2); // node cli.js
-    RelutionSDK.initFromArgs(this.args);
     if (this.args.length <= 0) {
       // go interactive
       this.args = this.reset;

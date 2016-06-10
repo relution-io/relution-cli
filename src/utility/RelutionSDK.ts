@@ -15,6 +15,10 @@ export function initFromArgs(argv: string[] = []) {
       case '--debug':
         options.debug = true;
         break;
+      case '--cd':
+        argv.shift();
+        process.chdir(argv[0]);
+        break;
       default:
         break;
     }

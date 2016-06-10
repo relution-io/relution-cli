@@ -1,4 +1,7 @@
 #!/usr/bin/env node --harmony
+import {Observable} from '@reactivex/rxjs';
+import * as RelutionSDK from './utility/RelutionSDK';
+
 import {Server} from './commands/Server';
 import {Environment} from './commands/Environment';
 import {Tower} from './commands/Tower';
@@ -7,11 +10,13 @@ import {Deploy} from './commands/Deploy';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
 
-import {Observable} from '@reactivex/rxjs';
-// const loader = require('cli-loader')();
-// loader.start();
+// command line preprocessing
+let argv = new Array<string>(...process.argv);
+argv.splice(0, 2); // node cli.js
+RelutionSDK.initFromArgs(argv);
+
 // all sub commands add to be here
-let staticCommands = {
+const staticCommands = {
   server: new Server(),
   env: new Environment(),
   new: new New(),
@@ -21,7 +26,7 @@ let staticCommands = {
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised
-let all = Object.keys(staticCommands).map((commandName: any) => {
+const all = Object.keys(staticCommands).map((commandName: any) => {
   return staticCommands[commandName].preload().defaultIfEmpty();
 });
 
@@ -32,10 +37,9 @@ Observable.forkJoin(all).subscribe(
   },
   (e: any) => {
     console.error('preload', e);
-    process.exit();
+    process.exit(-1);
   },
   () => {
-    // console.log(`cli is preloaded`);
-    return new Tower(staticCommands);
+    return new Tower(staticCommands, argv);
   }
 );
