@@ -1,9 +1,14 @@
+import * as Relution from 'relution-sdk';
 import * as chalk from 'chalk';
+
 /**
  * DebugLog
  */
 export class DebugLog {
-  static withStack: boolean = true;
+  static get withStack(): boolean {
+    return Relution.debug.enabled; // use --debug command line switch to enable this
+  };
+
   static badge(label: string, color = 'green'): string {
     if (chalk.supportsColor) {
       return '';
