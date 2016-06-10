@@ -181,7 +181,6 @@ export class Push extends Command {
   list() {
     return Observable.create((observer: any) => {
       let content: any = [['']];
-      let tableHeader: Array<string> = ['PushConfig Name'];
       this.collection.loadModels().subscribe({
         complete: () => {
           this.collection.pushFiles.forEach((file: { name: string, path: string }) => {
@@ -190,7 +189,7 @@ export class Push extends Command {
           if (content.length < 1) {
             observer.complete();
           }
-          observer.next(this.table.sidebar(content, tableHeader));
+          observer.next(this.table.sidebar(content, this.i18n.PUSH_LIST_TABLEHEADERS));
           observer.complete();
         }
       });

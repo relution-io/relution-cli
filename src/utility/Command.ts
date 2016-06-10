@@ -175,7 +175,7 @@ export class Command implements CommandInterface {
       });
       content.push(['', '', '', '']);
       if (!asArray) {
-        observer.next(this.table.sidebar(content));
+        observer.next(this.table.sidebar(content, this.i18n.GENERAL_HELP_TABLEHEADERS));
       } else {
         observer.next(content);
       }

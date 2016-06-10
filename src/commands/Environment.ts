@@ -251,7 +251,6 @@ export class Environment extends Command {
   list() {
     return Observable.create((observer: any) => {
       let content: any = [['']];
-      let tableHeader: Array<string> = ['Environment Name'];
       this.envCollection.getEnvironments().subscribe({
         complete: () => {
           let list: Array<string> = this.envCollection.flatEnvArray();
@@ -261,7 +260,7 @@ export class Environment extends Command {
           if (content.length < 1) {
             observer.complete();
           }
-          observer.next(this.table.sidebar(content, tableHeader));
+          observer.next(this.table.sidebar(content, this.i18n.ENV_LIST_TABLEHEADERS));
           observer.complete();
         }
       });

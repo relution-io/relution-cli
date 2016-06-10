@@ -34,7 +34,7 @@ export class Table {
     console.log(this.table.toString());
   }
 
-  sidebar(content: any, header: Array<string> = ['Options', 'Commands', 'Param(s)', 'Description']) {
+  sidebar(content: any, header: Array<string>) {
     let grid = new clitable({
       head: header,
       options: { hAlign: 'center', vAlign: 'center' },

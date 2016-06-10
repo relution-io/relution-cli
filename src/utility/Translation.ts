@@ -7,20 +7,38 @@ export class Translation {
   static NOT_VALID: string = `Your Input is not valid`;
   static EXIT_TO_HOME: string = 'Back to Home';
   static NPM_INSTALL = `Start npm install this take a while`;
+
+  static GENERAL_HELP_TABLEHEADERS = ['Group', 'Command', 'Parameters', 'Description'];
+
   /**
    * Server Command
    */
   static SERVER_ADD: string = 'Add a new Server to the config';
   static SERVER_LIST: string = 'List all available Server from config';
+  static SERVER_LIST_TABLEHEADERS = ['Server', 'URL', 'Default', 'Username'];
   static SERVER_RM: string = 'Remove a Server from the config';
   static SERVER_UPDATE: string = 'Update a exists server from the Server list';
   static SERVER_CLIENTCERT: string = 'Specify a client certificate for contacting a Server';
   static SERVER_CLIENTCERT_NOT_FOUND = 'File not found.';
-  /**
+
+  /*
+   * Environment
+   */
+  static ENV_LIST_TABLEHEADERS = ['Environment Name'];
+  static ENV_UPDATE = 'Add a new key value pair to your Environment.';
+  static ENV_COPY = 'copy a exists Environment';
+  static ENV_IS_CREATED(name: string): string {
+    return `Environment ${name} is generated.`;
+  }
+  static ENV_UPDATE_COMPLETE = `Update complete`;
+  static ENV_ADD_FIRSTLY = `Please add an Environment firstly!`;
+
+  /*
    * New Command
    */
   static NEW_CREATE = `create a new Project in Folder`;
-  /**
+
+  /*
    * Deploy Command
    */
   static DEPLOY_PUBLISH = `deploy your Baas to the server`;
@@ -28,7 +46,8 @@ export class Translation {
   static DEPLOY_SUCCESS = 'Deployment completed.';
   static DEPLOY_FAILED = 'Deployment failed!';
   static DEPLOY_APPURL = 'Your application is available at';
-  /**
+
+  /*
    * Connection Command
    */
   static CONNECTION_ADD_LABEL = `new connection`;
@@ -38,16 +57,10 @@ export class Translation {
   static CONNECTION_ADD_CONNECTION_BEFORE = `Please add first a connection for this feature.`;
   static CONNECTION_ADD_SERVER_BEFORE = `Please add first a Server to create a Connection.`;
 
-  /**
-   * Environment
+  /*
+   * Push
    */
-  static ENV_UPDATE = 'Add a new key value pair to your Environment.';
-  static ENV_COPY = 'copy a exists Environment';
-  static ENV_IS_CREATED(name: string): string {
-    return `Environment ${name} is generated.`;
-  }
-  static ENV_UPDATE_COMPLETE = `Update complete`;
-  static ENV_ADD_FIRSTLY = `Please add an Environment firstly!`;
+  static PUSH_LIST_TABLEHEADERS = ['Push'];
 
   static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
     return `The folder "${folder}" is not a Relution project. Please read the manual "How to migrate exists Project into a relution Project".`;

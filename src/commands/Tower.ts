@@ -243,7 +243,7 @@ export class Tower {
       content.unshift(this._rowDivider);
       // to say hello
       if (!asArray) {
-        observer.next(this.table.sidebar(content));
+        observer.next(this.table.sidebar(content, Translation.GENERAL_HELP_TABLEHEADERS));
       } else {
         observer.next(content);
       }

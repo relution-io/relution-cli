@@ -107,7 +107,7 @@ export class Server extends Command {
     });
 
     return Observable.create((observer: any) => {
-      observer.next(this.table.sidebar(content));
+      observer.next(this.table.sidebar(content, this.i18n.SERVER_LIST_TABLEHEADERS));
       observer.complete();
     });
   }
