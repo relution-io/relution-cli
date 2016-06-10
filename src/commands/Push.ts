@@ -17,7 +17,7 @@ import {find} from 'lodash';
  * │ push    │ add      │ <$name>  │ create a push config        │
  * │ push    │ list     │ --       │ list available push configs │
  * │ push    │ help     │ --       │ List the Push Command       │
- * │ push    │ quit     │ --       │ Exit to Home                │
+ * │ push    │ back     │ --       │ Exit to Home                │
  * │         │          │          │                             │
  * └─────────┴──────────┴──────────┴─────────────────────────────┘
  * ```
@@ -54,7 +54,7 @@ export class Push extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('Push')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };

@@ -17,7 +17,7 @@ const loader = require('cli-loader')();
  * │         │          │          │                                │
  * │ deploy  │ deploy   │ <$name>  │ deploy your Baas to the server │
  * │ deploy  │ help     │ --       │ List the Deploy Command        │
- * │ deploy  │ quit     │ --       │ Exit to Home                   │
+ * │ deploy  │ back     │ --       │ Exit to Home                   │
  * │         │          │          │                                │
  * └─────────┴──────────┴──────────┴────────────────────────────────┘
  * ```
@@ -62,7 +62,7 @@ export class Deploy extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('Deploy')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };

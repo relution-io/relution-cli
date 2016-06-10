@@ -12,7 +12,7 @@ import * as fs from 'fs';
  * │         │          │          │                                │
  * │ new     │ create   │ <$name>  │ create a new Project in Folder │
  * │ new     │ help     │ --       │ List the New Command           │
- * │ new     │ quit     │ --       │ Exit to Home                   │
+ * │ new     │ back     │ --       │ Exit to Home                   │
  * │         │          │          │                                │
  * └─────────┴──────────┴──────────┴────────────────────────────────┘
  * ```
@@ -41,7 +41,7 @@ export class New extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('New')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };

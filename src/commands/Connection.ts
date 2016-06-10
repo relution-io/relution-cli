@@ -25,7 +25,7 @@ export interface TreeDirectory {
  * │            │          │          │                         │
  * │ connection │ add      │ <$name>  │ create a connection     │
  * │ connection │ help     │ --       │ List the Deploy Command │
- * │ connection │ quit     │ --       │ Exit to Home            │
+ * │ connection │ back     │ --       │ Exit to Home            │
  * │            │          │          │                         │
  * └────────────┴──────────┴──────────┴─────────────────────────┘
  * ```
@@ -66,7 +66,7 @@ export class Connection extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('connections')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };

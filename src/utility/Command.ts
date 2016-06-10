@@ -21,7 +21,7 @@ interface CommandInterface {
   inquirer: any;
   relutionSDK: RelutionSdk;
   help: () => {};
-  quit: () => {};
+  back: () => {};
   showCommands: () => {};
 }
 /**
@@ -122,7 +122,7 @@ export class Command implements CommandInterface {
     return this.init([this.name], this._parent);
   }
 
-  quit() {
+  back() {
     return this.init([this.name], this._parent);
   }
   /**
@@ -134,7 +134,7 @@ export class Command implements CommandInterface {
      │ server  │ list       │ <$name> │ list all available BaaS Server │
      │ server  │ rm         │ <$name> │ remove a server form the list  │
      │ server  │ help       │ --      │ List the Server Command        │
-     │ server  │ quit       │ --      │ Exit To Home                   │
+     │ server  │ back       │ --      │ Exit To Home                   │
      └─────────┴────────────┴─────────┴────────────────────────────────┘
    * ```
    */

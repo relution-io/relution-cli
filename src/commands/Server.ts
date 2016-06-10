@@ -14,7 +14,7 @@ import {orderBy, partition, concat} from 'lodash';
  * │ server  │ update   │ <$name>  │ Update a exist server from the Server list │
  * │ server  │ rm       │ <$name>  │ Remove a Server from the config            │
  * │ server  │ help     │ --       │ List the Server Command                    │
- * │ server  │ quit     │ --       │ Exit to Home                               │
+ * │ server  │ back     │ --       │ Exit to Home                               │
  * │         │          │          │                                            │
  * └─────────┴──────────┴──────────┴────────────────────────────────────────────┘
  * ```
@@ -68,7 +68,7 @@ export class Server extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('Server')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };

@@ -24,7 +24,7 @@ import {AddAttribute} from './environment/AddAttribute';
  * │ env     │ copy     │ <$from> <$name> │ copy a exist Environment                      │
  * │ env     │ list     │ --              │ List all environments by name                 │
  * │ env     │ help     │ --              │ List the Environment Command                  │
- * │ env     │ quit     │ --              │ Exit To Home                                  │
+ * │ env     │ back     │ --              │ Exit To Home                                  │
  * │         │          │                 │                                               │
  * └─────────┴──────────┴─────────────────┴───────────────────────────────────────────────┘
  * ```
@@ -113,7 +113,7 @@ export class Environment extends Command {
     help: {
       description: this.i18n.LIST_COMMAND('Environment')
     },
-    quit: {
+    back: {
       description: this.i18n.EXIT_TO_HOME
     }
   };
