@@ -212,7 +212,7 @@ export class Deploy extends Command {
         this._relutionHjson = relutionHjson.data;
         return this.getServerPrompt()
           .filter((server: { deployserver: string }) => {
-            return server.deployserver !== this.i18n.TAKE_ME_OUT;
+            return server.deployserver !== this.i18n.CANCEL;
           });
       })
       /**
@@ -241,7 +241,7 @@ export class Deploy extends Command {
         // console.log(this._parent.staticCommands.env.chooseEnv);
         return this._parent.staticCommands.env.chooseEnv.choose('list')
           .filter((answers: { env: string }) => {
-            return answers.env !== this.i18n.TAKE_ME_OUT;
+            return answers.env !== this.i18n.CANCEL;
           })
           /**
            * create the zip File

@@ -13,7 +13,7 @@ export class Translation {
   static PRESS_ENTER = ' or press enter';
   static QUIT = 'back';
   static ENTER_SOMETHING = `Please enter a `;
-  static TAKE_ME_OUT: string = 'Take me out of here';
+  static CANCEL: string = 'Cancel';
   static NOT_VALID: string = `Your Input is not valid`;
   static EXIT_TO_HOME: string = 'Back to Home';
   static NPM_INSTALL = `Start npm install this take a while`;

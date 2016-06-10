@@ -142,7 +142,7 @@ export class ApiList {
 
   private _chooseConnection(): any | Observable<any> {
     let choices = this.connection.getConnectionNames();
-    choices.push({name: this.connection.i18n.TAKE_ME_OUT, value: this.connection.i18n.TAKE_ME_OUT});
+    choices.push({name: this.connection.i18n.CANCEL, value: this.connection.i18n.CANCEL});
 
     return Observable.fromPromise(
       this.connection.inquirer.prompt({
@@ -166,7 +166,7 @@ export class ApiList {
      */
     return this._chooseConnection()
       .filter((answers: { connectionname: TreeDirectory | string }) => {
-        return answers.connectionname !== this.connection.i18n.TAKE_ME_OUT;
+        return answers.connectionname !== this.connection.i18n.CANCEL;
       })
       .exhaustMap((answers: { connectionname: TreeDirectory }) => {
         treeDirectory = answers.connectionname;

@@ -57,7 +57,7 @@ export class ChooseEnv {
     });
 
     choices.push({
-      name: Translation.TAKE_ME_OUT,
+      name: Translation.CANCEL,
       checked: false
     });
     return choices;

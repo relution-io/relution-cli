@@ -168,8 +168,8 @@ export class AddConnection {
 
     choices = orderBy(choices, ['name'], ['asc']);
     choices.push({
-      name: this.connection.i18n.TAKE_ME_OUT,
-      value: this.connection.i18n.TAKE_ME_OUT,
+      name: this.connection.i18n.CANCEL,
+      value: this.connection.i18n.CANCEL,
       default: false
     });
 
@@ -201,8 +201,8 @@ export class AddConnection {
 
     choices = orderBy(choices, ['name'], ['asc']);
     choices.push({
-      name: this.connection.i18n.TAKE_ME_OUT,
-      value: this.connection.i18n.TAKE_ME_OUT,
+      name: this.connection.i18n.CANCEL,
+      value: this.connection.i18n.CANCEL,
       default: false
     });
 
@@ -288,7 +288,7 @@ export class AddConnection {
         this.connectionModel.description = answers.connectiondescription;
         return this.getServerPrompt()
           .filter((server: { connectserver: string }) => {
-            return server.connectserver !== this.connection.i18n.TAKE_ME_OUT;
+            return server.connectserver !== this.connection.i18n.CANCEL;
           });
       })
 
@@ -341,7 +341,7 @@ export class AddConnection {
         protocols = protocols;
         return this._chooseProtocol(protocols)
           .filter((answers: { protocol: string }) => {
-            return answers.protocol !== this.connection.i18n.TAKE_ME_OUT;
+            return answers.protocol !== this.connection.i18n.CANCEL;
           });
       })
       /**
@@ -360,7 +360,7 @@ export class AddConnection {
             .exhaustMap((answers: any) => {
               // console.log('answers', answers);
               Object.keys(answers).forEach((key) => {
-                if (key !== this.connection.i18n.TAKE_ME_OUT) {
+                if (key !== this.connection.i18n.CANCEL) {
                   this.connectionModel.metaModel.fieldDefinitions.index[key].defaultValue = answers[key];
                   // console.log(this.connectionModel.metaModel.fieldDefinitions[key]);
                 }

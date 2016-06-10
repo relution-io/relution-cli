@@ -183,7 +183,7 @@ export class ServerCrud {
    */
   serverListPrompt(name = 'server', type = 'checkbox', message = 'Select Server(s) :') {
     let choices = map(this.userRc.server, 'id');
-    choices.push(this.server.i18n.TAKE_ME_OUT);
+    choices.push(this.server.i18n.CANCEL);
     return [
       {
         type: type,
@@ -226,14 +226,14 @@ export class ServerCrud {
     let all: any = [];
     return this.deletePrompt()
       .filter((answers: { server: Array<string> }) => {
-        if (answers.server.indexOf(this.server.i18n.TAKE_ME_OUT) !== -1 && answers.server.length > 1) {
-          DebugLog.warn(`I see you choose "servers" and "${this.server.i18n.TAKE_ME_OUT}" so you get out without remove.`);
+        if (answers.server.indexOf(this.server.i18n.CANCEL) !== -1 && answers.server.length > 1) {
+          DebugLog.warn(`I see you choose "servers" and "${this.server.i18n.CANCEL}" so you get out without remove.`);
           return false;
         }
         return true;
       })
       .filter((answers: { server: Array<string> }) => {
-        return answers.server.indexOf(this.server.i18n.TAKE_ME_OUT) === -1;
+        return answers.server.indexOf(this.server.i18n.CANCEL) === -1;
       })
       .exhaustMap((answers: { server: Array<string> }) => {
         answers.server.forEach((serverId: string) => {
@@ -334,7 +334,7 @@ export class ServerCrud {
        */
       return this._updateServerChooserPrompt()
         .filter((answers: { server: string }) => {
-          return answers.server !== this.server.i18n.TAKE_ME_OUT;
+          return answers.server !== this.server.i18n.CANCEL;
         })
         .map((answers: { server: string }) => {
           return this._copy(answers.server);
@@ -407,7 +407,7 @@ export class ServerCrud {
       // get server list
       return this._updateServerChooserPrompt()
         .filter((answers: { server: string }) => {
-          return answers.server !== this.server.i18n.TAKE_ME_OUT;
+          return answers.server !== this.server.i18n.CANCEL;
         })
         .map((answers: { server: string }) => {
           return this._copy(answers.server);

@@ -228,7 +228,7 @@ export class Environment extends Command {
     let names: Array<string> = [];
     return this.chooseEnv.choose()
       .filter((answers: { env: [string] }) => {
-        return answers[this.chooseEnv.promptName].indexOf(this.i18n.TAKE_ME_OUT) === -1;
+        return answers[this.chooseEnv.promptName].indexOf(this.i18n.CANCEL) === -1;
       })
       /**
        * get the attributes which one generated

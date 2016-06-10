@@ -146,7 +146,7 @@ export class Push extends Command {
       type: 'list',
       name: 'pushType',
       message: this.i18n.CHOOSE_LIST('Provider'),
-      choices: ['ios', 'android', this.i18n.TAKE_ME_OUT]
+      choices: ['ios', 'android', this.i18n.CANCEL]
     };
 
     return Observable.fromPromise(this.inquirer.prompt(prompt));
@@ -240,7 +240,7 @@ export class Push extends Command {
         model.name = answers.pushName;
         return this._chooseProviderType()
           .filter((provider: { pushType: string }) => {
-            return provider.pushType !== this.i18n.TAKE_ME_OUT;
+            return provider.pushType !== this.i18n.CANCEL;
           });
       })
       .exhaustMap((type: { pushType: string }) => {

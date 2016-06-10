@@ -64,8 +64,8 @@ export class MetaModel extends Relution.model.MetaModel {
             return { name: item.label, value: item.value };
           });
           choices.push({
-            name: Translation.TAKE_ME_OUT,
-            value: Translation.TAKE_ME_OUT
+            name: Translation.CANCEL,
+            value: Translation.CANCEL
           });
           prompt.push({
             type: 'list',
