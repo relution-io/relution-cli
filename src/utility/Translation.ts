@@ -34,7 +34,7 @@ export class Translation {
   /*
    * Environment
    */
-  static ENV_LIST_TABLEHEADERS = ['Environment Name'];
+  static ENV_LIST_TABLEHEADERS = ['Environment Name', 'Description'];
   static ENV_UPDATE = 'Add a new key value pair to your Environment.';
   static ENV_COPY = 'copy a exists Environment';
   static ENV_IS_CREATED(name: string): string {
@@ -66,7 +66,7 @@ export class Translation {
   static CONNECTION_API_LIST_DESCRIPTION = `assign some calls to the choosen connection.`;
   static CONNECTION_ADD_CONNECTION_BEFORE = `Please add first a connection for this feature.`;
   static CONNECTION_ADD_SERVER_BEFORE = `Please add first a Server to create a Connection.`;
-  static CONNECTION_LIST_TABLEHEADERS = ['Connection Name'];
+  static CONNECTION_LIST_TABLEHEADERS = ['Connection Name', 'Description'];
 
   /*
    * Push

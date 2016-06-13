@@ -186,7 +186,11 @@ export class Connection extends Command {
     return Observable.create((observer: any) => {
       let content: any = [['']];
       this.getConnectionNames().forEach((connection) => {
-        content.push([chalk.yellow(`${connection.name}`)]);
+        let model: ConnectionModel = connection.value && connection.value.connection;
+        content.push([
+          chalk.yellow(connection.name),
+          model && model.description || ''
+        ]);
       });
       if (content.length < 1) {
         observer.complete();

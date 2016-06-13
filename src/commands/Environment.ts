@@ -253,9 +253,11 @@ export class Environment extends Command {
       let content: any = [['']];
       this.envCollection.getEnvironments().subscribe({
         complete: () => {
-          let list: Array<string> = this.envCollection.flatEnvArray();
-          list.forEach((name: string) => {
-            content.push([chalk.yellow(`${name}`)]);
+          this.envCollection.collection.forEach((envModel: EnvModel) => {
+            content.push([
+              chalk.yellow(envModel.name),
+              envModel.data && envModel.data.description || ''
+            ]);
           });
           if (content.length < 1) {
             observer.complete();
