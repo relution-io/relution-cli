@@ -241,7 +241,7 @@ export class ServerCrud {
         });
         return Observable.forkJoin(all)
           .do(() => {
-            DebugLog.info(`Server ${answers.server.toString()} are removed.`);
+            DebugLog.info(`Server ${answers.server.toString()} removed.`);
           });
       });
   }

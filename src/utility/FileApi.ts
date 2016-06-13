@@ -98,7 +98,7 @@ export class FileApi {
   // String -> [String]
   fileList(dir: string, ext?: string): Observable<string> {
     if (!fs.existsSync(dir)) {
-      return Observable.throw(`${dir} not exist or maybe not readable`);
+      return Observable.throw(new Error(`${dir} does not exist or may not be readable`));
     }
     let loadingFiles: Array<string> = fs.readdirSync(dir);
     // files by extension

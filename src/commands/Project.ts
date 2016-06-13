@@ -46,20 +46,12 @@ export class Project extends Command {
     deploy: {
       description: this.i18n.DEPLOY_PUBLISH,
       when: () => {
-        if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson')) || this._parent.staticCommands.env.envCollection.collection.length <= 0 ) {
-          return false;
-        }
-        return true;
+        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
       },
       why: () => {
         if (!RxFs.exist(path.join(process.cwd(), 'relution.hjson'))) {
           return this.i18n.FOLDER_IS_NOT_A_RELUTION_PROJECT(path.join(process.cwd()));
         }
-
-        if (this._parent.staticCommands.env.envCollection.collection.length <= 0) {
-          return this.i18n.ENV_ADD_FIRSTLY;
-        }
-
       },
       vars: {
         name: {

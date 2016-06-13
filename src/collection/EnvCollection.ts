@@ -53,15 +53,15 @@ export class EnvCollection {
       // console.log(envFile);
       return this.fsApi.readHjson(`${this.envFolder}/${envFile}`);
     })
-      .concatAll()
-      .map((model: { data: any, path: string, comments: any }) => {
-        return new EnvModel(model.data.name, model.path, model.data);
-      })
-      .reduce((collection: [EnvModel], model: EnvModel) => {
-        collection.push(model);
-        // console.log('collection', collection);
-        return collection;
-      }, this.collection);
+    .concatAll()
+    .map((model: { data: any, path: string, comments: any }) => {
+      return new EnvModel(model.data.name, model.path, model.data);
+    })
+    .reduce((collection: [EnvModel], model: EnvModel) => {
+      collection.push(model);
+      // console.log('collection', collection);
+      return collection;
+    }, this.collection);
   }
 
   public validate(name: string) {
@@ -94,7 +94,7 @@ export class EnvCollection {
           this.envFiles.push(filePath);
         },
         (e: Error) => {
-          return e;
+          throw e;
         },
         () => {
           return this.envFiles;

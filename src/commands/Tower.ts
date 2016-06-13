@@ -140,7 +140,7 @@ export class Tower {
    */
   home() {
     this.args = this._copy(this.reset);
-    this.init();
+    return this.init();
   }
 
   /**

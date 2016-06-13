@@ -24,6 +24,7 @@ export class DebugLog {
   }
 
   static error(e: Error): void {
+    Relution.debug.assertIsError(e); // when e travels through observers it's all too easy to catch a string
     return DebugLog.log('red', `${DebugLog.badge('ERROR', 'red')}${chalk.red(e.message)}`, e.stack && DebugLog.withStack ? e.stack : '');
   }
 

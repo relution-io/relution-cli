@@ -87,9 +87,8 @@ export class Deploy {
     loader.start();
 
     // data to upload
-    let formData = {
+    let formData: any = {
       // Pass a simple key-value pair
-      env: env,
       name: this._relutionHjson.name,
       uuid: this._relutionHjson.uuid,
       // Pass optional meta-data with an 'options' object with style: {value: DATA, options: OPTIONS}
@@ -103,6 +102,10 @@ export class Deploy {
         }
       }
     };
+    if (env) {
+      // env key/value is present only if an environment was choosen
+      formData.env = env;
+    }
 
     // continuously queries deployment status if server supports this
     let deploymentUrl: string;
@@ -228,17 +231,23 @@ export class Deploy {
         }
         this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
         // console.log(this.owner._parent.staticCommands.env.chooseEnv);
-        return this.owner._parent.staticCommands.env.chooseEnv.choose('list')
-          .filter((answers: { env: string }) => {
-            return answers.env !== this.i18n.CANCEL;
-          })
-          /**
-           * create the zip File
-           */
-          .map((answers: { env: string }) => {
-            envName = answers[this.owner._parent.staticCommands.env.chooseEnv.promptName];
-            return this._archiver.createBundle();
-          });
+        if (this.owner._parent.staticCommands.env.envCollection.collection.length > 0) {
+          // must choose an environment
+          return this.owner._parent.staticCommands.env.chooseEnv.choose('list')
+            .filter((answers: { env: string }) => {
+              return answers.env !== this.i18n.CANCEL;
+            })
+            /**
+             * create the zip File
+             */
+            .map((answers: { env: string }) => {
+              envName = answers[this.owner._parent.staticCommands.env.chooseEnv.promptName];
+              return this._archiver.createBundle();
+            });
+        } else {
+          // there is no environment present
+          return Observable.of(this._archiver.createBundle());
+        }
       })
       /**
        * loop into logs don when zip is coming upload start
