@@ -46,7 +46,7 @@ export class ServerCrud {
       {
         type: 'input',
         name: 'id',
-        message: 'Server Name :',
+        message: 'Server name :',
         validate: (value: string): any => {
           let test: number = findIndex(this.userRc.server, { id: value });
           if (!test && this._scenario === ADD) {
@@ -65,7 +65,7 @@ export class ServerCrud {
       {
         type: 'input',
         name: 'serverUrl',
-        message: 'Enter the server url (http://....) :',
+        message: 'Enter the server url (https://....) :',
         validate: (value: string): any => {
           var pass = value.match(Validator.urlPattern);
 
@@ -87,7 +87,7 @@ export class ServerCrud {
       {
         type: 'password',
         name: 'password',
-        message: 'Enter your Password :',
+        message: 'Enter your password :',
         validate: (value: string) => {
           return Validator.notEmptyValidate(value);
         }
@@ -96,7 +96,7 @@ export class ServerCrud {
         type: 'confirm',
         name: 'default',
         default: false,
-        message: 'Set as Default Server ?'
+        message: 'Set as default server ?'
       }
     ];
   };

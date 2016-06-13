@@ -16,7 +16,7 @@ export class Translation {
   static CANCEL: string = 'Cancel';
   static NOT_VALID: string = `Your Input is not valid`;
   static EXIT_TO_HOME: string = 'Back to Home';
-  static NPM_INSTALL = `Start npm install this take a while`;
+  static NPM_INSTALL = `Performing npm install which may take a while...`;
 
   static GENERAL_HELP_TABLEHEADERS = ['Group', 'Command', 'Parameters', 'Description'];
 
@@ -129,7 +129,7 @@ export class Translation {
   }
 
   static WRITTEN(name: string, type = 'File'): string {
-    return `${type} ${name} was created successfully.`;
+    return `${type} ${name} created successfully.`;
   }
 
   static ALREADY_EXIST(name: string, type = 'Name'): string {
