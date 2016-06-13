@@ -15,7 +15,7 @@ export class RelutionHjson implements TemplateInterface {
   private _description: string;
   private _fileApi: FileApi = new FileApi();
   private _uuid: string;
-  private _directoryIndex: boolean = false;
+  private _directoryIndex: boolean = true;
   private _server: string = 'app.js';
   private _private: boolean = false;
   private _baseAlias: string;
@@ -32,11 +32,12 @@ export class RelutionHjson implements TemplateInterface {
         baseAlias: ${this.baseAlias}
         //uuid identifier
         uuid: ${this.uuid}
-        //client: ${this.client} //uncommented by default
+        //static files
+        client: ${this.client}
         //node start script
         server: ${this.server}
         //shows directoryIndex on the Server good for debugging
-        directoryIndex: ${this.directoryIndex}
+        //directoryIndex: ${this.directoryIndex}
         //@todo have to be defined
         private: ${this.private}
       }

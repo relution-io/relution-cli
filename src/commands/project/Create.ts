@@ -16,13 +16,14 @@ export class Create {
   private _fsApi: FileApi = new FileApi();
 
   public rootProjectFolder: string = process.cwd();
-  // create in the project folder a folder with a gitkeep file
+  // create in the project folder a folder
   public emptyFolders: Array<string> = [
     'env',
     'routes',
     'models',
     'connections',
-    'push'
+    'push',
+    'www'
   ];
 
   // files to be generated
@@ -39,7 +40,8 @@ export class Create {
     'modelreadme',
     'connectionsreadme',
     'envreadme',
-    'pushreadme'
+    'pushreadme',
+    'index.html'
   ];
 
   constructor() {

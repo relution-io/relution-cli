@@ -12,6 +12,7 @@ import {GitIgnore as GitIgnoreTemplate} from './templates/new/GitIgnore';
 import {PackageJson as PackageJsonTemplate} from './templates/new/PackageJson';
 import {Routes as RoutesTemplate} from './templates/new/Routes';
 import {EditorConfig as EditorConfigTemplate} from './templates/new/EditorConfig';
+import {IndexHtml} from './templates/new/IndexHtml';
 import {Readme as ReadmeTemplate} from './templates/new/Readme';
 import {PushReadme as PushReadmeTemplate} from './templates/new/PushReadme';
 import {EnvReadme as EnvReadmeTemplate} from './templates/new/EnvReadme';
@@ -46,6 +47,7 @@ export class Gii {
     new TemplateModel('package', new PackageJsonTemplate()),
     new TemplateModel('routes', new RoutesTemplate()),
     new TemplateModel('editorconfig', new EditorConfigTemplate()),
+    new TemplateModel('index.html', new IndexHtml()),
     new TemplateModel('readme', new ReadmeTemplate()),
     new TemplateModel('pushreadme', new PushReadmeTemplate()),
     new TemplateModel('envreadme', new EnvReadmeTemplate()),
