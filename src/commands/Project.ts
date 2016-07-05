@@ -8,6 +8,7 @@ import {Deploy} from './project/Deploy';
 import {RxFs} from './../utility/RxFs';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as _ from 'lodash';
 
 /**
  * create a new Baas for the Developer
@@ -28,7 +29,7 @@ export class Project extends Command {
     create: {
       when: () => {
         let files = fs.readdirSync(process.cwd());
-        if (files.length) {
+        if (_.some(files, (file) => !/(^|\/)\.[^\/\.]/g.test(file))) {
           return false;
         }
         return true;
@@ -82,7 +83,10 @@ export class Project extends Command {
     return Observable.create((observer: any) => {
       this._fsApi.fileList(process.cwd()).subscribe({
         next: (file: any) => {
-          files.push(file);
+          if (!/(^|\/)\.[^\/\.]/g.test(file)) {
+            console.log(file);
+            files.push(file);
+          }
         },
         complete: () => {
           if (!files.length) { // is empty the folder
