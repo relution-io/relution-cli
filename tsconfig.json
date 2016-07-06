@@ -12,6 +12,7 @@
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
         "noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": false,
         "forceConsistentCasingInFileNames": true
     },
     "filesGlob": [
