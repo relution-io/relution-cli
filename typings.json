@@ -7,11 +7,13 @@
   "globalDependencies": {
     "backbone": "registry:dt/backbone#1.0.0+20160316155526",
     "backbone-global": "registry:dt/backbone-global#1.0.0+20160626232945",
+    "cordova/plugins/device": "registry:dt/cordova/plugins/device#0.0.0+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "es6-collections": "registry:dt/es6-collections#0.5.1+20160316155526",
     "es6-promise": "registry:dt/es6-promise#0.0.0+20160423074304",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "node": "registry:dt/node#4.0.0+20160423143914",
+    "phonegap-plugin-push": "registry:dt/phonegap-plugin-push#0.0.0+20160501153936",
     "q": "registry:dt/q#0.0.0+20160417152954",
     "username": "registry:dt/username#1.0.1+20160316171810",
     "socket.io-client": "registry:dt/socket.io-client#1.4.4+20160317120654",
