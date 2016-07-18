@@ -34,6 +34,7 @@ export class PushRoute implements TemplateInterface {
          * If it finds one, that device is updated. Otherwise a new
          * device is created and stored in the database.
          * </p>
+         * @link [RelutionSDK Push APi](https://relution-io.github.io/relution-sdk/modules/_push_push_.html)
          * @param app express.js application to hook into.
          */
         function push(app) {
