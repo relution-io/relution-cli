@@ -15,6 +15,7 @@ import {EditorConfig as EditorConfigTemplate} from './templates/new/EditorConfig
 import {IndexHtml} from './templates/new/IndexHtml';
 import {Readme as ReadmeTemplate} from './templates/new/Readme';
 import {PushReadme as PushReadmeTemplate} from './templates/new/PushReadme';
+import {PushRoute as PushRouteTemplate} from './templates/new/PushRoute';
 import {EnvReadme as EnvReadmeTemplate} from './templates/new/EnvReadme';
 import {ConnectionsReadme as ConnectionsReadmeTemplate} from './templates/new/ConnectionsReadme';
 import {ModelReadme as ModelReadmeTemplate} from './templates/new/ModelReadme';
@@ -55,7 +56,8 @@ export class Gii {
     new TemplateModel('connectionsreadme', new ConnectionsReadmeTemplate()),
     new TemplateModel('connectors', new ConnectorsTemplate()),
     new TemplateModel('connection', new ConnectionTemplate()),
-    new TemplateModel('connectionGen', new ConnectionGenTemplate())
+    new TemplateModel('connectionGen', new ConnectionGenTemplate()),
+    new TemplateModel('pushroute', new PushRouteTemplate())
   ];
 
   public getTemplateByName(name: string): TemplateModel {

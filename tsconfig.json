@@ -12,7 +12,7 @@
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
         "noFallthroughCasesInSwitch": true,
-		"noImplicitReturns": false,
+        "noImplicitReturns": false,
         "forceConsistentCasingInFileNames": true
     },
     "filesGlob": [
@@ -58,9 +58,11 @@
         "src/gii/templates/new/EditorConfig.ts",
         "src/gii/templates/new/EnvReadme.ts",
         "src/gii/templates/new/GitIgnore.ts",
+        "src/gii/templates/new/IndexHtml.ts",
         "src/gii/templates/new/ModelReadme.ts",
         "src/gii/templates/new/PackageJson.ts",
         "src/gii/templates/new/PushReadme.ts",
+        "src/gii/templates/new/PushRoute.ts",
         "src/gii/templates/new/Readme.ts",
         "src/gii/templates/new/RelutionHjson.spec.ts",
         "src/gii/templates/new/RelutionHjson.ts",
