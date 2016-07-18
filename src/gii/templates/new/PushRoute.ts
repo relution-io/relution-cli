@@ -1,0 +1,83 @@
+import {TemplateInterface} from './../../TemplateInterface';
+const html = require('common-tags').html;
+
+export class PushRoute implements TemplateInterface {
+  public parentFolder: string = 'routes';
+  public publishName: string = 'push.js';
+  public name: string = 'push';
+
+  get template(): string{
+    return (html`
+      'use strict';
+      /**
+       * @file routes/push.js
+       * ${this.name} Backend
+       */
+
+      // Relution APIs
+      var pushService = require('relution/push.js');
+
+      module.exports = (
+        /**
+         * module providing direct access to push.
+         *
+         * registers a push target device.
+         *
+         * <p>
+         * The method attempts fetching an existing device using the metadata
+         * information given. This either works by providing a UUID or using
+         * heuristics based on information typically extracted using Cordova device
+         * plugin. The latter approach solves the potential problem when the client
+         * is uninstalled and reinstalled so that device local information is lost.
+         * </p>
+         * <p>
+         * If it finds one, that device is updated. Otherwise a new
+         * device is created and stored in the database.
+         * </p>
+         * @param app express.js application to hook into.
+         */
+        function push(app) {
+
+          app.post('/api/v1/push/registration',
+            /**
+             * register the device on the push Service
+             *
+             * @param req containing body JSON to pass as input.
+             * @param res result of call is provided as JSON body data.
+             * @param next function to invoke error handling.
+             */
+            function serviceCall(req, res, next) {
+              push.registerPushDevice(req.body).then(res.json.bind(res), next).done();
+            }
+          );
+
+          app.post('/api/v1/push',
+            /**
+             * posts push notification(s).
+             *
+             * @param req containing body JSON to pass as input.
+             * @param res result of call is provided as JSON body data.
+             * @param next function to invoke error handling.
+             */
+            function serviceCall(req, res, next) {
+              push.postPushNotification(req.body).then(res.json.bind(res), next).done();
+            }
+          );
+
+          app.get('/api/v1/push/:uuid',
+            /**
+             * gets push notification status.
+             *
+             * @param req containing body JSON to pass as input.
+             * @param res result of call is provided as JSON body data.
+             * @param next function to invoke error handling.
+             */
+            function serviceCall(req, res, next) {
+              push.fetchPushNotification(req.params.uuid).then(res.json.bind(res), next).done();
+            }
+          );
+        }
+      )(global.app);
+    `);
+  }
+}

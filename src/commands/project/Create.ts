@@ -41,6 +41,7 @@ export class Create {
     'connectionsreadme',
     'envreadme',
     'pushreadme',
+    'pushroute',
     'index.html'
   ];
 
