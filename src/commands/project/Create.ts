@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as inquirer from 'inquirer';
-const npm = require('npm');
 
 import {Observable} from '@reactivex/rxjs';
 import {Validator} from './../../utility/Validator';
@@ -46,7 +45,7 @@ export class Create {
   ];
 
   constructor() {
-    npm.load();
+
   }
   /**
    * write folders to the project folder
@@ -112,9 +111,17 @@ export class Create {
    * npm install
    */
   npmInstall(): Observable<any> {
-    npm.commands.install();
-    let installer: any = Observable.bindNodeCallback(npm.commands.install);
-    return installer();
+    const exec = require('child_process').exec;
+    return Observable.create((observer: any) => {
+      return exec('npm install', (error: Error, stdout: any, stderr: any) => {
+        if (error) {
+            observer.error(`exec error: ${error}`);
+            return;
+          }
+          observer.next(`stdout: ${stdout}`);
+          observer.complete();
+      });
+    });
   }
   /**
    * create a new project
@@ -139,7 +146,7 @@ export class Create {
         /**
          * npm i
          */
-        .exhaustMap(() => {
+        .exhaustMap((err: any) => {
           DebugLog.info(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
           DebugLog.info(Translation.NPM_INSTALL);
           return this.npmInstall();
