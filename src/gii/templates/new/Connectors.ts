@@ -50,7 +50,7 @@ export class Connectors implements TemplateInterface {
             connector.runCall(req.params.connection, req.params.call, req.body).then(res.json.bind(res), next).done();
           }
         );
-      }\n
-    `);
+      }
+    ` + '\n');
   }
 }
