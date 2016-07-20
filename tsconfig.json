@@ -68,6 +68,8 @@
         "src/gii/templates/new/RelutionHjson.ts",
         "src/gii/templates/new/RelutionIgnore.ts",
         "src/gii/templates/new/Routes.ts",
+        "src/gii/templates/new/TsConfigJson.ts",
+        "src/gii/templates/new/TslintJson.ts",
         "src/gii/templates/Push.ts",
         "src/models/CallModel.ts",
         "src/models/CertModelRc.ts",

@@ -46,9 +46,9 @@ export class PackageJson implements TemplateInterface {
         "dependencies": {
           "lodash": "~4.5.1",
           "q": "~1.4.1",
-          "body-parser": "^1.5.2",
+          "body-parser": "1.10.0",
           "errorhandler": "^1.1.1",
-          "express": "^4.8.0",
+          "express": "4.10.5",
           "express-session": "^1.7.2",
           "jade": "^0.1.0",
           "method-override": "^2.1.2",
@@ -70,8 +70,7 @@ export class PackageJson implements TemplateInterface {
           "build": "tsc -p .",
           "api": "typedoc -p . --rootDir src --out www --module commonjs --stripInternal --name ${this.name} --exclude **/*.spec.ts src typings/main.d.ts",
           "serve-api": "http-server public/docs",
-          "watch": "tsconfig && tsc -p . -w",
-          "postinstall": "typings install"
+          "watch": "tsconfig && tsc -p . -w"
         }
       }\n
     `);

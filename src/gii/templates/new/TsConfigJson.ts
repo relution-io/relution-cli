@@ -18,7 +18,7 @@ export class TsConfigJson implements TemplateInterface {
           "pretty": true,
           "stripInternal": true,
           "noEmitOnError": true,
-          "noImplicitAny": true,
+          "noImplicitAny": false,
           "suppressImplicitAnyIndexErrors": true,
           "noFallthroughCasesInSwitch": true,
           "noImplicitReturns": false,

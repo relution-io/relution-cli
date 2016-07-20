@@ -9,36 +9,24 @@ export class App implements TemplateInterface {
     return (html`
       /**
        * @file app.js
-       * Simple MADP Application
        */
-      const http = require('http');
-      const express = require('express');
-      const bodyParser = require('body-parser');
-      const multer = require('multer');
-      const errorHandler = require('errorhandler');
+      import * as express from 'express';
+      import * as bodyParser from 'body-parser';
 
       const app = express();
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({ extended: true }));
-      app.use(multer());
 
       // global variables
       global['app'] = app;
 
       // install routes
-      require('./routes/routes');
-      require('./routes/connectors');
-      require('./routes/push');
+      require('./routes/routes').init(app);
+      require('./routes/connectors').init(app);
+      require('./routes/push').init(app);
 
-      // error handling middleware should be loaded after the loading the routes
-      if ('development' == app.get('env')) {
-        app.use(errorHandler());
-      }
-      // starts express webserver
-      const server = http.createServer(app);
-      server.listen(app.get('port'), () => {
-        console.log('Express server listening on port ' + app.get('port'));
-      });\n
-    `);
+      //start express server
+      app.listen(app.get('port'));
+    ` + '\n');
   }
 }
