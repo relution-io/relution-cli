@@ -31,7 +31,7 @@ export class Routes implements TemplateInterface {
               };
               return res.json(index);
           });
-        }\n
-    `);
+        }
+    ` + '\n');
   }
 }

@@ -25,7 +25,7 @@ export class App implements TemplateInterface {
       require('./routes/connectors').init(app);
       require('./routes/push').init(app);
 
-      //start express server
+      // start express server
       app.listen(app.get('port'));
     ` + '\n');
   }

@@ -71,7 +71,7 @@ export class PushRoute implements TemplateInterface {
             Q(pushService.fetchPushNotification(req.params.uuid)).then(res.json.bind(res), next).done();
           }
         );
-      }\n
-    `);
+      }
+    ` + '\n');
   }
 }
