@@ -41,6 +41,8 @@ export class Create {
     'envreadme',
     'pushreadme',
     'pushroute',
+    'tslint',
+    'tsconfig',
     'index.html'
   ];
 
@@ -115,11 +117,27 @@ export class Create {
     return Observable.create((observer: any) => {
       return exec('npm install', (error: Error, stdout: any, stderr: any) => {
         if (error) {
-            observer.error(`exec error: ${error}`);
+          observer.error(`exec error: ${error}`);
+          return;
+        }
+        DebugLog.debug(stdout);
+        exec(`typings install dt~es6-collections dt~es6-promise dt~backbone dt~q dt~express dt~jquery dt~underscore dt~node dt~serve-static dt~express-serve-static-core --save --global`, (e: Error, dout: any, derr: any) => {
+          if (e) {
+            observer.error(`exec error: ${e}`);
             return;
           }
-          observer.next(`stdout: ${stdout}`);
-          observer.complete();
+          DebugLog.debug(dout);
+          exec(`typings install npm~lodash npm~mime --save`, (err: Error, ddout: any, dderr: any) => {
+            if (err) {
+              observer.error(`exec error: ${err}`);
+              return;
+            }
+
+            DebugLog.debug(ddout);
+            observer.next();
+            observer.complete();
+          });
+        });
       });
     });
   }
@@ -173,7 +191,7 @@ export class Create {
         .exhaustMap(() => {
           DebugLog.info(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
           DebugLog.info(Translation.NPM_INSTALL);
-          return this.npmInstall();
+          return this.npmInstall().last();
         })
         /**
          * done

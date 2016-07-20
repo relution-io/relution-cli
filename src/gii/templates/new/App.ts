@@ -2,35 +2,43 @@ import {TemplateInterface} from './../../TemplateInterface';
 const html = require('common-tags').html;
 
 export class App implements TemplateInterface {
-  public publishName: string = 'app.js';
+  public publishName: string = 'app.ts';
   public name: string = 'app';
 
-  get template(): string{
+  get template(): string {
     return (html`
-      'use strict';
       /**
        * @file app.js
        * Simple MADP Application
        */
-      var Q = require('q');
-      Q.stopUnhandledRejectionTracking(); // requires use of Q's nextTick(cb)
-      Q.nextTick = process.nextTick;      // Q's nextTick(cb) is not compatible with thread-locals
-      //Q.longStackSupport = true;        // advanced diagnostic stack traces
+      const http = require('http');
+      const express = require('express');
+      const bodyParser = require('body-parser');
+      const multer = require('multer');
+      const errorHandler = require('errorhandler');
 
-      var express = require('express');
-      var app = express();
-
-      app.use(express.bodyParser());
+      const app = express();
+      app.use(bodyParser.json());
+      app.use(bodyParser.urlencoded({ extended: true }));
+      app.use(multer());
 
       // global variables
-      global.app = app;
+      global['app'] = app;
 
       // install routes
       require('./routes/routes');
       require('./routes/connectors');
+      require('./routes/push');
 
+      // error handling middleware should be loaded after the loading the routes
+      if ('development' == app.get('env')) {
+        app.use(errorHandler());
+      }
       // starts express webserver
-      app.listen();
+      const server = http.createServer(app);
+      server.listen(app.get('port'), () => {
+        console.log('Express server listening on port ' + app.get('port'));
+      });\n
     `);
   }
 }
