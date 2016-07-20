@@ -16,7 +16,7 @@ export class PushRoute implements TemplateInterface {
 
       // Relution APIs
       var pushService = require('relution/push.js');
-
+      var Q = require('q');
       module.exports = (
         /**
          * module providing direct access to push.
@@ -48,7 +48,7 @@ export class PushRoute implements TemplateInterface {
              * @param next function to invoke error handling.
              */
             function serviceCall(req, res, next) {
-              push.registerPushDevice(req.body).then(res.json.bind(res), next).done();
+              Q(pushService.registerPushDevice(req.body)).then(res.json.bind(res), next).done();
             }
           );
 
@@ -61,7 +61,7 @@ export class PushRoute implements TemplateInterface {
              * @param next function to invoke error handling.
              */
             function serviceCall(req, res, next) {
-              push.postPushNotification(req.body).then(res.json.bind(res), next).done();
+              Q(pushService.postPushNotification(req.body)).then(res.json.bind(res), next).done();
             }
           );
 
@@ -74,7 +74,7 @@ export class PushRoute implements TemplateInterface {
              * @param next function to invoke error handling.
              */
             function serviceCall(req, res, next) {
-              push.fetchPushNotification(req.params.uuid).then(res.json.bind(res), next).done();
+              Q(pushService.fetchPushNotification(req.params.uuid)).then(res.json.bind(res), next).done();
             }
           );
         }
