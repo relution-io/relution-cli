@@ -108,7 +108,7 @@ export class UserRc {
    * ```
    */
   public updateRcFile(): Observable<UserRc> {
-    console.log(this._rcHome, JSON.stringify(this, null, 2));
+    // console.log(this._rcHome, JSON.stringify(this, null, 2));
     return RxFs.writeFile(this._rcHome, JSON.stringify(this, null, 2))
       .exhaustMap(() => {
         return this.streamRc();

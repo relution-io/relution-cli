@@ -61,14 +61,18 @@ export class Deploy {
    */
   getServerPrompt(): Observable<any> {
     this._defaultServer = 'default';
-    let prompt = this._copy(this.owner._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
-    let indexDefault: number = findIndex(this.userRc.server, { default: true });
-    if (indexDefault > -1) {
-      this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
-      prompt[0].choices.splice(indexDefault, 1);
-      prompt[0].choices.unshift(this._defaultServer);
-    }
-    return Observable.fromPromise(this.inquirer.prompt(prompt));
+    return this.userRc.streamRc().exhaustMap(() => {
+      let prompt = this._copy(this.owner._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
+      let indexDefault: number = findIndex(this.userRc.server, { default: true });
+
+      if (indexDefault > -1) {
+        this._defaultServer += ` ${prompt[0].choices[indexDefault]}`;
+        prompt[0].choices.splice(indexDefault, 1);
+        prompt[0].choices.unshift(this._defaultServer);
+      }
+      // console.log(this.userRc.server);
+      return Observable.fromPromise(this.inquirer.prompt(prompt));
+    });
   }
 
   /**
