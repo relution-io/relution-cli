@@ -34,20 +34,19 @@ export class ConnectionGen implements TemplateInterface {
        * ${date.getFullYear()}
        * All rights reserved.
        */
-
+      import * as Q from 'q';
       // Relution APIs
       const connector = require('relution/connector.js');
 
       export class ${this.capitalizeFirstLetter(this.name)}BaseConnection {
-        constructor(public name = '${this.name}') {
-
-        }
+        constructor(public name = '${this.name}') {}
 
         configureSession(properties) {
           return connector.configureSession(this.name, properties);
         }
 
-        ${this.metaData.map((model: CallModel) => ` /**
+        ${this.metaData.map((model: CallModel) => `
+       /**
         * ${this.name}['${model.name}']
         *
         * ${model.action}
