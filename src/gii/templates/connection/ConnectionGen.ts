@@ -19,6 +19,10 @@ export class ConnectionGen implements TemplateInterface {
     return num;
   }
 
+  private capitalizeFirstLetter(name: string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
   get template() {
     let date = new Date();
     return (html`
@@ -30,44 +34,35 @@ export class ConnectionGen implements TemplateInterface {
        * ${date.getFullYear()}
        * All rights reserved.
        */
-
+      import * as Q from 'q';
       // Relution APIs
       const connector = require('relution/connector.js');
 
-      const factory = function ${this.name}_factory () {
-        if (!this) {
-          return new (<any>factory)();
+      export class ${this.capitalizeFirstLetter(this.name)}BaseConnection {
+        constructor(public name = '${this.name}') {}
+
+        configureSession(properties) {
+          return connector.configureSession(this.name, properties);
         }
-      };
 
-      factory.prototype = {
-        name: '${this.name}'
-      };
-
-      factory.prototype.configureSession = function ${this.name}_configureSession(properties) {
-        return connector.configureSession('${this.name}', properties);
-      };
-
-      // generated calls go here
-
-      export = factory;
-
-    ${this.metaData.map((model: CallModel) => ` /**
-      * ${this.name}['${model.name}']
-      *
-      * ${model.action}
-      *
-      * @params input "Object" ${model.inputModel}
-      * @return Promise ${model.outputModel}
-      */
-      export ${model.name} = function(input) {
-        return connector.runCall(
-          '${this.name}',
-          '${model.name}',
-          input
-        );
-      };
-    `)}
+        ${this.metaData.map((model: CallModel) => `
+       /**
+        * ${this.name}['${model.name}']
+        *
+        * ${model.action}
+        *
+        * @params input "Object" ${model.inputModel}
+        * @return Promise ${model.outputModel}
+        */
+        public ${model.name}(input) {
+          return connector.runCall(
+            this.name,
+            '${model.name}',
+            input
+          );
+        }
+      `)}
+      }
   ` + '\n');
   }
 }

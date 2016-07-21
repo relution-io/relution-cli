@@ -258,7 +258,7 @@ export class ApiList {
         template.instance.name = connectionModel.name;
         template.instance.path = path.dirname(connectionModel.name);
         template.instance.metaData = choosedCalls;
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.connection.rootFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder);
       })
       .do({
         complete: () => {
