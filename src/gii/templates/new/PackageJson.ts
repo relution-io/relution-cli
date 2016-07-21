@@ -46,9 +46,9 @@ export class PackageJson implements TemplateInterface {
         "dependencies": {
           "lodash": "~4.5.1",
           "q": "~1.4.1",
-          "body-parser": "1.10.0",
+          "body-parser": "^1.10.0",
           "errorhandler": "^1.1.1",
-          "express": "4.10.5",
+          "express": "^4.10.5",
           "express-session": "^1.7.2",
           "jade": "^0.1.0",
           "method-override": "^2.1.2",
