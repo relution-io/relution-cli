@@ -29,9 +29,8 @@ export class Connection implements TemplateInterface {
      * ${date.getFullYear()}
      * All rights reserved.
      */
-    module.exports = require('./${this.name}.gen')();
+    export = require('./${this.name}.gen')();
     // user code goes here
-
     `);
   }
 }

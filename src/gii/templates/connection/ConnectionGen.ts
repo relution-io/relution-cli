@@ -22,10 +22,8 @@ export class ConnectionGen implements TemplateInterface {
   get template() {
     let date = new Date();
     return (html`
-      'use strict';
       /**
-       * @file ${this.path}/${this.name}.gen.js
-       * Simple MADP Application
+       * @file ${this.path}/${this.name}.gen.ts
        *
        * Created by Relution CLI on ${this._pad(date.getDate())}.${this._pad(date.getMonth() + 1)}.${date.getFullYear()}
        * Copyright (c)
@@ -34,24 +32,25 @@ export class ConnectionGen implements TemplateInterface {
        */
 
       // Relution APIs
-      var connector = require('relution/connector.js');
+      const connector = require('relution/connector.js');
 
-      var factory = function ${this.name}_factory() {
+      const factory = function ${this.name}_factory () {
         if (!this) {
-          return new factory();
+          return new (<any>factory)();
         }
-      }
+      };
+
       factory.prototype = {
         name: '${this.name}'
       };
 
       factory.prototype.configureSession = function ${this.name}_configureSession(properties) {
         return connector.configureSession('${this.name}', properties);
-      }
+      };
 
       // generated calls go here
 
-      module.exports = factory;
+      export = factory;
 
     ${this.metaData.map((model: CallModel) => ` /**
       * ${this.name}['${model.name}']
@@ -61,7 +60,7 @@ export class ConnectionGen implements TemplateInterface {
       * @params input "Object" ${model.inputModel}
       * @return Promise ${model.outputModel}
       */
-      module.exports['${model.name}'] = function(input) {
+      export ${model.name} = function(input) {
         return connector.runCall(
           '${this.name}',
           '${model.name}',
@@ -69,6 +68,6 @@ export class ConnectionGen implements TemplateInterface {
         );
       };
     `)}
-  `);
+  ` + '\n');
   }
 }

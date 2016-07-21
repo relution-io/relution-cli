@@ -388,22 +388,22 @@ export class AddConnection {
         return this.connection.fileApi.writeHjson(template, this.connectionName, this._rootFolder);
       })
       /**
-       * write name.gen.js file to the connections folder
+       * write name.gen.ts file to the connections folder
        */
       .exhaustMap(() => {
         let template = this._gii.getTemplateByName('connectionGen');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.js`, this.connectionHomeFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connectionHomeFolder);
       })
       /**
-       * write name.js file to the connections folder
+       * write name.ts file to the connections folder
        */
       .exhaustMap(() => {
         let template = this._gii.getTemplateByName('connection');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.js`, this._rootFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.ts`, this._rootFolder);
       })
       .exhaustMap(() => {
         return this.connection.streamConnectionFromFileSystem();
