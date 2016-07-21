@@ -20,9 +20,10 @@ import {EnvReadme as EnvReadmeTemplate} from './templates/new/EnvReadme';
 import {ConnectionsReadme as ConnectionsReadmeTemplate} from './templates/new/ConnectionsReadme';
 import {ModelReadme as ModelReadmeTemplate} from './templates/new/ModelReadme';
 import {Connectors as ConnectorsTemplate} from './templates/new/Connectors';
+import {TslintJson as TslintJsonTemplate} from './templates/new/TslintJson';
+import {TsConfigJson as TsConfigJsonTemplate} from './templates/new/TsConfigJson';
 import {Connection as ConnectionTemplate} from './templates/connection/Connection';
 import {ConnectionGen as ConnectionGenTemplate} from './templates/connection/ConnectionGen';
-
 import {TemplateModel} from './TemplateModel';
 
 export class Gii {
@@ -57,7 +58,9 @@ export class Gii {
     new TemplateModel('connectors', new ConnectorsTemplate()),
     new TemplateModel('connection', new ConnectionTemplate()),
     new TemplateModel('connectionGen', new ConnectionGenTemplate()),
-    new TemplateModel('pushroute', new PushRouteTemplate())
+    new TemplateModel('pushroute', new PushRouteTemplate()),
+    new TemplateModel('tslint', new TslintJsonTemplate()),
+    new TemplateModel('tsconfig', new TsConfigJsonTemplate())
   ];
 
   public getTemplateByName(name: string): TemplateModel {
