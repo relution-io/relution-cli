@@ -55,11 +55,7 @@ export class Deploy {
   _copy(org: any) {
     return JSON.parse(JSON.stringify(org));
   }
-
-  /**
-   * choose first on which Server the App has to be deployed
-   */
-  getServerPrompt(): Observable<any> {
+  _getServers() {
     this._defaultServer = 'default';
     return this.userRc.streamRc().exhaustMap(() => {
       let prompt = this._copy(this.owner._parent.staticCommands.server.crudHelper.serverListPrompt(this._promptkey, 'list', 'Select a Server'));
@@ -70,7 +66,15 @@ export class Deploy {
         prompt[0].choices.splice(indexDefault, 1);
         prompt[0].choices.unshift(this._defaultServer);
       }
-      // console.log(this.userRc.server);
+      return prompt;
+    });
+  }
+  /**
+   * choose first on which Server the App has to be deployed
+   */
+  getServerPrompt(): Observable<any> {
+    this._defaultServer = 'default';
+    return this._getServers().exhaustMap((prompt) => {
       return Observable.fromPromise(this.inquirer.prompt(prompt));
     });
   }
@@ -89,7 +93,6 @@ export class Deploy {
    */
   upload(archiveresp: any, env: string): Observable<any> {
     loader.start();
-
     // data to upload
     let formData: any = {
       // Pass a simple key-value pair
@@ -181,12 +184,22 @@ export class Deploy {
   /**
    * deploy the baas to the server
    */
-  public publish(): Observable<any> {
+  public publish(args?: [string]): Observable<any> {
+    console.log(args);
+    let serverArgName: any = undefined;
+
+    if (args && args[0]) {
+      serverArgName = args[0];
+    }
+
     this._fileApi.path = this.projectDir;
+
     // loginresponse
     let userResp: Relution.security.User;
+
     // choosed environment
     let envName = '';
+
     // choosed Server
     let choosedServer: any;
 
@@ -195,6 +208,16 @@ export class Deploy {
     }
     // load the environments before
     return this.owner._parent.staticCommands.env.envCollection.getEnvironments()
+      .map(() => {
+        if (args && args[1]) {
+          const exists = find(this.owner._parent.staticCommands.env.envCollection.collection, {name: args[1]});
+          if (exists) {
+            envName = exists.name;
+          } else {
+            this.log.warn(this.i18n.DEPLOY_ENV_NOT_EXISTS(args[1]));
+          }
+        }
+      })
       /**
        * load the relution.hjson
        */
@@ -206,10 +229,15 @@ export class Deploy {
        */
       .exhaustMap((relutionHjson: { data: any, path: string }) => {
         this._relutionHjson = relutionHjson.data;
-        return this.getServerPrompt()
-          .filter((server: { deployserver: string }) => {
-            return server.deployserver !== this.i18n.CANCEL;
-          });
+        if (!serverArgName || !serverArgName.length) {
+          return this.getServerPrompt();
+        }
+        return this._getServers().map(() => {
+          return { deployserver: serverArgName };
+        });
+      })
+      .filter((server: { deployserver: string }) => {
+        return server.deployserver !== this.i18n.CANCEL;
       })
       /**
        * logged in on server
@@ -221,7 +249,6 @@ export class Deploy {
           choosedServer = find(this.userRc.server, { id: server.deployserver });
         }
         loader.start();
-        // console.log(choosedServer);
         return this.relutionSDK.login(choosedServer);
       })
       /**
@@ -235,7 +262,7 @@ export class Deploy {
         }
         this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
         // console.log(this.owner._parent.staticCommands.env.chooseEnv);
-        if (this.owner._parent.staticCommands.env.envCollection.collection.length > 0) {
+        if (this.owner._parent.staticCommands.env.envCollection.collection.length > 0 && !envName || !envName.length) {
           // must choose an environment
           return this.owner._parent.staticCommands.env.chooseEnv.choose('list')
             .filter((answers: { env: string }) => {
@@ -276,11 +303,27 @@ export class Deploy {
         this.log.info(chalk.green(respLog.message) + ' ' + figures.tick);
         return this.upload(respLog, envName);
       })
+
       /**
        * complete upload
        */
       .ignoreElements() // log piped already
-      .finally(() => loader.stop());
+      .finally(() => {
+        loader.stop();
+      }).do({
+        error: () => {
+          // is directly used
+          if (args && args[0] && args[1]) {
+            process.exit(-1);
+          }
+        },
+        complete: () => {
+          // is directly used
+          if (args && args[0] && args[1]) {
+            process.exit(0);
+          }
+        }
+      });
   }
 
   public get projectDir(): string {

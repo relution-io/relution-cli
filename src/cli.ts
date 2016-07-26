@@ -13,9 +13,11 @@ import {Command} from './utility/Command';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
+// console.log(argv);
 argv.splice(0, 2); // node cli.js
 RelutionSDK.initFromArgs(argv);
 
+// console.log('2', argv);
 // all sub commands add to be here
 const staticCommands: _.Dictionary<Command>  = {
   server: new Server(),
@@ -40,6 +42,7 @@ Observable.forkJoin(all).subscribe(
     process.exit(-1);
   },
   () => {
+    // console.log('test', argv);
     return new Tower(staticCommands, argv);
   }
 );
