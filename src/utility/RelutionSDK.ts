@@ -26,7 +26,7 @@ export function initFromArgs(argv: string[] = []) {
         break;
     }
   }
-  console.log(options);
+  // console.log(options);
   return Relution.core.init(options);
 }
 

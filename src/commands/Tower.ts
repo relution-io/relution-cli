@@ -108,7 +108,7 @@ export class Tower {
     this.staticCommandRootKeys.forEach((name) => {
       staticCommands[name]._parent = this;
     });
-    console.log('argv', argv);
+    // console.log('argv', argv);
     this.args = argv;
     if (this.args.length <= 0) {
       this.args = this.reset; // go interactive
