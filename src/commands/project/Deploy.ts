@@ -184,7 +184,7 @@ export class Deploy {
   /**
    * deploy the baas to the server
    */
-  public publish(args?: [string]): Observable<any> {
+  public publish(args?: Array<string>): Observable<any> {
     console.log(args);
     let serverArgName: any = undefined;
 
