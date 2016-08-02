@@ -78,7 +78,7 @@ export class Project extends Command {
    * @params name a string to create the project
    * @return Observable
    */
-  create(name?: string): Observable<any> {
+  create(name?: Array<string>): Observable<any> {
     let files: Array<any> = [];
     return Observable.create((observer: any) => {
       this._fsApi.fileList(process.cwd()).subscribe({
@@ -104,7 +104,7 @@ export class Project extends Command {
     });
   }
 
-  deploy() {
-    return new Deploy(this).publish();
+  deploy(args: Array<string>) {
+    return new Deploy(this).publish(args);
   }
 }

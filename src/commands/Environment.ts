@@ -227,13 +227,13 @@ export class Environment extends Command {
   update(name?: string): Observable<any> {
     let names: Array<string> = [];
     return this.chooseEnv.choose()
-      .filter((answers: { env: [string] }) => {
+      .filter((answers: { env: Array<string> }) => {
         return answers[this.chooseEnv.promptName].indexOf(this.i18n.CANCEL) === -1;
       })
       /**
        * get the attributes which one generated
        */
-      .exhaustMap((answers: { env: [string] }) => {
+      .exhaustMap((answers: { env: Array<string> }) => {
         names = answers[this.chooseEnv.promptName];
         return this.getAttributes([]);
       })

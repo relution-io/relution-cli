@@ -56,6 +56,9 @@ export class Translation {
   static DEPLOY_SUCCESS = 'Deployment completed.';
   static DEPLOY_FAILED = 'Deployment failed!';
   static DEPLOY_APPURL = 'Your application is available at';
+  static DEPLOY_ENV_NOT_EXISTS(env: string): string {
+    return `${env} not exists in Environments!`;
+  }
 
   /*
    * Connection Command

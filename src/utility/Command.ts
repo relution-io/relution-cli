@@ -199,6 +199,7 @@ export class Command implements CommandInterface {
 
   init(args: Array<string>): any {
     // this.log.info(`Command.ts ${this.name}`, args);
+    // console.log(JSON.stringify(args, null, 2));
     let myObservable: Observable<any>;
 
     // directly
@@ -243,6 +244,7 @@ export class Command implements CommandInterface {
         myObservable = this[args[1]]();
       }
     }
+    // console.log(myObservable);
     return myObservable.subscribe(
       (log: any) => {
         if (log && log.length) {
