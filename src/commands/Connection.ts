@@ -7,8 +7,10 @@ import {RxFs} from './../utility/RxFs';
 import {findIndex, map} from 'lodash';
 import {AddConnection} from './connection/Add';
 import {ApiList} from './connection/ApiList';
+import {RenderMetamodelContainer} from './connection/RenderMetamodelContainer';
 import {Observable} from '@reactivex/rxjs';
 import {ConnectionModel} from './../models/ConnectionModel';
+import * as Relution from 'relution-sdk';
 
 export interface TreeDirectory {
   name: string;
@@ -35,6 +37,10 @@ export interface TreeDirectory {
 export class Connection extends Command {
   public fileApi: FileApi = new FileApi();
   public rootFolder: string = path.join(process.cwd(), 'connections');
+  private _uuidConnectionUrl: string;
+  private _callsUrl: string;
+  private _metaModelContainerUrl: string;
+
 
   public commands: any = {
     add: {
@@ -65,6 +71,9 @@ export class Connection extends Command {
         }
       }
     },
+    createInterfaces: {
+      label: this.i18n.CONNECTION_RENDER_METAMODEL_LABEL
+    },
     list: {
       when: () => {
         return RxFs.exist(this.rootFolder);
@@ -83,16 +92,40 @@ export class Connection extends Command {
   };
   public helperAdd: AddConnection = new AddConnection(this);
   public helperApiList: ApiList = new ApiList(this);
+  public helperMetaModelContainer = new RenderMetamodelContainer(this);
   public connectionsDirTree: Array<TreeDirectory> = [];
 
   constructor() {
     super('connection');
   }
 
+  public preload() {
+    return super.preload().exhaustMap(
+      () => {
+        return this.streamConnectionFromFileSystem();
+      }
+    );
+  }
+
+  set metaModelContainerUrl (containerUuid: string) {
+    this._metaModelContainerUrl = `/gofer/meta-model/rest/modelContainers/${containerUuid}`;
+  }
+
+  get metaModelContainerUrl (): string {
+    return this._metaModelContainerUrl;
+  }
+
+  public get callsUrl(): string {
+    return this._callsUrl;
+  }
+
+  public set callsUrl(v: string) {
+    this._callsUrl = `/mcap/connector/rest/connectors/${v}/calls`;
+  }
   /**
    * get all Connections form the rootfolder
    */
-  flatTree(tree: any, store: TreeDirectory[] = []): TreeDirectory[] {
+  public flatTree(tree: any, store: TreeDirectory[] = []): TreeDirectory[] {
     if (!tree) {
       return store;
     };
@@ -111,14 +144,87 @@ export class Connection extends Command {
     });
     return store;
   }
+  /**
+   * Query Filter to get the connection from the Server
+   */
+  public connectionFilter = {
+    'type': 'logOp',
+    'operation': 'AND',
+    'filters': [
+      {
+        'type': 'string',
+        'fieldName': 'application',
+        'value': ''
+      },
+      {
+        'type': 'string',
+        'fieldName': 'name',
+        'value': ''
+      }
+    ]
+  };
+  /**
+   * simple getter
+   */
+  public get uuidConnectionUrl(): string {
+    return this._uuidConnectionUrl;
+  }
 
-  getConnectionNames(): {name: string, value: TreeDirectory | any}[] {
+  public setUuidConnectionUrl(uuid: string, connectionName: string) {
+    this.connectionFilter.filters[0].value = uuid;
+    this.connectionFilter.filters[1].value = connectionName;
+    let query = encodeURIComponent(`${JSON.stringify(this.connectionFilter)}`);
+    this._uuidConnectionUrl = (`/mcap/connector/rest/connectors/?filter=${query}&field=uuid&field=containerUuid&field=calls`);
+  }
+
+  public getConnectionNames(): {name: string, value: TreeDirectory | any}[] {
     return map(this.connectionsDirTree, (item: TreeDirectory) => {
       return {name: item.connection.name, value: item};
     });
   }
 
-  streamConnectionFromFileSystem() {
+  /**
+   * fetch the uuid from the server by query
+   */
+  public getConnectionUUid(appUUid: string, connectionName: string) {
+    this.setUuidConnectionUrl(appUUid, connectionName);
+    return Observable.fromPromise(
+      Relution.web.ajax(
+        {
+          method: 'GET',
+          url: this.uuidConnectionUrl
+        })
+    );
+  }
+  /**
+   * return a list of availables calls for the connection
+   */
+  public getConnectionCalls(connectionUuid: string) {
+    this.callsUrl = connectionUuid;
+    return Observable.fromPromise(
+      Relution.web.ajax(
+        {
+          method: 'GET',
+          url: this.callsUrl
+        })
+    );
+  }
+  /**
+   * return a list of availables metamodel for the connection
+   */
+  public getConnectionMetamodelContainer(containerUuid: string) {
+    this.metaModelContainerUrl = containerUuid;
+    return Observable.fromPromise(
+      Relution.web.ajax({
+        method: 'GET',
+        url: this.metaModelContainerUrl
+      })
+    );
+  }
+  /**
+   * return all connections from the connection folder
+   */
+  public streamConnectionFromFileSystem() {
     this.connectionsDirTree = this.flatTree(this.fileApi.dirTree(this.rootFolder, ['.hjson']));
     let forkjoin: any = [];
     this.connectionsDirTree.forEach((connection: TreeDirectory) => {
@@ -137,26 +243,22 @@ export class Connection extends Command {
       }
     );
   }
-
-  preload() {
-    return super.preload().exhaustMap(
-      () => {
-        return this.streamConnectionFromFileSystem();
-      }
-    );
-  }
-
-  apiList(name?: string) {
+  /**
+   * Add some calls to the connection
+   */
+  public apiList(name?: string) {
     return this.helperApiList.apiList();
   }
-
-  add(path?: string): Observable<any> {
+  /**
+   * create a new connection
+   */
+  public add(path?: string): Observable<any> {
     return this.helperAdd.add();
   }
   /**
    * check if the connection add command is disabled
    */
-  addEnabled(): boolean {
+  public addEnabled(): boolean {
     if (!this.userRc.server.length) {
       return false;
     }
@@ -168,7 +270,7 @@ export class Connection extends Command {
   /**
    * return why is is not enabld
    */
-  addWhyDisabled(): string {
+  public addWhyDisabled(): string {
     if (!this.userRc.server.length) {
       return this.i18n.CONNECTION_ADD_SERVER_BEFORE;
     }
@@ -182,7 +284,7 @@ export class Connection extends Command {
    * shows all available connections
    * @returns Observable
    */
-  list() {
+  public list() {
     return Observable.create((observer: any) => {
       let content: any = [['']];
       this.getConnectionNames().forEach((connection) => {
@@ -200,4 +302,7 @@ export class Connection extends Command {
     });
   }
 
+  public createInterfaces() {
+    return this.helperMetaModelContainer.create();
+  }
 }

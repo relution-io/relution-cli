@@ -170,6 +170,7 @@ export class ConnectionModel implements ConnectionInterface {
   public set connectorProvider(v: string) {
     this._connectorProvider = v;
   }
+
   public getCommentvalue(fieldDefinition: Relution.model.FieldDefinition) {
     let comment = '';
     if (fieldDefinition.enumDefinition && fieldDefinition.enumDefinition.items && fieldDefinition.enumDefinition.items.length) {

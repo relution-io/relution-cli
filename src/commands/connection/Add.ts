@@ -410,6 +410,8 @@ export class AddConnection {
       })
       .do({
         complete: (file: any) => {
+          const exec = require('child_process').exec;
+          exec('tsc -p .');
           this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
         }
       });
