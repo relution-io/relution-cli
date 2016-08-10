@@ -1,4 +1,4 @@
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import {FileApi} from './../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
 import {PushCollection, PushModel, IOSPush, AndroidPush} from './../collection/PushCollection';

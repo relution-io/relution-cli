@@ -1,5 +1,5 @@
 import {Observable} from '@reactivex/rxjs';
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import {ServerCrud} from './server/ServerCrud';
 import {ServerModelRc} from './../models/ServerModelRc';
 import {orderBy, partition, concat} from 'lodash';

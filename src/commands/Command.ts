@@ -2,12 +2,12 @@ import {Observable} from '@reactivex/rxjs';
 import * as chalk from 'chalk';
 import * as _ from 'lodash';
 
-import {UserRc} from './UserRc';
-import {Table} from './Table';
+import {UserRc} from './../utility/UserRc';
+import {Table} from './../utility/Table';
 import {Tower} from './../commands/Tower';
-import {Translation} from './Translation';
-import {DebugLog} from './DebugLog';
-import {RelutionSdk} from './RelutionSDK';
+import {Translation} from './../utility/Translation';
+import {DebugLog} from './../utility/DebugLog';
+import {RelutionSdk} from './../utility/RelutionSDK';
 
 const inquirer = require('inquirer');
 
@@ -35,7 +35,7 @@ interface CommandInterface {
  *
  *```javascript
  *
- * import {Command} from './../utility/Command';
+ * import {Command} from './Command';
  *
  * export MyCommand extends Command{
  *  constructor(){

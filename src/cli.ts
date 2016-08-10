@@ -9,7 +9,7 @@ import {Tower} from './commands/Tower';
 import {Project} from './commands/Project';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
-import {Command} from './utility/Command';
+import {Command} from './commands/Command';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);

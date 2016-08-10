@@ -10,56 +10,16 @@ import {TreeDirectory} from './../Connection';
 
 export class ApiList {
 
-  private _uuidConnectionUrl: string;
-
-  private _callsUrl: string;
   private _callsCollection: CallModel[];
-  /**
-   * template renderer
-   */
-  private _gii = new Gii();
-
-  constructor(public connection: Connection) {
-
-  }
-  public get callsUrl(): string {
-    return this._callsUrl;
-  }
-
-  public set callsUrl(v: string) {
-    this._callsUrl = `/mcap/connector/rest/connectors/${v}/calls`;
-  }
-
   /**
    * the default server
    */
   private _defaultServer: string;
-  private _connectionFilter = {
-    'type': 'logOp',
-    'operation': 'AND',
-    'filters': [
-      {
-        'type': 'string',
-        'fieldName': 'application',
-        'value': ''
-      },
-      {
-        'type': 'string',
-        'fieldName': 'name',
-        'value': ''
-      }
-    ]
-  };
-  public get uuidConnectionUrl(): string {
-    return this._uuidConnectionUrl;
-  }
-
-  public setUuidConnectionUrl(uuid: string, connectionName: string) {
-    this._connectionFilter.filters[0].value = uuid;
-    this._connectionFilter.filters[1].value = connectionName;
-    let query = encodeURIComponent(`${JSON.stringify(this._connectionFilter)}`);
-    this._uuidConnectionUrl = (`/mcap/connector/rest/connectors/?filter=${query}&field=uuid`);
-  }
+  /**
+   * template renderer
+   */
+  private _gii = new Gii();
+  constructor(public connection: Connection) {}
 
   private _enterCallName(calls: CallModel[]): any {
     let prompt: Array<{type: string, name: string, value: CallModel, default: string, message: string}> = [];
@@ -88,27 +48,7 @@ export class ApiList {
     return Observable.fromPromise(this.connection.inquirer.prompt(prompt));
   }
 
-  private _getConnectionUUid(appUUid: string, connectionName: string) {
-    this.setUuidConnectionUrl(appUUid, connectionName);
-    return Observable.fromPromise(
-      Relution.web.ajax(
-        {
-          method: 'GET',
-          url: this.uuidConnectionUrl
-        })
-    );
-  }
 
-  private _getConnectionCalls(connectionUuid: string) {
-    this.callsUrl = connectionUuid;
-    return Observable.fromPromise(
-      Relution.web.ajax(
-        {
-          method: 'GET',
-          url: this.callsUrl
-        })
-    );
-  }
 
   private _chooseCalls(calls: CallModel[]): any | Array<{
         name: string,
@@ -206,18 +146,18 @@ export class ApiList {
        * get the connection uuid from the server
        */
       .exhaustMap((resp: { user: Relution.security.User }) => {
-        return this._getConnectionUUid(relutionHjson.uuid, connectionModel.name);
+        return this.connection.getConnectionUUid(relutionHjson.uuid, connectionModel.name);
       })
       /**
        * read the calls from the server
        */
       .exhaustMap((resp: { empty: boolean, items: Array<{ uuid: string }> }) => {
-        return this._getConnectionCalls(resp.items[0].uuid);
+        return this.connection.getConnectionCalls(resp.items[0].uuid);
       })
       /**
        * add the calls to the _callsCollection as a Model
        */
-      .exhaustMap((callsResp: [CallModel]) => {
+      .exhaustMap((callsResp: CallModel[]) => {
         this._callsCollection = [];
         // console.log(Object.keys(callsResp).length);
         Object.keys(callsResp).forEach((key: string) => {
@@ -258,6 +198,7 @@ export class ApiList {
         template.instance.name = connectionModel.name;
         template.instance.path = path.dirname(connectionModel.name);
         template.instance.metaData = choosedCalls;
+        // console.log(template.instance);
         return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder);
       })
       .do({

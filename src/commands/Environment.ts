@@ -1,4 +1,4 @@
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import * as chalk from 'chalk';
 import {isArray} from 'lodash';
 import {Observable} from '@reactivex/rxjs';

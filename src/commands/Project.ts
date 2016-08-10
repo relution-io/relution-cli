@@ -1,4 +1,4 @@
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import {Observable} from '@reactivex/rxjs';
 import {FileApi} from './../utility/FileApi';
 
