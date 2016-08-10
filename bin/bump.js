@@ -5,7 +5,7 @@ const Observable = require('@reactivex/rxjs').Observable;
 const semver = require('semver');
 
 class Bump {
-  constructor(defaultType = 'prerelease', packages = [`${process.cwd()}/package.json`]) {
+  constructor(defaultType = 'patch', packages = [`${process.cwd()}/package.json`]) {
     this.packages = [];
     this.types = [
       'major',
@@ -103,6 +103,7 @@ Semver
   .bump(defVer)
   .last()
   .mergeMap((version) => {
+    console.log('version', version);
     return GitRepo.addTag(version, defVer);
   })
   .subscribe(

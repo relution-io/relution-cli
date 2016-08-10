@@ -1,10 +1,11 @@
 {
   "name": "relution-cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
     "precommit": "npm run tslint",
+    "bump": "node bin/bump",
     "tslint": "tslint src/**/*.ts",
     "coverage": "istanbul cover lib/**/*.js",
     "test": "node testrunner.js",
@@ -36,7 +37,9 @@
     "sinon": "^1.17.4",
     "tslint": "^3.8.1",
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
-    "typescript": "^1.8.10"
+    "typescript": "^1.8.10",
+    "simple-git": "^1.37.0",
+    "semver": "^5.1.0"
   },
   "engines": {
     "node": ">=4.4.0"
