@@ -37,6 +37,7 @@
         "src/commands/environment/AddAttribute.ts",
         "src/commands/environment/ChooseEnv.spec.ts",
         "src/commands/environment/ChooseEnv.ts",
+        "src/commands/Logger.ts",
         "src/commands/Project.spec.ts",
         "src/commands/Project.ts",
         "src/commands/project/Create.spec.ts",
