@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as chalk from 'chalk';
 
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import {FileApi} from './../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
 import {findIndex, map} from 'lodash';

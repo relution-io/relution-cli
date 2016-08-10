@@ -5,7 +5,7 @@ import * as chalk from 'chalk';
 import {UserRc} from './../utility/UserRc';
 import {Table} from './../utility/Table';
 import {Greet} from './../utility/Greet';
-import {Command} from './../utility/Command';
+import {Command} from './Command';
 import {Server} from './Server';
 import {Environment} from './Environment';
 import {Translation} from './../utility/Translation';

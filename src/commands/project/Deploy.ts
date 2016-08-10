@@ -8,7 +8,7 @@ import * as Relution from 'relution-sdk';
 import {FileApi} from '../../utility/FileApi';
 import {RxFs} from '../../utility/RxFs';
 import {Archiver} from '../../utility/Archiver';
-import {Command} from '../../utility/Command';
+import {Command} from '../Command';
 import {Translation} from '../../utility/Translation';
 import {DebugLog} from '../../utility/DebugLog';
 import {UserRc} from '../../utility/UserRc';
