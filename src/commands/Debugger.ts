@@ -7,26 +7,16 @@ import {RxFs} from './../utility/RxFs';
 import * as os from 'os';
 import * as path from 'path';
 import * as Relution from 'relution-sdk';
-import * as querystring from 'querystring';
 
 import {Observable} from '@reactivex/rxjs';
 
 export class Debugger extends Command {
 
-  private _url: string;
   private _deployCommand: Deploy;
   private _relutionHjson: any;
   private _fileApi: FileApi = new FileApi();
 
-  public get url(): string {
-    return this._url;
-  }
-
-  public set url(v: string) {
-    this._url = v;
-  }
-
-   public commands: Object = {
+  public commands: Object = {
     open: {
       when: () => {
         return RxFs.exist(path.join(this._deployCommand.projectDir, 'relution.hjson'));
@@ -53,13 +43,9 @@ export class Debugger extends Command {
     super('debug');
     this._deployCommand = new Deploy(this);
   }
-  public escape(s: string): string {
-    return s.replace(/"/g, '\\\"');
-  }
+
   public open() {
     let choosedServer: ServerModelRc;
-    // console.log(this._parent.staticCommands.project._);
-    // `${server.serverUrl}/gofer/security-login?j_username=${username}&j_password=${password}&redirect=${redirect}`
     /**
      * get the relution.hjson
      */
