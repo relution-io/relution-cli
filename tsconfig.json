@@ -32,6 +32,7 @@
         "src/commands/connection/Add.ts",
         "src/commands/connection/ApiList.ts",
         "src/commands/connection/RenderMetamodelContainer.ts",
+        "src/commands/Debugger.ts",
         "src/commands/Environment.spec.ts",
         "src/commands/Environment.ts",
         "src/commands/environment/AddAttribute.ts",
