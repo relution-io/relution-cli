@@ -8,7 +8,7 @@
     "bump": "node bin/bump",
     "tslint": "tslint src/**/*.ts",
     "coverage": "istanbul cover lib/**/*.js",
-    "test": "node testrunner.js",
+    "test": "node bin/testrunner.js",
     "debug": "node-debug --web-port 8088 lib/cli.js --debug",
     "clean": "del 'lib/**'",
     "build": "tsc -p .",
