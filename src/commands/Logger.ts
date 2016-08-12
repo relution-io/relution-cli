@@ -12,6 +12,7 @@ import { LoggerHelper, LEVEL } from './logger/LoggerHelper';
 
 const blessed = require('blessed');
 const contrib = require('blessed-contrib');
+
 export interface LogMessage {
   id: string;
   message: string;
@@ -31,7 +32,7 @@ export class Logger extends Command {
   public termLog: any;
   public choosedServer: ServerModelRc;
   public choosedLevel: number;
-
+  private _grid: any;
   public commands: Object = {
     log: {
       label: 'log',
@@ -64,21 +65,21 @@ export class Logger extends Command {
 
   private _openLogView() {
     this.screen = blessed.screen();
-    this.termLog = contrib.log(
-      {
-        fg: 'green',
-        label: `Server Log ${this.choosedServer.id} ${this.choosedServer.serverUrl}`,
-        height: '40%',
-        tags: true,
-        xLabelPadding: 3,
-        xPadding: 5,
-        bufferLength: 40,
-        border: {
-          type: 'line',
-          fg: 'cyan'
-        }
-      });
-    this.screen.append(this.termLog);
+    this._grid = new contrib.grid({rows: 12, cols: 12, screen: this.screen});
+    this.termLog = this._grid.set(0, 0, 4, 12, contrib.log, {
+      fg: 'green',
+      label: `Server Log ${this.choosedServer.id} ${this.choosedServer.serverUrl}`,
+      height: '40%',
+      tags: true,
+      xLabelPadding: 3,
+      xPadding: 5,
+      interactive: false,
+      bufferLength: 40,
+      columnSpacing: 10,
+      border: {
+        type: 'none'
+      }
+    });
     this.screen.render();
   }
 
@@ -173,7 +174,7 @@ export class Logger extends Command {
   public getlog(registerUUid: string, ob: Observer<any>): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
     .then((messages: Array<LogMessage>) => {
-      if (!this.screen) {
+      if (!this.screen && os.platform() !== 'win32') {
         this._openLogView();
         this.screen.key(['escape', 'q', 'C-c'], function(ch: string, key: string) {
           this.screen.destroy();
@@ -184,7 +185,11 @@ export class Logger extends Command {
       if (!ob.isUnsubscribed) {
         messages.map((log) => {
           // console.log(log);
-          this.termLog.log(this._beautifyLogMessage(log));
+          if (os.platform() !== 'win32') {
+            console.log(this._beautifyLogMessage(log));
+          } else {
+            this.termLog.log(this._beautifyLogMessage(log), {height: 30});
+          }
         });
         return this.getlog(registerUUid, ob);
       }
@@ -198,8 +203,10 @@ export class Logger extends Command {
           return this.getlog(registerUUid, ob)
           .catch((e: Error) => {
             ob.error(e);
-            this.screen.destroy();
-            this.screen = undefined;
+            if (os.platform() !== 'win32') {
+              this.screen.destroy();
+              this.screen = undefined;
+            }
             this._registerLogger().unsubcribe();
             return;
           });
