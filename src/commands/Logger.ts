@@ -1,7 +1,7 @@
 import { Command } from './Command';
 import {ServerModelRc} from './../models/ServerModelRc';
 import {Deploy} from './project/Deploy';
-import {filter, find} from 'lodash';
+import {find} from 'lodash';
 import {FileApi} from '../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
 import * as os from 'os';
@@ -22,7 +22,6 @@ export interface LogMessage {
   extraFieldsMap?: any;
   setProperties?: Array<string>;
 }
-
 export class Logger extends Command {
   private screen: any;
   private _deployCommand: Deploy;
@@ -33,10 +32,10 @@ export class Logger extends Command {
   public choosedServer: ServerModelRc;
   public choosedLevel: number;
   private _grid: any;
+  private _state = 'cli';
   public commands: Object = {
     log: {
       label: 'log',
-      method: 'logPrinter',
       when: () => {
         return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
       },
@@ -45,8 +44,11 @@ export class Logger extends Command {
       },
       description: this.i18n.LOGGER_LOG_DESCRIPTION,
       vars: {
-        server: {
+        serverName: {
           pos: 0
+        },
+        level: {
+          pos: 1
         }
       }
     },
@@ -174,7 +176,7 @@ export class Logger extends Command {
   public getlog(registerUUid: string, ob: Observer<any>): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
     .then((messages: Array<LogMessage>) => {
-      if (!this.screen && os.platform() !== 'win32') {
+      if (!this.screen && os.platform() !== 'win32' && this._state === 'cli') {
         this._openLogView();
         this.screen.key(['escape', 'q', 'C-c'], function(ch: string, key: string) {
           this.screen.destroy();
@@ -186,7 +188,7 @@ export class Logger extends Command {
         if (messages.length) {
           messages.map((log) => {
             // console.log(log);
-            if (os.platform() !== 'win32') {
+            if (os.platform() === 'win32' || this._state === 'args') {
               console.log(this._beautifyLogMessage(log));
             } else {
               this.termLog.log(this._beautifyLogMessage(log), {height: 30});
@@ -198,21 +200,67 @@ export class Logger extends Command {
     });
   }
 
-  public logPrinter(): any {
+  private _directLog(args?: Array<string>) {
+    return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
+      /**
+       * get a server from inquirer
+       */
+      .mergeMap((relutionHjson: { data: any, path: string }) => {
+        this._relutionHjson = relutionHjson.data;
+        return this._deployCommand._getServers();
+      })
+      /**
+       * logged in on server
+       */
+      .mergeMap(() => {
+        if (args[0].trim() === this._deployCommand.defaultServer.trim()) {
+          this.choosedServer = find(this.userRc.server, { default: true });
+        } else {
+          this.choosedServer = find(this.userRc.server, { id: args[0] });
+        }
+        return this.relutionSDK.login(this.choosedServer);
+      })
+      .mergeMap(() => {
+        return Observable.from([{level: args[1]}]);
+      })
+      .mergeMap((level: any) => {
+        this.choosedLevel = LEVEL[level];
+        this.debuglog.info(`${this.choosedServer.userName} logged in on ${this.choosedServer.serverUrl}`);
+        this._log = new LoggerHelper(this._relutionHjson.uuid, this.choosedServer);
+        return this._log.registerLogger();
+      });
+  }
+
+  public log(args?: Array<any>): any {
+    // console.log('args', args);
+    let serverName: string;
+    let level = LEVEL.TRACE;
+
+    if (args && args[0]) {
+      serverName = args[0];
+      this._state = 'args';
+    } else {
+      this._state = 'cli';
+    }
+
+    if (args && args[1]) {
+      level = args[1];
+    }
+
     return Observable.create((ob: Observer<{}>) => {
-      this._registerLogger()
-        .subscribe((registerUUid: string) => {
-          return this.getlog(registerUUid, ob)
-          .catch((e: Error) => {
-            ob.error(e);
-            if (os.platform() !== 'win32') {
-              this.screen.destroy();
-              this.screen = undefined;
-            }
-            this._registerLogger().unsubcribe();
-            return;
-          });
+      const sub = serverName ?  this._directLog(args) : this._registerLogger();
+      sub.subscribe((registerUUid: string) => {
+        return this.getlog(registerUUid, ob)
+        .catch((e: Error) => {
+          ob.error(e);
+          if (os.platform() !== 'win32' && this._state === 'cli') {
+            this.screen.destroy();
+            this.screen = undefined;
+          }
+          sub().unsubcribe();
+          return;
         });
+      });
     });
   }
 }

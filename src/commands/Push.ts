@@ -68,14 +68,14 @@ export class Push extends Command {
   private _keyValid(value: string, type = 'Name', pattern = Validator.stringPattern): boolean {
     let pass: RegExpMatchArray = value.match(pattern);
     if (!value.length) {
-      this.log.error(new Error(this.i18n.NOT_EMPTY(type)));
+      this.debuglog.error(new Error(this.i18n.NOT_EMPTY(type)));
       return false;
     }
 
     if (pass) {
       return true;
     } else {
-      this.log.error(new Error(this.i18n.NOT_ALLOWED(value, pattern)));
+      this.debuglog.error(new Error(this.i18n.NOT_ALLOWED(value, pattern)));
       return false;
     }
   }
@@ -100,7 +100,7 @@ export class Push extends Command {
         message: this.i18n.ENTER_SOMETHING.concat('Certificatefile'),
         validate: (value: string): boolean => {
           if (value.indexOf('.p12') === -1) {
-            this.log.error(new Error('Certificatefile must end with .p12'));
+            this.debuglog.error(new Error('Certificatefile must end with .p12'));
             return false;
           }
           return this._keyValid(value, 'Certificatefile', Validator.p12Pattern);
@@ -208,18 +208,18 @@ export class Push extends Command {
         let unique = find(this.collection.pushFiles, { name: value });
         let pass: RegExpMatchArray = value.match(Validator.stringPattern);
         if (!value.length) {
-          this.log.error(new Error(this.i18n.NOT_EMPTY('Name')));
+          this.debuglog.error(new Error(this.i18n.NOT_EMPTY('Name')));
           return false;
         }
         if (unique) {
-          this.log.error(new Error(this.i18n.ALREADY_EXIST(value, 'Pushconfig')));
+          this.debuglog.error(new Error(this.i18n.ALREADY_EXIST(value, 'Pushconfig')));
           return false;
         }
 
         if (pass) {
           return true;
         } else {
-          this.log.error(new Error(this.i18n.NOT_ALLOWED(value, Validator.stringPattern)));
+          this.debuglog.error(new Error(this.i18n.NOT_ALLOWED(value, Validator.stringPattern)));
           return false;
         }
       }
@@ -267,7 +267,7 @@ export class Push extends Command {
         return this.collection.add(model)
           .last()
           .do(() => {
-            this.log.info(this.i18n.FILES_WRITTEN(model.name));
+            this.debuglog.info(this.i18n.FILES_WRITTEN(model.name));
           });
       });
   }

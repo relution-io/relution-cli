@@ -44,7 +44,7 @@ Observable.forkJoin(all).subscribe(
     process.exit(-1);
   },
   () => {
-    // console.log('test', argv);
+    console.log('test', argv);
     return new Tower(staticCommands, argv);
   }
 );
