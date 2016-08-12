@@ -1,25 +1,43 @@
 import { Command } from './Command';
 import {ServerModelRc} from './../models/ServerModelRc';
 import {Deploy} from './project/Deploy';
-import {find} from 'lodash';
+import {filter, find} from 'lodash';
 import {FileApi} from '../utility/FileApi';
 import {RxFs} from './../utility/RxFs';
 import * as os from 'os';
 import * as path from 'path';
 import * as Relution from 'relution-sdk';
+import {Observable, Observer} from '@reactivex/rxjs';
+import { LoggerHelper, LEVEL } from './logger/LoggerHelper';
 
-import {Observable} from '@reactivex/rxjs';
+const blessed = require('blessed');
+const contrib = require('blessed-contrib');
+export interface LogMessage {
+  id: string;
+  message: string;
+  logger: string;
+  level: number;
+  date: Date;
+  extraFieldsMap?: any;
+  setProperties?: Array<string>;
+}
 
 export class Logger extends Command {
-
+  private screen: any;
   private _deployCommand: Deploy;
   private _relutionHjson: any;
   private _fileApi: FileApi = new FileApi();
+  private _log: LoggerHelper;
+  public termLog: any;
+  public choosedServer: ServerModelRc;
+  public choosedLevel: number;
 
   public commands: Object = {
     log: {
+      label: 'log',
+      method: 'logPrinter',
       when: () => {
-        return RxFs.exist(path.join(this._deployCommand.projectDir, 'relution.hjson'));
+        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
       },
       why: () => {
         return this.i18n.LOGGER_LOG_WHY;
@@ -41,6 +59,152 @@ export class Logger extends Command {
 
   constructor() {
     super('logger');
+    this._deployCommand = new Deploy(this);
+  }
+
+  private _openLogView() {
+    this.screen = blessed.screen();
+    this.termLog = contrib.log(
+      {
+        fg: 'green',
+        label: `Server Log ${this.choosedServer.id} ${this.choosedServer.serverUrl}`,
+        height: '40%',
+        tags: true,
+        xLabelPadding: 3,
+        xPadding: 5,
+        bufferLength: 40,
+        border: {
+          type: 'line',
+          fg: 'cyan'
+        }
+      });
+    this.screen.append(this.termLog);
+    this.screen.render();
+  }
+
+  private _registerLogger() {
+
+    return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
+      /**
+       * get a server from inquirer
+       */
+      .mergeMap((relutionHjson: { data: any, path: string }) => {
+        this._relutionHjson = relutionHjson.data;
+        return this._deployCommand.getServerPrompt();
+      })
+      .filter((server: { deployserver: string }) => {
+        return server.deployserver !== this.i18n.CANCEL;
+      })
+      /**
+       * logged in on server
+       */
+      .mergeMap((server: { deployserver: string }) => {
+        if (server.deployserver.toString().trim() === this._deployCommand.defaultServer.trim()) {
+          this.choosedServer = find(this.userRc.server, { default: true });
+        } else {
+          this.choosedServer = find(this.userRc.server, { id: server.deployserver });
+        }
+        return this.relutionSDK.login(this.choosedServer);
+      })
+      .mergeMap(() => {
+        return this._chooseLevel();
+      })
+      .mergeMap((level: any) => {
+        this.choosedLevel = LEVEL[level];
+        Relution.debug.info(`${this.choosedServer.userName} logged in on ${this.choosedServer.serverUrl}`);
+        this._log = new LoggerHelper(this._relutionHjson.uuid, this.choosedServer);
+        return this._log.registerLogger();
+      });
+  }
+
+  private _chooseLevel() {
+    let questions = {
+      name: 'level',
+      message: 'Choose the log Level first',
+      type: 'list',
+      choices: Object.keys(LEVEL).map((lev) => {
+        return {
+          name: lev.toLowerCase(),
+          value: lev
+        };
+      }),
+      filter: function (str: Array<string>) {
+        return str;
+      }
+    };
+    return Observable.fromPromise(this.inquirer.prompt(questions));
+  }
+
+  private _getLevelName(level: number): string {
+    let name = '';
+    Object.keys(LEVEL).forEach((key: string) => {
+      if (LEVEL[key] === level) {
+        name = key;
+      }
+    });
+    return name;
+  }
+
+  private _getLevelColor(level: number): string {
+    switch (level) {
+      default:
+      case LEVEL.TRACE:
+        return 'bgBlue';
+      case LEVEL.ERROR:
+        return 'bgRed';
+      case LEVEL.WARN:
+        return 'bgYellow';
+      case LEVEL.FATAL:
+        return 'bgMagenta';
+      case LEVEL.DEBUG:
+        return 'bgCyan';
+    }
+  }
+  private _beautifyLogMessage(log: LogMessage) {
+    let bgColor = this._getLevelColor(log.level);
+    const levelName = this._getLevelName(log.level);
+    if (!this.color[bgColor]) {
+      bgColor = 'bgBlue';
+    }
+    const content = [[this.color.underline[bgColor](this.color.white(levelName)), log.message, log.date, log.id]];
+    return this.table.row(content);
+  }
+
+  public getlog(registerUUid: string, ob: Observer<any>): any {
+    return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
+    .then((messages: Array<LogMessage>) => {
+      if (!this.screen) {
+        this._openLogView();
+        this.screen.key(['escape', 'q', 'C-c'], function(ch: string, key: string) {
+          this.screen.destroy();
+          this.screen = undefined;
+          return ob.complete();
+        });
+      }
+      if (!ob.isUnsubscribed) {
+        messages.map((log) => {
+          // console.log(log);
+          this.termLog.log(this._beautifyLogMessage(log));
+        });
+        return this.getlog(registerUUid, ob);
+      }
+    });
+  }
+
+  public logPrinter(): any {
+    return Observable.create((ob: Observer<{}>) => {
+      this._registerLogger()
+        .subscribe((registerUUid: string) => {
+          return this.getlog(registerUUid, ob)
+          .catch((e: Error) => {
+            ob.error(e);
+            this.screen.destroy();
+            this.screen = undefined;
+            this._registerLogger().unsubcribe();
+            return;
+          });
+        });
+    });
   }
 }
 

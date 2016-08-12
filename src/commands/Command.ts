@@ -77,6 +77,7 @@ export class Command implements CommandInterface {
   public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
+  public color = chalk;
   public inquirer = inquirer;
   public i18n = Translation;
   public log = DebugLog;

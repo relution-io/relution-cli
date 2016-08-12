@@ -343,4 +343,7 @@ export class Deploy {
   public set relutionHjson(v: any) {
     this._relutionHjson = v;
   }
+  public get defaultServer(): string {
+    return this._defaultServer;
+  }
 }
