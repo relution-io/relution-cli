@@ -129,7 +129,7 @@ export class Logger extends Command {
   private _chooseLevel() {
     let questions = {
       name: 'level',
-      message: 'Choose the log Level first',
+      message: 'Please choose the log Level first',
       type: 'list',
       choices: Object.keys(LEVEL).map((lev) => {
         return {
