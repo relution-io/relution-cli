@@ -183,14 +183,16 @@ export class Logger extends Command {
         });
       }
       if (!ob.isUnsubscribed) {
-        messages.map((log) => {
-          // console.log(log);
-          if (os.platform() !== 'win32') {
-            console.log(this._beautifyLogMessage(log));
-          } else {
-            this.termLog.log(this._beautifyLogMessage(log), {height: 30});
-          }
-        });
+        if (messages.length) {
+          messages.map((log) => {
+            // console.log(log);
+            if (os.platform() !== 'win32') {
+              console.log(this._beautifyLogMessage(log));
+            } else {
+              this.termLog.log(this._beautifyLogMessage(log), {height: 30});
+            }
+          });
+        }
         return this.getlog(registerUUid, ob);
       }
     });
