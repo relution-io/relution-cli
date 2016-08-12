@@ -64,7 +64,9 @@ export class Logger extends Command {
     super('logger');
     this._deployCommand = new Deploy(this);
   }
-
+  /**
+   * open a screen on os sytems nice !
+   */
   private _openLogView() {
     this.screen = blessed.screen();
     this._grid = new contrib.grid({rows: 12, cols: 12, screen: this.screen});
@@ -84,7 +86,9 @@ export class Logger extends Command {
     });
     this.screen.render();
   }
-
+  /**
+   * register Logger on server with the prompts
+   */
   private _registerLogger() {
 
     return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
@@ -119,7 +123,9 @@ export class Logger extends Command {
         return this._log.registerLogger();
       });
   }
-
+  /**
+   * choose a level
+   */
   private _chooseLevel() {
     let questions = {
       name: 'level',
@@ -137,7 +143,9 @@ export class Logger extends Command {
     };
     return Observable.fromPromise(this.inquirer.prompt(questions));
   }
-
+  /**
+   * return the level by  number as a string
+   */
   private _getLevelName(level: number): string {
     let name = '';
     Object.keys(LEVEL).forEach((key: string) => {
@@ -147,7 +155,9 @@ export class Logger extends Command {
     });
     return name;
   }
-
+  /**
+   * return the bgColor by level
+   */
   private _getLevelColor(level: number): string {
     switch (level) {
       default:
@@ -163,6 +173,9 @@ export class Logger extends Command {
         return 'bgCyan';
     }
   }
+  /**
+   * add some cosmetics on message
+   */
   private _beautifyLogMessage(log: LogMessage) {
     let bgColor = this._getLevelColor(log.level);
     const levelName = this._getLevelName(log.level);
@@ -172,7 +185,9 @@ export class Logger extends Command {
     const content = [[this.color.underline[bgColor](this.color.white(levelName)), log.message, log.date, log.id]];
     return this.table.row(content);
   }
-
+  /**
+   * return a polling Promise with live log messages
+   */
   public getlog(registerUUid: string, ob: Observer<any>): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
     .then((messages: Array<LogMessage>) => {
@@ -199,7 +214,9 @@ export class Logger extends Command {
       }
     });
   }
-
+  /**
+   * ist directly used from the terminal
+   */
   private _directLog(args?: Array<string>) {
     return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
       /**
@@ -230,7 +247,9 @@ export class Logger extends Command {
         return this._log.registerLogger();
       });
   }
-
+  /**
+   * print the livelog appender from you choosen server
+   */
   public log(args?: Array<any>): any {
     // console.log('args', args);
     let serverName: string;
