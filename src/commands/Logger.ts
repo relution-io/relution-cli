@@ -18,7 +18,7 @@ export interface LogMessage {
   message: string;
   logger: string;
   level: number;
-  date: Date;
+  date: any;
   extraFieldsMap?: any;
   setProperties?: Array<string>;
 }
@@ -173,6 +173,23 @@ export class Logger extends Command {
         return 'bgCyan';
     }
   }
+  private _getHumanDate(timeStamp: any) {
+    const date = new Date(timeStamp);
+    let month: any = date.getMonth() + 1;
+    let day: any = date.getDate();
+    let hour: any = date.getHours();
+    let min: any = date.getMinutes();
+    let sec: any = date.getSeconds();
+
+    month = (month < 10 ? "0" : "") + month;
+    day = (day < 10 ? "0" : "") + day;
+    hour = (hour < 10 ? "0" : "") + hour;
+    min = (min < 10 ? "0" : "") + min;
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
+    return str;
+  }
   /**
    * add some cosmetics on message
    */
@@ -182,7 +199,7 @@ export class Logger extends Command {
     if (!this.color[bgColor]) {
       bgColor = 'bgBlue';
     }
-    const content = [[this.color.underline[bgColor](this.color.white(levelName)), log.message, log.date, log.id]];
+    const content = [[this.color.underline[bgColor](this.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id]];
     return this.table.row(content);
   }
   /**
@@ -238,7 +255,7 @@ export class Logger extends Command {
         return this.relutionSDK.login(this.choosedServer);
       })
       .mergeMap(() => {
-        return Observable.from([{level: args[1]}]);
+        return Observable.from([{level: LEVEL[args[1].toUpperCase()] || LEVEL.TRACE}]);
       })
       .mergeMap((level: any) => {
         this.choosedLevel = LEVEL[level];

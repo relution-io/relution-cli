@@ -54,7 +54,7 @@ export class Table {
     let grid = new clitable({
       options: { hAlign: 'center', vAlign: 'center' },
       chars: this.tableCharsNoBorder,
-      colWidths: [15, 100, 15, 15]
+      colWidths: [15, 200, 25, 25]
     });
     if (header) {
       grid.head = header;
