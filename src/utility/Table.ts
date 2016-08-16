@@ -65,7 +65,6 @@ export class Table {
     return grid.toString();
   }
   sidebar(content: any, header: Array<string>) {
-    console.log(content, header);
     let grid = new clitable({
       head: header,
       options: { hAlign: 'center', vAlign: 'center' },
