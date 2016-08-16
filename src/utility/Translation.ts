@@ -59,7 +59,11 @@ export class Translation {
   static DEPLOY_ENV_NOT_EXISTS(env: string): string {
     return `${env} not exists in Environments!`;
   }
-
+  /*
+   * Debugger Command
+   */
+  static DEBUGGER_OPEN_DESCRIPTION = 'open the node inspector with a specific Server.';
+  static DEBUGGER_OPEN_WHY = `You are not in a relution Project Folder`;
   /*
    * Connection Command
    */

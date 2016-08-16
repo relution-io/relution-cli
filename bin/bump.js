@@ -109,7 +109,6 @@ Semver
   .subscribe(
     (log) => {
       console.log(log);
-
     },
     (e) => console.error(e),
     () => {
