@@ -102,19 +102,23 @@ export class AddConnection {
           let connections = this.connection.getConnectionNames();
           let notEmpty = Validator.notEmptyValidate(value);
           let isUnique = true;
-
+          let pass: any = value.match(Validator.namePattern);
           if (!notEmpty) {
             this.connection.debuglog.error(new Error(`Name can not be empty`));
             return false;
           }
-
-          connections.forEach((item) => {
-            if (item.value.connection && item.value.connection.name === value) {
-              this.connection.debuglog.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
-              isUnique = false;
-            }
-          });
-          return isUnique;
+          if (pass) {
+            connections.forEach((item) => {
+              if (item.value.connection && item.value.connection.name === value) {
+                this.connection.debuglog.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
+                isUnique = false;
+              }
+            });
+            return isUnique;
+          } else {
+            this.connection.debuglog.error(new Error(this.connection.i18n.NOT_ALLOWED(value, Validator.namePattern)));
+            return false;
+          }
         }
       })
     );
@@ -127,10 +131,7 @@ export class AddConnection {
       this.connection.inquirer.prompt({
         type: 'input',
         name: 'connectiondescription',
-        message: `Please enter a description:`,
-        validate: (value: string): boolean => {
-          return Validator.notEmptyValidate(value);
-        }
+        message: `Please enter a description:`
       })
     );
   }

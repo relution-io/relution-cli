@@ -34,7 +34,7 @@ export class ConnectionGen implements TemplateInterface {
       * @params input 'Object' ${model.inputModel}
       * @return Promise ${model.outputModel}
       */
-      public ${model.name}(input: ${model.inputModel}): Q.Promise<${model.outputModel}> {
+      public ${model.name}(input: ${model.inputModel || 'any'}): Q.Promise<${model.outputModel || `any`}> {
         return connector.runCall(
           this.name,
           '${model.name}',

@@ -20,6 +20,11 @@ export class Validator {
    */
   public static stringNumberPattern: RegExp = /^[a-zA-Z\s]|[0-9\s]+$/;
   /**
+   * allow a-Z _- for the string but no space
+   * @type {RegExp}
+   */
+  public static namePattern: RegExp = /^[a-zA-Z_]+$/;
+  /**
    * allow 0-9 for the server name
    * @type {RegExp}
    */

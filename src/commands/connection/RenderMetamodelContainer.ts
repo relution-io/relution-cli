@@ -86,14 +86,15 @@ export class RenderMetamodelContainer {
        */
       .exhaustMap((resp: { empty: boolean, items: Array<{calls: Array<CallModel>, metadata: Array<any>, containerUuid: string, uuid: string, aclEntries: Array<String>, effectivePermissions: String }> }) => {
         // console.log('resp', resp.items[0].calls);
+        template.instance.metaData = [];
         template.instance.name = connectionModel.name;
         template.instance.path = path.dirname(connectionModel.name);
         const connection = resp.items[0];
         Object.keys(connection.calls).forEach((callName: string) => {
           template.instance.metaData.push(connection.calls[callName]);
         });
-        return this.connection.getConnectionMetamodelContainer(connection.containerUuid).map((resp: any) => {
-          return this._modelFactory.instance.fromJSON(JSON.stringify(resp));
+        return this.connection.getConnectionMetamodelContainer(connection.containerUuid).map((myResp: any) => {
+          return this._modelFactory.instance.fromJSON(JSON.stringify(myResp));
         });
       })
       /**
@@ -101,6 +102,7 @@ export class RenderMetamodelContainer {
        */
       .exhaustMap((modelContainer: Relution.model.TypeScriptModelContainer) => {
         // console.log('modelContainer', JSON.stringify(modelContainer, null, 2));
+        template.instance.interfaces = [];
         modelContainer.models.forEach((metaModel: Relution.model.TypeScriptMetaModel) => {
           template.instance.interfaces.push(metaModel);
         });
