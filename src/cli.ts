@@ -26,9 +26,9 @@ const staticCommands: _.Dictionary<Command>  = {
   project: new Project(),
   env: new Environment(),
   connection: new Connection(),
-  logger: new Logger(),
   push: new Push(),
-  debug: new Debugger()
+  debug: new Debugger(),
+  logger: new Logger()
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised
