@@ -1,10 +1,9 @@
 {
   "name": "relution-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm run tslint",
     "bump": "node bin/bump",
     "typeupdate": "node bin/update_typings",
     "tslint": "tslint src/**/*.ts",
