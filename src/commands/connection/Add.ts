@@ -8,6 +8,7 @@ import * as path from 'path';
 import {ConnectionModel, MetaModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 import * as chalk from 'chalk';
+import {TsBeautifier} from './../../gii/TsBeautifier';
 
 /**
  * this class add a new Connection
@@ -395,7 +396,10 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connectionGen');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connectionHomeFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connectionHomeFolder)
+          .exhaustMap(() => {
+            return TsBeautifier.format([path.join(this.connectionHomeFolder, `${template.instance.name}.gen.ts`)]);
+          });
       })
       /**
        * write name.ts file to the connections folder
@@ -404,7 +408,10 @@ export class AddConnection {
         let template = this._gii.getTemplateByName('connection');
         template.instance.name = this.connectionName;
         template.instance.path = path.dirname(this.connectionModel.name);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.ts`, this._rootFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.ts`, this._rootFolder)
+          .exhaustMap(() => {
+            return TsBeautifier.format([path.join(this._rootFolder, `${template.instance.name}.ts`)]);
+          });
       })
       .exhaustMap(() => {
         return this.connection.streamConnectionFromFileSystem();

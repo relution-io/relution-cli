@@ -7,6 +7,7 @@ import {Call, CallModel} from './../../models/CallModel';
 import {ConnectionModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
 import {TreeDirectory} from './../Connection';
+import {TsBeautifier} from './../../gii/TsBeautifier';
 
 export class ApiList {
 
@@ -199,7 +200,10 @@ export class ApiList {
         template.instance.path = path.dirname(connectionModel.name);
         template.instance.metaData = choosedCalls;
         // console.log(template.instance);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder)
+          .exhaustMap(() => {
+            return TsBeautifier.format([path.join(this.connection.rootFolder, `${template.instance.name}.gen.ts`)]);
+          });
       })
       .do({
         complete: () => {

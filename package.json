@@ -74,6 +74,7 @@
     "to-iso-string": "0.0.2",
     "tslint": "^3.14.0",
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
+    "typescript-formatter": "^2.3.0",
     "username": "^2.1.0"
   }
 }

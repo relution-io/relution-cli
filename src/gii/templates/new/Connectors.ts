@@ -23,7 +23,7 @@ export class Connectors implements TemplateInterface {
        *
        * @param app express.js application to hook into.
        */
-      export function init(app) {
+      export function init(app: any) {
         app.post('/api/v1/connectors/:connection',
           /**
            * installs session data such as credentials.
@@ -32,7 +32,7 @@ export class Connectors implements TemplateInterface {
            * @param res result of call is provided as JSON body data.
            * @param next function to invoke error handling.
            */
-          function serviceCall(req, res, next) {
+          function serviceCall(req: any, res: any, next: any) {
             connector.configureSession(req.params.connection, req.body);
             res.send(204); // success --> 204 no content
           }
@@ -46,7 +46,7 @@ export class Connectors implements TemplateInterface {
            * @param res result of call is provided as JSON body data.
            * @param next function to invoke error handling.
            */
-          function serviceCall(req, res, next) {
+          function serviceCall(req: any, res: any, next: any) {
             connector.runCall(req.params.connection, req.params.call, req.body).then(res.json.bind(res), next).done();
           }
         );

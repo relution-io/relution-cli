@@ -75,7 +75,7 @@ export class ConnectionGen implements TemplateInterface {
     export class ${this.capitalizeFirstLetter(this.name)}BaseConnection {
       constructor(public name = '${this.name}') {}
 
-      configureSession(properties) {
+      configureSession(properties: any) {
         return connector.configureSession(this.name, properties);
       }
 

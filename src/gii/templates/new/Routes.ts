@@ -13,7 +13,7 @@ export class Routes implements TemplateInterface {
         */
         const about = require('../package.json');
 
-        export function init(app) {
+        export function init(app: any) {
           app.get('/index.json',
             /**
             * provides an overview of available API, state, etc.

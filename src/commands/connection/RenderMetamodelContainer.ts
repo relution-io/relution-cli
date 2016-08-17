@@ -7,6 +7,7 @@ import {Observable} from '@reactivex/rxjs';
 import {CallModel} from './../../models/CallModel';
 import {ConnectionModel} from './../../models/ConnectionModel';
 import {Gii} from './../../gii/Gii';
+import {TsBeautifier} from './../../gii/TsBeautifier';
 
 export class RenderMetamodelContainer {
 
@@ -107,7 +108,10 @@ export class RenderMetamodelContainer {
           template.instance.interfaces.push(metaModel);
         });
         // console.log(template.instance.template);
-        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder);
+        return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder)
+          .exhaustMap(() => {
+            return TsBeautifier.format([path.join(this.connection.rootFolder, `${template.instance.name}.gen.ts`)]);
+          })
       })
       .do({
         complete: () => {
