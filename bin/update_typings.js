@@ -1,5 +1,4 @@
 #!/usr/bin/env node --harmony
-const fs = require('fs');
 const path = require('path');
 const Observable = require('@reactivex/rxjs').Observable;
 const typingsJson = require(path.join(__dirname, '..', 'typings.json'));

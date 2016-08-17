@@ -205,7 +205,7 @@ export class Logger extends Command {
   /**
    * return a polling Promise with live log messages
    */
-  public getlog(registerUUid: string, ob: Observer<any>): any {
+  public getlog(registerUUid: string, ob: any): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
     .then((messages: Array<LogMessage>) => {
       if (!this.screen && os.platform() !== 'win32' && this._state === 'cli') {
