@@ -10,6 +10,7 @@ import {Project} from './commands/Project';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
 import {Command} from './commands/Command';
+import {Logger} from './commands/Logger';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
@@ -24,6 +25,7 @@ const staticCommands: _.Dictionary<Command>  = {
   project: new Project(),
   env: new Environment(),
   connection: new Connection(),
+  logger: new Logger(),
   push: new Push()
 };
 
@@ -42,7 +44,6 @@ Observable.forkJoin(all).subscribe(
     process.exit(-1);
   },
   () => {
-    // console.log('test', argv);
     return new Tower(staticCommands, argv);
   }
 );

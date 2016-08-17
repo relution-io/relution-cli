@@ -71,7 +71,7 @@ export class ApiList {
       paginated: calls.length < 10 ? true : false,
       validate: (answer: string[]): boolean => {
         if (answer.length < 1) {
-          this.connection.log.warn(`You must choose at least one topping.`);
+          this.connection.debuglog.warn(`You must choose at least one topping.`);
           return false;
         }
         return true;
@@ -203,7 +203,7 @@ export class ApiList {
       })
       .do({
         complete: () => {
-          return this.connection.log.info(`${connectionModel.name} are updated!`);
+          return this.connection.debuglog.info(`${connectionModel.name} are updated!`);
         }
       });
   }

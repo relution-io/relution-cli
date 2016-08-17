@@ -33,7 +33,7 @@ export class Deploy {
   private userRc: UserRc;
   private i18n: typeof Translation;
   private relutionSDK: RelutionSdk;
-  private log = DebugLog;
+  private debuglog = DebugLog;
   private inquirer: any;
 
   private _promptkey: string = 'deployserver';
@@ -48,13 +48,14 @@ export class Deploy {
     this.userRc = owner.userRc;
     this.i18n = owner.i18n;
     this.relutionSDK = owner.relutionSDK;
-    this.log = owner.log;
+    this.debuglog = owner.debuglog;
     this.inquirer = owner.inquirer;
   }
 
   _copy(org: any) {
     return JSON.parse(JSON.stringify(org));
   }
+
   _getServers() {
     this._defaultServer = 'default';
     return this.userRc.streamRc().exhaustMap(() => {
@@ -166,16 +167,16 @@ export class Deploy {
       .then(deploymentCheck)
       .finally(() => loader.stop())
       .then((result) => {
-        this.log.info(this.i18n.DEPLOY_SUCCESS);
+        this.debuglog.info(this.i18n.DEPLOY_SUCCESS);
 
         // be nice and output URL of application
         const url = Relution.web.resolveApp(this._relutionHjson);
         if (url) {
-          this.log.info(this.i18n.DEPLOY_APPURL, url);
+          this.debuglog.info(this.i18n.DEPLOY_APPURL, url);
         }
         return result;
       }, (error: Relution.web.HttpError) => {
-        this.log.error(new Error(this.i18n.DEPLOY_FAILED));
+        this.debuglog.error(new Error(this.i18n.DEPLOY_FAILED));
         throw error;
       })
     );
@@ -213,7 +214,7 @@ export class Deploy {
           if (exists) {
             envName = exists.name;
           } else {
-            this.log.warn(this.i18n.DEPLOY_ENV_NOT_EXISTS(args[1]));
+            this.debuglog.warn(this.i18n.DEPLOY_ENV_NOT_EXISTS(args[1]));
           }
         }
       })
@@ -259,7 +260,7 @@ export class Deploy {
         if (!this.checkOrga(userResp)) {
           return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
-        this.log.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
+        this.debuglog.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
         // console.log(this.owner._parent.staticCommands.env.chooseEnv);
         if (this.owner._parent.staticCommands.env.envCollection.collection.length > 0 && !envName || !envName.length) {
           // must choose an environment
@@ -285,9 +286,9 @@ export class Deploy {
       .exhaustMap((log: Observable<{ file: string } | { directory: string } | { zip: string, readStream: any, message: string }>) => {
         return log.map((respLog: any) => {
           if (respLog.file || respLog.directory) {
-            this.log.info(chalk.magenta(respLog.file ? `add file ${respLog.file}` : `add directory ${respLog.directory}`));
+            this.debuglog.info(chalk.magenta(respLog.file ? `add file ${respLog.file}` : `add directory ${respLog.directory}`));
           } else if (respLog.processed) {
-            this.log.info(chalk.green(respLog.processed) + ' ' + figures.tick);
+            this.debuglog.info(chalk.green(respLog.processed) + ' ' + figures.tick);
           }
           return respLog;
         })
@@ -299,7 +300,7 @@ export class Deploy {
        * upload zip to server
        */
       .exhaustMap((respLog: { zip: string, readStream: any, message: string }) => {
-        this.log.info(chalk.green(respLog.message) + ' ' + figures.tick);
+        this.debuglog.info(chalk.green(respLog.message) + ' ' + figures.tick);
         return this.upload(respLog, envName);
       })
 
@@ -342,5 +343,8 @@ export class Deploy {
 
   public set relutionHjson(v: any) {
     this._relutionHjson = v;
+  }
+  public get defaultServer(): string {
+    return this._defaultServer;
   }
 }

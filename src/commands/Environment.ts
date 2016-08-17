@@ -175,7 +175,7 @@ export class Environment extends Command {
         validate: function (value: string) {
           let done: any = this.async();
           if (self.envCollection.isUnique(value)) {
-            self.log.error(new Error(self.i18n.ALREADY_EXIST(value)));
+            self.debuglog.error(new Error(self.i18n.ALREADY_EXIST(value)));
             done(false);
           }
 
@@ -183,7 +183,7 @@ export class Environment extends Command {
           if (pass) {
             done(null, true);
           } else {
-            self.log.error(new Error(self.i18n.NOT_ALLOWED(value, Validator.stringPattern)));
+            self.debuglog.error(new Error(self.i18n.NOT_ALLOWED(value, Validator.stringPattern)));
             done(false);
           }
         }
@@ -292,7 +292,7 @@ export class Environment extends Command {
       toBeGenerate = args[1];
       return this.envCollection.copyByName(tobeCopied, toBeGenerate)
         .do((data: any) => {
-          this.log.info(this.i18n.HJSON_WRITTEN(toBeGenerate));
+          this.debuglog.info(this.i18n.HJSON_WRITTEN(toBeGenerate));
         });
     }
   }
@@ -308,20 +308,20 @@ export class Environment extends Command {
           return this.createEnvironment(answers.name);
         })
         .exhaustMap((log: string) => {
-          this.log.info(`${log} \n`);
+          this.debuglog.info(`${log} \n`);
           return this.list();
         });
     }
     // >relution env add bubble
-    // this.log.debug('name', name);
+    // this.debuglog.debug('name', name);
     if (isArray(name)) {
-      // this.log.debug('isArray(name)', isArray(name));
+      // this.debuglog.debug('isArray(name)', isArray(name));
       let envName: string = name[0];
-      // this.log.debug('envName', envName);
+      // this.debuglog.debug('envName', envName);
       let pass: any = envName.match(Validator.stringPattern);
-      // this.log.debug('pass', pass);
+      // this.debuglog.debug('pass', pass);
       let unique: EnvModel = this.envCollection.isUnique(envName);
-      // this.log.debug('unique', unique);
+      // this.debuglog.debug('unique', unique);
 
       if (unique) {
 
