@@ -289,7 +289,7 @@ export class ServerCrud {
           })
           .map((resp: any) => {
             let userResp = resp.user;
-            return this.server.log.info(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`);
+            return this.server.debuglog.info(`logged in as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name}`);
           });
       });
 

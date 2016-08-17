@@ -104,13 +104,13 @@ export class AddConnection {
           let isUnique = true;
 
           if (!notEmpty) {
-            this.connection.log.error(new Error(`Name can not be empty`));
+            this.connection.debuglog.error(new Error(`Name can not be empty`));
             return false;
           }
 
           connections.forEach((item) => {
             if (item.value.connection && item.value.connection.name === value) {
-              this.connection.log.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
+              this.connection.debuglog.error(new Error(`"${chalk.magenta(value)}" already exists! Please choose another one or remove the "${chalk.magenta(value + '.hjson')}" before.`));
               isUnique = false;
             }
           });
@@ -380,7 +380,7 @@ export class AddConnection {
         if (written && written.connectionOverwrite === false) {
           fileWritten = written.connectionOverwrite;
           return Observable.create((observer: any) => {
-            this.connection.log.warn(`Connection add ${this.connectionName} canceled.`);
+            this.connection.debuglog.warn(`Connection add ${this.connectionName} canceled.`);
             return observer.complete();
           });
         }
@@ -412,7 +412,7 @@ export class AddConnection {
         complete: (file: any) => {
           const exec = require('child_process').exec;
           exec('tsc -p .');
-          this.connection.log.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
+          this.connection.debuglog.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
         }
       });
   }

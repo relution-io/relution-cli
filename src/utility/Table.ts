@@ -19,7 +19,23 @@ export class Table {
     'right-mid': '╢',
     'middle': '│'
   };
-
+  public tableCharsNoBorder: Object = {
+    'top': '',
+    'top-mid': '',
+    'top-left': '',
+    'top-right': '',
+    'bottom': '',
+    'bottom-mid': '',
+    'bottom-left': '',
+    'bottom-right': '',
+    'left': '',
+    'left-mid': '',
+    'mid': '',
+    'mid-mid': '',
+    'right': '',
+    'right-mid': '',
+    'middle': ''
+  };
   public set table(v: any) {
     this._table = v;
   }
@@ -34,6 +50,20 @@ export class Table {
     console.log(this.table.toString());
   }
 
+  row(content: any, header?: Array<string>) {
+    let grid = new clitable({
+      options: { hAlign: 'center', vAlign: 'center' },
+      chars: this.tableCharsNoBorder,
+      colWidths: [15, 200, 25, 25]
+    });
+    if (header) {
+      grid.head = header;
+    }
+    content.forEach((item: Object) => {
+      grid.push(item);
+    });
+    return grid.toString();
+  }
   sidebar(content: any, header: Array<string>) {
     let grid = new clitable({
       head: header,

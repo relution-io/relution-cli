@@ -66,6 +66,7 @@ export class Tower {
   public userRc: UserRc = new UserRc();
   // where is this command available
   public name: string = 'Relution CLI';
+  public commandInternName = 'relution';
   // all commands are available
   public staticCommands: {
     [name: string]: Command;
@@ -80,11 +81,11 @@ export class Tower {
   // create a Table in the Terminal
   public table: Table;
   // Back to home on this command
-  public reset: Array<string> = [this.name];
+  public reset: Array<string> = [this.commandInternName];
   // Tower commands
   public commands: Object = {
     help: {
-      description: Translation.HELP_COMMAND(this.name)
+      description: Translation.HELP_COMMAND(this.commandInternName)
     },
     quit: {
       description: 'Exit the Relution CLI'
@@ -148,16 +149,20 @@ export class Tower {
    */
   init() {
     //  debugger;
-    //  console.log('Relution', this.args);
-    //  console.log('this.staticCommandRootKeys', this.staticCommandRootKeys);
-    if (this.args[0] === this.name || this.staticCommandRootKeys.indexOf(this.args[0]) !== -1) {
-      //  console.log('this.args[0] === this.name', this.args[0] === this.name);
+    // console.log('Relution', this.args);
+    // console.log('this.staticCommandRootKeys', this.staticCommandRootKeys);
+    //  if (this.args[0] === this.commandInternName) {
+    //    this.args.shift();
+    //  }
+    //  console.log(this.args);
+    if (this.args[0] === this.commandInternName || this.staticCommandRootKeys.indexOf(this.args[0]) !== -1) {
+      // console.log('this.args[0] === this.commandInternName', this.args[0] === this.commandInternName);
       // only relution
       if (this.args.length === 1) {
         //  console.log('this.args.length === 1', this.args.length === 1);
         return this.showCommands().subscribe((answers: any) => {
-          if (answers[this.name]) {
-            this.args = answers[this.name];
+          if (answers[this.commandInternName]) {
+            this.args = answers[this.commandInternName];
           } else {
             this.args = answers;
           }
@@ -184,17 +189,18 @@ export class Tower {
         //  console.log('this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1', this.staticCommandRootKeys.indexOf(this.args[0]) !== -1 || this.staticCommandRootKeys.indexOf(this.args[1]) !== -1);
 
         let subArgs = this._copy(this.args);
-        if (subArgs[0] === this.name) {
-          subArgs.splice(0, 1);
+        if (subArgs[0] === this.commandInternName) {
+          subArgs.shift();
         }
         // only ['server']
+        // debugger;
         if (subArgs[0] === this.staticCommands[subArgs[0]].name && subArgs.length === 1) {
           //  console.log(`trigger static ${subArgs.toString()} showCommands`);
           return this.staticCommands[subArgs[0]].init(subArgs);
           // only ['server', 'add', 'name']
         } else if (this.staticCommands[subArgs[0]][subArgs[1]]) {
           let params = this._copy(subArgs);
-          params.splice(0, 1);
+          params.shift();
           if (params.length) {
             return this.staticCommands[subArgs[0]].init(params);
           }
@@ -225,7 +231,7 @@ export class Tower {
       let content: any = [this._rowDivider];
       // to say hello
       this.flatCommands().forEach((commandName: string) => {
-        if (commandName !== this.name && this.reserved.indexOf(commandName) === -1) {
+        if (commandName !== this.commandInternName && this.reserved.indexOf(commandName) === -1) {
           this.staticCommands[commandName].help(true).subscribe(
             (commands: Array<string>) => {
               commands.forEach((command: string) => {
@@ -280,7 +286,7 @@ export class Tower {
     this.flatCommands().forEach((command) => {
       temp.push({
         name: command,
-        value: [this.name, command]
+        value: [this.commandInternName, command]
       });
     });
     //  console.log(temp);
@@ -299,7 +305,7 @@ export class Tower {
   showCommands(message = 'Please Choose Your Option: ', type = 'list'): any {
     let questions = [
       {
-        name: this.name,
+        name: this.commandInternName,
         message: message,
         type: type,
         choices: this.setupCommandsForList(),

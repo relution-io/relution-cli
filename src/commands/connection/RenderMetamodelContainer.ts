@@ -111,7 +111,7 @@ export class RenderMetamodelContainer {
         complete: () => {
           const exec = require('child_process').exec;
           exec('tsc -p .');
-          return this.connection.log.info(`${connectionModel.name} are updated!`);
+          return this.connection.debuglog.info(`${connectionModel.name} are updated!`);
         }
       });
   }

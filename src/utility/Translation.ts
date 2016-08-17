@@ -75,6 +75,11 @@ export class Translation {
   static CONNECTION_ADD_SERVER_BEFORE = `Please add first a Server to create a Connection.`;
   static CONNECTION_LIST_TABLEHEADERS = ['Connection Name', 'Description'];
   static CONNECTION_RENDER_METAMODEL_LABEL = 'add Metamodelcontainer';
+  /**
+   * Logger Command
+   */
+  static LOGGER_LOG_WHY = `Logging is disabled`;
+  static LOGGER_LOG_DESCRIPTION = `Logs your Server Livelogger.`;
   /*
    * Push
    */

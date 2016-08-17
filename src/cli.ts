@@ -11,6 +11,7 @@ import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
 import {Debugger} from './commands/Debugger';
 import {Command} from './commands/Command';
+import {Logger} from './commands/Logger';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
@@ -26,7 +27,8 @@ const staticCommands: _.Dictionary<Command>  = {
   env: new Environment(),
   connection: new Connection(),
   push: new Push(),
-  debug: new Debugger()
+  debug: new Debugger(),
+  logger: new Logger()
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised
@@ -44,7 +46,6 @@ Observable.forkJoin(all).subscribe(
     process.exit(-1);
   },
   () => {
-    // console.log('test', argv);
     return new Tower(staticCommands, argv);
   }
 );

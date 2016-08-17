@@ -18,7 +18,7 @@ interface CommandInterface {
   config: Object;
   commands?: Object;
   i18n: Translation;
-  log: DebugLog;
+  debuglog: DebugLog;
   table: Table;
   userRc: UserRc;
   inquirer: any;
@@ -77,9 +77,10 @@ export class Command implements CommandInterface {
   public userRc: UserRc = new UserRc();
   public config: any;
   public commands: Object;
+  public color = chalk;
   public inquirer = inquirer;
   public i18n = Translation;
-  public log = DebugLog;
+  public debuglog = DebugLog;
   public reserved: Array<string> = ['help', this.i18n.QUIT];
   public table: Table = new Table();
   public _parent: Tower;
@@ -141,7 +142,7 @@ export class Command implements CommandInterface {
    * ```
    */
   help(asArray = false) {
-    // this.log.info('help', asArray);
+    // this.debuglog.info('help', asArray);
     return Observable.create((observer: any) => {
       let content: any = [['', '', '', '']];
       // [this.name, '', '', '']
@@ -159,7 +160,7 @@ export class Command implements CommandInterface {
               let params = '';
               vars.forEach((param, index) => {
                 params += chalk.yellow(`<$${param}>`);
-                // this.log.info(index, vars.length, index !== (vars.length -1));
+                // this.debuglog.info(index, vars.length, index !== (vars.length -1));
                 if (index !== (vars.length - 1)) {
                   params += ' ';
                 }
@@ -198,7 +199,7 @@ export class Command implements CommandInterface {
   }
 
   init(args: Array<string>): any {
-    // this.log.info(`Command.ts ${this.name}`, args);
+    // this.debuglog.info(`Command.ts ${this.name}`, args);
     // console.log(JSON.stringify(args, null, 2));
     let myObservable: Observable<any>;
 
@@ -209,7 +210,7 @@ export class Command implements CommandInterface {
         (answers: Array<string>) => {
           return this.init(answers[this.name]);
         },
-        (e: any) => this.log.error(e)
+        (e: any) => this.debuglog.error(e)
       );
     }
 
@@ -220,23 +221,23 @@ export class Command implements CommandInterface {
 
     // we have this method maybe help we get ['server', 'help', 'param']
     // build this.help('param');
-    // this.log.info('this[args[0]]', this[args[0]]);
+    // this.debuglog.info('this[args[0]]', this[args[0]]);
     if (this[args[0]]) {
-      // this.log.info('args.length > 1', args.length > 1);
+      // this.debuglog.info('args.length > 1', args.length > 1);
       if (args.length > 1) {
         let params = this._copy(args);
-        params.splice(0, 1); // remove 'update' or 'create'
+        params.shift(); // remove 'update' or 'create'
         myObservable = this[args[0]](params);
       } else {
         myObservable = this[args[0]]();
       }
     }
 
-    // this.log.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
+    // this.debuglog.info('args[0] === this.name && this[args[1]]', args[0] === this.name && this[args[1]] !== undefined);
     // server add
     if (args[0] === this.name && this[args[1]]) {
       if (args.length > 2) {
-        this.log.info('args.length > 2', args.length > 2);
+        this.debuglog.info('args.length > 2', args.length > 2);
         let subArgs: Array<string> = this._copy(args);
         subArgs.splice(0, 2);
         myObservable = this[args[1]](subArgs);
@@ -248,11 +249,11 @@ export class Command implements CommandInterface {
     return myObservable.subscribe(
       (log: any) => {
         if (log && log.length) {
-          this.log.log('cyan', log);
+          this.debuglog.log('cyan', log);
         }
       },
       (e: any) => {
-        this.log.error(e);
+        this.debuglog.error(e);
         this.home();
       },
       () => {
@@ -275,7 +276,7 @@ export class Command implements CommandInterface {
       let name = this.commands[command].label || this.commands[command].name || command;
       let message = this.commandIsDisabled(this.commands[command], command);
       if (!_.isNil(message)) {
-        // this.log.info(`"${chalk.magenta(name)}" is disabled because: ${message}`);
+        // this.debuglog.info(`"${chalk.magenta(name)}" is disabled because: ${message}`);
       }
       temp.push({
         disabled: message,
@@ -287,7 +288,7 @@ export class Command implements CommandInterface {
   }
 
   showCommands(message = `Please Choose Your ${this.name} Command: `, type = 'list'): any {
-    // this.log.info(new Date().getTime());
+    // this.debuglog.info(new Date().getTime());
     if (!this.commands) {
       return Observable.throw(new Error(`Command ${this.name} has no commands!`));
     }
