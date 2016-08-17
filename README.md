@@ -19,6 +19,12 @@ $: npm i
 $: npm run watch
 ```
 
+#### Bump Version
+> Please Notice all files are uncommitted will be added also add a tag will be added to your repo and push it to the repo. If you dont want this Please commit your changes before with your own comment.
+```bash
+npm run bump major|minor|patch|pre|premajor|preminor|prepatch|prerelease //available options
+```
+
 ##### Test
 
 ```bash
