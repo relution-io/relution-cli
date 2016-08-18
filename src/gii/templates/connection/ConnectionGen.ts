@@ -1,8 +1,10 @@
+import {Validator} from '../../../utility/Validator';
 import {TemplateInterface} from './../../TemplateInterface';
 import {CallModel} from './../../../models/CallModel';
 import * as Relution from 'relution-sdk';
 const html = require('common-tags').html;
-
+const camelCase = require('camel-case');
+const pascalCase = require('pascal-case');
 /**
  * ConnectionGen
  */
@@ -12,6 +14,7 @@ export class ConnectionGen implements TemplateInterface {
   public metaData: Array<CallModel> = [];
   public publishName: string;
   public interfaces: any = [];
+  public interfaceOn: boolean = false;
 
   private _pad(num: number): string | number {
     if (num < 10) {
@@ -20,27 +23,24 @@ export class ConnectionGen implements TemplateInterface {
     return num;
   }
 
-  private capitalizeFirstLetter(name: string) {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  }
-
-  private _getTypes(_testString: string) {
-    const re = /^[a-z0-9 ]$/i;
-    const isValid = re.test(_testString);
-    return isValid ? _testString : 'any';
+  private static _isValidName(_testString: string) {
+    let pass: any = _testString.match(Validator.namePattern);
+    return pass;
   }
 
   private _getMethod (model: CallModel) {
+    const input = this.interfaceOn ? pascalCase(model.inputModel) : 'any';
+    const output = this.interfaceOn ? pascalCase(model.outputModel) : 'any';
     return (html`
     /**
-      * ${this.name}['${model.name}']
+      * ${this.name}['${camelCase(model.name)}']
       *
       * ${model.action}
       *
-      * @params input 'Object' ${model.inputModel}
-      * @return Promise ${model.outputModel}
+      * @params input 'Object' ${input}
+      * @return Promise ${output}
       */
-      public ${model.name}(input: ${this._getTypes(model.inputModel)}): Q.Promise<${this._getTypes(model.outputModel)}> {
+      public ${camelCase(model.name)}(input: ${input}): Q.Promise<${output}> {
         return connector.runCall(
           this.name,
           '${model.name}',
@@ -50,17 +50,33 @@ export class ConnectionGen implements TemplateInterface {
     );
   }
 
-  private static mapField(fieldDefinition: Relution.model.TypeScriptFieldDefinition) {
-    return `${fieldDefinition.name}${fieldDefinition.mandatory ? ': ' : '?: '}${fieldDefinition.dataTypeTS};`;
+  private static _mapField(fieldDefinition: Relution.model.TypeScriptFieldDefinition) {
+    const relutionTypes = Object.keys(Relution.model.TypeScriptFieldDefinition.typeMapping).map((key) => {
+      return Relution.model.TypeScriptFieldDefinition.typeMapping[key];
+    });
+    const pass = ConnectionGen._isValidName(fieldDefinition.name);
+    let value = fieldDefinition.dataTypeTS;
+    if (relutionTypes.indexOf(fieldDefinition.dataTypeTS) === -1) {
+      if (value.indexOf('[]') !== -1) {
+        value = `${pascalCase(fieldDefinition.dataTypeTS)}[]`;
+      } else {
+        value = pascalCase(fieldDefinition.dataTypeTS);
+      }
+    }
+
+    if (pass) {
+      return `${fieldDefinition.name}${fieldDefinition.mandatory ? ': ' : '?: '}${value};`;
+    }
+    return `'${fieldDefinition.name}'${fieldDefinition.mandatory ? ': ' : '?: '}${value};`;
   }
 
   public toInterface(model: Relution.model.TypeScriptMetaModel): string {
     return (html`
       /**
-      * @interface ${model.name}
+      * @interface ${pascalCase(model.name)}
       */
-      export interface ${model.name} {
-        ${model.fieldDefinitions.map(ConnectionGen.mapField)}
+      export interface ${pascalCase(model.name)} {
+        ${model.fieldDefinitions.map(ConnectionGen._mapField)}
       }` + '\n');
   }
 
@@ -78,7 +94,7 @@ export class ConnectionGen implements TemplateInterface {
     // Relution APIs
     const connector = require('relution/connector.js');
     ${this.interfaces ? this.interfaces.map(this.toInterface.bind(this)) : ''}
-    export class ${this.capitalizeFirstLetter(this.name)}BaseConnection {
+    export class ${pascalCase(this.name)}BaseConnection {
       constructor(public name = '${this.name}') {}
 
       configureSession(properties: any) {

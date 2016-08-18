@@ -1,5 +1,6 @@
 import {TemplateInterface} from './../../TemplateInterface';
 const html = require('common-tags').html;
+const pascalCase = require('pascal-case');
 
 /**
  * Connection
@@ -8,10 +9,6 @@ export class Connection implements TemplateInterface {
   public name: string = '';
   public path: string = 'connections';
   public publishName: string;
-
-  private capitalizeFirstLetter(name: string) {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  }
 
   private _pad(num: number): string | number {
     if (num < 10) {
@@ -33,11 +30,11 @@ export class Connection implements TemplateInterface {
      * ${date.getFullYear()}
      * All rights reserved.
      */
-    import {${this.capitalizeFirstLetter(this.name)}BaseConnection} from './${this.name}.gen';
+    import {${pascalCase(this.name)}BaseConnection} from './${this.name}.gen';
     /**
-     * ${this.capitalizeFirstLetter(this.name)}Connection
+     * ${pascalCase(this.name)}Connection
      */
-    export class ${this.capitalizeFirstLetter(this.name)}Connection extends ${this.capitalizeFirstLetter(this.name)}BaseConnection {
+    export class ${pascalCase(this.name)}Connection extends ${pascalCase(this.name)}BaseConnection {
       // user code goes here
     }
     ` + '\n');

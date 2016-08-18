@@ -104,6 +104,7 @@ export class RenderMetamodelContainer {
       .exhaustMap((modelContainer: Relution.model.TypeScriptModelContainer) => {
         // console.log('modelContainer', JSON.stringify(modelContainer, null, 2));
         template.instance.interfaces = [];
+        template.instance.interfaceOn = true;
         modelContainer.models.forEach((metaModel: Relution.model.TypeScriptMetaModel) => {
           template.instance.interfaces.push(metaModel);
         });
