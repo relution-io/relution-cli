@@ -1,3 +1,4 @@
+import {Project} from './Project';
 import {Observable} from '@reactivex/rxjs';
 import * as _ from 'lodash';
 import * as chalk from 'chalk';
@@ -70,9 +71,9 @@ export class Tower {
   // all commands are available
   public staticCommands: {
     [name: string]: Command;
-
-    server: Server,
-    env: Environment
+    server: Server;
+    project: Project;
+    env: Environment;
   };
   // helper to get keys from subcommand
   public staticCommandRootKeys: Array<string>;

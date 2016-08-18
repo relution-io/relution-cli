@@ -1,3 +1,4 @@
+import {Deploy} from '../project/Deploy';
 import {Connection} from './../Connection';
 import {RxFs} from './../../utility/RxFs';
 import {Observable} from '@reactivex/rxjs';
@@ -60,7 +61,6 @@ export class AddConnection {
    * template renderer
    */
   private _gii = new Gii();
-
   constructor(command: Connection) {
     this.connection = command;
   }
@@ -416,10 +416,15 @@ export class AddConnection {
       .exhaustMap(() => {
         return this.connection.streamConnectionFromFileSystem();
       })
+      .map(() => {
+        const exec = require('child_process').exec;
+        exec('tsc -p .');
+      })
+      .exhaustMap(() => {
+        return this.connection._parent.staticCommands.project.deploy([choosedServer.id]);
+      })
       .do({
         complete: (file: any) => {
-          const exec = require('child_process').exec;
-          exec('tsc -p .');
           this.connection.debuglog.info(`Connection ${this.connectionModel.name} are created. Please Deploy your Connection before you can update it.`);
         }
       });

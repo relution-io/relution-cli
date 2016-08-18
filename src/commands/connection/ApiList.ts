@@ -170,14 +170,17 @@ export class ApiList {
          * Prompt a Filter
          */
         // console.log(this._callsCollection);
-        return this._pleaseFilterCalls(this._callsCollection)
-          .exhaustMap((answers: { callsFilter: string }) => {
-            if (answers.callsFilter && answers.callsFilter.length < 0) {
-              calls = this._callsCollection.filter(this._filterCallsByName, answers.callsFilter);
-              return this._chooseCalls(calls);
-            }
-            return this._chooseCalls(this._callsCollection);
-          });
+        if (this._callsCollection.length >= 5) {
+          return this._pleaseFilterCalls(this._callsCollection)
+            .exhaustMap((answers: { callsFilter: string }) => {
+              if (answers.callsFilter && answers.callsFilter.length > 0) {
+                calls = this._callsCollection.filter(this._filterCallsByName, answers.callsFilter);
+                return this._chooseCalls(calls);
+              }
+              return this._chooseCalls(this._callsCollection);
+            });
+        }
+        return this._chooseCalls(this._callsCollection);
       })
       .exhaustMap((answers: { choosedCalls: Array<CallModel> }) => {
         choosedCalls = answers.choosedCalls;
@@ -204,6 +207,13 @@ export class ApiList {
           .exhaustMap(() => {
             return TsBeautifier.format([path.join(this.connection.rootFolder, `${template.instance.name}.gen.ts`)]);
           });
+      })
+      .map(() => {
+        const exec = require('child_process').exec;
+        exec('tsc -p .');
+      })
+      .exhaustMap(() => {
+        return this.connection._parent.staticCommands.project.deploy([choosedServer.id]);
       })
       .do({
         complete: () => {

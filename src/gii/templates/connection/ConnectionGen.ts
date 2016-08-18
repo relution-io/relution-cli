@@ -24,6 +24,12 @@ export class ConnectionGen implements TemplateInterface {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
+  private _getTypes(_testString: string) {
+    const re = /^[a-z0-9 ]$/i;
+    const isValid = re.test(_testString);
+    return isValid ? _testString : 'any';
+  }
+
   private _getMethod (model: CallModel) {
     return (html`
     /**
@@ -34,7 +40,7 @@ export class ConnectionGen implements TemplateInterface {
       * @params input 'Object' ${model.inputModel}
       * @return Promise ${model.outputModel}
       */
-      public ${model.name}(input: ${model.inputModel || 'any'}): Q.Promise<${model.outputModel || `any`}> {
+      public ${model.name}(input: ${this._getTypes(model.inputModel)}): Q.Promise<${this._getTypes(model.outputModel)}> {
         return connector.runCall(
           this.name,
           '${model.name}',

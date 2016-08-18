@@ -111,12 +111,17 @@ export class RenderMetamodelContainer {
         return this.connection.fileApi.writeFile(template.instance.template, `${template.instance.name}.gen.ts`, this.connection.rootFolder)
           .exhaustMap(() => {
             return TsBeautifier.format([path.join(this.connection.rootFolder, `${template.instance.name}.gen.ts`)]);
-          })
+          });
+      })
+      .map(() => {
+        const exec = require('child_process').exec;
+        exec(`tsc -p ${this.connection.rootFolder}`);
+      })
+      .exhaustMap(() => {
+        return this.connection._parent.staticCommands.project.deploy([choosedServer.id]);
       })
       .do({
         complete: () => {
-          const exec = require('child_process').exec;
-          exec('tsc -p .');
           return this.connection.debuglog.info(`${connectionModel.name} are updated!`);
         }
       });
