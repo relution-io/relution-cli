@@ -210,7 +210,7 @@ export class ApiList {
       })
       .map(() => {
         const exec = require('child_process').exec;
-        exec('tsc -p .');
+        exec(`tsc -p ${process.cwd()}`);
       })
       .exhaustMap(() => {
         return this.connection._parent.staticCommands.project.deploy([choosedServer.id]);
