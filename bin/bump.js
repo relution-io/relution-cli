@@ -1,4 +1,5 @@
 #!/usr/bin/env node --harmony
+'use strict';
 const fs = require('fs');
 const path = require('path');
 const Observable = require('@reactivex/rxjs').Observable;
