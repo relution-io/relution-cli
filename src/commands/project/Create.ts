@@ -9,6 +9,8 @@ import {TemplateModel} from './../../gii/TemplateModel';
 import {FileApi} from './../../utility/FileApi';
 import {DebugLog} from './../../utility/DebugLog';
 
+const camelCase = require('camel-case');
+
 export class Create {
   private _name: string;
   private _gii: Gii = new Gii();
@@ -69,7 +71,7 @@ export class Create {
       {
         type: 'input',
         name: 'name',
-        default: path.basename(process.cwd()),
+        default: camelCase(path.basename(process.cwd())),
         message: Translation.ENTER_SOMETHING.concat('Project name'),
         validate: (value: string): boolean => {
           let pass: any = value.match(Validator.stringPattern);
@@ -121,7 +123,7 @@ export class Create {
           return;
         }
         DebugLog.debug(stdout);
-        exec(`typings install dt~es6-collections dt~es6-promise dt~express dt~serve-static dt~express-serve-static-core dt~multer dt~body-parser --save --global`, (e: Error, dout: any, derr: any) => {
+        exec(`typings install dt~es6-collections dt~node dt~q dt~es6-promise dt~express dt~serve-static dt~express-serve-static-core dt~multer dt~body-parser --save --global`, (e: Error, dout: any, derr: any) => {
           if (e) {
             observer.error(`exec error: ${e}`);
             return;

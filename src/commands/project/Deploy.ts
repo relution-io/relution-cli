@@ -86,7 +86,7 @@ export class Deploy {
    */
   checkOrga(resp: any) {
     let orga: any = Relution.security.getCurrentOrganization('defaultRoles');
-    return orga && orga.defaultRoles.length > 0;
+    return orga && orga.defaultRoles && orga.defaultRoles.length > 0;
   }
 
   /**
@@ -229,7 +229,7 @@ export class Deploy {
        */
       .exhaustMap((relutionHjson: { data: any, path: string }) => {
         this._relutionHjson = relutionHjson.data;
-        if (!serverArgName || !serverArgName.length) {
+        if (!serverArgName) {
           return this.getServerPrompt();
         }
         return this._getServers().map(() => {

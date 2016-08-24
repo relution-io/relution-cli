@@ -15,24 +15,30 @@ export class ConnectionGen implements TemplateInterface {
   public publishName: string;
   public interfaces: any = [];
   public interfaceOn: boolean = false;
-
+  /**
+   * month helper
+   */
   private _pad(num: number): string | number {
     if (num < 10) {
       return '0' + num;
     }
     return num;
   }
-
+  /**
+   * check if the name
+   */
   private static _isValidName(_testString: string) {
     let pass: any = _testString.match(Validator.namePattern);
     return pass;
   }
-
+  /**
+   * return a function string
+   */
   private _getMethod (model: CallModel) {
     const input = this.interfaceOn ? pascalCase(model.inputModel) : 'any';
     const output = this.interfaceOn ? pascalCase(model.outputModel) : 'any';
-    return (html`
-    /**
+    return (`
+      /**
       * ${this.name}['${camelCase(model.name)}']
       *
       * ${model.action}
@@ -49,7 +55,9 @@ export class ConnectionGen implements TemplateInterface {
       }`
     );
   }
-
+  /**
+   * map a field into a Interface
+   */
   private static _mapField(fieldDefinition: Relution.model.TypeScriptFieldDefinition) {
     const relutionTypes = Object.keys(Relution.model.TypeScriptFieldDefinition.typeMapping).map((key) => {
       return Relution.model.TypeScriptFieldDefinition.typeMapping[key];
@@ -69,9 +77,11 @@ export class ConnectionGen implements TemplateInterface {
     }
     return `'${fieldDefinition.name}'${fieldDefinition.mandatory ? ': ' : '?: '}${value};`;
   }
-
+  /**
+   * create a Interface Template
+   */
   public toInterface(model: Relution.model.TypeScriptMetaModel): string {
-    return (html`
+    return (`
       /**
       * @interface ${pascalCase(model.name)}
       */

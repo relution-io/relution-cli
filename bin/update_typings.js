@@ -1,4 +1,5 @@
 #!/usr/bin/env node --harmony
+'use strict';
 const path = require('path');
 const Observable = require('@reactivex/rxjs').Observable;
 const typingsJson = require(path.join(__dirname, '..', 'typings.json'));
