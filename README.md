@@ -11,13 +11,19 @@
 [travis-url]: https://travis-ci.org/relution-io/relution-cli
 [daviddm-url]: https://david-dm.org/relution-io/relution-cli
 
-### Dev Guide
----
 
-##### Installation
+#### Installation
 ```bash
 $: npm i -g relution-cli
 ```
+
+#### Usage
+```bash
+$: relution
+```
+
+### Dev Guide
+---
 
 #### Bump Version
 <p style="color: red">
@@ -28,12 +34,12 @@ $: npm i -g relution-cli
 npm run bump major|minor|patch|pre|premajor|preminor|prepatch|prerelease //available options
 ```
 
-##### Test
+#### Test
 ```bash
 $: npm test
 ```
 
-##### Api reference
+#### Api reference
 ```bash
 $: npm run api
 $: npm run serve-api
