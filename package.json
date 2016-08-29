@@ -1,6 +1,6 @@
 {
   "name": "relution-cli",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -34,12 +34,12 @@
     "husky": "^0.11.4",
     "istanbul": "^0.4.3",
     "mocha": "^2.5.1",
+    "semver": "^5.1.0",
+    "simple-git": "^1.37.0",
     "sinon": "^1.17.4",
     "tslint": "^3.8.1",
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
-    "typescript": "^1.8.10",
-    "simple-git": "^1.37.0",
-    "semver": "^5.1.0"
+    "typescript": "^1.8.10"
   },
   "engines": {
     "node": ">=4.4.0"
@@ -62,18 +62,20 @@
     "husky": "^0.11.6",
     "inquirer": "github:drmabuse23/Inquirer.js#add78131e3461acbc861b4cdba8aff67a54ef4f4",
     "install": "^0.6.1",
+    "istanbul": "^0.4.5",
     "lodash": "^4.14.2",
     "mkdirp": "^0.5.1",
     "node-uuid": "^1.4.7",
     "nopt": "^3.0.6",
-    "npm": "^3.10.6",
+    "npm": "^3.10.7",
     "pascal-case": "^2.0.0",
     "progress": "^1.1.8",
     "relution-sdk": "git+https://git@github.com/relution-io/relution-sdk.git",
     "rimraf": "^2.5.4",
+    "simple-git": "^1.48.0",
     "sinon": "^1.17.5",
     "to-iso-string": "0.0.2",
-    "tslint": "^3.14.0",
+    "tslint": "^3.15.1",
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
     "typescript-formatter": "^2.3.0",
     "username": "^2.1.0"
