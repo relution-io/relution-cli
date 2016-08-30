@@ -1,3 +1,4 @@
+import {ArrayLookup, FieldDefinition} from 'relution-sdk/lib/model/ModelContainer';
 import {Validator} from '../../../utility/Validator';
 import {TemplateInterface} from './../../TemplateInterface';
 import {CallModel} from './../../../models/CallModel';
@@ -78,6 +79,17 @@ export class ConnectionGen implements TemplateInterface {
     return `'${fieldDefinition.name}'${fieldDefinition.mandatory ? ': ' : '?: '}${value};`;
   }
   /**
+   * return a String of Attributes with TypeScriptFieldDefinition.dataTypeTS
+   */
+  private static getInterfaceAttributesAsString(fieldDefinitions: ArrayLookup<FieldDefinition>): string {
+    const attrs = fieldDefinitions.map(ConnectionGen._mapField);
+    let template = '';
+    attrs.forEach((attr, index) => {
+      template += attr + (index === (attrs.length - 1)) ? '' : '\n';
+    });
+    return template;
+  }
+  /**
    * create a Interface Template
    */
   public toInterface(model: Relution.model.TypeScriptMetaModel): string {
@@ -86,7 +98,7 @@ export class ConnectionGen implements TemplateInterface {
       * @interface ${pascalCase(model.name)}
       */
       export interface ${pascalCase(model.name)} {
-        ${model.fieldDefinitions.map(ConnectionGen._mapField)}
+        ${ConnectionGen.getInterfaceAttributesAsString(model.fieldDefinitions)}
       }` + '\n');
   }
 

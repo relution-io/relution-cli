@@ -30,15 +30,15 @@ export class RelutionHjson implements TemplateInterface {
         description: ${this.description}
         //on which baseAlias the app is available
         baseAlias: ${this.baseAlias}
-        //uuid identifier
+        //uuid identifier dont touch it!!!
         uuid: ${this.uuid}
-        //static files
+        //static files root folder to your client application
         client: ${this.client}
         //node start script
         server: ${this.server}
         //shows directoryIndex on the Server good for debugging
         //directoryIndex: ${this.directoryIndex}
-        //@todo have to be defined
+        //if this attribute is set to true no anonymous user can see the app
         private: ${this.private}
       }
     `);
