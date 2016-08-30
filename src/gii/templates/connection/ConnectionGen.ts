@@ -82,10 +82,11 @@ export class ConnectionGen implements TemplateInterface {
    * return a String of Attributes with TypeScriptFieldDefinition.dataTypeTS
    */
   private static getInterfaceAttributesAsString(fieldDefinitions: ArrayLookup<FieldDefinition>): string {
-    const attrs = fieldDefinitions.map(ConnectionGen._mapField);
     let template = '';
-    attrs.forEach((attr, index) => {
-      template += attr + (index === (attrs.length - 1)) ? '' : '\n';
+    fieldDefinitions.forEach((fieldDefinition: Relution.model.TypeScriptFieldDefinition, index: number) => {
+      const end = (index === (fieldDefinitions.length - 1)) ? '' : '\n';
+      const attr = ConnectionGen._mapField(fieldDefinition);
+      template +=  attr + end;
     });
     return template;
   }
