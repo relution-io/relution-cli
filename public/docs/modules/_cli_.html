@@ -75,6 +75,7 @@
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_cli_.html#all" class="tsd-kind-icon">all</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_cli_.html#argv" class="tsd-kind-icon">argv</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
@@ -91,10 +92,20 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="all" class="tsd-anchor"></a>
 					<h3>all</h3>
-					<div class="tsd-signature tsd-kind-icon">all<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<div class="tsd-signature tsd-kind-icon">all<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L24">cli.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L35">cli.ts:35</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="argv" class="tsd-anchor"></a>
+					<h3>argv</h3>
+					<div class="tsd-signature tsd-kind-icon">argv<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L17">cli.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -107,7 +118,7 @@
 					<div class="tsd-signature tsd-kind-icon">static<wbr>Commands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L14">cli.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L24">cli.ts:24</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -116,17 +127,17 @@
 						<div class="tsd-signature tsd-kind-icon">connection<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_connection_.connection.html" class="tsd-signature-type">Connection</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L19">cli.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L28">cli.ts:28</a></li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="staticcommands.deploy" class="tsd-anchor"></a>
-						<h3>deploy</h3>
-						<div class="tsd-signature tsd-kind-icon">deploy<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_deploy_.deploy.html" class="tsd-signature-type">Deploy</a></div>
+						<a name="staticcommands.debug" class="tsd-anchor"></a>
+						<h3>debug</h3>
+						<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_debugger_.debugger.html" class="tsd-signature-type">Debugger</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L18">cli.ts:18</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L30">cli.ts:30</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -136,17 +147,27 @@
 						<div class="tsd-signature tsd-kind-icon">env<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_environment_.environment.html" class="tsd-signature-type">Environment</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L16">cli.ts:16</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L27">cli.ts:27</a></li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="staticcommands.new" class="tsd-anchor"></a>
-						<h3>new</h3>
-						<div class="tsd-signature tsd-kind-icon">new<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_new_.new.html" class="tsd-signature-type">New</a></div>
+						<a name="staticcommands.logger" class="tsd-anchor"></a>
+						<h3>logger</h3>
+						<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_logger_.logger.html" class="tsd-signature-type">Logger</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L17">cli.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L31">cli.ts:31</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="staticcommands.project" class="tsd-anchor"></a>
+						<h3>project</h3>
+						<div class="tsd-signature tsd-kind-icon">project<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_project_.project.html" class="tsd-signature-type">Project</a></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L26">cli.ts:26</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -156,7 +177,7 @@
 						<div class="tsd-signature tsd-kind-icon">push<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_push_.push.html" class="tsd-signature-type">Push</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L20">cli.ts:20</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L29">cli.ts:29</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -166,7 +187,7 @@
 						<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <a href="../classes/_commands_server_.server.html" class="tsd-signature-type">Server</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L15">cli.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/cli.ts#L25">cli.ts:25</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -188,6 +209,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_cli_.html#all" class="tsd-kind-icon">all</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_cli_.html#argv" class="tsd-kind-icon">argv</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_cli_.html#staticcommands" class="tsd-kind-icon">static<wbr>Commands</a>

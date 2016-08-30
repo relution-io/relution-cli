@@ -70,12 +70,25 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>ConnectionGen</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">ConnectionGen</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_gii_templateinterface_.templateinterface.html" class="tsd-signature-type">TemplateInterface</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -85,8 +98,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#interfaceon" class="tsd-kind-icon">interface<wbr>On</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#interfaces" class="tsd-kind-icon">interfaces</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#metadata" class="tsd-kind-icon">meta<wbr>Data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#publishname" class="tsd-kind-icon">publish<wbr>Name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -95,10 +112,15 @@
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#template" class="tsd-kind-icon">template</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#_getmethod" class="tsd-kind-icon">_get<wbr>Method</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#_pad" class="tsd-kind-icon">_pad</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#tointerface" class="tsd-kind-icon">to<wbr>Interface</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#_isvalidname" class="tsd-kind-icon">_is<wbr>Valid<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#_mapfield" class="tsd-kind-icon">_map<wbr>Field</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_gii_templates_connection_connectiongen_.connectiongen.html#getinterfaceattributesasstring" class="tsd-kind-icon">get<wbr>Interface<wbr>Attributes<wbr>AsString</a></li>
 							</ul>
 						</section>
 					</div>
@@ -107,12 +129,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="interfaceon" class="tsd-anchor"></a>
+					<h3>interface<wbr>On</h3>
+					<div class="tsd-signature tsd-kind-icon">interface<wbr>On<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L18">gii/templates/connection/ConnectionGen.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="interfaces" class="tsd-anchor"></a>
+					<h3>interfaces</h3>
+					<div class="tsd-signature tsd-kind-icon">interfaces<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L17">gii/templates/connection/ConnectionGen.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="metadata" class="tsd-anchor"></a>
+					<h3>meta<wbr>Data</h3>
+					<div class="tsd-signature tsd-kind-icon">meta<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="_models_callmodel_.callmodel.html" class="tsd-signature-type">CallModel</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L15">gii/templates/connection/ConnectionGen.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="name" class="tsd-anchor"></a>
 					<h3>name</h3>
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L8">gii/templates/connection/ConnectionGen.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L13">gii/templates/connection/ConnectionGen.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -122,7 +174,18 @@
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L9">gii/templates/connection/ConnectionGen.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L14">gii/templates/connection/ConnectionGen.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="publishname" class="tsd-anchor"></a>
+					<h3>publish<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">publish<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/_gii_templateinterface_.templateinterface.html">TemplateInterface</a>.<a href="../interfaces/_gii_templateinterface_.templateinterface.html#publishname">publishName</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L16">gii/templates/connection/ConnectionGen.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,22 +196,50 @@
 					<a name="template" class="tsd-anchor"></a>
 					<h3>template</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> template<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> template<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L16">gii/templates/connection/ConnectionGen.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L105">gii/templates/connection/ConnectionGen.ts:105</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_getmethod" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _get<wbr>Method</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_get<wbr>Method<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><a href="_models_callmodel_.callmodel.html" class="tsd-signature-type">CallModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L38">gii/templates/connection/ConnectionGen.ts:38</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>return a function string</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>model: <a href="_models_callmodel_.callmodel.html" class="tsd-signature-type">CallModel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="_pad" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _pad</h3>
@@ -159,9 +250,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L10">gii/templates/connection/ConnectionGen.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L22">gii/templates/connection/ConnectionGen.ts:22</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>month helper</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -172,6 +268,118 @@
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">number</span>
 							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="tointerface" class="tsd-anchor"></a>
+					<h3>to<wbr>Interface</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Interface<span class="tsd-signature-symbol">(</span>model<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TypeScriptMetaModel</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L95">gii/templates/connection/ConnectionGen.ts:95</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>create a Interface Template</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>model: <span class="tsd-signature-type">TypeScriptMetaModel</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="_isvalidname" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> _is<wbr>Valid<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">_is<wbr>Valid<wbr>Name<span class="tsd-signature-symbol">(</span>_testString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L31">gii/templates/connection/ConnectionGen.ts:31</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>check if the name</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_testString: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="_mapfield" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> _map<wbr>Field</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">_map<wbr>Field<span class="tsd-signature-symbol">(</span>fieldDefinition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TypeScriptFieldDefinition</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L62">gii/templates/connection/ConnectionGen.ts:62</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>map a field into a Interface</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>fieldDefinition: <span class="tsd-signature-type">TypeScriptFieldDefinition</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="getinterfaceattributesasstring" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Interface<wbr>Attributes<wbr>AsString</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Interface<wbr>Attributes<wbr>AsString<span class="tsd-signature-symbol">(</span>fieldDefinitions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayLookup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FieldDefinition</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/gii/templates/connection/ConnectionGen.ts#L84">gii/templates/connection/ConnectionGen.ts:84</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>return a String of Attributes with TypeScriptFieldDefinition.dataTypeTS</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>fieldDefinitions: <span class="tsd-signature-type">ArrayLookup</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FieldDefinition</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -196,23 +404,56 @@
 						<a href="_gii_templates_connection_connectiongen_.connectiongen.html" class="tsd-kind-icon">Connection<wbr>Gen</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#interfaceon" class="tsd-kind-icon">interface<wbr>On</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#interfaces" class="tsd-kind-icon">interfaces</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#metadata" class="tsd-kind-icon">meta<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#path" class="tsd-kind-icon">path</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#publishname" class="tsd-kind-icon">publish<wbr>Name</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#template" class="tsd-kind-icon">template</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#_getmethod" class="tsd-kind-icon">_get<wbr>Method</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#_pad" class="tsd-kind-icon">_pad</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#tointerface" class="tsd-kind-icon">to<wbr>Interface</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#_isvalidname" class="tsd-kind-icon">_is<wbr>Valid<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#_mapfield" class="tsd-kind-icon">_map<wbr>Field</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_gii_templates_connection_connectiongen_.connectiongen.html#getinterfaceattributesasstring" class="tsd-kind-icon">get<wbr>Interface<wbr>Attributes<wbr>AsString</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_gii_templates_connection_connectiongen_.html#camelcase" class="tsd-kind-icon">camel<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/_gii_templates_connection_connectiongen_.html#html" class="tsd-kind-icon">html</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_gii_templates_connection_connectiongen_.html#pascalcase" class="tsd-kind-icon">pascal<wbr>Case</a>
 					</li>
 				</ul>
 			</nav>

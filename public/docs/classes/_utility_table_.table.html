@@ -98,6 +98,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_table_.table.html#notice" class="tsd-kind-icon">notice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_table_.table.html#row" class="tsd-kind-icon">row</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_utility_table_.table.html#sidebar" class="tsd-kind-icon">sidebar</a></li>
 							</ul>
 						</section>
@@ -105,6 +106,7 @@
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="_utility_table_.table.html#tablechars" class="tsd-kind-icon">table<wbr>Chars</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="_utility_table_.table.html#tablecharsnoborder" class="tsd-kind-icon">table<wbr>Chars<wbr>NoBorder</a></li>
 							</ul>
 						</section>
 					</div>
@@ -136,7 +138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L27">utility/Table.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L43">utility/Table.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -144,7 +146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L23">utility/Table.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L39">utility/Table.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -170,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L31">utility/Table.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L47">utility/Table.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -184,16 +186,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="sidebar" class="tsd-anchor"></a>
-					<h3>sidebar</h3>
+					<a name="row" class="tsd-anchor"></a>
+					<h3>row</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sidebar<span class="tsd-signature-symbol">(</span>content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">row<span class="tsd-signature-symbol">(</span>content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L37">utility/Table.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L53">utility/Table.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,7 +204,33 @@
 									<h5>content: <span class="tsd-signature-type">any</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> header: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;[&#x27;Options&#x27;, &#x27;Commands&#x27;, &#x27;Param(s)&#x27;, &#x27;Description&#x27;]</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> header: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sidebar" class="tsd-anchor"></a>
+					<h3>sidebar</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sidebar<span class="tsd-signature-symbol">(</span>content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, header<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L67">utility/Table.ts:67</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>content: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>header: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -372,6 +400,166 @@
 						</aside>
 					</section>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
+					<a name="tablecharsnoborder" class="tsd-anchor"></a>
+					<h3>table<wbr>Chars<wbr>NoBorder</h3>
+					<div class="tsd-signature tsd-kind-icon">table<wbr>Chars<wbr>NoBorder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L22">utility/Table.ts:22</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.bottom-1" class="tsd-anchor"></a>
+						<h3>bottom</h3>
+						<div class="tsd-signature tsd-kind-icon">bottom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L27">utility/Table.ts:27</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.bottom_left-1" class="tsd-anchor"></a>
+						<h3>bottom-<wbr>left</h3>
+						<div class="tsd-signature tsd-kind-icon">bottom-<wbr>left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L29">utility/Table.ts:29</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.bottom_mid-1" class="tsd-anchor"></a>
+						<h3>bottom-<wbr>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">bottom-<wbr>mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L28">utility/Table.ts:28</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.bottom_right-1" class="tsd-anchor"></a>
+						<h3>bottom-<wbr>right</h3>
+						<div class="tsd-signature tsd-kind-icon">bottom-<wbr>right<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L30">utility/Table.ts:30</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.left-1" class="tsd-anchor"></a>
+						<h3>left</h3>
+						<div class="tsd-signature tsd-kind-icon">left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L31">utility/Table.ts:31</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.left_mid-1" class="tsd-anchor"></a>
+						<h3>left-<wbr>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">left-<wbr>mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L32">utility/Table.ts:32</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.mid-1" class="tsd-anchor"></a>
+						<h3>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L33">utility/Table.ts:33</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.mid_mid-1" class="tsd-anchor"></a>
+						<h3>mid-<wbr>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">mid-<wbr>mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L34">utility/Table.ts:34</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.middle-1" class="tsd-anchor"></a>
+						<h3>middle</h3>
+						<div class="tsd-signature tsd-kind-icon">middle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L37">utility/Table.ts:37</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.right-1" class="tsd-anchor"></a>
+						<h3>right</h3>
+						<div class="tsd-signature tsd-kind-icon">right<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L35">utility/Table.ts:35</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.right_mid-1" class="tsd-anchor"></a>
+						<h3>right-<wbr>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">right-<wbr>mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L36">utility/Table.ts:36</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.top-1" class="tsd-anchor"></a>
+						<h3>top</h3>
+						<div class="tsd-signature tsd-kind-icon">top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L23">utility/Table.ts:23</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.top_left-1" class="tsd-anchor"></a>
+						<h3>top-<wbr>left</h3>
+						<div class="tsd-signature tsd-kind-icon">top-<wbr>left<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L25">utility/Table.ts:25</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.top_mid-1" class="tsd-anchor"></a>
+						<h3>top-<wbr>mid</h3>
+						<div class="tsd-signature tsd-kind-icon">top-<wbr>mid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L24">utility/Table.ts:24</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="tablecharsnoborder.top_right-1" class="tsd-anchor"></a>
+						<h3>top-<wbr>right</h3>
+						<div class="tsd-signature tsd-kind-icon">top-<wbr>right<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/utility/Table.ts#L26">utility/Table.ts:26</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -402,10 +590,16 @@
 								<a href="_utility_table_.table.html#notice" class="tsd-kind-icon">notice</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_utility_table_.table.html#row" class="tsd-kind-icon">row</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_utility_table_.table.html#sidebar" class="tsd-kind-icon">sidebar</a>
 							</li>
 							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
 								<a href="_utility_table_.table.html#tablechars" class="tsd-kind-icon">table<wbr>Chars</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
+								<a href="_utility_table_.table.html#tablecharsnoborder" class="tsd-kind-icon">table<wbr>Chars<wbr>NoBorder</a>
 							</li>
 						</ul>
 					</li>

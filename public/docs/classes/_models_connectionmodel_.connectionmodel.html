@@ -130,8 +130,10 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_models_connectionmodel_.connectionmodel.html#_fielddefinitioncomment" class="tsd-kind-icon">_field<wbr>Definition<wbr>Comment</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_models_connectionmodel_.connectionmodel.html#_getproperties" class="tsd-kind-icon">_get<wbr>Properties</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_models_connectionmodel_.connectionmodel.html#fromjson" class="tsd-kind-icon">from<wbr>Json</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_models_connectionmodel_.connectionmodel.html#getcallsforhjson" class="tsd-kind-icon">get<wbr>Calls<wbr>For<wbr>Hjson</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_models_connectionmodel_.connectionmodel.html#getcommentvalue" class="tsd-kind-icon">get<wbr>Commentvalue</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_models_connectionmodel_.connectionmodel.html#getproperties" class="tsd-kind-icon">get<wbr>Properties</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_models_connectionmodel_.connectionmodel.html#tojson" class="tsd-kind-icon">to<wbr>Json</a></li>
 							</ul>
 						</section>
@@ -512,7 +514,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L195">models/ConnectionModel.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L196">models/ConnectionModel.ts:196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -540,19 +542,61 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="_getproperties" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _get<wbr>Properties</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">_get<wbr>Properties<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="fromjson" class="tsd-anchor"></a>
+					<h3>from<wbr>Json</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Json<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L207">models/ConnectionModel.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L235">models/ConnectionModel.ts:235</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getcallsforhjson" class="tsd-anchor"></a>
+					<h3>get<wbr>Calls<wbr>For<wbr>Hjson</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Calls<wbr>For<wbr>Hjson<span class="tsd-signature-symbol">(</span>calls<span class="tsd-signature-symbol">: </span><a href="../interfaces/_models_callmodel_.call.html" class="tsd-signature-type">Call</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L256">models/ConnectionModel.ts:256</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>add to the calls on the connection.hjson
+										&quot;calls&quot;:  {
+									/**</p>
+									<ul>
+										<li>@inputModel: _KP_MOB_DEMANDORDER_GETMessage</li>
+										<li>@outpuModel: MOBILE_SST<em>NEW/</em>-DK_-KP_MOB_DEMANDORDER_GET
+											*\/
+										&quot;getAccount&quot;: &quot;MOBILE_SST<em>NEWNEW/</em>-KP_MOB_DEMANDORDER_GET&quot;,</li>
+									</ul>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>calls: <a href="../interfaces/_models_callmodel_.call.html" class="tsd-signature-type">Call</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -567,7 +611,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L173">models/ConnectionModel.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L174">models/ConnectionModel.ts:174</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -576,6 +620,23 @@
 									<h5>fieldDefinition: <span class="tsd-signature-type">FieldDefinition</span></h5>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getproperties" class="tsd-anchor"></a>
+					<h3>get<wbr>Properties</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Properties<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L208">models/ConnectionModel.ts:208</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -590,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L220">models/ConnectionModel.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/relution-io/relution-cli/blob/master/src/models/ConnectionModel.ts#L221">models/ConnectionModel.ts:221</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -668,11 +729,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_models_connectionmodel_.connectionmodel.html#_fielddefinitioncomment" class="tsd-kind-icon">_field<wbr>Definition<wbr>Comment</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_models_connectionmodel_.connectionmodel.html#_getproperties" class="tsd-kind-icon">_get<wbr>Properties</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_models_connectionmodel_.connectionmodel.html#fromjson" class="tsd-kind-icon">from<wbr>Json</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_models_connectionmodel_.connectionmodel.html#getcallsforhjson" class="tsd-kind-icon">get<wbr>Calls<wbr>For<wbr>Hjson</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_models_connectionmodel_.connectionmodel.html#getcommentvalue" class="tsd-kind-icon">get<wbr>Commentvalue</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_models_connectionmodel_.connectionmodel.html#getproperties" class="tsd-kind-icon">get<wbr>Properties</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_models_connectionmodel_.connectionmodel.html#tojson" class="tsd-kind-icon">to<wbr>Json</a>
