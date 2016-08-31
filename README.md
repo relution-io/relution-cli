@@ -1,5 +1,9 @@
 # Relution CLI
 
+Relution-cli is a complete solution to implement the back end of your Baas applications.
+
+[Docs](https://relution.readme.io/docs/relution-cli) 
+
 [![NPM version](http://img.shields.io/npm/v/relution-cli.svg?style=flat-square)][npm-url]
 [![Coverage Status](http://img.shields.io/coveralls/relution-io/relution-cli/master.svg?style=flat-square)][coveralls-url]
 [![Build Status](https://img.shields.io/travis/relution-io/relution-cli/master.svg?style=flat-square)][travis-url]
