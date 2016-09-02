@@ -77,6 +77,7 @@
         "src/gii/templates/new/Routes.ts",
         "src/gii/templates/new/TsConfigJson.ts",
         "src/gii/templates/new/TslintJson.ts",
+        "src/gii/templates/new/Typings.ts",
         "src/gii/templates/Push.ts",
         "src/gii/TsBeautifier.ts",
         "src/models/CallModel.ts",

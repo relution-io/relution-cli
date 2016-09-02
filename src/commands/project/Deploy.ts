@@ -198,7 +198,7 @@ export class Deploy {
     let userResp: Relution.security.User;
 
     // choosed environment
-    let envName = '';
+    let envName: any = undefined;
 
     // choosed Server
     let choosedServer: any;
@@ -261,8 +261,8 @@ export class Deploy {
           return Observable.throw(new Error(this.i18n.DEPLOY_NO_ORGA));
         }
         this.debuglog.info(chalk.green(`Login as ${userResp.givenName ? userResp.givenName + ' ' + userResp.surname : userResp.name} succeeded. ${figures.tick}`));
-        // console.log(this.owner._parent.staticCommands.env.chooseEnv);
-        if (this.owner._parent.staticCommands.env.envCollection.collection.length > 0 && !envName || !envName.length) {
+
+        if (this.owner._parent.staticCommands.env.chooseEnv.envCollection.collection.length && !envName) {
           // must choose an environment
           return this.owner._parent.staticCommands.env.chooseEnv.choose('list')
             .filter((answers: { env: string }) => {

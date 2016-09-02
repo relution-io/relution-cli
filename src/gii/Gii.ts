@@ -1,3 +1,4 @@
+
 /**
  * @class Gii
  * Gii provides a CLI-based interface for you to interactively generate the code you want.
@@ -21,6 +22,7 @@ import {ConnectionsReadme as ConnectionsReadmeTemplate} from './templates/new/Co
 import {ModelReadme as ModelReadmeTemplate} from './templates/new/ModelReadme';
 import {Connectors as ConnectorsTemplate} from './templates/new/Connectors';
 import {TslintJson as TslintJsonTemplate} from './templates/new/TslintJson';
+import {TypingsJson as TypingsJsonTemplate} from './templates/new/Typings';
 import {TsConfigJson as TsConfigJsonTemplate} from './templates/new/TsConfigJson';
 import {Connection as ConnectionTemplate} from './templates/connection/Connection';
 import {ConnectionGen as ConnectionGenTemplate} from './templates/connection/ConnectionGen';
@@ -60,6 +62,7 @@ export class Gii {
     new TemplateModel('connectionGen', new ConnectionGenTemplate()),
     new TemplateModel('pushroute', new PushRouteTemplate()),
     new TemplateModel('tslint', new TslintJsonTemplate()),
+    new TemplateModel('typings', new TypingsJsonTemplate()),
     new TemplateModel('tsconfig', new TsConfigJsonTemplate())
   ];
 

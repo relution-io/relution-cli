@@ -30,6 +30,7 @@ export class Create {
   // files to be generated
   public toGenTemplatesName: Array<string> = [
     'app',
+    'typings',
     'editorconfig',
     'package',
     'relutionhjson',
@@ -122,22 +123,44 @@ export class Create {
           observer.error(`exec error: ${error}`);
           return;
         }
+
         DebugLog.debug(stdout);
-        exec(`typings install dt~es6-collections dt~node dt~q dt~es6-promise dt~express dt~serve-static dt~express-serve-static-core dt~multer dt~body-parser --save --global`, (e: Error, dout: any, derr: any) => {
-          if (e) {
-            observer.error(`exec error: ${e}`);
+        exec('typings i', (error: Error, stdout: any, stderr: any) => {
+          if (error) {
+            observer.error(`exec error: ${error}`);
             return;
           }
-          DebugLog.debug(dout);
-          exec(`typings install npm~lodash npm~mime --save`, (err: Error, ddout: any, dderr: any) => {
+          DebugLog.debug(stdout);
+          observer.next();
+          observer.complete();
+        });
+      });
+    });
+  }
+
+  public installTypings() {
+    const exec = require('child_process').exec;
+    return Observable.create((observer: any) => {
+      exec(`typings install dt~es6-collections env~node dt~q dt~es6-promise dt~express dt~serve-static dt~express-serve-static-core dt~multer dt~body-parser --save --global`, (e: Error, dout: any, derr: any) => {
+        if (e) {
+          observer.error(`exec error: ${e}`);
+          return;
+        }
+        DebugLog.debug(dout);
+        exec(`typings install npm~lodash npm~mime --save`, (err: Error, ddout: any, dderr: any) => {
+          if (err) {
+            observer.error(`exec error: ${err}`);
+            return;
+          }
+
+          DebugLog.debug(ddout);
+          exec(`tsconfig && tsc -p ${process.cwd()}`, (err: Error, ddout: any, dderr: any) => {
             if (err) {
               observer.error(`exec error: ${err}`);
               return;
             }
-
             DebugLog.debug(ddout);
-            observer.next();
-            observer.complete();
+
           });
         });
       });
@@ -171,6 +194,15 @@ export class Create {
           DebugLog.info(Translation.NPM_INSTALL);
           return this.npmInstall();
         })
+        .exhaustMap(() => {
+          return Observable.create((observer: any) => {
+            const exec = require('child_process').exec;
+            exec(`tsconfig`);
+            exec(`tsc -p ${process.cwd()}`);
+            console.log('test');
+            observer.complete();
+          });
+        })
         /**
          * done
          */
@@ -194,6 +226,15 @@ export class Create {
           DebugLog.info(Translation.FILES_WRITTEN(this.toGenTemplatesName.toString()));
           DebugLog.info(Translation.NPM_INSTALL);
           return this.npmInstall().last();
+        })
+        .exhaustMap(() => {
+          return Observable.create((observer: any) => {
+            const exec = require('child_process').exec;
+            exec(`tsconfig`);
+            exec(`tsc -p ${process.cwd()}`);
+            console.log('test');
+            observer.complete();
+          });
         })
         /**
          * done

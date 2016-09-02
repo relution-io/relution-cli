@@ -17,7 +17,7 @@ export class ChooseEnv {
   public message: string;
 
   constructor(envCollection: EnvCollection) {
-    this.envCollection = envCollection;
+    this._envCollection = envCollection;
     // console.log('this.envCollection', this.envCollection);
   }
   public prompt(choices: Array<{ name: string, checked: boolean }>): Array<any> {

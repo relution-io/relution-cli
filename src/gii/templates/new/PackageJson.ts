@@ -67,7 +67,7 @@ export class PackageJson implements TemplateInterface {
         "scripts": {
           "precommit": "npm run tslint",
           "tslint": "tslint src/**/*.ts",
-          "build": "tsc -p .",
+          "build": "tsconfig && tsc -p .",
           "api": "typedoc -p . --rootDir src --out www --module commonjs --stripInternal --name ${this.name} --exclude **/*.spec.ts src typings/main.d.ts",
           "serve-api": "http-server public/docs",
           "watch": "tsconfig && tsc -p . -w"
