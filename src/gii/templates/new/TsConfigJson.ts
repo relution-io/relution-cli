@@ -22,7 +22,8 @@ export class TsConfigJson implements TemplateInterface {
           "suppressImplicitAnyIndexErrors": true,
           "noFallthroughCasesInSwitch": true,
           "noImplicitReturns": false,
-          "forceConsistentCasingInFileNames": true
+          "forceConsistentCasingInFileNames": true,
+          "newLine": "lf"
         },
         "filesGlob": [
           "**/!(*.d).ts",
