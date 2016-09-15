@@ -15,6 +15,10 @@ Relution-cli is a complete solution to implement the back end of your Baas appli
 [travis-url]: https://travis-ci.org/relution-io/relution-cli
 [daviddm-url]: https://david-dm.org/relution-io/relution-cli
 
+### Dependencies for the projects 
+```shell
+npm i -g tsconfig-cli typescript typings
+```
 
 #### Installation
 ```bash
