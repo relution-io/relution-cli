@@ -1,21 +1,7 @@
 {
   "name": "relution-cli",
   "version": false,
-  "devDependencies": {
-    "sinon": "registry:npm/sinon#1.16.0+20160309002336"
-  },
-  "globalDependencies": {
-    "es6-collections": "registry:dt/es6-collections#0.5.1+20160316155526",
-    "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
-    "username": "registry:dt/username#1.0.1+20160316171810"
-  },
   "dependencies": {
-    "chalk": "registry:npm/chalk#1.1.1+20160812215109",
-    "inquirer": "registry:npm/inquirer#1.0.0+20160723033700",
-    "lodash": "registry:npm/lodash#4.0.0+20160723033700",
-    "mkdirp": "registry:npm/mkdirp#0.5.0+20160723033700",
-    "node-uuid": "registry:npm/node-uuid#1.4.7+20160723033700",
-    "request": "registry:npm/request#2.69.0+20160428223725",
-    "rimraf": "registry:npm/rimraf#2.5.0+20160723033700"
+    "inquirer": "registry:npm/inquirer#1.0.0+20160723033700"
   }
 }
