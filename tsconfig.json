@@ -13,15 +13,14 @@
         "suppressImplicitAnyIndexErrors": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": false,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "LF"
     },
     "filesGlob": [
         "src/**/*.ts",
-        "!src/**/*.d.ts",
-        "typings/index.d.ts"
+        "!src/**/*.d.ts"
     ],
     "files": [
-        "typings/index.d.ts",
         "src/cli.ts",
         "src/collection/EnvCollection.spec.ts",
         "src/collection/EnvCollection.ts",

@@ -93,7 +93,7 @@ export class Create {
    */
   enterName(): any {
     let prompt = this._addName;
-    return Observable.fromPromise(inquirer.prompt(prompt));
+    return Observable.fromPromise(<any>inquirer.prompt(prompt));
   }
   /**
    * create the "toGenTemplatesName" as file

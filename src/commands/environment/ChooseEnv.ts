@@ -36,13 +36,14 @@ export class ChooseEnv {
       }
     ];
   }
+  
   /**
    * @return Observable
    */
   choose(type = 'checkbox', message: string = Translation.SELECT('Environment/s')): any {
     this.promptType = type;
     this.message = message;
-    return Observable.fromPromise(inquirer.prompt(this.prompt(this.choices)));
+    return Observable.fromPromise(<any>inquirer.prompt(this.prompt(this.choices)));
   }
 
   get choices(): Array<{ name: string, checked: boolean }> {

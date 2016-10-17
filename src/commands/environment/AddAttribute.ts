@@ -52,7 +52,7 @@ export class AddAttribute {
         }
       }
     ];
-    return Observable.fromPromise(inquirer.prompt(prompt));
+    return Observable.fromPromise(<any>inquirer.prompt(prompt));
   }
   /**
    * add another value ? y/n
@@ -67,6 +67,6 @@ export class AddAttribute {
         message: 'Add one more ?'
       }
     ];
-    return Observable.fromPromise(inquirer.prompt(prompt));
+    return Observable.fromPromise(<any>inquirer.prompt(prompt));
   }
 }
