@@ -14,7 +14,6 @@ export class TsConfigJson implements TemplateInterface {
           "declaration": false,
           "sourceMap": true,
           "rootDir": "./",
-          "outDir": "./",
           "pretty": true,
           "stripInternal": true,
           "noEmitOnError": true,
@@ -23,13 +22,16 @@ export class TsConfigJson implements TemplateInterface {
           "noFallthroughCasesInSwitch": true,
           "noImplicitReturns": false,
           "forceConsistentCasingInFileNames": true,
-          "newLine": "LF"
+          "newLine": "LF",
+          "typeRoots" : ["./node_modules/@types"]
         },
-        "filesGlob": [
-          "**/!(*.d).ts",
-          "!node_modules/**/*.d.ts",
-          "!node_modules/**/*.ts",
-          "typings/index.d.ts"
+        "include": [
+          "./**/*.ts"
+        ],
+        "exclude": [
+          "./**/*.d.ts",
+          "node_modules/**/*.d.ts",
+          "node_modules/**/*.ts"
         ]
       }\n
     `);

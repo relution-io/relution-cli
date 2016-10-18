@@ -60,9 +60,20 @@ export class PackageJson implements TemplateInterface {
           "node": ">=4.4.0"
         },
         "devDependencies": {
+          "@types/body-parser": "^0.0.33",
+          "@types/es6-collections": "^0.5.29",
+          "@types/es6-promise": "^0.0.32",
+          "@types/express": "^4.0.32",
+          "@types/express-serve-static-core": "^4.0.37",
+          "@types/multer": "^0.0.32",
+          "@types/node": "^6.0.45",
+          "@types/q": "^0.0.32",
+          "@types/serve-static": "^1.7.31",
+          "@types/lodash": "^4.14.37",
+          "@types/mime": "^0.0.29",
           "tslint": "^3.8.1",
           "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
-          "typescript": "^1.8.10"
+          "typescript": "^2.0.2"
         },
         "scripts": {
           "precommit": "npm run tslint",

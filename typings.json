@@ -1,7 +1,0 @@
-{
-  "name": "relution-cli",
-  "version": false,
-  "dependencies": {
-    "inquirer": "registry:npm/inquirer#1.0.0+20160723033700"
-  }
-}

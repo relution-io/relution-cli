@@ -13,7 +13,6 @@ export class RelutionIgnore implements TemplateInterface {
     return (html`
       client/**/*.*
       /node_modules
-      typings
       **/*.ts
       *.DS_STORE
       *.git
