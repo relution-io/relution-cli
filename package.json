@@ -67,7 +67,7 @@
     "sinon": "^1.17.4",
     "tslint": "^3.8.1",
     "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
-    "typescript": "2.0.2"
+    "typescript": "^2.0.3"
   },
   "engines": {
     "node": ">=4.4.0"
@@ -106,7 +106,6 @@
     "rimraf": "^2.5.4",
     "socket.io-client": "^1.4.8",
     "to-iso-string": "0.0.2",
-    "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
     "typescript-formatter": "^2.3.0",
     "username": "^2.1.0",
     "websql": "^0.4.4"

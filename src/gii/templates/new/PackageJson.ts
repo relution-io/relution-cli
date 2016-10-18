@@ -73,7 +73,7 @@ export class PackageJson implements TemplateInterface {
           "@types/mime": "^0.0.29",
           "tslint": "^3.8.1",
           "typedoc": "github:sierrasoftworks/typedoc#v1.8.10",
-          "typescript": "^2.0.2"
+          "typescript": "^2.0.3"
         },
         "scripts": {
           "precommit": "npm run tslint",
