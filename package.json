@@ -14,7 +14,7 @@
     "build": "tsc -p .",
     "api": "typedoc -p . --rootDir src --out public/docs --module commonjs --stripInternal --name Relution-CLI --exclude **/*.spec.ts src typings/main.d.ts",
     "serve-api": "http-server public/docs",
-    "watch": "tsconfig && tsc -p . -w"
+    "watch": "tsc -p . -w"
   },
   "bin": {
     "relution": "lib/cli.js"
