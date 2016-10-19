@@ -199,8 +199,7 @@ export class Logger extends Command {
     if (!this.color[bgColor]) {
       bgColor = 'bgBlue';
     }
-    const content = [[this.color.underline[bgColor](this.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id]];
-    return this.table.row(content);
+    return [this.color.underline[bgColor](this.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id];
   }
   /**
    * return a polling Promise with live log messages
@@ -221,9 +220,9 @@ export class Logger extends Command {
           messages.map((log) => {
             // console.log(log);
             if (os.platform() === 'win32' || this._state === 'args') {
-              console.log(this._beautifyLogMessage(log));
+              console.log.apply(console, this._beautifyLogMessage(log));
             } else {
-              this.termLog.log(this._beautifyLogMessage(log), {height: 30});
+              this.termLog.log(this.table.row([this._beautifyLogMessage(log)]), {height: 30});
             }
           });
         }
