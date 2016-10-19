@@ -12,6 +12,9 @@ export class App implements TemplateInterface {
        */
       import * as express from 'express';
       import * as bodyParser from 'body-parser';
+      import {init as routesRoute} from './routes/routes';
+      import {init as pushRoute} from './routes/push';
+      import {init as connectorsRoute} from './routes/connectors';
 
       const app = express();
       app.use(bodyParser.json());
@@ -19,12 +22,10 @@ export class App implements TemplateInterface {
 
       // global variables
       global['app'] = app;
-
       // install routes
-      require('./routes/routes').init(app);
-      require('./routes/connectors').init(app);
-      require('./routes/push').init(app);
-
+      routesRoute(app);
+      pushRoute(app);
+      connectorsRoute(app);
       // start express server
       app.listen(app.get('port'));
     ` + '\n');

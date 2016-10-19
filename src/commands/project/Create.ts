@@ -30,7 +30,6 @@ export class Create {
   // files to be generated
   public toGenTemplatesName: Array<string> = [
     'app',
-    'typings',
     'editorconfig',
     'package',
     'relutionhjson',
@@ -93,7 +92,7 @@ export class Create {
    */
   enterName(): any {
     let prompt = this._addName;
-    return Observable.fromPromise(inquirer.prompt(prompt));
+    return Observable.fromPromise(<any>inquirer.prompt(prompt));
   }
   /**
    * create the "toGenTemplatesName" as file
@@ -197,9 +196,7 @@ export class Create {
         .exhaustMap(() => {
           return Observable.create((observer: any) => {
             const exec = require('child_process').exec;
-            exec(`tsconfig`);
             exec(`tsc -p ${process.cwd()}`);
-            console.log('test');
             observer.complete();
           });
         })
@@ -230,9 +227,7 @@ export class Create {
         .exhaustMap(() => {
           return Observable.create((observer: any) => {
             const exec = require('child_process').exec;
-            exec(`tsconfig`);
             exec(`tsc -p ${process.cwd()}`);
-            console.log('test');
             observer.complete();
           });
         })

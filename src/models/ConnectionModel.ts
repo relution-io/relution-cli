@@ -89,7 +89,7 @@ export class MetaModel extends Relution.model.MetaModel {
   }
 
   questions(): any | Observable<any> {
-    return Observable.fromPromise(inquirer.prompt(this.prompt()));
+    return Observable.fromPromise(<any>inquirer.prompt(this.prompt()));
   }
 }
 
@@ -106,6 +106,7 @@ export class ConnectionModel implements ConnectionInterface {
   private _calls: any = {};
   private _metaModel: MetaModel;
   private _fileApi: FileApi = new FileApi();
+  private static HJSON_COMMENT_PREFIX = '__WSC__'; //please notice in hjson > 2.0 it is __COMMENTS__
 
   constructor(params?: { name?: string, protocol?: string, calls?: {}, properties?: {} }) {
     if (params) {
@@ -212,7 +213,7 @@ export class ConnectionModel implements ConnectionInterface {
       if (fieldDefinition.defaultValue && fieldDefinition.mandatory || this.metaModel.promptAlways.indexOf(fieldDefinition.name) !== -1) {
         properties[fieldDefinition.name] = fieldDefinition.defaultValue;
       } else {
-        properties.__WSC__.c[''] += (`${os.EOL}${this._fieldDefinitionComment(fieldDefinition)}\n`);
+        properties[ConnectionModel.HJSON_COMMENT_PREFIX].c[''] += (`${os.EOL}${this._fieldDefinitionComment(fieldDefinition)}\n`);
       }
     });
     return properties;
@@ -255,12 +256,12 @@ export class ConnectionModel implements ConnectionInterface {
    */
   public getCallsForHjson(calls: Call[]) {
     let outputCalls = this._fileApi.copyHjson({});
-    outputCalls['__WSC__'].c[''] = `// please add APIs in use by the backend here`;
+    outputCalls[ConnectionModel.HJSON_COMMENT_PREFIX].c[''] = `// please add APIs in use by the backend here`;
 
     calls.forEach((call) => {
       outputCalls[call.name] = call.action;
       outputCalls = this._fileApi.copyHjson(outputCalls);
-      // outputCalls['__WSC__'].c[call.name] =
+      // outputCalls[ConnectionModel.HJSON_COMMENT_PREFIX'].c[call.name] =
       // `/**
       // * @inputModel: ${call.inputModel}
       // * @outpuModel: ${call.outputModel}

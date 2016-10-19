@@ -12,11 +12,16 @@ let mocha = new Mocha();
 let chokidarOptions = {
   persistent: true
 };
-let root = path.join(__dirname, 'lib');
+let root = path.join(process.cwd(), 'lib');
 let filteredTree = dirTree(root, ['.js']);
+
 let testFiles = [];
+// console.log(filteredTree);
 
 let traverseFiles = (tree) => {
+  if (!tree) {
+    throw Error(`Tree can not be empty!`);
+  }
   if (tree.children) {
     return traverseFiles(tree.children);
   }

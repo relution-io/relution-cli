@@ -431,8 +431,7 @@ export class ServerCrud {
       if (!pfx) {
         return Observable.of(undefined);
       }
-
-      return RxFs.readFile(pfx).map((pfxContent: Buffer) => {
+      return RxFs.readFile(pfx.toString()).map((pfxContent: Buffer) => {
         return new CertModelRc(_.defaults({
           pfx: pfxContent
         }, answers));

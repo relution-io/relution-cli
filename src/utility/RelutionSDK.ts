@@ -55,7 +55,6 @@ export class RelutionSdk {
         });
       }
     }
-
     return Observable.fromPromise(Relution.web.login({
       userName: serverModel.userName,
       password: serverModel.password
