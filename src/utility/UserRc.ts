@@ -70,7 +70,8 @@ export class UserRc {
   streamRc(): Observable<UserRc> {
     return Observable.create((observer: any) => {
       /* tslint:disable:no-bitwise */
-      return fs.access(this._rcHome, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+	  const fsConstants = fs.constants || <typeof fs.constants><any>fs; // node 4 (LTS) compatibility
+      return fs.access(this._rcHome, fsConstants.R_OK | fsConstants.W_OK, (err) => {
       /* tslint:enable:no-bitwise */
         if (err) {
           observer.error(err);
