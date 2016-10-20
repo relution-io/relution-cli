@@ -1,14 +1,18 @@
-import { Command } from './Command';
-import {ServerModelRc} from './../models/ServerModelRc';
-import {Deploy} from './project/Deploy';
-import {find} from 'lodash';
-import {FileApi} from '../utility/FileApi';
-import {RxFs} from './../utility/RxFs';
 import * as os from 'os';
 import * as path from 'path';
 import * as Relution from 'relution-sdk';
-import {Observable, Observer} from '@reactivex/rxjs';
-import { LoggerHelper, LEVEL } from './logger/LoggerHelper';
+import { find } from 'lodash';
+import { Observable, Observer } from '@reactivex/rxjs';
+import { Deploy } from './../project/Deploy';
+import { FileApi } from '../../utility/FileApi';
+import { LoggerHelper, LEVEL } from './../logger/LoggerHelper';
+import { ServerModelRc } from './../../models/ServerModelRc';
+import { Command } from './../Command';
+import { UserRc } from '../../utility/UserRc';
+import { DebugLog } from '../../utility/DebugLog';
+import { Translation } from '../../utility/Translation';
+import { RelutionSdk } from '../../utility/RelutionSDK';
+import { RxFs } from './../../utility/RxFs';
 
 const blessed = require('blessed');
 const contrib = require('blessed-contrib');
@@ -22,7 +26,7 @@ export interface LogMessage {
   extraFieldsMap?: any;
   setProperties?: Array<string>;
 }
-export class Logger extends Command {
+export class Logger {
   private screen: any;
   private _deployCommand: Deploy;
   private _relutionHjson: any;
@@ -33,43 +37,28 @@ export class Logger extends Command {
   public choosedLevel: number;
   private _grid: any;
   private _state = 'cli';
-  public commands: Object = {
-    log: {
-      label: 'log',
-      when: () => {
-        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
-      },
-      why: () => {
-        return this.i18n.LOGGER_LOG_WHY;
-      },
-      description: this.i18n.LOGGER_LOG_DESCRIPTION,
-      vars: {
-        serverName: {
-          pos: 0
-        },
-        level: {
-          pos: 1
-        }
-      }
-    },
-    help: {
-      description: this.i18n.HELP_COMMAND('Debugger')
-    },
-    back: {
-      description: this.i18n.EXIT_TO_HOME
-    }
-  };
+  private owner: Command;
+  private userRc: UserRc;
+  private i18n: typeof Translation;
+  private relutionSDK: RelutionSdk;
+  private debuglog = DebugLog;
+  private inquirer: any;
 
-  constructor() {
-    super('logger');
-    this._deployCommand = new Deploy(this);
+  constructor(owner: Command) {
+    this.owner = owner;
+    this.userRc = owner.userRc;
+    this.i18n = owner.i18n;
+    this.relutionSDK = owner.relutionSDK;
+    this.debuglog = owner.debuglog;
+    this.inquirer = owner.inquirer;
+    this._deployCommand = new Deploy(owner);
   }
   /**
    * open a screen on os sytems nice !
    */
   private _openLogView() {
     this.screen = blessed.screen();
-    this._grid = new contrib.grid({rows: 12, cols: 12, screen: this.screen});
+    this._grid = new contrib.grid({ rows: 12, cols: 12, screen: this.screen });
     this.termLog = this._grid.set(0, 0, 4, 12, contrib.log, {
       fg: 'green',
       label: `Server Log ${this.choosedServer.id} ${this.choosedServer.serverUrl}`,
@@ -187,7 +176,7 @@ export class Logger extends Command {
     min = (min < 10 ? "0" : "") + min;
     sec = (sec < 10 ? "0" : "") + sec;
 
-    var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
+    var str = date.getFullYear() + "-" + month + "-" + day + "_" + hour + ":" + min + ":" + sec;
     return str;
   }
   /**
@@ -196,39 +185,39 @@ export class Logger extends Command {
   private _beautifyLogMessage(log: LogMessage) {
     let bgColor = this._getLevelColor(log.level);
     const levelName = this._getLevelName(log.level);
-    if (!this.color[bgColor]) {
+    if (!this.owner.color[bgColor]) {
       bgColor = 'bgBlue';
     }
-    return [this.color.underline[bgColor](this.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id];
+    return [this.owner.color.underline[bgColor](this.owner.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id];
   }
   /**
    * return a polling Promise with live log messages
    */
   public getlog(registerUUid: string, ob: any): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
-    .then((messages: Array<LogMessage>) => {
-      if (!this.screen && os.platform() !== 'win32' && this._state === 'cli') {
-        this._openLogView();
-        this.screen.key(['escape', 'q', 'C-c'], function(ch: string, key: string) {
-          this.screen.destroy();
-          this.screen = undefined;
-          return ob.complete();
-        });
-      }
-      if (!ob.isUnsubscribed) {
-        if (messages.length) {
-          messages.map((log) => {
-            // console.log(log);
-            if (os.platform() === 'win32' || this._state === 'args') {
-              console.log.apply(console, this._beautifyLogMessage(log));
-            } else {
-              this.termLog.log(this.table.row([this._beautifyLogMessage(log)]), {height: 30});
-            }
+      .then((messages: Array<LogMessage>) => {
+        if (!this.screen && os.platform() !== 'win32' && this._state === 'cli') {
+          this._openLogView();
+          this.screen.key(['escape', 'q', 'C-c'], function (ch: string, key: string) {
+            this.screen.destroy();
+            this.screen = undefined;
+            return ob.complete();
           });
         }
-        return this.getlog(registerUUid, ob);
-      }
-    });
+        if (!ob.isUnsubscribed) {
+          if (messages.length) {
+            messages.map((log) => {
+              // console.log(log);
+              if (os.platform() === 'win32' || this._state === 'args') {
+                console.log.apply(console, this._beautifyLogMessage(log));
+              } else {
+                this.termLog.log(this.owner.table.row([this._beautifyLogMessage(log)]), { height: 30 });
+              }
+            });
+          }
+          return this.getlog(registerUUid, ob);
+        }
+      });
   }
   /**
    * ist directly used from the terminal
@@ -254,7 +243,7 @@ export class Logger extends Command {
         return this.relutionSDK.login(this.choosedServer);
       })
       .mergeMap(() => {
-        return Observable.from([{level: LEVEL[args[1].toUpperCase()] || LEVEL.TRACE}]);
+        return Observable.from([{ level: LEVEL[args[1].toUpperCase()] || LEVEL.TRACE }]);
       })
       .mergeMap((level: any) => {
         this.choosedLevel = LEVEL[level];
@@ -283,18 +272,18 @@ export class Logger extends Command {
     }
 
     return Observable.create((ob: Observer<{}>) => {
-      const sub = serverName ?  this._directLog(args) : this._registerLogger();
+      const sub = serverName ? this._directLog(args) : this._registerLogger();
       sub.subscribe((registerUUid: string) => {
         return this.getlog(registerUUid, ob)
-        .catch((e: Error) => {
-          ob.error(e);
-          if (os.platform() !== 'win32' && this._state === 'cli') {
-            this.screen.destroy();
-            this.screen = undefined;
-          }
-          sub().unsubcribe();
-          return;
-        });
+          .catch((e: Error) => {
+            ob.error(e);
+            if (os.platform() !== 'win32' && this._state === 'cli') {
+              this.screen.destroy();
+              this.screen = undefined;
+            }
+            sub().unsubcribe();
+            return;
+          });
       });
     });
   }

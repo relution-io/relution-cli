@@ -4,6 +4,8 @@ import {FileApi} from './../utility/FileApi';
 
 import {Create} from './project/Create';
 import {Deploy} from './project/Deploy';
+import {Debugger} from './project/Debugger';
+import {Logger} from './project/Logger';
 
 import {RxFs} from './../utility/RxFs';
 import * as fs from 'fs';
@@ -60,6 +62,38 @@ export class Project extends Command {
         }
       }
     },
+    debug: {
+      when: () => {
+        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
+      },
+      why: () => {
+        return this.i18n.DEBUGGER_OPEN_WHY;
+      },
+      description: this.i18n.DEBUGGER_OPEN_DESCRIPTION,
+      vars: {
+        server: {
+          pos: 0
+        }
+      }
+    },
+    log: {
+      label: 'logger',
+      when: () => {
+        return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
+      },
+      why: () => {
+        return this.i18n.LOGGER_LOG_WHY;
+      },
+      description: this.i18n.LOGGER_LOG_DESCRIPTION,
+      vars: {
+        serverName: {
+          pos: 0
+        },
+        level: {
+          pos: 1
+        }
+      }
+    },
     help: {
       description: this.i18n.HELP_COMMAND('Project')
     },
@@ -106,5 +140,13 @@ export class Project extends Command {
 
   deploy(args: Array<string>) {
     return new Deploy(this).publish(args);
+  }
+
+  debug() {
+    return new Debugger(this).open();
+  }
+
+  log(args: Array<string>) {
+    return new Logger(this).log(args);
   }
 }
