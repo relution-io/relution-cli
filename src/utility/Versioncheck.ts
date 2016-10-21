@@ -8,15 +8,7 @@ import * as chalk from 'chalk';
 const pkg = require(`${__dirname}/../../package.json`);
 const isOnline = require('is-online');
 const emoji = require('node-emoji');
-const semverDiff = require('semver-diff');
 
-const diffIcons = {
-  'patch': ':warning:',
-  'major': ':shit:',
-  'minor': ':thumbsdown:',
-  'prerelease': ':loudspeaker:',
-  'build': ':panda_face:'
-};
 
 export interface INPMSearch {
   results: Array<{
@@ -65,22 +57,13 @@ export class NpmVersionCheck {
       );
     });
   }
-
-  private static diffIcon() {
-    const diff = semverDiff(pkg.version, NpmVersionCheck._pkg.version);
-    console.log('diff', diff);
-    if (!diff || Object.keys(diffIcons).indexOf(diff) === -1) {
-      return diffIcons.patch;
-    }
-    return diffIcons[diff];
-  }
   /**
    * simple yes/no
    */
   private static _versionCheck() {
     // console.log('check version', NpmVersionCheck._pkg.version[0] !== pkg.version ? `Version is outdated please update to ${NpmVersionCheck._pkg.version}` : '');
     return NpmVersionCheck._pkg.version[0] !== pkg.version ?
-      emoji.emojify(`${NpmVersionCheck.diffIcon()} ${chalk.yellow(Translation.CLI_OUTDATED(NpmVersionCheck._pkg.version))}`) :
+      emoji.emojify(`:warning: ${chalk.yellow(Translation.CLI_OUTDATED(NpmVersionCheck._pkg.version))}`) :
       emoji.emojify(`:clap: ${Translation.CLI_UPTODATE(pkg.version)}`);
   }
 
@@ -103,7 +86,6 @@ export class NpmVersionCheck {
             // console.log(`no package ${NpmVersionCheck._pkg}`)
             return NpmVersionCheck._package().subscribe(
               (_pkg: any) => {
-                console.log(`package`, NpmVersionCheck._pkg);
                 ob.next(NpmVersionCheck._versionCheck());
                 ob.complete();
               }

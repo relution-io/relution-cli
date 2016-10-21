@@ -11,7 +11,7 @@ export class Greet {
     // | | \ \  __/ | |_| | |_| | (_) | | | | |   \  |  |__  |  |
     // |_|  \_\___|_|\__,_|\__|_|\___/|_| |_|  \___| |_____| |__|
     //     `);
-    console.log(`Relution-Cli v${Greet.pkg.version}: `);
+    // console.log(`Relution-Cli v${Greet.pkg.version}: `);
     console.log(`Hi ${username}`);
   }
 
