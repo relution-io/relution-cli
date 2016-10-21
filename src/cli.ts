@@ -1,18 +1,18 @@
 #!/usr/bin/env node --harmony
-import {NpmVersionCheck} from './utility/Versioncheck';
-import {Observable} from '@reactivex/rxjs';
+import { NpmVersionCheck } from './utility/Versioncheck';
+import { Observable } from '@reactivex/rxjs';
 import * as RelutionSDK from './utility/RelutionSDK';
 import * as _ from 'lodash';
 
-import {Server} from './commands/Server';
-import {Environment} from './commands/Environment';
-import {Tower} from './commands/Tower';
-import {Project} from './commands/Project';
-import {Connection} from './commands/Connection';
-import {Push} from './commands/Push';
-import {Debugger} from './commands/Debugger';
-import {Command} from './commands/Command';
-import {Logger} from './commands/Logger';
+import { Server } from './commands/Server';
+import { Environment } from './commands/Environment';
+import { Tower } from './commands/Tower';
+import { Project } from './commands/Project';
+import { Connection } from './commands/Connection';
+import { Push } from './commands/Push';
+import { Debugger } from './commands/Debugger';
+import { Command } from './commands/Command';
+import { Logger } from './commands/Logger';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
@@ -22,7 +22,7 @@ RelutionSDK.initFromArgs(argv);
 
 // console.log('2', argv);
 // all sub commands add to be here
-const staticCommands: _.Dictionary<Command>  = {
+const staticCommands: _.Dictionary<Command> = {
   server: new Server(),
   project: new Project(),
   env: new Environment(),
@@ -39,20 +39,20 @@ const all = Object.keys(staticCommands).map((commandName: any) => {
 
 // preload done
 Observable.forkJoin(all)
-.flatMap(
-  () => {
-    return NpmVersionCheck.check();
-  }
-)
-.subscribe(
-  (a: any) => {
-    console.log(a);
-  },
-  (e: any) => {
-    console.error('preload', e);
-    process.exit(-1);
-  },
-  () => {
-    return new Tower(staticCommands, argv);
-  }
-);
+  .flatMap(
+    () => {
+      return NpmVersionCheck.check();
+    }
+  )
+  .subscribe(
+    (a: any) => {
+      console.log(a);
+    },
+    (e: any) => {
+      console.error('preload', e);
+      process.exit(-1);
+    },
+    () => {
+      return new Tower(staticCommands, argv);
+    }
+  );

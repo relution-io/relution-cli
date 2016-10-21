@@ -44,62 +44,53 @@ export class NpmVersionCheck {
    * get this package from the search looks like
    */
   private static _package() {
-    return Observable.create((ob: Observer<any>) => {
-      NpmVersionCheck._postApi().subscribe(
-        (resp) => {
-          NpmVersionCheck._pkg = resp;
-          // console.log('package', resp);
-          ob.next(resp);
-        },
-        e => {
-          ob.next({name: pkg.name, version: pkg.version});
-        }
-      );
-    });
+    return NpmVersionCheck._postApi();
   }
   /**
    * simple yes/no
    */
   private static _versionCheck() {
-    // console.log('check version', NpmVersionCheck._pkg.version[0] !== pkg.version ? `Version is outdated please update to ${NpmVersionCheck._pkg.version}` : '');
+    if (!NpmVersionCheck._pkg) {
+      return emoji.emojify(':interrobang: Version check failed');
+    }
     return NpmVersionCheck._pkg.version[0] !== pkg.version ?
       emoji.emojify(`:warning: ${chalk.yellow(Translation.CLI_OUTDATED(NpmVersionCheck._pkg.version))}`) :
       emoji.emojify(`:clap: ${Translation.CLI_UPTODATE(pkg.version)}`);
   }
 
+  private static offline() {
+    return emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`);
+  }
+
   public static check() {
-    // isOnline((e: any, on: any) => {
-    //   console.log(e, on);
-    // });
-    // return Observable.empty();
     return Observable.create((ob: Observer<any>) => {
-      const _isOnline = Observable.bindCallback(isOnline);
-      const scriber = _isOnline();
-      return scriber.subscribe(
-        (online: any) => {
-          if (online.length && !online[0] && online[2] === false) {
-            ob.next(emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`));
-            return ob.complete();
-          }
-          // console.log('online', online);
-          if (!NpmVersionCheck._pkg) {
-            // console.log(`no package ${NpmVersionCheck._pkg}`)
-            return NpmVersionCheck._package().subscribe(
+      return isOnline((e: any, on: any) => {
+        // console.log('wtf', e, on);
+        if (!on) {
+          ob.next(NpmVersionCheck.offline());
+          ob.complete();
+        }
+
+        if (!NpmVersionCheck._pkg) {
+          // console.log(`no package ${NpmVersionCheck._pkg}`)
+          return NpmVersionCheck._package()
+            .subscribe(
               (_pkg: any) => {
                 ob.next(NpmVersionCheck._versionCheck());
                 ob.complete();
+              },
+              () => {
+                if (!on) {
+                  ob.next(NpmVersionCheck.offline()); // https.js throws bad errors
+                  ob.complete();
+                }
+                ob.complete();
               }
             );
-          }
-          ob.next(NpmVersionCheck._versionCheck());
-          ob.complete();
-        },
-        e => {
-          // console.log('offline', e);
-          ob.next(emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`));
-          ob.complete();
         }
-      );
+        ob.next(NpmVersionCheck._versionCheck());
+        ob.complete();
+      });
     });
   }
 }
