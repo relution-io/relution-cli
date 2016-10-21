@@ -86,32 +86,6 @@ export class Translation {
   static PUSH_LIST_TABLEHEADERS = ['Push'];
   /**
    * Check Version
-   * ⚠️ Version is outdated please update to 0.0.26
-      Relution-Cli v0.0.25:
-      Hi pascalbrewing
-      ? Please Choose Your Option:  (Use arrow keys)
-      ❯ server
-        project
-        env
-        connection
-        push
-        debug
-        logger
-        help
-        quit
-
-      Pascals-MacBook-Pro:rel-cli-test pascalbrewing$ relution
-      👏  Your version 0.0.26 is up to date
-      Relution-Cli v0.0.26:
-
-      relution
-      🌒  Hey you are offline, this make sense ?
-      Relution-Cli v0.0.26:
-
-      relution
-      ⁉️ Version check failed
-      Relution-Cli v0.0.26:
-      Hi pascalbrewing
    */
   static CLI_OFFLINE = '  Hey you are offline, this make sense ?';
   static CLI_UPTODATE = (version: string) => {
