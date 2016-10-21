@@ -85,6 +85,17 @@ export class Translation {
    */
   static PUSH_LIST_TABLEHEADERS = ['Push'];
 
+  /**
+   * Version check
+   */
+  static CLI_OUTDATED(version: string): string {
+    return `Version is outdated please update to ${version}`;
+  }
+
+  static CLI_UPTODATE(version: string): string {
+    return `Your version ${version} is up to date`;
+  }
+
   static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
     return `Folder ${relative(folder)} does not contain a Relution project, see "How to migrate existing Project into a Relution Project".`;
   }

@@ -1,4 +1,5 @@
 #!/usr/bin/env node --harmony
+import {NpmVersionCheck} from './utility/Versioncheck';
 import {Observable} from '@reactivex/rxjs';
 import * as RelutionSDK from './utility/RelutionSDK';
 import * as _ from 'lodash';
@@ -37,9 +38,15 @@ const all = Object.keys(staticCommands).map((commandName: any) => {
 });
 
 // preload done
-Observable.forkJoin(all).subscribe(
+Observable.forkJoin(all)
+.flatMap(
+  () => {
+    return NpmVersionCheck.check();
+  }
+)
+.subscribe(
   (a: any) => {
-    // console.log(a);
+    console.log(a);
   },
   (e: any) => {
     console.error('preload', e);
