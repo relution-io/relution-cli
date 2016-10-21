@@ -84,6 +84,44 @@ export class Translation {
    * Push
    */
   static PUSH_LIST_TABLEHEADERS = ['Push'];
+  /**
+   * Check Version
+   * ⚠️ Version is outdated please update to 0.0.26
+      Relution-Cli v0.0.25:
+      Hi pascalbrewing
+      ? Please Choose Your Option:  (Use arrow keys)
+      ❯ server
+        project
+        env
+        connection
+        push
+        debug
+        logger
+        help
+        quit
+
+      Pascals-MacBook-Pro:rel-cli-test pascalbrewing$ relution
+      👏  Your version 0.0.26 is up to date
+      Relution-Cli v0.0.26:
+
+      relution
+      🌒  Hey you are offline, this make sense ?
+      Relution-Cli v0.0.26:
+
+      relution
+      ⁉️ Version check failed
+      Relution-Cli v0.0.26:
+      Hi pascalbrewing
+   */
+  static CLI_OFFLINE = '  Hey you are offline, this make sense ?';
+  static CLI_UPTODATE = (version: string) => {
+    return ` Your version ${version} is up to date`;
+  }
+  static CLI_OUTOFDATE = (version: string) => {
+    return ` Version is outdated please update to ${version}`;
+  }
+  static CLI_VERSION_CHECK_FAILED = ' Version check failed';
+
 
   static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
     return `Folder ${relative(folder)} does not contain a Relution project, see "How to migrate existing Project into a Relution Project".`;
