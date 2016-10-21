@@ -50,9 +50,12 @@ export class NpmVersionCheck {
           NpmVersionCheck._pkg = resp;
           // console.log('package', resp);
           ob.next(resp);
+        },
+        e => {
+          ob.next({name: pkg.name, version: pkg.version});
         }
       );
-    })
+    });
   }
   /**
    * simple yes/no
@@ -65,15 +68,20 @@ export class NpmVersionCheck {
   }
 
   public static check() {
+    // isOnline((e: any, on: any) => {
+    //   console.log(e, on);
+    // });
+    // return Observable.empty();
     return Observable.create((ob: Observer<any>) => {
       const _isOnline = Observable.bindCallback(isOnline);
       const scriber = _isOnline();
       return scriber.subscribe(
-        (online: boolean) => {
-          if (!online) {
+        (online: any) => {
+          if (online.length && !online[0] && online[2] === false) {
             ob.next(emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`));
-            ob.complete();
+            return ob.complete();
           }
+          // console.log('online', online);
           if (!NpmVersionCheck._pkg) {
             // console.log(`no package ${NpmVersionCheck._pkg}`)
             return NpmVersionCheck._package().subscribe(
@@ -86,8 +94,13 @@ export class NpmVersionCheck {
           }
           ob.next(NpmVersionCheck._versionCheck());
           ob.complete();
+        },
+        e => {
+          // console.log('offline', e);
+          ob.next(emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`));
+          ob.complete();
         }
-      )
+      );
     });
   }
 }
