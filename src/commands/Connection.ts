@@ -72,7 +72,7 @@ export class Connection extends Command {
       }
     },
     createInterfaces: {
-      label: this.i18n.CONNECTION_RENDER_METAMODEL_LABEL
+      label: this.i18n.CONNECTION_GENERATE_CODE
     },
     list: {
       when: () => {
