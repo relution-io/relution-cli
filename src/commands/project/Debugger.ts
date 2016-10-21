@@ -65,7 +65,7 @@ export class Debugger {
       .mergeMap((resp: any) => {
         const exec = require('child_process').exec;
         const redirect = Relution.web.resolveUrl('node-inspector', { application: this._relutionHjson.name });
-        const url = `${choosedServer.serverUrl}gofer/security-login?j_username=${
+        const url = `${choosedServer.serverUrl}/gofer/security-login?j_username=${
           encodeURIComponent(choosedServer.userName)
           }&j_password=${
           encodeURIComponent(choosedServer.password)
