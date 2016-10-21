@@ -95,6 +95,7 @@ export class Translation {
   static CLI_UPTODATE(version: string): string {
     return `Your version ${version} is up to date`;
   }
+  static CLI_OFFLINE = 'Hey you are offline, this make sense ?';
 
   static FOLDER_IS_NOT_A_RELUTION_PROJECT(folder: string): string {
     return `Folder ${relative(folder)} does not contain a Relution project, see "How to migrate existing Project into a Relution Project".`;

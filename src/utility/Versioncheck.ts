@@ -25,7 +25,6 @@ export class NpmVersionCheck {
   private static _uri = 'http://npmsearch.com/query?q=relution-cli&fields=version,name';
   private static _res: INPMSearch = { results: [] };
   private static _pkg: any = null;
-  private static _i18n: Translation;
   /**
    * fetch the APi url http://npmsearch.com/query?q=relution-cli&fields=version,name
    * and filter the version
@@ -72,6 +71,7 @@ export class NpmVersionCheck {
       return scriber.subscribe(
         (online: boolean) => {
           if (!online) {
+            ob.next(emoji.emojify(`:waxing_crescent_moon: ${Translation.CLI_OFFLINE}`));
             ob.complete();
           }
           if (!NpmVersionCheck._pkg) {
