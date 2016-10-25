@@ -76,7 +76,7 @@ export class Project extends Command {
         }
       }
     },
-    log: {
+    logger: {
       label: 'logger',
       when: () => {
         return RxFs.exist(path.join(process.cwd(), 'relution.hjson'));
@@ -146,7 +146,7 @@ export class Project extends Command {
     return new Debugger(this).open();
   }
 
-  log(args: Array<string>) {
+  logger(args: Array<string>) {
     return new Logger(this).log(args);
   }
 }
