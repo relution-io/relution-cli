@@ -27,7 +27,7 @@ export interface LogMessage {
   setProperties?: Array<string>;
 }
 export class Logger {
-  private screen: any;
+  private _screen: any;
   private _deployCommand: Deploy;
   private _relutionHjson: any;
   private _fileApi: FileApi = new FileApi();
@@ -37,28 +37,28 @@ export class Logger {
   public choosedLevel: number;
   private _grid: any;
   private _state = 'cli';
-  private owner: Command;
-  private userRc: UserRc;
-  private i18n: typeof Translation;
-  private relutionSDK: RelutionSdk;
-  private debuglog = DebugLog;
-  private inquirer: any;
+  private _owner: Command;
+  private _userRc: UserRc;
+  private _i18n: typeof Translation;
+  private _relutionSDK: RelutionSdk;
+  private _debuglog = DebugLog;
+  private _inquirer: any;
 
   constructor(owner: Command) {
-    this.owner = owner;
-    this.userRc = owner.userRc;
-    this.i18n = owner.i18n;
-    this.relutionSDK = owner.relutionSDK;
-    this.debuglog = owner.debuglog;
-    this.inquirer = owner.inquirer;
+    this._owner = owner;
+    this._userRc = owner.userRc;
+    this._i18n = owner.i18n;
+    this._relutionSDK = owner.relutionSDK;
+    this._debuglog = owner.debuglog;
+    this._inquirer = owner.inquirer;
     this._deployCommand = new Deploy(owner);
   }
   /**
    * open a screen on os sytems nice !
    */
   private _openLogView() {
-    this.screen = blessed.screen();
-    this._grid = new contrib.grid({ rows: 12, cols: 12, screen: this.screen });
+    this._screen = blessed.screen();
+    this._grid = new contrib.grid({ rows: 12, cols: 12, screen: this._screen });
     this.termLog = this._grid.set(0, 0, 4, 12, contrib.log, {
       fg: 'green',
       label: `Server Log ${this.choosedServer.id} ${this.choosedServer.serverUrl}`,
@@ -73,13 +73,12 @@ export class Logger {
         type: 'none'
       }
     });
-    this.screen.render();
+    this._screen.render();
   }
   /**
    * register Logger on server with the prompts
    */
   private _registerLogger() {
-
     return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
       /**
        * get a server from inquirer
@@ -89,18 +88,14 @@ export class Logger {
         return this._deployCommand.getServerPrompt();
       })
       .filter((server: { deployserver: string }) => {
-        return server.deployserver !== this.i18n.CANCEL;
-      })
-      /**
-       * logged in on server
-       */
-      .mergeMap((server: { deployserver: string }) => {
+        return server.deployserver !== this._i18n.CANCEL;
+      }).mergeMap((server: { deployserver: string }) => {
         if (server.deployserver.toString().trim() === this._deployCommand.defaultServer.trim()) {
-          this.choosedServer = find(this.userRc.server, { default: true });
+          this.choosedServer = find(this._userRc.server, { default: true });
         } else {
-          this.choosedServer = find(this.userRc.server, { id: server.deployserver });
+          this.choosedServer = find(this._userRc.server, { id: server.deployserver });
         }
-        return this.relutionSDK.login(this.choosedServer);
+        return this._relutionSDK.login(this.choosedServer);
       })
       .mergeMap(() => {
         return this._chooseLevel();
@@ -130,7 +125,7 @@ export class Logger {
         return str;
       }
     };
-    return Observable.fromPromise(this.inquirer.prompt(questions));
+    return Observable.fromPromise(this._inquirer.prompt(questions));
   }
   /**
    * return the level by  number as a string
@@ -185,10 +180,10 @@ export class Logger {
   private _beautifyLogMessage(log: LogMessage) {
     let bgColor = this._getLevelColor(log.level);
     const levelName = this._getLevelName(log.level);
-    if (!this.owner.color[bgColor]) {
+    if (!this._owner.color[bgColor]) {
       bgColor = 'bgBlue';
     }
-    return [this.owner.color.underline[bgColor](this.owner.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id];
+    return [this._owner.color.underline[bgColor](this._owner.color.white(levelName)), log.message, this._getHumanDate(log.date), log.id];
   }
   /**
    * return a polling Promise with live log messages
@@ -196,9 +191,9 @@ export class Logger {
   public getlog(registerUUid: string, ob: any): any {
     return this._log.fetchlogs(registerUUid, LEVEL.TRACE, 'test')
       .then((messages: Array<LogMessage>) => {
-        if (!this.screen && os.platform() !== 'win32' && this._state === 'cli') {
+        if (!this._screen && os.platform() !== 'win32' && this._state === 'cli') {
           this._openLogView();
-          this.screen.key(['escape', 'q', 'C-c'], function (ch: string, key: string) {
+          this._screen.key(['escape', 'q', 'C-c'], function (ch: string, key: string) {
             this.screen.destroy();
             this.screen = undefined;
             return ob.complete();
@@ -211,7 +206,7 @@ export class Logger {
               if (os.platform() === 'win32' || this._state === 'args') {
                 console.log.apply(console, this._beautifyLogMessage(log));
               } else {
-                this.termLog.log(this.owner.table.row([this._beautifyLogMessage(log)]), { height: 30 });
+                this.termLog.log(this._owner.table.row([this._beautifyLogMessage(log)]), { height: 30 });
               }
             });
           }
@@ -229,34 +224,37 @@ export class Logger {
        */
       .mergeMap((relutionHjson: { data: any, path: string }) => {
         this._relutionHjson = relutionHjson.data;
-        return this._deployCommand._getServers();
+
+      })
+      .filter((server: { deployserver: string }) => {
+        return server.deployserver !== this._i18n.CANCEL;
       })
       /**
        * logged in on server
        */
-      .mergeMap(() => {
+      .mergeMap((server: { deployserver: string }) => {
         if (args[0].trim() === this._deployCommand.defaultServer.trim()) {
-          this.choosedServer = find(this.userRc.server, { default: true });
+          this.choosedServer = find(this._userRc.server, { default: true });
         } else {
-          this.choosedServer = find(this.userRc.server, { id: args[0] });
+          this.choosedServer = find(this._userRc.server, { id: args[0] });
         }
-        return this.relutionSDK.login(this.choosedServer);
+        return this._relutionSDK.login(this.choosedServer);
       })
       .mergeMap(() => {
         return Observable.from([{ level: LEVEL[args[1].toUpperCase()] || LEVEL.TRACE }]);
       })
       .mergeMap((level: any) => {
         this.choosedLevel = LEVEL[level];
-        this.debuglog.info(`${this.choosedServer.userName} logged in on ${this.choosedServer.serverUrl}`);
+        this._debuglog.info(`${this.choosedServer.userName} logged in on ${this.choosedServer.serverUrl}`);
         this._log = new LoggerHelper(this._relutionHjson.uuid, this.choosedServer);
         return this._log.registerLogger();
       });
   }
+
   /**
    * print the livelog appender from you choosen server
    */
   public log(args?: Array<any>): any {
-    // console.log('args', args);
     let serverName: string;
     let level = LEVEL.TRACE;
 
@@ -271,21 +269,70 @@ export class Logger {
       level = args[1];
     }
 
-    return Observable.create((ob: Observer<{}>) => {
-      const sub = serverName ? this._directLog(args) : this._registerLogger();
-      sub.subscribe((registerUUid: string) => {
-        return this.getlog(registerUUid, ob)
-          .catch((e: Error) => {
-            ob.error(e);
-            if (os.platform() !== 'win32' && this._state === 'cli') {
-              this.screen.destroy();
-              this.screen = undefined;
-            }
-            sub().unsubcribe();
-            return;
-          });
+    const isSuper = args && args[0] ? true : false;
+
+    return this._fileApi.readHjson(path.join(this._deployCommand.projectDir, 'relution.hjson'))
+      /**
+       * get a server from inquirer
+       */
+      .mergeMap((relutionHjson: { data: any, path: string }) => {
+        this._relutionHjson = relutionHjson.data;
+        // directLog
+        if (isSuper) {
+          return this._deployCommand._getServers();
+          // registerLogger
+        } else {
+          return this._deployCommand.getServerPrompt();
+        }
+      })
+      .filter((server: { deployserver: string }) => {
+        return server.deployserver !== this._i18n.CANCEL;
+      }).mergeMap((server: { deployserver: string }) => {
+        // directLog
+        if (isSuper) {
+          if (args[0].trim() === this._deployCommand.defaultServer.trim()) {
+            this.choosedServer = find(this._userRc.server, { default: true });
+          } else {
+            this.choosedServer = find(this._userRc.server, { id: args[0] });
+          }
+          // registerLogger
+        } else {
+          if (server.deployserver.toString().trim() === this._deployCommand.defaultServer.trim()) {
+            this.choosedServer = find(this._userRc.server, { default: true });
+          } else {
+            this.choosedServer = find(this._userRc.server, { id: server.deployserver });
+          }
+        }
+        return this._relutionSDK.login(this.choosedServer);
+      })
+      .mergeMap(() => {
+        // directLog
+        if (isSuper) {
+          return Observable.from([{ level: LEVEL[args[1].toUpperCase()] || LEVEL.TRACE }]);
+          // registerLogger
+        } else {
+          return this._chooseLevel();
+        }
+      })
+      .mergeMap((level: any) => {
+        this.choosedLevel = LEVEL[level];
+        Relution.debug.info(`${this.choosedServer.userName} logged in on ${this.choosedServer.serverUrl}`);
+        this._log = new LoggerHelper(this._relutionHjson.uuid, this.choosedServer);
+        return this._log.registerLogger();
+      })
+      .exhaustMap((registerUUid: string) => {
+        return Observable.create((ob: Observer<any>) => {
+          return this.getlog(registerUUid, ob)
+            .catch((e: Error) => {
+              ob.error(e);
+              if (os.platform() !== 'win32' && this._state === 'cli') {
+                this._screen.destroy();
+                this._screen = undefined;
+              }
+              // ob.unsubcribe();
+              return;
+            })
+        });
       });
-    });
   }
 }
-

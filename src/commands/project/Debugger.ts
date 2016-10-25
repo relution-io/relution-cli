@@ -15,23 +15,23 @@ import { RxFs } from './../../utility/RxFs';
 
 export class Debugger {
 
-  public _deployCommand: Deploy;
+  private _deployCommand: Deploy;
   private _relutionHjson: any;
   private _fileApi: FileApi = new FileApi();
-  private owner: Command;
-  private userRc: UserRc;
-  private i18n: typeof Translation;
-  private relutionSDK: RelutionSdk;
-  private debuglog = DebugLog;
-  private inquirer: any;
+  private _owner: Command;
+  private _userRc: UserRc;
+  private _i18n: typeof Translation;
+  private _relutionSDK: RelutionSdk;
+  private _debuglog = DebugLog;
+  private _inquirer: any;
 
   constructor(owner: Command) {
-    this.owner = owner;
-    this.userRc = owner.userRc;
-    this.i18n = owner.i18n;
-    this.relutionSDK = owner.relutionSDK;
-    this.debuglog = owner.debuglog;
-    this.inquirer = owner.inquirer;
+    this._owner = owner;
+    this._userRc = owner.userRc;
+    this._i18n = owner.i18n;
+    this._relutionSDK = owner.relutionSDK;
+    this._debuglog = owner.debuglog;
+    this._inquirer = owner.inquirer;
     this._deployCommand = new Deploy(owner);
   }
 
@@ -49,18 +49,18 @@ export class Debugger {
         return this._deployCommand.getServerPrompt();
       })
       .filter((server: { deployserver: string }) => {
-        return server.deployserver !== this.i18n.CANCEL;
+        return server.deployserver !== this._i18n.CANCEL;
       })
       /**
        * logged in on server
        */
       .mergeMap((server: { deployserver: string }) => {
         if (server.deployserver.toString().trim() === this._deployCommand.defaultServer.trim()) {
-          choosedServer = find(this.userRc.server, { default: true });
+          choosedServer = find(this._userRc.server, { default: true });
         } else {
-          choosedServer = find(this.userRc.server, { id: server.deployserver });
+          choosedServer = find(this._userRc.server, { id: server.deployserver });
         }
-        return this.relutionSDK.login(choosedServer);
+        return this._relutionSDK.login(choosedServer);
       })
       .mergeMap((resp: any) => {
         const exec = require('child_process').exec;
