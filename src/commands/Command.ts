@@ -247,9 +247,9 @@ export class Command implements CommandInterface {
     }
     // console.log(myObservable);
     return myObservable.subscribe(
-      (log: any) => {
-        if (log && log.length) {
-          this.debuglog.log('cyan', log);
+      (logger: any) => {
+        if (logger && logger.length) {
+          this.debuglog.log('cyan', logger);
         }
       },
       (e: any) => {

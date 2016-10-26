@@ -38,6 +38,7 @@ export class ServerModelRc implements ServerModelRcInterface {
         return srcValue;
       }
     });
+    this.fixServerUrl(this.serverUrl);
   }
 
   public toJSON(): ServerModelRcInterface {
@@ -57,5 +58,10 @@ export class ServerModelRc implements ServerModelRcInterface {
       this.default ? chalk.green(figures.tick) : chalk.red(figures.cross),
       chalk.yellow(this.userName)
     ];
+  }
+
+  public fixServerUrl(serverUrl: string) {
+    if (serverUrl.slice(-1) === '/') this.serverUrl = serverUrl.slice(0, -1);
+    else this.serverUrl += '/';
   }
 }

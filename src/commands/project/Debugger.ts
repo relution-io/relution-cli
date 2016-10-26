@@ -1,47 +1,38 @@
-import { Command } from './Command';
-import { ServerModelRc } from './../models/ServerModelRc';
-import { Deploy } from './project/Deploy';
-import { find } from 'lodash';
-import { FileApi } from '../utility/FileApi';
-import { RxFs } from './../utility/RxFs';
 import * as os from 'os';
 import * as path from 'path';
 import * as Relution from 'relution-sdk';
-
+import { find } from 'lodash';
 import { Observable } from '@reactivex/rxjs';
+import { Deploy } from './../project/Deploy';
+import { FileApi } from '../../utility/FileApi';
+import { ServerModelRc } from './../../models/ServerModelRc';
+import { Command } from './../Command';
+import { UserRc } from '../../utility/UserRc';
+import { DebugLog } from '../../utility/DebugLog';
+import { Translation } from '../../utility/Translation';
+import { RelutionSdk } from '../../utility/RelutionSDK';
+import { RxFs } from './../../utility/RxFs';
 
-export class Debugger extends Command {
+export class Debugger {
 
   private _deployCommand: Deploy;
   private _relutionHjson: any;
   private _fileApi: FileApi = new FileApi();
+  private _owner: Command;
+  private _userRc: UserRc;
+  private _i18n: typeof Translation;
+  private _relutionSDK: RelutionSdk;
+  private _debuglog = DebugLog;
+  private _inquirer: any;
 
-  public commands: Object = {
-    open: {
-      when: () => {
-        return RxFs.exist(path.join(this._deployCommand.projectDir, 'relution.hjson'));
-      },
-      why: () => {
-        return this.i18n.DEBUGGER_OPEN_WHY;
-      },
-      description: this.i18n.DEBUGGER_OPEN_DESCRIPTION,
-      vars: {
-        server: {
-          pos: 0
-        }
-      }
-    },
-    help: {
-      description: this.i18n.HELP_COMMAND('Debugger')
-    },
-    back: {
-      description: this.i18n.EXIT_TO_HOME
-    }
-  };
-
-  constructor() {
-    super('debug');
-    this._deployCommand = new Deploy(this);
+  constructor(owner: Command) {
+    this._owner = owner;
+    this._userRc = owner.userRc;
+    this._i18n = owner.i18n;
+    this._relutionSDK = owner.relutionSDK;
+    this._debuglog = owner.debuglog;
+    this._inquirer = owner.inquirer;
+    this._deployCommand = new Deploy(owner);
   }
 
   public open() {
@@ -58,29 +49,29 @@ export class Debugger extends Command {
         return this._deployCommand.getServerPrompt();
       })
       .filter((server: { deployserver: string }) => {
-        return server.deployserver !== this.i18n.CANCEL;
+        return server.deployserver !== this._i18n.CANCEL;
       })
       /**
        * logged in on server
        */
       .mergeMap((server: { deployserver: string }) => {
         if (server.deployserver.toString().trim() === this._deployCommand.defaultServer.trim()) {
-          choosedServer = find(this.userRc.server, { default: true });
+          choosedServer = find(this._userRc.server, { default: true });
         } else {
-          choosedServer = find(this.userRc.server, { id: server.deployserver });
+          choosedServer = find(this._userRc.server, { id: server.deployserver });
         }
-        return this.relutionSDK.login(choosedServer);
+        return this._relutionSDK.login(choosedServer);
       })
       .mergeMap((resp: any) => {
         const exec = require('child_process').exec;
         const redirect = Relution.web.resolveUrl('node-inspector', { application: this._relutionHjson.name });
         const url = `${choosedServer.serverUrl}/gofer/security-login?j_username=${
           encodeURIComponent(choosedServer.userName)
-        }&j_password=${
+          }&j_password=${
           encodeURIComponent(choosedServer.password)
-        }&redirect=${
+          }&redirect=${
           encodeURIComponent(redirect)
-        }`;
+          }`;
         let cmd: string;
         if (os.platform() === 'win32') {
           cmd = `${process.env.COMSPEC || 'cmd'} /C "@start /B ${url.replace(/&/g, '^&')}"`;

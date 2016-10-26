@@ -9,9 +9,7 @@ import {Tower} from './commands/Tower';
 import {Project} from './commands/Project';
 import {Connection} from './commands/Connection';
 import {Push} from './commands/Push';
-import {Debugger} from './commands/Debugger';
 import {Command} from './commands/Command';
-import {Logger} from './commands/Logger';
 
 // command line preprocessing
 let argv = new Array<string>(...process.argv);
@@ -26,9 +24,7 @@ const staticCommands: _.Dictionary<Command>  = {
   project: new Project(),
   env: new Environment(),
   connection: new Connection(),
-  push: new Push(),
-  debug: new Debugger(),
-  logger: new Logger()
+  push: new Push()
 };
 
 // observable to wait for before loading the tower some commands need a some data befor it can be initialised

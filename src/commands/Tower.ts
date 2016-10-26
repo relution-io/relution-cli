@@ -173,8 +173,8 @@ export class Tower {
       //  console.log('this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]', this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]);
       if (this.args.length >= 1 && this.reserved.indexOf(this.args[1]) !== -1 && this[this.args[1]]) {
         return this[this.args[1]]().subscribe(
-          (log: any) => {
-            console.log(log);
+          (logger: any) => {
+            console.log(logger);
           },
           (e: ErrorConstructor) => {
             console.log(`Something get wrong to use ${this.args[1]}`, e);

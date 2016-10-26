@@ -35,3 +35,5 @@ typings
 devtest
 /spec/gentest/**/*.*
 .DS_Store
+
+.vscode
