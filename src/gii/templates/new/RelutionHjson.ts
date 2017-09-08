@@ -1,4 +1,4 @@
-import * as uuid from 'node-uuid';
+import * as uuid from 'uuid';
 import {FileApi} from './../../../utility/FileApi';
 import {Translation} from './../../../utility/Translation';
 import {TemplateInterface} from './../../TemplateInterface';
