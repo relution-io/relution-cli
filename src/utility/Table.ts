@@ -1,4 +1,4 @@
-let clitable = require('cli-table2');
+let clitable = require('cli-table3');
 export class Table {
   private _table: any;
 
